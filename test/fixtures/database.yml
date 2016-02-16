@@ -1,0 +1,8 @@
+:test: &default
+  :uri: oracle://procon:procon0701@10.20.1.175:1521/oradds1.prodam.com.br
+
+:development:
+  :uri: oracle://procon:procon0701@10.20.1.175:1521/oradds1.prodam.com.br
+
+:production:
+  :uri: jdbc:oracle:thin:procon/ahyo9Thuli@pdm1-prd-scan.prodam.local:1521/dbpdm01.prodam.com.br

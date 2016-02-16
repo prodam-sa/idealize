@@ -1,0 +1,12 @@
+:title: 'Idealize!'
+:routes:
+  '/':
+    :title: Home
+    :controller: HomeController
+    :navigation: true
+    :icon: home
+  '/info':
+    :title: Informações
+    :controller: InfoController
+    :navigation: true
+    :icon: info
