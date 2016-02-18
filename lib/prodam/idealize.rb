@@ -12,5 +12,10 @@ module Prodam
     # Base
     autoload :Configuration, 'prodam/idealize/configuration'
     autoload :Database, 'prodam/idealize/database'
+
+    def self.initialize(env = :development)
+      Database.load_config('config/database.yml', env)
+      Application.load_config('config/application.yml', env)
+    end
   end
 end
