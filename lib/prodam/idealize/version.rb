@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 module Procon
   VERSION   = '0.1.0'
   RELEASE   = ''

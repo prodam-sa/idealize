@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 class Prodam::Idealize::Database
   class << self
     attr_reader :uri
