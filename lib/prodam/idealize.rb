@@ -7,11 +7,22 @@ require 'sequel'
 require 'json'
 require 'prodam/idealize/version'
 
+class String
+  def underscore
+    self.gsub(/::/, '/').
+    gsub(/([A-Z]+)([A-Z][a-z])/,'\1_\2').
+    gsub(/([a-z\d])([A-Z])/,'\1_\2').
+    tr("-", "_").
+    downcase
+  end
+end
+
 module Prodam
   module Idealize
     # Base
     autoload :Configuration, 'prodam/idealize/configuration'
     autoload :Database, 'prodam/idealize/database'
+    autoload :Application, 'prodam/idealize/application'
 
     # Models
     autoload :Usuario, 'models/usuario'
