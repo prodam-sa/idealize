@@ -13,6 +13,9 @@ module Prodam
     autoload :Configuration, 'prodam/idealize/configuration'
     autoload :Database, 'prodam/idealize/database'
 
+    # Models
+    autoload :Usuario, 'models/usuario'
+
     def self.initialize(env = :development)
       Database.load_config('config/database.yml', env)
       Application.load_config('config/application.yml', env)
