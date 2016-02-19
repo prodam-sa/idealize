@@ -16,6 +16,10 @@ app.vendors:
 app.console:
 	exec ruby -S pry -Ilib:app -r prodam/idealize
 
+# make app.server environment=production
+app.server:
+	ruby -S puma --environment $(environment) --port 8092
+
 # make db.console environment=production
 db.console:
 	exec rlwrap sqlplus $$(cat db/$(environment).ora)
@@ -44,8 +48,4 @@ db.bootstrap:
 
 check:
 	ruby test/all.rb
-
-# make server environment=production
-server:
-	ruby -S puma --environment $(environment) --port 8092
 
