@@ -14,7 +14,7 @@ app.vendors:
 	git clone --depth 10 https://github.com/google/material-design-lite.git vendors/mdl
 
 app.console:
-	exec ruby -S pry -Ilib:app -r console
+	exec ruby -S pry -Ilib:app -r prodam/idealize
 
 # make db.console environment=production
 db.console:
