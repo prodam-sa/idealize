@@ -1,7 +1,5 @@
 # unicode: utf-8
 
+ENV['RACK_ENV'] ||= 'development'
+
 require 'prodam/idealize'
-
-env = ENV['RACK_ENV'] || :development
-
-Prodam::Idealize.initialize env

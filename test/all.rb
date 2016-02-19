@@ -4,11 +4,9 @@ $LOAD_PATH.unshift '.'
 
 require 'minitest/autorun'
 require 'minitest/rg'
-require 'test/helpers'
 require 'rack/test'
 require 'prodam/idealize'
-
-Prodam::Idealize.initialize :test
+require 'test/helpers'
 
 Dir['test/*_test.rb', 'test/{models,controllers}/*_test.rb'].each do |test|
   load test

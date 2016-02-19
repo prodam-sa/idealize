@@ -1,3 +1,4 @@
+ENV['RACK_ENV'] = 'test'
 FIXTURES  = File.expand_path(File.join(File.dirname(__FILE__), 'fixtures')) unless defined? FIXTURES
 
 module Minitest
