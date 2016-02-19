@@ -8,8 +8,14 @@ require 'json'
 require 'prodam/idealize/version'
 
 class String
+  def camelcase
+    gsub('/', ' :: ').
+    gsub(/([a-z]+)_([a-z]+)/,'\1 \2').
+    split(' ').map(&:capitalize).join
+  end
+
   def underscore
-    self.gsub(/::/, '/').
+    gsub(/::/, '/').
     gsub(/([A-Z]+)([A-Z][a-z])/,'\1_\2').
     gsub(/([a-z\d])([A-Z])/,'\1_\2').
     tr("-", "_").
@@ -19,7 +25,6 @@ end
 
 module Prodam
   module Idealize
-
     class << self
       def root_directory
         @root_directory ||= Pathname.new(File.expand_path("#{File.basename(__FILE__)}/.."))
@@ -56,6 +61,16 @@ module Prodam
           controller[id] = data
         end
       end
+
+      def models
+        @models ||= Dir[root_directory.join('app').join('models').join('*.rb')].each_with_object({}) do |path, models|
+          id = File.basename(path.gsub(/.*\/models/, ''), '.rb')
+          models[id.to_sym] = {
+            require_path: "models/#{id}",
+            const_name: id.camelcase.to_sym
+          }
+        end
+      end
     end
 
     class Prodam::Idealize::Database
@@ -89,10 +104,14 @@ module Prodam
     autoload :Usuario, 'models/usuario'
 
     # Controllers
-    autoload :Application, 'controllers/application_controller'
+    autoload :ApplicationController, 'controllers/application_controller'
 
     controllers.each do |id, controller|
       autoload controller[:const_name], controller[:require_path]
+    end
+
+    models.each do |id, model|
+      autoload model[:const_name], model[:require_path]
     end
   end
 end
