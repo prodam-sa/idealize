@@ -2,7 +2,7 @@
 
 require 'digest'
 
-class Prodam::Idealize::Usuario < Sequel::Model(Prodam::Idealize::Database[:usuario])
+class Prodam::Idealize::Usuario < Prodam::Idealize::Model[:usuario]
   plugin :validation_helpers
   no_primary_key # chave primária gerenciada pelo próprio Oracle por sequences.
   set_allowed_columns :nome_usuario, :nome, :email, :ad
