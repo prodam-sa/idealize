@@ -1,0 +1,8 @@
+:test: &default
+  :uri: oracle://idealize:idealize2016@10.20.1.175:1521/oradds1.prodam.com.br
+
+:development:
+  :uri: oracle://teste:teste@localhost:1521/ora.prodam.com.br
+
+:production:
+  :uri: oracle://teste:teste@localhost:1521/ora.prodam.com.br
