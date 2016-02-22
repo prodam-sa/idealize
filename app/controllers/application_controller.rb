@@ -12,4 +12,13 @@ class Prodam::Idealize::ApplicationController < Sinatra::Base
   end
   enable :method_override
   enable :sessions
+
+  helpers Prodam::Idealize::AuthenticationHelper
+  helpers Prodam::Idealize::ViewHelper
+  helpers Prodam::Idealize::UrlHelper
+
+  before do
+    @page = { title: 'Caixa de Ideias' }
+    message ||= { level: :info, text: nil, url: nil }
+  end
 end
