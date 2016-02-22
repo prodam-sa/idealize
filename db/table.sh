@@ -65,15 +65,15 @@ create sequence s_${table_alias} minvalue 1 start with 1 increment by 1;
 
 create table ${table_alias} (
   id_${table_alias} number(15,0)
-           constraint ${table_alias}_pk primary key using index tablespace &indx
+    constraint ${table_alias}_pk primary key using index tablespace &indx
 ) tablespace &data;
 
 create or replace trigger ${table_alias}_insert
   before insert
   on ${table_alias} for each row
-when (new.id_${table_alias} is null)
+when (new.id is null)
 begin
-  :new.id_${table_alias} := s_${table_alias}.nextval;
+  :new.id := s_${table_alias}.nextval;
 end;
 /
 
