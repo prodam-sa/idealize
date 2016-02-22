@@ -8,11 +8,11 @@ insert into usuario (
   , senha_encriptada
   , ad
   ) values (
-    'admin'
-  , 'Administrador Prodam'
+    'idealize'
+  , 'Administrador Prodam Idealize'
   , 'idealize@prodam.am.gov.br'
-  , '3a93774d444d2450e3fecc14a17ed72c'
-  , '3b7dc0d8f6a8e9f850c995f3d1808854'
+  , '70bda423a16885f993bc9fb873b56ab7'
+  , '2c62f1ac5edb7274d6839334ca7f0d3b'
   , 'S'
   )
 ;

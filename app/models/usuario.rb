@@ -4,39 +4,50 @@ require 'digest'
 
 class Prodam::Idealize::Usuario < Prodam::Idealize::Model[:usuario]
   plugin :validation_helpers
-  no_primary_key # chave primária gerenciada pelo próprio Oracle por sequences.
   set_allowed_columns :nome_usuario, :nome, :email, :ad
 
   def validate
     super
     validates_presence [:nome_usuario, :nome, :email], message: 'não foi atribuído.'
-    validates_unique [:nome_usuario, :email], message: 'já existe.'
+    validates_unique :nome_usuario, message: 'já existe.'
+    validates_unique :email, message: 'já registrado.'
   end
 
   def before_save
-    self[:senha_salt] = encript(nome.downcase.tr(' ', ''), email)
+    self[:senha_salt] = encript(self[:nome].downcase.tr(' ', ''), self[:email])
   end
 
-  def save(opts = {})
+  def after_save
+    self[:id] = self.class.select(:id).where(nome_usuario: self[:nome_usuario]).first[:id]
+  end
+
+  def save(options = {})
+    before_save
     if new?
-      self[:senha_encriptada] = encript(opts[:senha], self[:senha_salt])
+      self.class.no_primary_key
+      self[:senha_encriptada] = encript(options[:senha], self[:senha_salt])
     end
-    anything = super(opts)
-    anything
+    super
+    self.class.set_primary_key :id
+    self
+  end
+
+  def authenticate?(password)
+    senha_encriptada == encript(password, senha_salt)
+  end
+
+  def administrador?
+    self[:ad] == 'S'
   end
 
   def self.authenticate(options)
     usuario = find nome_usuario: options[:nome_usuario]
-    check(usuario, options[:senha])
+    usuario && usuario.authenticate?(options[:senha]) && usuario
   end
 
 private
 
   def encript(text, salt = nil)
-    Digest::MD5.new.update(salt ? text : "#{salt}:#{text}").hexdigest
-  end
-
-  def check(user, password)
-    user && user.senha_encriptada == encript(password, user.senha_salt)
+    Digest::MD5.hexdigest(salt ? "#{salt}:#{text}" : text)
   end
 end
