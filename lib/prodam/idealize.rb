@@ -62,13 +62,15 @@ module Prodam
         end
       end
 
-      def models
-        @models ||= Dir[root_directory.join('app').join('models').join('*.rb')].each_with_object({}) do |path, models|
-          id = File.basename(path.gsub(/.*\/models/, ''), '.rb')
-          models[id.to_sym] = {
-            require_path: "models/#{id}",
-            const_name: id.camelcase.to_sym
-          }
+      def sources_from(*pathnames)
+        pathnames.each_with_object({}) do |pathname, sources|
+          Dir[root_directory.join('app').join(pathname.to_s).join('*.rb')].each do |source|
+            id = File.basename(source.gsub(/.*\/#{pathname}/, ''), '.rb')
+            sources[id.to_sym] = {
+              require_path: "#{pathname}/#{id}",
+              const_name: id.camelcase.to_sym
+            }
+          end
         end
       end
     end
@@ -100,9 +102,6 @@ module Prodam
       end
     end
 
-    # Models
-    autoload :Usuario, 'models/usuario'
-
     # Controllers
     autoload :ApplicationController, 'controllers/application_controller'
 
@@ -110,8 +109,8 @@ module Prodam
       autoload controller[:const_name], controller[:require_path]
     end
 
-    models.each do |id, model|
-      autoload model[:const_name], model[:require_path]
+    sources_from(:models, :helpers).each do |id, source|
+      autoload source[:const_name], source[:require_path]
     end
   end
 end
