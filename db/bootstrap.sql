@@ -18,3 +18,17 @@ insert into usuario (
 ;
 
 commit;
+
+prompt ** CATEGORIAS
+
+insert into categoria
+  select s_categoria.nextval
+       , v_categoria.*
+    from (
+      select 'Nenhum'    as nome from dual union
+      select 'Educação'  as nome from dual union
+      select 'Negócio'   as nome from dual union
+      select 'Segurança' as nome from dual union
+      select 'Trânsito'  as nome from dual
+    ) v_categoria
+;
