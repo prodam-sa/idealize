@@ -15,7 +15,7 @@ describe 'Usuário' do
   end
 
   it 'consulta conta uma existente' do
-    usuario = Prodam::Idealize::Usuario.find nome_usuario: 'admin'
+    usuario = Prodam::Idealize::Usuario.find nome_usuario: 'idealize'
     assert usuario
   end
 end
