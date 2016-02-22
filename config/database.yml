@@ -1,0 +1,6 @@
+:test:
+  :uri: oracle://idealize:idealize2016@10.20.1.175:1521/oradds1.prodam.com.br
+:development:
+  :uri: oracle://idealize:idealize2016@10.20.1.175:1521/oradds1.prodam.com.br
+:production:
+  :uri: jdbc:oracle:thin:idealize/<senha>@pdm1-prd-scan.prodam.local:1521/dbpdm01.prodam.com.br

@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="pt">
+  <head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="description" content=""/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Prodam - <%=@page[:title]%></title>
+
+    <!-- Fallback to homescreen for Chrome <39 on Android -->
+    <meta name="mobile-web-app-capable" content="yes"/>
+    <meta name="application-name" content="Material Design Lite"/>
+    <link rel="icon" sizes="192x192" href=""/>
+
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+    <meta name="apple-mobile-web-app-title" content=""/>
+
+    <link rel="apple-touch-icon" href="<%=path_to '/img/ios-desktop.png'%>"/>
+    <link rel="shortcut icon" href="<%=path_to '/img/favicon.png'%>"/>
+
+    <!-- Page styles -->
+    <link rel="stylesheet" href="<%=path_to '/css/material.min.css'%>"/>
+    <link rel="stylesheet" href="<%=path_to '/css/prodam.css'%>"/>
+    <script src="<%=path_to '/js/material.min.js'%>"></script>
+
+    <!-- Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"/>
+  </head>
+  <body>
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
+      <header class="mdl-layout__header mdl-color--indigo-900 prd-layout__header">
+        <div class="mdl-layout__header-row">
+          <span class="mdl-layout-title prd-layout-title">
+            <i class="material-icons"><%=@page[:icon]%></i>
+            <%=@page[:title]%>
+          </span>
+          <div class="mdl-layout-spacer"></div>
+          <a href="<%=path_to :sair%>" class="mdl-button mdl-js-button mdl-button--icon">
+            <i class="material-icons">power_settings_new</i>
+          </a>
+          <!--div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label mdl-textfield--align-right">
+            <label class="mdl-button mdl-js-button mdl-button--icon" for="fixed-header-drawer-exp">
+              <i class="material-icons">search</i>
+            </label>
+            <div class="mdl-textfield__expandable-holder">
+              <input class="mdl-textfield__input" type="text" name="sample" id="fixed-header-drawer-exp">
+            </div>
+          </div-->
+        </div>
+        <%if message[:text]%>
+          <div class="mdl-layout__header-row prd-color--<%=message[:level]%>">
+            <%=message[:text]%><%message.update text: nil%>
+          </div>
+        <%end%>
+      </header>
+      <div class="mdl-layout__drawer prd-layout__drawer">
+        <span class="mdl-layout-title">
+        </span>
+        <a href="<%=path_to :home%>"><img src="<%=path_to '/img/brand-colored.svg'%>" class="prd-drawer__brand"/></a>
+        <nav class="mdl-navigation prd-navigation">
+        <%controllers.select { |id, controller| controller[:navigation] }.each do |id, controller|%>
+          <a class="mdl-navigation__link prd-navigation__link" href="<%=path_to controller[:url_path]%>">
+            <i class="material-icons" role="presentation"><%=controller[:icon]%></i>
+            <%=controller[:title]%>
+          </a>
+        <%end%>
+        </nav>
+        <div class="mdl-layout-spacer"></div>
+        <nav class="mdl-navigation prd-navigation">
+          <a class="mdl-navigation__link prd-navigation__link" href="<%=path_to :ajuda%>"><i class="material-icons" role="presentation">help</i>Ajuda</a>
+        </nav>
+        <small class="mdl-color--grey-200 mdl-typography--text-center">
+          <%=version_info%>
+        </small>
+      </div>
+      <main class="mdl-layout__content">
+        <div class="page-content">
+          <%=yield%>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>

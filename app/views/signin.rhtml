@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="pt">
+  <head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="description" content=""/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Prodam - <%=@page[:title]%></title>
+
+    <!-- Fallback to homescreen for Chrome <39 on Android -->
+    <meta name="mobile-web-app-capable" content="yes"/>
+    <meta name="application-name" content="Material Design Lite"/>
+    <link rel="icon" sizes="192x192" href=""/>
+
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+    <meta name="apple-mobile-web-app-title" content=""/>
+
+    <link rel="apple-touch-icon" href="<%=path_to '/img/ios-desktop.png'%>"/>
+    <link rel="shortcut icon" href="<%=path_to '/img/favicon.png'%>"/>
+
+    <!-- Page styles -->
+    <link rel="stylesheet" href="<%=path_to '/css/material.min.css'%>"/>
+    <link rel="stylesheet" href="<%=path_to '/css/prodam.css'%>"/>
+    <script src="<%=path_to '/js/material.min.js'%>"></script>
+
+    <!-- Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"/>
+  </head>
+  <body>
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+      <header class="mdl-layout__header mdl-color--indigo-900 prd-layout__header">
+      <%if message[:text]%>
+        <div class="mdl-layout__header-row prd-color--<%=message[:level]%>">
+          <%=message[:text]%><%message.update text: nil%>
+        </div>
+      <%end%>
+      </header>
+      <main class="mdl-layout__content">
+        <div class="mdl-grid page-content">
+          <div class="mdl-cell--12-col">
+            <%=yield%>
+          </div>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,12 @@
+:title: 'Idealize!'
+:routes:
+  '/':
+    :title: Home
+    :controller: AcessoController
+    :navigation: true
+    :icon: home
+  '/ideais':
+    :title: Ideias
+    :controller: IdeiasController
+    :navigation: true
+    :icon: wb_incandescent
