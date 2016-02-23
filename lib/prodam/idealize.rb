@@ -101,8 +101,8 @@ module Prodam
         Sequel::Model(Database[dataset])
       end
 
-      def to_uri(prefix = '')
-        "#{prefix}/#{self[:id]}"
+      def to_url_param(prefix = nil)
+        [prefix, id].compact.join('/')
       end
     end
 
