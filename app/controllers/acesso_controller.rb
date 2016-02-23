@@ -25,19 +25,19 @@ class Prodam::Idealize::AcessoController < Prodam::Idealize::ApplicationControll
     redirect path_to('/'), 303
   end
 
-  get '/conta', authenticate: :authenticate do
+  get '/conta', authenticate: true do
     @usuario ||= Prodam::Idealize::Usuario[session[:user_id]]
     view 'acesso/forms/usuario'
   end
 
-  put '/conta/:id', authenticate: :authenticate do |id|
+  put '/conta/:id', authenticate: true do |id|
     @usuario = Prodam::Idealize::Usuario[id]
     @usuario.update(params[:usuario])
     message.update(level: :information, text: 'Dados da conta foram atualizados.')
     redirect path_to('/conta'), 200
   end
 
-  put '/conta/:id/senha', authenticate: :authenticate do |id|
+  put '/conta/:id/senha', authenticate: true do |id|
     @usuario = Prodam::Idealize::Usuario[id]
     if @usuario.save(params[:usuario])
       message.update(level: :information, text: 'Senha atualizada.')

@@ -5,9 +5,9 @@ require 'sinatra/base'
 class Prodam::Idealize::ApplicationController < Sinatra::Base
   set :public_folder, 'public'
   set :views, 'app/views'
-  set :authenticate do |*any|
+  set :authenticate do |required|
     condition do
-      redirect to('/'), 303 unless authenticated?
+      redirect to('/'), 303 if required && !authenticated?
     end
   end
   enable :method_override
