@@ -96,9 +96,13 @@ module Prodam
       end
     end
 
-    class Prodam::Idealize::Model
+    module Prodam::Idealize::Model
       def self.[](dataset)
         Sequel::Model(Database[dataset])
+      end
+
+      def to_uri(prefix = '')
+        "#{prefix}/#{self[:id]}"
       end
     end
 
