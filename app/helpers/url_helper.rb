@@ -7,12 +7,15 @@ module Prodam::Idealize::UrlHelper
     @context_path ||= check_for_context
   end
 
-  def path_to(path)
+  def path_to(path, *args)
+    subpath = args.join('/') if args.size > 0
     if path.is_a? Symbol
       controller = '/' + (path.to_s.match(/^(home|root)/i) ? '' : path).to_s
     else
-      controller = path
+      controller = path.to_s
     end
+    controller = "#{controller}/#{subpath}" if subpath
+    controller = controller.squeeze '/'
     "#{context_path}#{controller}"
   end
 
