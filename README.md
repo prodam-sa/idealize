@@ -6,12 +6,13 @@
 - Ideias e Propostas
 
 - Usuário
-  - Nome
-  - Data de Nascimento
+  - Nome de usuário
+  - Nome (Pessoa)
   - Email
-  - Senha
+  - Senha (criptografada)
+  - Data de criação
 
 - Ideias
+  - Autor (Co-autores)
   - Oportunidade/Desafio
   - Proposta/Solução
-  - 
