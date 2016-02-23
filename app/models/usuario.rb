@@ -23,11 +23,9 @@ class Prodam::Idealize::Usuario < Prodam::Idealize::Model[:usuario]
 
   def save(options = {})
     before_save
-    if new?
-      self.class.no_primary_key
-      self[:senha_encriptada] = encript(options[:senha], self[:senha_salt])
-    end
-    super
+    self.class.no_primary_key if new?
+    self[:senha_encriptada] = encript(options[:senha], self[:senha_salt])
+    super(options)
     self.class.set_primary_key :id
     self
   end

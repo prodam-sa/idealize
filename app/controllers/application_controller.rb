@@ -5,7 +5,7 @@ require 'sinatra/base'
 class Prodam::Idealize::ApplicationController < Sinatra::Base
   set :public_folder, 'public'
   set :views, 'app/views'
-  set :auth do |*any|
+  set :authenticate do |*any|
     condition do
       redirect to('/'), 303 unless authenticated?
     end
@@ -19,6 +19,5 @@ class Prodam::Idealize::ApplicationController < Sinatra::Base
 
   before do
     @page = { title: 'Caixa de Ideias' }
-    message ||= { level: :info, text: nil, url: nil }
   end
 end
