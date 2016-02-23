@@ -2,11 +2,16 @@
 :routes:
   '/':
     :title: Home
-    :controller: AcessoController
-    :navigation: true
+    :controller: HomeController
+    :navigation: navbar
     :icon: home
-  '/ideais':
+  '/conta':
+    :title: Conta
+    :controller: AcessoController
+    :navigation: topmenu
+    :icon: account_box
+  '/ideias':
     :title: Ideias
     :controller: IdeiasController
-    :navigation: true
+    :navigation: navbar
     :icon: wb_incandescent

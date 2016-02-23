@@ -7,12 +7,12 @@ class Prodam::Idealize::ApplicationController < Sinatra::Base
   set :views, 'app/views'
   set :authenticate do |required|
     condition do
-      redirect to('/'), 303 if required && !authenticated?
+      redirect path_to(:conta, :acessar), 303 if required && !authenticated?
     end
   end
   set :authorize do |required|
     condition do
-      redirect to('/'), 303 if required && !authorized?
+      redirect path_to(:conta, :acessar), 303 if required && !authorized?
     end
   end
   enable :method_override

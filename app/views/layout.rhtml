@@ -40,7 +40,7 @@
           <a href="<%=path_to :conta%>" class="mdl-button mdl-js-button mdl-button--icon">
             <i class="material-icons">account_box</i>
           </a>
-          <a href="<%=path_to :sair%>" class="mdl-button mdl-js-button mdl-button--icon">
+          <a href="<%=path_to :conta, :sair%>" class="mdl-button mdl-js-button mdl-button--icon">
             <i class="material-icons">power_settings_new</i>
           </a>
           <!--div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label mdl-textfield--align-right">
@@ -63,7 +63,7 @@
         </span>
         <a href="<%=path_to :home%>"><img src="<%=path_to '/img/brand-colored.svg'%>" class="prd-drawer__brand"/></a>
         <nav class="mdl-navigation prd-navigation">
-        <%controllers.select { |id, controller| controller[:navigation] }.each do |id, controller|%>
+        <%controllers.select { |id, controller| controller[:navigation] == 'navbar' }.each do |id, controller|%>
           <a class="mdl-navigation__link prd-navigation__link" href="<%=path_to controller[:url_path]%>">
             <i class="material-icons" role="presentation"><%=controller[:icon]%></i>
             <%=controller[:title]%>
