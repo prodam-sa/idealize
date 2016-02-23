@@ -10,6 +10,11 @@ class Prodam::Idealize::ApplicationController < Sinatra::Base
       redirect to('/'), 303 if required && !authenticated?
     end
   end
+  set :authorize do |required|
+    condition do
+      redirect to('/'), 303 if required && !authorized?
+    end
+  end
   enable :method_override
   enable :sessions
 

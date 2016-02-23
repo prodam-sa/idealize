@@ -12,7 +12,7 @@ module Prodam::Idealize::AuthenticationHelper
   end
 
   def authorized?
-    authenticated? && session[:user][:ad] == 'S'
+    authenticated? && session[:user_admin] == 'S'
   end
 
   def authenticate(user_id, user_admin = 'N')
