@@ -3,6 +3,8 @@
 require 'digest'
 
 class Prodam::Idealize::Usuario < Prodam::Idealize::Model[:usuario]
+  include Prodam::Idealize::Model
+
   plugin :validation_helpers
   set_allowed_columns :nome_usuario, :nome, :email, :ad
 
@@ -19,6 +21,7 @@ class Prodam::Idealize::Usuario < Prodam::Idealize::Model[:usuario]
 
   def after_save
     self[:id] = self.class.select(:id).where(nome_usuario: self[:nome_usuario]).first[:id]
+    self
   end
 
   def save(options = {})
@@ -41,6 +44,10 @@ class Prodam::Idealize::Usuario < Prodam::Idealize::Model[:usuario]
   def self.authenticate(options)
     usuario = find nome_usuario: options[:nome_usuario]
     usuario && usuario.authenticate?(options[:senha]) && usuario
+  end
+
+  def to_url_param
+    "#{super}-#{nome_usuario}"
   end
 
 private
