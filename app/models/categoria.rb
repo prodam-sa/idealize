@@ -8,6 +8,7 @@ class Prodam::Idealize::Categoria < Prodam::Idealize::Model[:categoria]
   def validate
     super
     validates_presence :titulo, message: 'não foi atribuído.'
+    validates_presence :descricao, message: 'deve ser preenchido.'
     validates_unique :titulo, message: 'já registrado.'
   end
 
