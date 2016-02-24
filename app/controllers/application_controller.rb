@@ -7,14 +7,23 @@ class Prodam::Idealize::ApplicationController < Sinatra::Base
   set :views, 'app/views'
   set :authenticate do |required|
     condition do
-      redirect path_to(:conta, :acessar), 303 if required && !authenticated?
+      if required && !authenticated?
+        message.update level: :warning, text: "Você precisa estar autenticado."
+        redirect path_to(:conta, :acessar), 303
+      end
     end
   end
-  set :authorize do |required|
+  set :authorize do |action|
     condition do
-      redirect path_to(:conta, :acessar), 303 if required && !authorized?
+      unless authorized?
+        message.update level: :warning, text: "Você não possui permissão para #{action}."
+        redirect path_to(:home), 303
+      else
+        pass
+      end
     end
   end
+
   enable :method_override
   enable :sessions
 

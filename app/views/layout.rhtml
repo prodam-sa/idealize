@@ -37,12 +37,18 @@
             <%=@page[:title]%>
           </span>
           <div class="mdl-layout-spacer"></div>
-          <a href="<%=path_to :conta%>" class="mdl-button mdl-js-button mdl-button--icon">
-            <i class="material-icons">account_box</i>
-          </a>
-          <a href="<%=path_to :conta, :sair%>" class="mdl-button mdl-js-button mdl-button--icon">
-            <i class="material-icons">power_settings_new</i>
-          </a>
+          <%if authenticated?%>
+            <a href="<%=path_to :conta%>" class="mdl-button mdl-js-button mdl-button--icon">
+              <i class="material-icons">account_box</i>
+            </a>
+            <a href="<%=path_to :conta, :sair%>" class="mdl-button mdl-js-button mdl-button--icon">
+              <i class="material-icons">power_settings_new</i>
+            </a>
+          <%else%>
+            <a href="<%=path_to :conta, :acessar%>" class="mdl-button mdl-js-button mdl-button--icon">
+              <i class="material-icons">perm_identity</i>
+            </a>
+          <%end%>
           <!--div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label mdl-textfield--align-right">
             <label class="mdl-button mdl-js-button mdl-button--icon" for="fixed-header-drawer-exp">
               <i class="material-icons">search</i>

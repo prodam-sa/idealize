@@ -2,9 +2,9 @@
 
 module Prodam::Idealize::AuthenticationHelper
   def protected!
-    return if authenticated?
-    headers['WWW-Authenticate'] = 'Basic realm="Somente administradores"'
-    halt 401, "Você não possui autorização\n"
+    if authenticated? and !authorized?
+      return
+    end
   end
 
   def authenticated?
@@ -12,10 +12,10 @@ module Prodam::Idealize::AuthenticationHelper
   end
 
   def authorized?
-    authenticated? && session[:user_admin] == 'S'
+    authenticated? && session[:user_admin]
   end
 
-  def authenticate(user_id, user_admin = 'N')
+  def authenticate(user_id, user_admin = false)
     session[:user_id] = user_id
     session[:user_admin] = user_admin
   end

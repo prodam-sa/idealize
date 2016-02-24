@@ -1,20 +1,22 @@
 # encoding: utf-8
 
 class Prodam::Idealize::AcessoController < Prodam::Idealize::ApplicationController
+  before '/:id/?:action?' do |id, action|
+    @usuario = Prodam::Idealize::Usuario[id.to_i]
+  end
+
   get '/', authenticate: true do
     @usuario ||= Prodam::Idealize::Usuario[session[:user_id]]
     view 'acesso/forms/usuario'
   end
 
   put '/:id', authenticate: true do |id|
-    @usuario = Prodam::Idealize::Usuario[id]
     @usuario.update(params[:usuario])
     message.update(level: :information, text: 'Dados da conta foram atualizados.')
     redirect to('/'), 200
   end
 
   put '/:id/senha', authenticate: true do |id|
-    @usuario = Prodam::Idealize::Usuario[id]
     if @usuario.save(params[:usuario])
       message.update(level: :information, text: 'Senha atualizada.')
     end
@@ -31,7 +33,7 @@ class Prodam::Idealize::AcessoController < Prodam::Idealize::ApplicationControll
       redirect to('/'), 303
     else
       message.update level: :error, text: 'Usuário não encontrado ou senha inválida'
-      redirect to('/'), 303
+      redirect to('/acessar'), 303
     end
   end
 
