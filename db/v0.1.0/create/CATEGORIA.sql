@@ -15,8 +15,8 @@ create table categoria (
             constraint categoria_descricao_nn not null
 , icone varchar2(32)
         default 'folder_special'
-, data_criada date
-              default sysdate
+, data_criacao date
+               default sysdate
 ) tablespace &data;
 
 create or replace trigger categoria_insert
@@ -32,4 +32,3 @@ comment on table  categoria              is 'Categoria das ideias.';
 comment on column categoria.titulo       is 'Título da categoria.';
 comment on column categoria.descricao    is 'Descrição da categoria.';
 comment on column categoria.icone        is 'Ícone para representação da categoria.';
-comment on column categoria.data_criacao is 'Data de criação da categoria.';
