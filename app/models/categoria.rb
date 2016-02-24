@@ -5,6 +5,8 @@ class Prodam::Idealize::Categoria < Prodam::Idealize::Model[:categoria]
 
   plugin :validation_helpers
 
+  many_to_many :ideias, join_table: :ideia_categoria
+
   def validate
     super
     validates_presence :titulo, message: 'não foi atribuído.'
