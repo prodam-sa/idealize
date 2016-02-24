@@ -45,6 +45,7 @@ db.drop.version:
 
 db.bootstrap:
 	sh db/sqlrun.sh db/bootstrap.sql
+	ruby -Ilib:app db/bootstrap.rb
 
 check:
 	ruby test/all.rb
