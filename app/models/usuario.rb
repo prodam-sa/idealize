@@ -46,8 +46,8 @@ class Prodam::Idealize::Usuario < Prodam::Idealize::Model[:usuario]
     usuario && usuario.authenticate?(options[:senha]) && usuario
   end
 
-  def to_url_param
-    "#{super}-#{nome_usuario}"
+  def param_name
+    "#{id}-#{nome_usuario.downcase}"
   end
 
 private

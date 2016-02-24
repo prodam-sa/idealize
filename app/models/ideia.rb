@@ -28,8 +28,8 @@ class Prodam::Idealize::Ideia < Prodam::Idealize::Model[:ideia]
     self
   end
 
-  def to_url_param
-    "#{super}-#{titulo.downcase.tr(' ', '-')}"
+  def param_name
+    "#{id}-#{titulo.downcase.tr(' ', '-')}"
   end
 
   class << self

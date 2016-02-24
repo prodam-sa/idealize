@@ -101,8 +101,12 @@ module Prodam
         Sequel::Model(Database[dataset])
       end
 
+      def param_name
+        id
+      end
+
       def to_url_param(prefix = nil)
-        [prefix, id].compact.join('/')
+        [prefix, param_name].compact.join('/')
       end
     end
 
