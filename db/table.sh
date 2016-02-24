@@ -64,8 +64,10 @@ define data = &2
 create sequence s_${table_alias} minvalue 1 start with 1 increment by 1;
 
 create table ${table_alias} (
-  id_${table_alias} number(15,0)
-    constraint ${table_alias}_pk primary key using index tablespace &indx
+  id number(15,0)
+     constraint ${table_alias}_pk primary key using index tablespace &indx
+--, %referencia%_id number(15,0)
+--                constraint ${table_alias}_fk references %referencia%(id)
 ) tablespace &data;
 
 create or replace trigger ${table_alias}_insert
