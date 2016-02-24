@@ -25,10 +25,10 @@ insert into categoria
   select s_categoria.nextval
        , v_categoria.*
     from (
-      select 'Nenhum'    as nome from dual union
-      select 'Educação'  as nome from dual union
-      select 'Negócio'   as nome from dual union
-      select 'Segurança' as nome from dual union
-      select 'Trânsito'  as nome from dual
+      select 'Nenhum'    as titulo, 'folder_special' as icone from dual union
+      select 'Educação'  as titulo, 'local_library'  as icone from dual union
+      select 'Negócio'   as titulo, 'business'       as icone from dual union
+      select 'Segurança' as titulo, 'security'       as icone from dual union
+      select 'Trânsito'  as titulo, 'directions_car' as icone from dual
     ) v_categoria
 ;

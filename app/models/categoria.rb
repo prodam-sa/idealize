@@ -1,11 +1,17 @@
 # encoding: utf-8
 
 class Prodam::Idealize::Categoria < Prodam::Idealize::Model[:categoria]
+  include Prodam::Idealize::Model
+
   plugin :validation_helpers
 
   def validate
     super
-    validates_presence :nome, message: 'não foi atribuído.'
-    validates_unique :nome, message: 'já registrado.'
+    validates_presence :titulo, message: 'não foi atribuído.'
+    validates_unique :titulo, message: 'já registrado.'
+  end
+
+  def param_name
+    "#{id}-#{titulo.downcase.tr(' ', '-')}"
   end
 end
