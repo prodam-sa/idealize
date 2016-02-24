@@ -16,18 +16,6 @@ class Prodam::Idealize::Ideia < Prodam::Idealize::Model[:ideia]
     validates_presence :texto_solucao, message: 'deve conter algum conteúdo.'
   end
 
-  def save
-    self.class.no_primary_key if new?
-    super
-    self.class.set_primary_key :id
-    self
-  end
-
-  def after_save
-    self[:id] = self.class.select(:id).where(titulo: self[:titulo]).first[:id] if new?
-    self
-  end
-
   def param_name
     "#{id}-#{titulo.downcase.tr(' ', '-')}"
   end

@@ -19,18 +19,12 @@ class Prodam::Idealize::Usuario < Prodam::Idealize::Model[:usuario]
     self[:senha_salt] = encript(self[:nome].downcase.tr(' ', ''), self[:email])
   end
 
-  def after_save
-    self[:id] = self.class.select(:id).where(nome_usuario: self[:nome_usuario]).first[:id]
-    self
-  end
+  alias original_save save
 
   def save(options = {})
     before_save
-    self.class.no_primary_key if new?
     self[:senha_encriptada] = encript(options[:senha], self[:senha_salt])
-    super(options)
-    self.class.set_primary_key :id
-    self
+    original_save
   end
 
   def authenticate?(password)

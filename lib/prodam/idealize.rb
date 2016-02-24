@@ -101,6 +101,22 @@ module Prodam
         Sequel::Model(Database[dataset])
       end
 
+      def save
+        self.class.no_primary_key if new?
+        super
+        self.class.set_primary_key :id
+        self
+      end
+
+      def sql_sequence_currval
+        sql "SELECT s_#{table_name}.currval as ID FROM DUAL"
+      end
+
+      def after_save
+        self[:id] = Prodam::Idealize::Database[sql_sequence_currval].first[:id].to_i if new?
+        self
+      end
+
       def param_name
         id
       end
