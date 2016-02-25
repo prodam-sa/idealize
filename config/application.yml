@@ -3,15 +3,15 @@
   '/':
     :title: Home
     :controller: HomeController
-    :navigation: navbar
+    :navigation: sidebar
     :icon: home
   '/conta':
     :title: Conta
     :controller: AcessoController
-    :navigation: topmenu
+    :navigation: toolbar
     :icon: account_box
   '/ideias':
     :title: Ideias
     :controller: IdeiasController
-    :navigation: navbar
+    :navigation: sidebar
     :icon: wb_incandescent

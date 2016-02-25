@@ -69,7 +69,7 @@
         </span>
         <a href="<%=path_to :home%>"><img src="<%=path_to '/img/brand-colored.svg'%>" class="prd-drawer__brand"/></a>
         <nav class="mdl-navigation prd-navigation">
-        <%controllers.select { |id, controller| controller[:navigation] == 'navbar' }.each do |id, controller|%>
+        <%controllers.select { |id, controller| controller[:navigation] == 'sidebar' }.each do |id, controller|%>
           <a class="mdl-navigation__link prd-navigation__link" href="<%=path_to controller[:url_path]%>">
             <i class="material-icons" role="presentation"><%=controller[:icon]%></i>
             <%=controller[:title]%>
