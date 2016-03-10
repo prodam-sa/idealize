@@ -15,14 +15,16 @@ class Prodam::Idealize::AcessoController < Prodam::Idealize::ApplicationControll
   put '/:id', authenticate: true do |id|
     @usuario.update(params[:usuario])
     message.update(level: :information, text: 'Dados da conta foram atualizados.')
-    redirect to('/'), 200
+    redirect path_to(:conta), 303
   end
 
   put '/:id/senha', authenticate: true do |id|
     if @usuario.save(params[:usuario])
-      message.update(level: :information, text: 'Senha atualizada.')
+      message.update(level: :success, text: 'Senha atualizada.')
+    else
+      message.update(level: :error, text: 'A senha informada não foi confirmada corretamente.')
     end
-    redirect path_to('/conta'), 303
+    redirect path_to(:conta), 303
   end
 
   get '/acessar' do
