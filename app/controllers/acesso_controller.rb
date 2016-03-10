@@ -1,6 +1,8 @@
 # encoding: utf-8
 
 class Prodam::Idealize::AcessoController < Prodam::Idealize::ApplicationController
+  helpers Prodam::Idealize::GravatarHelper
+
   before '/:id/?:action?' do |id, action|
     @usuario = Prodam::Idealize::Usuario[id.to_i]
   end
