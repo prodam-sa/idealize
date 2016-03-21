@@ -1,8 +1,22 @@
 # encoding: utf-8
 
 require 'sinatra/base'
+require 'sinatra/content_for'
+require 'sinatra/reloader'
 
 class Prodam::Idealize::ApplicationController < Sinatra::Base
+  configure :development do
+    register Sinatra::Reloader
+    dont_reload 'lib/prodam/ideialize/version'
+  end
+
+  helpers Sinatra::ContentFor
+
+  helpers Prodam::Idealize::AuthenticationHelper
+  helpers Prodam::Idealize::ViewHelper
+  helpers Prodam::Idealize::UrlHelper
+  helpers Prodam::Idealize::GravatarHelper
+
   set :public_folder, 'public'
   set :views, 'app/views'
   set :authenticate do |required|
@@ -27,11 +41,7 @@ class Prodam::Idealize::ApplicationController < Sinatra::Base
   enable :method_override
   enable :sessions
 
-  helpers Prodam::Idealize::AuthenticationHelper
-  helpers Prodam::Idealize::ViewHelper
-  helpers Prodam::Idealize::UrlHelper
-
   before do
-    @page = { title: 'Caixa de Ideias' }
+    @page = {}
   end
 end
