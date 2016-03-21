@@ -76,6 +76,12 @@ module Prodam
     end
 
     class Prodam::Idealize::Database
+      # Sequel::Inflections.clear
+
+      Sequel.inflections do |inflect|
+        inflect.irregular 'coautor', 'coautores'
+      end
+
       class << self
         attr_reader :uri
         attr_reader :options

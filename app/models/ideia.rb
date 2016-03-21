@@ -5,8 +5,14 @@ class Prodam::Idealize::Ideia < Prodam::Idealize::Model[:ideia]
 
   plugin :validation_helpers
 
-  many_to_one :author
-  many_to_many :categorias, join_table: :ideia_categoria
+  many_to_one :autor
+  many_to_many :categorias, {
+    join_table: :ideia_categoria
+  }
+  many_to_many :coautores, {
+    join_table: :ideia_coautor,
+    right_key: :coautor_id
+  }
 
   def validate
     super
