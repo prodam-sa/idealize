@@ -85,7 +85,8 @@
       <a href="<%=path_to :home%>"><img src="<%=path_to '/img/brand-colored.svg'%>" class="prd-drawer__brand"/></a>
       <nav class="mdl-navigation prd-navigation">
       <%controllers.select { |id, controller| controller[:navigation].include? 'drawer' }.each do |id, controller|%>
-        <a class="mdl-navigation__link prd-navigation__link" href="<%=path_to controller[:url_path]%>">
+        <%is_active = 'is-active' if @page[:url_path] == controller[:url_path]%>
+        <a class="mdl-navigation__link prd-navigation__link <%=is_active%>" href="<%=path_to controller[:url_path]%>">
           <i class="material-icons" role="presentation"><%=controller[:icon]%></i>
           <%=controller[:title]%>
         </a>
