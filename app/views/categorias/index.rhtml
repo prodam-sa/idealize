@@ -1,0 +1,8 @@
+<div class="mdl-grid">
+  <div class="mdl-cell mdl-cell--12-col mdl-shadow--2dp">
+    <%=partial 'categorias/list'%>
+  </div>
+</div>
+<%if authorized?%>
+  <%=partial 'categorias/form'%>
+<%end%>

@@ -1,0 +1,45 @@
+<div class="mdl-grid">
+  <div class="mdl-cell mdl-cell--12-col">
+    <div class="mdl-card mdl-card--expandable mdl-shadow--2dp">
+      <div class="prd-background-icon">
+        <i class="material-icons"><%=@categoria.icone%></i>
+      </div>
+      <div class="mdl-card__title">
+        <h2 class="mdl-card__title-text"><%=@categoria.titulo%></h2>
+      </div>
+      <div class="mdl-card__menu">
+        <button id="options-<%=@categoria.id%>" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+          <i class="material-icons">more_vert</i>
+        </button>
+        <div for="options-<%=@categoria.id%>" class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect">
+          <a href="<%=path_to :categorias, @categoria.to_url_param%>" class="mdl-menu__item">
+            Detalhes
+          </a>
+          <%if authorized?%>
+            <a href="<%=path_to :categorias, @categoria.to_url_param, :editar%>" class="mdl-menu__item">
+              Alterar
+            </a>
+          <%end%>
+        </div>
+      </div>
+      <div class="mdl-card__supporting-text mdl-card--expand">
+        <%=@categoria.descricao%>
+      </div>
+      <div class="mdl-card__actions mdl-card--border">
+        <a href="<%=path_to :categorias, @categoria.to_url_param%>" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+          Detalhes
+        </a>
+        <%if authorized?%>
+          <!--a href="<%=path_to :categorias, @categoria.to_url_param, :editar%>" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+            Alterar
+          </a-->
+          <form action="<%=path_to :categorias, @categoria.to_url_param, :excluir%>" method="post" style="display: inline">
+            <button name="_method" value="delete" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+              Excluir
+            </button>
+          </form>
+        <%end%>
+      </div>
+    </div>
+  </div>
+</div>
