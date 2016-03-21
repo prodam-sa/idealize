@@ -81,8 +81,39 @@
   list-style-type: none;
 }
 
+.mdl-card__icon.material-icons {
+  font-size: 16em;
+  color: #bbccaa;
+}
+
 .mdl-card--expandable, .mdl-data-table--expandable, .mdl-button--expand {
   width: 100%;
+}
+
+.prd-background-icon {
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -9;
+}
+
+.prd-background-icon .material-icons {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  min-width: 50%;
+  min-height: 50%;
+  opacity: 0.10;
+  margin: auto;
+  z-index: -9;
+  font-size: 9.50em;
+  display: flex;
+  /* justify-content: center; */
+  color: #789;
 }
 
 .mdl-tabs .mdl-tabs__tab-bar.mdl-tabs__tab-bar--non-centeralized {
