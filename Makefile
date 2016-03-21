@@ -11,14 +11,15 @@ app.libraries:
 	bundle install
 
 app.vendors:
-	git clone --depth 10 https://github.com/google/material-design-lite.git vendors/mdl
+	git clone --depth 10 https://github.com/google/material-design-lite.git vendors/mdl || true
+	git clone --depth 10 https://github.com/GoogleChrome/dialog-polyfill vendors/dialog-polyfill || true
 
 app.console:
 	exec ruby -S pry -Ilib:app -r prodam/idealize
 
 # make app.server environment=production
 app.server:
-	ruby -S puma --environment $(environment) --port 8092
+	ruby -S puma --environment $(environment) --port 8091 --debug --log-requests
 
 # make db.console environment=production
 db.console:
