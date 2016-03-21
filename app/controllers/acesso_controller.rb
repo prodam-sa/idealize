@@ -1,7 +1,9 @@
 # encoding: utf-8
 
 class Prodam::Idealize::AcessoController < Prodam::Idealize::ApplicationController
-  helpers Prodam::Idealize::GravatarHelper
+  before do
+    @page = controllers[:acesso_controller]
+  end
 
   before '/:id/?:action?' do |id, action|
     @usuario = Prodam::Idealize::Usuario[id.to_i]
@@ -33,8 +35,8 @@ class Prodam::Idealize::AcessoController < Prodam::Idealize::ApplicationControll
 
   post '/acessar' do
     if @usuario = Prodam::Idealize::Usuario.authenticate(params[:usuario])
-      authenticate(@usuario.id, @usuario.administrador?)
-      redirect to('/'), 303
+      authenticate(@usuario.id, @usuario.email, @usuario.administrador?)
+      redirect path_to(:home), 303
     else
       message.update level: :error, text: 'Usuário não encontrado ou senha inválida'
       redirect to('/acessar'), 303
