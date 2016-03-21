@@ -60,6 +60,7 @@ module Prodam
           data[:const_name] = data[:controller].to_sym
           controller[id] = data
         end
+        @controllers
       end
 
       def sources_from(*pathnames)
