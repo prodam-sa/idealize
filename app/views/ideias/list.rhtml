@@ -1,0 +1,21 @@
+<ul class="mdl-list">
+<%@ideias.each_with_index do |ideia, i|%>
+  <li class="mdl-list__item mdl-list__item--three-line">
+    <span class="mdl-list__item-primary-content">
+      <a href="<%=path_to :ideias, ideia.to_url_param%>">
+        <i class="material-icons mdl-list__item-avatar">wb_incandescent</i>
+      </a>
+      <span><%=ideia.titulo%></span>
+      <span class="mdl-list__item-text-body">
+        <%=ideia.texto_oportunidade[0..80]%>
+      </span>
+    </span>
+    <span class="mdl-list__item-secondary-content">
+      <a id="editar-<%=i%>" href="<%=path_to :ideias, ideia.to_url_param%>" class="mdl-list__item-secondary-action mdl-button mdl-button--icon mdl-js-button">
+        <i class="material-icons">edit</i>
+      </a>
+      <span for="editar-<%=i%>" class="mdl-tooltip mdl-tooltip--left">Editar <%=ideia.titulo%></span>
+    </span>
+  </li>
+<%end%>
+</ul>
