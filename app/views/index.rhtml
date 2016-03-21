@@ -1,0 +1,7 @@
+<div class="mdl-grid">
+<%@ideias.each_with_index do |ideia, i|%>
+  <div class="mdl-cell mdl-cell--12-col">
+    <%=partial 'ideias/card', locals: { ideia: ideia }%>
+  </div>
+<%end%>
+</div>
