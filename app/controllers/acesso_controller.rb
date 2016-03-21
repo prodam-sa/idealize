@@ -35,7 +35,7 @@ class Prodam::Idealize::AcessoController < Prodam::Idealize::ApplicationControll
 
   post '/acessar' do
     if @usuario = Prodam::Idealize::Usuario.authenticate(params[:usuario])
-      authenticate(@usuario.id, @usuario.email, @usuario.administrador?)
+      authenticate(@usuario.id, @usuario.administrador?)
       redirect path_to(:home), 303
     else
       message.update level: :error, text: 'Usuário não encontrado ou senha inválida'
