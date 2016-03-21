@@ -54,6 +54,10 @@
   margin: 16px 40px;
 }
 
+.prd-layout__drawer .prd-navigation .prd-navigation__link.is-active {
+  background-color: rgba(0, 0, 0, 0.25);
+}
+
 .prd-layout__header {
 }
 
