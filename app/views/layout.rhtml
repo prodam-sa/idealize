@@ -72,10 +72,12 @@
           </a>
         <%end%>
         </nav>
-        <a id="nova-ideia" href="<%=path_to :ideias, :nova%>" class="prd-header__button-add mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--colored">
-          <i class="material-icons">add</i>
-        </a>
-        <span class="mdl-tooltip" for="nova-ideia">Nova ideia!</span>
+        <%if authenticated?%>
+          <a id="nova-ideia" href="<%=path_to :ideias, :nova%>" class="prd-header__button-add mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--colored mdl-shadow--4dp">
+            <i class="material-icons">add</i>
+          </a>
+          <span class="mdl-tooltip" for="nova-ideia">Nova ideia!</span>
+        <%end%>
       </div>
     </header>
     <div class="mdl-layout__drawer prd-layout__drawer">

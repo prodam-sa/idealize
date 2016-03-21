@@ -1,0 +1,20 @@
+<div class="mdl-grid">
+  <div class="mdl-cell mdl-cell--12-col">
+    <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
+      <div class="mdl-tabs__tab-bar mdl-tabs__tab-bar--non-centeralized">
+        <a href="#ideias" class="mdl-tabs__tab is-active">Todas</a>
+        <%if authenticated? %>
+          <a href="#minhas" class="mdl-tabs__tab">Minhas Ideias</a>
+        <%end%>
+      </div>
+      <div id="ideias" class="mdl-tabs__panel is-active">
+        <%=partial 'ideias/list'%>
+      </div>
+      <%if authenticated?%>
+      <div id="minhas" class="mdl-tabs__panel">
+        <%=partial 'ideias/list'%>
+      </div>
+      <%end%>
+    </div>
+  </div>
+</div>
