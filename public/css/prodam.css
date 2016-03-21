@@ -17,6 +17,37 @@
 .prd-layout__drawer .prd-navigation .prd-navigation__link:hover {
 }
 
+.prd-layout__header .prd-layout__header-row {
+  justify-content: center;
+}
+
+.prd-layout__header .prd-navigation {
+  text-align: center;
+}
+
+.prd-layout__header .prd-navigation .prd-navigation__link {
+  display: block;
+  text-transform: uppercase;
+  flex: 1;
+  justify-content: center;
+}
+
+.prd-layout__header .prd-navigation .prd-navigation__link.is-active {
+  position: relative;
+  font-weight: bold;
+}
+
+.prd-layout__header .prd-navigation .prd-navigation__link.is-active:after {
+  content: "";
+  width: 70%;
+  height: 4px;
+  display: block;
+  position: absolute;
+  bottom: 0;
+  left: 15%;
+  background-color: red;;
+}
+
 .prd-layout__drawer .prd-drawer__brand {
   width: 60%;
   max-width: 100%;
@@ -96,4 +127,30 @@ img.prd-brand {
 
 .prd-color--error {
   background-color: #d50000;
+}
+
+.mdl-list__item {
+  border-bottom: 1px solid #ddd;
+}
+
+.mdl-list__item:last-child {
+  border-bottom: none;
+}
+
+.prd-button--float-right {
+  display: flex;
+  justify-content: right;
+}
+
+.prd-searchbox {
+}
+
+.prd-max-width {
+  max-width: 900px;
+  width: 100%;
+  margin: auto;
+}
+
+.prd-header__button-add {
+  position: absolute;
 }

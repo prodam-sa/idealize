@@ -3,15 +3,20 @@
   '/':
     :title: Home
     :controller: HomeController
-    :navigation: sidebar
+    :navigation: [header, drawer]
     :icon: home
-  '/conta':
-    :title: Conta
-    :controller: AcessoController
-    :navigation: toolbar
-    :icon: account_box
+  '/categorias':
+    :title: Categorias
+    :controller: CategoriasController
+    :navigation: [header, drawer]
+    :icon: group_work
   '/ideias':
     :title: Ideias
     :controller: IdeiasController
-    :navigation: sidebar
+    :navigation: [header, drawer]
     :icon: wb_incandescent
+  '/conta':
+    :title: Conta
+    :controller: AcessoController
+    :navigation: [top]
+    :icon: account_box
