@@ -35,7 +35,7 @@ app.console:
 
 # make app.server environment=production
 app.server:
-	ruby -S puma --environment $(environment) --port 8091 --debug --log-requests
+	ruby -S puma --environment $(environment) --port 8091 --debug --log-requests --daemon
 
 # make db.console environment=production
 db.console:
