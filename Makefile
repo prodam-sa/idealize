@@ -3,6 +3,24 @@ version ?= 0.1.0
 database = $(name)
 environment ?= development
 
+vendors  = material-design-lite dialog-polyfill requirejs
+vendors += scribe
+vendors += scribe-plugin-blockquote-command
+vendors += scribe-plugin-code-command
+vendors += scribe-plugin-content-cleaner
+vendors += scribe-plugin-curly-quotes
+vendors += scribe-plugin-formatter-plain-text-convert-new-lines-to-html
+vendors += scribe-plugin-heading-command
+vendors += scribe-plugin-intelligent-unlink-command
+vendors += scribe-plugin-keyboard-shortcuts
+vendors += scribe-plugin-link-prompt-command
+vendors += scribe-plugin-sanitizer
+vendors += scribe-plugin-smart-lists
+vendors += scribe-plugin-toolbar
+
+$(vendors):
+	bower install $(@) --save
+
 all: check
 
 install: app.libraries app.vendors
@@ -10,9 +28,7 @@ install: app.libraries app.vendors
 app.libraries:
 	bundle install
 
-app.vendors:
-	git clone --depth 10 https://github.com/google/material-design-lite.git vendors/mdl || true
-	git clone --depth 10 https://github.com/GoogleChrome/dialog-polyfill vendors/dialog-polyfill || true
+app.vendors: $(vendors)
 
 app.console:
 	exec ruby -S pry -Ilib:app -r prodam/idealize
