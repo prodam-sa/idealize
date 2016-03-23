@@ -34,8 +34,13 @@ app.console:
 	exec ruby -S pry -Ilib:app -r prodam/idealize
 
 # make app.server environment=production
-app.server:
-	ruby -S puma --environment $(environment) --port 8091 --debug --log-requests --daemon
+app.server.start:
+	ruby -S puma --environment $(environment) --port 8091 --pidfile tmp/$(environment).pid --debug --log-requests --daemon
+
+app.server.stop:
+	ruby -S pumactl --pidfile tmp/$(environment).pid stop
+
+app.server.restart: app.server.stop app.server.start
 
 # make db.console environment=production
 db.console:
