@@ -18,6 +18,8 @@ create table ideia (
 , texto_solucao varchar2(4000)
 , data_criacao date
                default sysdate
+, data_publicacao date
+, data_atualizacao date
 ) tablespace &data;
 
 create or replace trigger ideia_insert
@@ -33,3 +35,5 @@ comment on table  ideia                    is 'Ideias para oportunidades e solu�
 comment on column ideia.titulo             is 'Título da ideia.';
 comment on column ideia.texto_oportunidade is 'Texto da oportunidade ou desafio.';
 comment on column ideia.texto_solucao      is 'Texto descritivo da proposta ou solução.';
+comment on column ideia.data_publicacao    is 'Data de publicação da ideia. Enquando o campo estiver nulo, a ideia será um rascunho.';
+comment on column ideia.data_atualizacao   is 'Data de atualização da ideia.';

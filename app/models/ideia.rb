@@ -27,9 +27,13 @@ class Prodam::Idealize::Ideia < Prodam::Idealize::Model[:ideia]
     "#{id}-#{titulo.downcase.tr(' ', '-')}"
   end
 
+  def rascunho?
+    self[:data_publicacao].nil?
+  end
+
   class << self
     def latest(limit = 10)
-      reverse(:data_criacao).limit(limit).all
+      exclude(data_publicacao: nil).reverse(:data_criacao).limit(limit).all
     end
 
     def all_by_autor(autor_id, limit = 10)
