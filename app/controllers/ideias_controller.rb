@@ -10,7 +10,7 @@ class Prodam::Idealize::IdeiasController < Prodam::Idealize::ApplicationControll
   get '/nova', authenticate: true do
     @ideia = Prodam::Idealize::Ideia.new
     @categorias = Prodam::Idealize::Categoria.all
-    'TODO: Formulário de ideia'
+    view 'ideias/form'
   end
 
   post '/' do

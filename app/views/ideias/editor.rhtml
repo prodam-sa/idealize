@@ -1,0 +1,51 @@
+<div id="<%=html_id%>-editor" class="editor mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
+  <div class="mdl-tabs__tab-bar">
+    <a href="#text-panel" class="mdl-tabs__tab is-active">Texto</a>
+    <a href="#html-panel" class="mdl-tabs__tab">HTML</a>
+  </div>
+
+  <div id="text-panel" class="mdl-tabs__panel is-active mdl-grid mdl-grid--no-spacing">
+    <div class="editor__toolbar mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--1-col-phone">
+      <button type="button" class="mdl-button mdl-button--icon" id="edit-h2"                  data-command-name="h2"><i class="material-icons">title</i></button>
+      <button type="button" class="mdl-button mdl-button--icon" id="edit-bold"                data-command-name="bold"><i class="material-icons">format_bold</i></button>
+      <button type="button" class="mdl-button mdl-button--icon" id="edit-italic"              data-command-name="italic"><i class="material-icons">format_italic</i></button>
+      <button type="button" class="mdl-button mdl-button--icon" id="edit-underline"           data-command-name="underline"><i class="material-icons">format_underline</i></button>
+      <button type="button" class="mdl-button mdl-button--icon" id="edit-strikethrough"       data-command-name="strikeThrough"><i class="material-icons">format_strikethrough</i></button>
+      <button type="button" class="mdl-button mdl-button--icon" id="edit-removeformat"        data-command-name="removeFormat"><i class="material-icons"> format_clear</i></button>
+      <button type="button" class="mdl-button mdl-button--icon" id="edit-linkprompt"          data-command-name="linkPrompt"><i class="material-icons"> insert_link</i></button>
+      <button type="button" class="mdl-button mdl-button--icon" id="edit-unlink"              data-command-name="unlink"><i class="material-icons"> format_clear format_unlink</i></button>
+      <button type="button" class="mdl-button mdl-button--icon" id="edit-insertorderedlist"   data-command-name="insertOrderedList"><i class="material-icons">format_list_numbered</i></button>
+      <button type="button" class="mdl-button mdl-button--icon" id="edit-insertunorderedlist" data-command-name="insertUnorderedList"><i class="material-icons">format_list_bulleted</i></button>
+      <button type="button" class="mdl-button mdl-button--icon" id="edit-indent"              data-command-name="indent"><i class="material-icons">format_indent_increase</i></button>
+      <button type="button" class="mdl-button mdl-button--icon" id="edit-outdent"             data-command-name="outdent"><i class="material-icons">format_indent_decrease</i></button>
+      <button type="button" class="mdl-button mdl-button--icon" id="edit-blockquote"          data-command-name="blockquote"><i class="material-icons">format_quote</i></button>
+      <button type="button" class="mdl-button mdl-button--icon" id="edit-code"                data-command-name="code"><i class="material-icons">code</i></button>
+      <button type="button" class="mdl-button mdl-button--icon" id="edit-undo"                data-command-name="undo"><i class="material-icons">undo</i></button>
+      <button type="button" class="mdl-button mdl-button--icon" id="edit-redo"                data-command-name="redo"><i class="material-icons">redo</i></button>
+      <button type="button" class="mdl-button mdl-button--icon" id="edit-cleanup"             data-command-name="cleanup"><i class="material-icons">clear</i></button>
+  
+      <span class="mdl-tooltip mdl-tooltip--top" for="edit-h2">Título (CTRL+2)</span>
+      <span class="mdl-tooltip mdl-tooltip--top" for="edit-bold">Negrito (CTRL+B)</span>
+      <span class="mdl-tooltip mdl-tooltip--top" for="edit-italic">Itálico (CTRL+I)</span>
+      <span class="mdl-tooltip mdl-tooltip--top" for="edit-underline">Sublinha (CTRL+U)</span>
+      <span class="mdl-tooltip mdl-tooltip--top" for="edit-strikethrough">Riscado (ALT+SHIFT+S)</span>
+      <span class="mdl-tooltip mdl-tooltip--top" for="edit-removeformat">Sem formato (ALT+SHIFT+L)</span>
+      <span class="mdl-tooltip mdl-tooltip--top" for="edit-linkprompt">Inserir link (CTRL+K)</span>
+      <span class="mdl-tooltip mdl-tooltip--top" for="edit-unlink">Remover link (CTRL+SHIFT+K)</span>
+      <span class="mdl-tooltip mdl-tooltip--top" for="edit-insertorderedlist">Lista ordenada (ALT+SHIFT+N)</span>
+      <span class="mdl-tooltip mdl-tooltip--top" for="edit-insertunorderedlist">Lista desordenada (ALT+SHIFT+B)</span>
+      <span class="mdl-tooltip mdl-tooltip--top" for="edit-indent">Indentar</span>
+      <span class="mdl-tooltip mdl-tooltip--top" for="edit-outdent">Desindentar</span>
+      <span class="mdl-tooltip mdl-tooltip--top" for="edit-blockquote">Citação (ALT+SHIFT+Q)</span>
+      <span class="mdl-tooltip mdl-tooltip--top" for="edit-code">Código</span>
+      <span class="mdl-tooltip mdl-tooltip--top" for="edit-undo">Desfazer (CTRL+Z)</span>
+      <span class="mdl-tooltip mdl-tooltip--top" for="edit-redo">Refazer (CTRL+SHIFT+Z)</span>
+      <span class="mdl-tooltip mdl-tooltip--top" for="edit-cleanup">Limpar tudo (remoção de espaços)</span>
+    </div>
+    <div class="editor__area mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell-11-phone"></div>
+  </div>
+
+  <div id="html-panel" class="mdl-tabs__panel mdl-textfield mdl-js-textfield">
+    <textarea type="text" id="<%=html_id%>" name="<%=html_name%>" class="editor__code"></textarea>
+  </div>
+</div>
