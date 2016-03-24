@@ -108,9 +108,9 @@ module Prodam
         Sequel::Model(Database[dataset])
       end
 
-      def save
+      def save(opts = Sequel::Model::OPTS)
         self.class.no_primary_key if new?
-        super
+        super(opts)
         self.class.set_primary_key :id
         self
       end
