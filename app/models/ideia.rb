@@ -31,6 +31,15 @@ class Prodam::Idealize::Ideia < Prodam::Idealize::Model[:ideia]
     self[:data_publicacao].nil?
   end
 
+  def publicar!
+    self[:data_publicacao] = Time.now
+    save
+  end
+
+  def before_save
+    self[:data_atualizacao] = Time.now
+  end
+
   class << self
     def latest(limit = 10)
       exclude(data_publicacao: nil).reverse(:data_criacao).limit(limit).all
