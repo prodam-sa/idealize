@@ -195,3 +195,8 @@ img.prd-brand {
 .prd-header__button-add {
   position: absolute;
 }
+
+.prd-big-icon.material-icons {
+  font-size: 8rem;
+  color: rgba(0, 0, 0, 0.50);
+}
