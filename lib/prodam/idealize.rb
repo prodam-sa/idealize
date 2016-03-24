@@ -109,23 +109,20 @@ module Prodam
       end
 
       def save(opts = Sequel::Model::OPTS)
-        self.class.no_primary_key if new?
+        must_get_id = new?
+        self.class.no_primary_key if must_get_id
         super(opts)
         self.class.set_primary_key :id
+        self[:id] = Prodam::Idealize::Database[sql_sequence_currval].first[:id].to_i if must_get_id
         self
       end
 
       def sql_sequence_currval
-        sql "SELECT s_#{table_name}.currval as ID FROM DUAL"
-      end
-
-      def after_save
-        self[:id] = Prodam::Idealize::Database[sql_sequence_currval].first[:id].to_i if new?
-        self
+        "SELECT s_#{self.class.table_name}.currval as ID FROM DUAL"
       end
 
       def param_name
-        id
+        id || ''
       end
 
       def to_url_param(prefix = nil)
