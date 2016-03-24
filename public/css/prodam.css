@@ -51,7 +51,7 @@ button:hover, button:active, button:focus {
   position: absolute;
   bottom: 0;
   left: 15%;
-  background-color: red;;
+  background-color: #00897b;
 }
 
 .prd-layout__drawer .prd-drawer__brand {
@@ -194,6 +194,22 @@ img.prd-brand {
 
 .prd-header__button-add {
   position: absolute;
+}
+
+.prd-footer__button-add {
+  position: fixed;
+  display: block;
+  right: 0;
+  bottom: 0;
+  margin-right: 40px;
+  margin-bottom: 40px;
+  z-index: 900;
+}
+
+.prd-layout--centered {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .prd-big-icon.material-icons {

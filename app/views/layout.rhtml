@@ -21,19 +21,20 @@
   <link rel="shortcut icon" href="<%=path_to '/img/favicon.png'%>"/>
 
   <!-- Page styles -->
-  <script src="<%=path_to '/src/dialog-polyfill/dialog-polyfill.js'%>"></script>
-  <script src="<%=path_to '/src/material-design-lite/material.min.js'%>"></script>
   <link rel="stylesheet" href="<%=path_to '/src/dialog-polyfill/dialog-polyfill.css'%>"/>
   <link rel="stylesheet" href="<%=path_to '/src/material-design-lite/material.min.css'%>"/>
+  <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.teal-indigo.min.css"/>
   <link rel="stylesheet" href="<%=path_to '/css/prodam.css'%>"/>
   <%=yield_content :stylesheet%>
+  <script src="<%=path_to '/src/dialog-polyfill/dialog-polyfill.js'%>"></script>
+  <script src="<%=path_to '/src/material-design-lite/material.min.js'%>"></script>
 
   <!-- Fonts -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"/>
 </head>
 <body>
   <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--no-desktop-drawer-button">
-    <header class="mdl-layout__header prd-layout__header">
+    <header class="prd-layout__header mdl-layout__header">
       <div class="mdl-layout__header-row">
         <span class="mdl-layout-title prd-layout-title">
           <i class="material-icons"><%=@page[:icon]%></i>
@@ -62,7 +63,7 @@
         <%end%>
       </div><!--/.mdl-layout__header-row-->
 
-      <div class="prd-layout__header-row mdl-layout__header-row mdl-layout--large-screen-only">
+      <div class="prd-layout__header-row mdl-layout__header-row mdl-color--teal-400 mdl-layout--large-screen-only">
         <nav class="prd-navigation prd-max-width mdl-navigation">
         <%controllers.select { |id, controller| controller[:navigation].include? 'header' }.each do |id, controller|%>
           <%is_active = 'is-active' if @page[:url_path] == controller[:url_path]%>
@@ -104,6 +105,12 @@
       <div class="prd-max-width">
         <%=yield%>
       </div>
+      <%if authenticated?%>
+        <a id="nova-ideia" href="<%=path_to :ideias, :nova%>" class="prd-footer__button-add mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--colored mdl-layout--small-screen-only mdl-shadow--4dp">
+          <i class="material-icons">add</i>
+        </a>
+        <span class="mdl-tooltip mdl-tooltip--top" for="nova-ideia">Nova ideia!</span>
+      <%end%>
     </main>
   </div>
   <%unless authenticated?%>
