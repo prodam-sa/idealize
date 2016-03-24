@@ -21,6 +21,9 @@
       </div>
     <%end%>
     <div class="mdl-card__supporting-text mdl-card--expand">
+      <%if ideia.autor%>
+        <p>Por <%=ideia.autor.nome%><%=! ideia.rascunho? ? ', publicada em '+ideia.data_publicacao.strftime('%d/%m/%Y') : ''%></p>
+      <%end%>
       <%=ideia.texto_oportunidade%>
     </div>
     <div class="mdl-card__actions mdl-card--border">
