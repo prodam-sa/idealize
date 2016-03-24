@@ -1,7 +1,13 @@
 <div class="mdl-grid">
-<%@ideias.each_with_index do |ideia, i|%>
   <div class="mdl-cell mdl-cell--12-col">
-    <%=partial 'ideias/card', locals: { ideia: ideia }%>
+  <%unless @ideias.empty? %>
+    <%=partial 'ideias/gallery', locals: { ideias: @ideias }%>
+  <%else%>
+    <div class="prd-layout--centered mdl-card mdl-card--expandable mdl-shadow--2dp">
+      <p class="mdl-typography--headline mdl-typography--text-center">
+        Nenhuma ideia foi publicada, ainda.
+      </p>
+    </div>
+  <%end%>
   </div>
-<%end%>
 </div>

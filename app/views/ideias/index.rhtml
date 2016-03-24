@@ -8,11 +8,28 @@
         <%end%>
       </div>
       <div id="todas-ideias" class="mdl-tabs__panel is-active">
-        <%=partial 'ideias/gallery', locals: { ideias: @ideias[:latest] } %>
+      <%unless @ideias[:latest].empty? %>
+        <%=partial 'ideias/gallery', locals: { ideias: @ideias[:latest] }%>
+      <%else%>
+        <div class="prd-layout--centered mdl-card mdl-card--expandable mdl-shadow--2dp">
+          <p class="mdl-typography--headline mdl-typography--text-center">
+            Nenhuma ideia foi publicada, ainda.
+          </p>
+        </div>
+      <%end%>
       </div>
       <%if authenticated?%>
       <div id="minhas-ideias" class="mdl-tabs__panel">
-        <%=partial 'ideias/gallery', locals: { ideias: @ideias[:all_by_autor] } %>
+      <%unless @ideias[:all_by_autor].empty? %>
+        <%=partial 'ideias/gallery', locals: { ideias: @ideias[:all_by_autor] }%>
+      <%else%>
+        <div class="prd-layout--centered mdl-card mdl-card--expandable mdl-shadow--2dp">
+          <p class="mdl-typography--headline mdl-typography--text-center">
+            Você ainda não publicou nenhuma ideia.<br/>
+            Se tiver alguma, então <a href="<%=path_to :ideias, :nova%>" class="">compartilhe conosco</a>.
+          </p>
+        </div>
+      <%end%>
       </div>
       <%end%>
     </div>
