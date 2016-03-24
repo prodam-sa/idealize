@@ -142,7 +142,13 @@ function(
       }
     }));
 
-    scribe.setContent('<p>' + defaulMessage + '</p>');
+    if (editorCode.value) {
+      defaulMessage = editorCode.value;
+    } else {
+      defaulMessage = '<p>' + defaulMessage + '</p>'
+    }
+
+    scribe.setContent(defaulMessage);
   }
   return editor;
 });
