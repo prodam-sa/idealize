@@ -1,18 +1,18 @@
 <div class="mdl-grid">
   <div class="mdl-cell mdl-cell--12-col">
     <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
-      <div class="mdl-tabs__tab-bar mdl-tabs__tab-bar--non-centeralized">
-        <a href="#ideias" class="mdl-tabs__tab is-active">Todas</a>
+      <div class="mdl-tabs__tab-bar mdl-tabs__tab-bar--non-centered">
+        <a href="#todas-ideias" class="mdl-tabs__tab is-active">Todas</a>
         <%if authenticated? %>
-          <a href="#minhas" class="mdl-tabs__tab">Minhas Ideias</a>
+          <a href="#minhas-ideias" class="mdl-tabs__tab"><span class="mdl-badge" data-badge="<%=@ideias[:all_by_autor].size%>">Minhas Ideias</span></a>
         <%end%>
       </div>
-      <div id="ideias" class="mdl-tabs__panel is-active">
-        <%=partial 'ideias/list'%>
+      <div id="todas-ideias" class="mdl-tabs__panel is-active">
+        <%=partial 'ideias/gallery', locals: { ideias: @ideias[:latest] } %>
       </div>
       <%if authenticated?%>
-      <div id="minhas" class="mdl-tabs__panel">
-        <%=partial 'ideias/list'%>
+      <div id="minhas-ideias" class="mdl-tabs__panel">
+        <%=partial 'ideias/gallery', locals: { ideias: @ideias[:all_by_autor] } %>
       </div>
       <%end%>
     </div>

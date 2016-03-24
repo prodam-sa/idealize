@@ -18,7 +18,13 @@ class Prodam::Idealize::IdeiasController < Prodam::Idealize::ApplicationControll
   end
 
   get '/' do
-    @ideias = Prodam::Idealize::Ideia.latest(5)
+    @ideias = {
+      latest: Prodam::Idealize::Ideia.latest(5),
+      all_by_autor: nil
+    }
+    if session[:user_id] && autor = Prodam::Idealize::Autor[session[:user_id]]
+      @ideias[:all_by_autor] = Prodam::Idealize::Ideia.all_by_autor(autor.id)
+    end
     @ideia = Prodam::Idealize::Ideia.new
     view 'ideias/index'
   end
