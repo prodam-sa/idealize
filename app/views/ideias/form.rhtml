@@ -1,28 +1,30 @@
 <div class="mdl-grid">
   <div class="mdl-cell mdl-cell--12-col">
-    <form action="<%=path_to :ideias%>" method="post" class="mdl-grid mdl-shadow--2dp">
+    <%path = @ideia.id ? path_to(:ideias, @ideia.to_url_param) : path_to(:ideias)%>
+    <form action="<%=path%>" method="post" class="mdl-grid mdl-shadow--2dp">
       <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--12-col">
         <label class="mdl-textfield__label" for="ideia_titulo">Título da sua ideia...</label>
-        <input id="ideia_titulo" name="ideia[:titulo]" class="mdl-textfield__input" type="text"/>
+        <input id="ideia_titulo" name="ideia[titulo]" class="mdl-textfield__input" type="text" value="<%=@ideia.titulo%>"/>
       </div>
 
       <div class="mdl-cell mdl-cell--12-col">
         <label for="ideia_texto_oportunidade">Oportunidade/Desafio</label>
-        <%=partial 'ideias/editor', locals: { html_id: 'ideia_texto_oportunidade', html_name: 'ideia[:texto_oportunidade]' }%>
+        <%=partial 'ideias/editor', locals: { html_id: 'ideia_texto_oportunidade', html_name: 'ideia[texto_oportunidade]', html_value: @ideia.texto_oportunidade }%>
       </div>
       
       <div class="mdl-cell mdl-cell--12-col">
         <label for="ideia_texto_solucao">Proposta/Solução</label>
-        <%=partial 'ideias/editor', locals: { html_id: 'ideia_texto_solucao', html_name: 'ideia[:texto_solucao]' }%>
+        <%=partial 'ideias/editor', locals: { html_id: 'ideia_texto_solucao', html_name: 'ideia[texto_solucao]', html_value: @ideia.texto_solucao }%>
       </div>
 
       <div class="mdl-cell mdl-cell--12-col mdl-grid mdl-grid--no-spacing">
-        <%@categorias.each_with_index do |categoria, i|%>
-          <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect mdl-cell mdl-cell--2-col" for="ideia_categorias_<%=i%>">
-            <input type="checkbox" id="ideia_categorias_<%=i%>" class="mdl-checkbox__input"/>
-            <span class="mdl-checkbox__label"><%=categoria.titulo%></span>
-          </label>
-        <%end%>
+      <%@categorias.each_with_index do |categoria, i|%>
+        <%checked = 'checked="checked"' if @ideia.categorias.include? categoria%>
+        <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect mdl-cell mdl-cell--2-col" for="ideia_categorias_<%=i%>">
+          <input type="checkbox" id="ideia_categorias_<%=i%>" name="categorias[]" value="<%=categoria.id%>" class="mdl-checkbox__input" <%=checked%>/>
+          <span class="mdl-checkbox__label"><%=categoria.titulo%></span>
+        </label>
+      <%end%>
       </div>
 
       <div class="mdl-card__actions mdl-card--border">
@@ -31,12 +33,12 @@
             <button type="submit" name="_method" value="<%=@ideia.id ? :put : :post%>" class="mdl-button mdl-button--raised mdl-js-button mdl-js-ripple-effect">
               Salvar
             </button>
-            <a href="<%=path_to :ideias%>" class="mdl-button mdl-js-button mdl-js-ripple-effect">
+            <a href="<%=path%>" class="mdl-button mdl-js-button mdl-js-ripple-effect">
               Cancelar
             </a>
           </div>
           <div class="mdl-cell mdl-cell--6-col-desktop mdl-cell--12-phone mdl-typography--text-right">
-            <button type="submit" name="ideia[:data_publicacao]" value="<%=Date.today%>" class="mdl-button mdl-js-button mdl-js-ripple-effect">
+            <button type="submit" name="ideia[data_publicacao]" value="<%=Date.today%>" class="mdl-button mdl-js-button mdl-js-ripple-effect">
               Publicar
             </button>
           </div>
