@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="pt">
+<head>
+  <meta charset="utf-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta name="description" content=""/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Prodam - <%=@page[:title]%></title>
+
+  <!-- Fallback to homescreen for Chrome <39 on Android -->
+  <meta name="mobile-web-app-capable" content="yes"/>
+  <meta name="application-name" content="Material Design Lite"/>
+  <link rel="icon" sizes="192x192" href=""/>
+
+  <!-- Add to homescreen for Safari on iOS -->
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+  <meta name="apple-mobile-web-app-title" content=""/>
+
+  <link rel="apple-touch-icon" href="<%=path_to '/img/ios-desktop.png'%>"/>
+  <link rel="shortcut icon" href="<%=path_to '/img/favicon.png'%>"/>
+
+  <!-- Page styles -->
+  <link rel="stylesheet" href="<%=path_to '/src/dialog-polyfill/dialog-polyfill.css'%>"/>
+  <link rel="stylesheet" href="<%=path_to '/src/material-design-lite/material.min.css'%>"/>
+  <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.teal-indigo.min.css"/>
+  <link rel="stylesheet" href="<%=path_to '/css/prodam.css'%>"/>
+  <%=yield_content :stylesheet%>
+
+  <!-- Fonts -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"/>
+
+  <script src="<%=path_to '/src/dialog-polyfill/dialog-polyfill.js'%>"></script>
+</head>
+<body>
+  <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--no-desktop-drawer-button">
+    <header class="prd-layout__header mdl-layout__header">
+      <div class="mdl-layout__header-row">
+        <span class="mdl-layout-title prd-layout-title">
+          <i class="material-icons"><%=@page[:icon]%></i>
+          <%=@page[:title]%>
+        </span>
+        <div class="mdl-layout-spacer"></div>
+        <div class="prd-searchbox mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label mdl-textfield--align-right">
+          <label class="mdl-button mdl-js-button mdl-button--icon" for="ideias-campo-pesquisa">
+            <i class="material-icons">search</i>
+          </label>
+          <div class="mdl-textfield__expandable-holder">
+            <input class="mdl-textfield__input" type="text" name="sample" id="ideias-campo-pesquisa" placeholder="Procure por ideias">
+          </div>
+        </div>
+        <%if authenticated?%>
+          <a href="<%=path_to :conta%>" class="mdl-button mdl-js-button mdl-button--icon">
+            <i class="material-icons">account_box</i>
+          </a>
+          <a href="<%=path_to :conta, :sair%>" class="mdl-button mdl-js-button mdl-button--icon">
+            <i class="material-icons">power_settings_new</i>
+          </a>
+        <%else%>
+          <button id="dialog-show" type="button" class="mdl-button mdl-js-button mdl-button--icon">
+            <i class="material-icons">perm_identity</i>
+          </button>
+        <%end%>
+      </div><!--/.mdl-layout__header-row-->
+
+      <div class="prd-layout__header-row mdl-layout__header-row mdl-color--teal-400 mdl-layout--large-screen-only">
+        <nav class="prd-navigation prd-max-width mdl-navigation">
+        <%controllers.select { |id, controller| controller[:navigation].include? 'header' }.each do |id, controller|%>
+          <%is_active = 'is-active' if @page[:url_path] == controller[:url_path]%>
+          <a class="mdl-navigation__link prd-navigation__link <%=is_active%>" href="<%=path_to controller[:url_path]%>">
+            <!--i class="material-icons" role="presentation"><%=controller[:icon]%></i-->
+            <%=controller[:title]%>
+          </a>
+        <%end%>
+        </nav>
+        <%if authenticated?%>
+          <a id="nova-ideia" href="<%=path_to :ideias, :nova%>" class="prd-header__button-add mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--colored mdl-shadow--4dp">
+            <i class="material-icons">add</i>
+          </a>
+          <span class="mdl-tooltip" for="nova-ideia">Nova ideia!</span>
+        <%end%>
+      </div>
+    </header>
+    <div class="mdl-layout__drawer prd-layout__drawer">
+      <span class="mdl-layout-title"></span>
+      <a href="<%=path_to :home%>"><img src="<%=path_to '/img/brand-colored.svg'%>" class="prd-drawer__brand"/></a>
+      <nav class="mdl-navigation prd-navigation">
+      <%controllers.select { |id, controller| controller[:navigation].include? 'drawer' }.each do |id, controller|%>
+        <%is_active = 'is-active' if @page[:url_path] == controller[:url_path]%>
+        <a class="mdl-navigation__link prd-navigation__link <%=is_active%>" href="<%=path_to controller[:url_path]%>">
+          <i class="material-icons" role="presentation"><%=controller[:icon]%></i>
+          <%=controller[:title]%>
+        </a>
+      <%end%>
+      </nav>
+      <div class="mdl-layout-spacer"></div>
+      <nav class="mdl-navigation prd-navigation">
+        <a class="mdl-navigation__link prd-navigation__link" href="<%=path_to :ajuda%>"><i class="material-icons" role="presentation">help</i>Ajuda</a>
+      </nav>
+      <small class="mdl-color--grey-200 mdl-typography--text-center">
+        <%=version_info%>
+      </small>
+    </div>
+    <main class="mdl-layout__content">
+      <div class="prd-max-width">
+        <%=yield%>
+      </div>
+      <%if authenticated?%>
+        <a id="nova-ideia" href="<%=path_to :ideias, :nova%>" class="prd-footer__button-add mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--colored mdl-layout--small-screen-only mdl-shadow--4dp">
+          <i class="material-icons">add</i>
+        </a>
+        <span class="mdl-tooltip mdl-tooltip--top" for="nova-ideia">Nova ideia!</span>
+      <%end%>
+    </main>
+  </div>
+  <%unless authenticated?%>
+  <dialog class="mdl-dialog">
+    <form action="<%=path_to :conta, :acessar%>" method="post">
+      <div class="mdl-dialog__content mdl-grid mdl-grid--no-spacing">
+        <img src="<%=path_to '/img/brand-colored.svg'%>" class="mdl-cell mdl-cell--12-col prd-brand"/>
+        <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-textfield--floating-label mdl-js-textfield">
+          <label for="usuario" class="mdl-textfield__label">Usuário</label>
+          <input type="text" id="usuario" name="usuario[nome_usuario]" class="mdl-textfield__input"/>
+        </div>
+        <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-textfield--floating-label mdl-js-textfield">
+          <label for="senha" class="mdl-textfield__label">Password</label>
+          <input type="password" id="senha" name="usuario[senha]" class="mdl-textfield__input"/>
+        </div>
+        <div class="mdl-cell mdl-cell--12-col">
+          <button type="submit" class="mdl-button mdl-button--raised mdl-js-button mdl-js-ripple-effect">
+            Acessar
+          </button>
+          <button type="button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--close-dialog">
+            Cancelar
+          </button>
+        </div>
+      </div>
+    </form>
+  </dialog>
+  <script src="<%=path_to '/js/dialog.js'%>"></script>
+  <%else%>
+    <%=yield_content :dialog%>
+  <%end%>
+  <%if message[:text]%>
+    <div aria-live="assertive" aria-atomic="true" aria-relevant="text" class="mdl-snackbar mdl-js-snackbar">
+      <div class="mdl-snackbar__text"><%=message[:text]%></div>
+      <button type="button" class="mdl-snackbar__action">Ok</button>
+    </div>
+    <%message.update text: nil%>
+  <%end%>
+  <%=yield_content :script%>
+  <script src="<%=path_to '/src/material-design-lite/material.min.js'%>"></script>
+  <script src="<%=path_to '/js/notification.js'%>"></script>
+</body>
+</html>

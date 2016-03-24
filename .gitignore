@@ -1,0 +1,6 @@
+vendors/**
+tmp/**
+public/src/**
+!public/src/*/*.min.css
+!public/src/*/*.min.js
+!public/src/*/*.min.js.map

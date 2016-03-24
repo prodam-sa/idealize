@@ -1,0 +1,22 @@
+:title: 'Idealize!'
+:routes:
+  '/':
+    :title: Home
+    :controller: HomeController
+    :navigation: [header, drawer]
+    :icon: home
+  '/categorias':
+    :title: Categorias
+    :controller: CategoriasController
+    :navigation: [header, drawer]
+    :icon: group_work
+  '/ideias':
+    :title: Ideias
+    :controller: IdeiasController
+    :navigation: [header, drawer]
+    :icon: wb_incandescent
+  '/conta':
+    :title: Conta
+    :controller: AcessoController
+    :navigation: [top]
+    :icon: account_box

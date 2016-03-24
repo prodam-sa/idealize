@@ -1,0 +1,13 @@
+<div class="mdl-grid">
+  <div class="mdl-cell mdl-cell--12-col">
+  <%unless @ideias.empty? %>
+    <%=partial 'ideias/gallery', locals: { ideias: @ideias }%>
+  <%else%>
+    <div class="prd-layout--centered mdl-card mdl-card--expandable mdl-shadow--2dp">
+      <p class="mdl-typography--headline mdl-typography--text-center">
+        Nenhuma ideia foi publicada, ainda.
+      </p>
+    </div>
+  <%end%>
+  </div>
+</div>

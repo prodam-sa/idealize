@@ -1,0 +1,69 @@
+<ul class="mdl-list">
+<%@categorias.each_with_index do |categoria, i|%>
+  <li class="mdl-list__item mdl-list__item--three-line">
+    <span class="mdl-list__item-primary-content">
+      <a href="<%=path_to :categorias, categoria.to_url_param%>">
+        <i class="material-icons mdl-badge mdl-badge--overlap mdl-list__item-avatar" data-badge="<%=categoria.ideias.count%>"><%=categoria.icone%></i>
+      </a>
+      <span><%=categoria.titulo%></span>
+      <div class="mdl-list__item-text-body">
+        <%=categoria.descricao%>
+      </div>
+    </span>
+    <span class="mdl-list__item-secondary-content">
+    <%if authorized?%>
+      <div class="mdl-list__item-secondary-action ">
+        <a id="editar-<%=i%>" href="<%=path_to :categorias, categoria.to_url_param%>" class="mdl-button mdl-button--icon mdl-js-button">
+          <i class="material-icons">edit</i>
+        </a>
+        <span for="editar-<%=i%>" class="mdl-tooltip mdl-tooltip--left">Editar <%=categoria.titulo%></span>
+        <button id="dialog-show-categoria-<%=i%>" type="button" class="mdl-button mdl-button--icon mdl-js-button">
+          <i class="material-icons">edit</i>
+        </button>
+        <span for="dialog-show-categoria-<%=i%>" class="mdl-tooltip mdl-tooltip--left">Editar <%=categoria.titulo%></span>
+      </div>
+    <%end%>
+    </span>
+    <%if authorized?%>
+      <%content_for :dialog do%>
+        <dialog id="dialog-form-categoria-<%=i%>" class="mdl-dialog">
+          <form action="<%=path_to :categorias, categoria.to_url_param%>" method="post" enctype="application/x-www-form-urlencoded">
+            <div class="mdl-grid">
+              <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <label for="categoria_titulo" class="mdl-textfield__label">Título da categoria</label>
+                <input type="text" id="categoria_titulo" name="categoria[titulo]" class="mdl-textfield__input" value="<%=@categoria.titulo%>"/>
+              </div>
+              <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <label for="categoria_descricao" class="mdl-textfield__label">Descrição</label>
+                <textarea type="text" id="categoria_descricao" name="categoria[descricao]" class="mdl-textfield__input" rows="1" maxrows="4"><%=@categoria.descricao%></textarea>
+              </div>
+            
+              <div class="mdl-cell mdl-cell--12-col">
+                <button type="submit" name="_method" value="put" class="mdl-button mdl-button--raised mdl-js-button mdl-js-ripple-effect"/>
+                  Salvar
+                </button>
+                <button type="button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--dialog-close">
+                  Cancelar
+                </button>
+              </div>
+            </div>
+          </form>
+        </dialog>
+        <script>
+          var dialog = document.querySelector('dialog-form-categoria-<%=i%>');
+          var button = document.querySelector('#dialog-show-categoria-<%=i%>');
+          if (! dialog.showModal) {
+            dialogPolyfill.registerDialog(dialog);
+          }
+          button.addEventListener('click', function() {
+            dialog.showModal();
+          });
+          dialog.querySelector('.mdl-button--close-dialog').addEventListener('click', function() {
+            dialog.close();
+          });
+        </script>
+      <%end%>
+    <%end%>
+  </li>
+<%end%>
+</ul>

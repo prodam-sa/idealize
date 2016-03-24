@@ -1,0 +1,3 @@
+{ "directory": "public/src"
+, "analytics": false
+, "timeout": 120000 }
