@@ -15,15 +15,13 @@ class Prodam::Idealize::Usuario < Prodam::Idealize::Model[:usuario]
     validates_unique :email, message: 'já registrado.'
   end
 
-  alias original_save save
+  alias original_update update
 
-  def save(options = {})
-    return unless confirm_password(options)
-    if options[:senha]
-      self[:senha_salt] = encript(self[:nome].downcase.tr(' ', ''), self[:email])
-      self[:senha_encriptada] = encript(options[:senha], self[:senha_salt])
-    end
-    original_save
+  def save_password(password, confirmation)
+    return unless confirm_password(password, confirmation)
+    self[:senha_salt] = encript(self[:nome].downcase.tr(' ', ''), self[:email])
+    self[:senha_encriptada] = encript(password, self[:senha_salt])
+    save
   end
 
   def authenticate?(password)
@@ -49,7 +47,7 @@ private
     Digest::MD5.hexdigest(salt ? "#{salt}:#{text}" : text)
   end
 
-  def confirm_password(options)
-    options[:senha] == options[:confirmacao_senha]
+  def confirm_password(password, confirmation)
+    password == confirmation
   end
 end

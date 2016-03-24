@@ -21,7 +21,7 @@ class Prodam::Idealize::AcessoController < Prodam::Idealize::ApplicationControll
   end
 
   put '/:id/senha', authenticate: true do |id|
-    if @usuario.save(params[:usuario])
+    if @usuario.save_password(*params[:usuario].values)
       message.update(level: :success, text: 'Senha atualizada.')
     else
       message.update(level: :error, text: 'A senha informada não foi confirmada corretamente.')
