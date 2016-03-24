@@ -5,7 +5,7 @@
         <i class="material-icons">more_vert</i>
       </button>
       <div for="options-<%=@ideia.id%>" class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect">
-        <a href="<%=path_to :categorias, @ideia.to_url_param, :editar%>" class="mdl-menu__item">
+        <a href="<%=path_to :ideias, @ideia.to_url_param, :editar%>" class="mdl-menu__item">
           Alterar
         </a>
       </div>
@@ -16,6 +16,7 @@
     </div>
     
     <div class="mdl-card__supporting-text">
+      <p>Por <%=@ideia.autor.nome%>, publicada em <%=@ideia.data_publicacao.strftime('%d/%m/%Y')%></p>
       <h3 class="mdl-card__title-text">Oportunidade/Problema</h3>
       <%=@ideia.texto_oportunidade%>
     </div>
@@ -25,16 +26,36 @@
       <%=@ideia.texto_solucao%>
     </div>
 
+    <div class="mdl-card__supporting-text">
+      <%@ideia.categorias.each_with_index do |categoria, c|%>
+        <a id="categoria-<%=categoria.id%>" href="<%=path_to :categorias, categoria.to_url_param%>" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+          <i class="material-icons"><%=categoria.icone%></i>
+        </a>
+        <span class="mdl-tooltip mdl-tooltip--top" for="categoria-<%=categoria.id%>"><%=categoria.titulo%></span>
+      <%end%>
+    </div>
+
     <%if authorized? or usuario_autor? @ideia%>
       <div class="mdl-card__actions mdl-card--border">
-        <a href="<%=path_to :categorias, @ideia.to_url_param, :editar%>" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-          Alterar
-        </a>
-        <form action="<%=path_to :categorias, @ideia.to_url_param, :excluir%>" method="post" style="display: inline">
-          <button name="_method" value="delete" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-            Excluir
-          </button>
-        </form>
+        <div class="mdl-grid mdl-grid--no-spacing">
+          <div class="mdl-cell mdl-cell--6-col-desktop mdl-cell--12-phone">
+            <a href="<%=path_to :ideias, @ideia.to_url_param, :editar%>" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+              Alterar
+            </a>
+            <form action="<%=path_to :ideias, @ideia.to_url_param%>" method="post" style="display: inline">
+              <button name="_method" value="delete" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+                Excluir
+              </button>
+            </form>
+          </div>
+          <div class="mdl-cell mdl-cell--6-col-desktop mdl-cell--12-phone mdl-typography--text-right">
+            <form action="<%=path_to :ideias, @ideia.to_url_param, :publicar%>" method="post" style="display: inline">
+              <button name="_method" value="put" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+                Publicar
+              </button>
+            </form>
+          </div>
+        </div>
       </div>
     <%end%>
   </div>
