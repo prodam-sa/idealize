@@ -1,18 +1,18 @@
 require.config({
   paths: {
-    'scribe': '/src/scribe/scribe',
-    'scribe-plugin-blockquote-command': '/src/scribe-plugin-blockquote-command/scribe-plugin-blockquote-command',
-    'scribe-plugin-code-command': '/src/scribe-plugin-code-command/scribe-plugin-code-command',
-    'scribe-plugin-curly-quotes': '/src/scribe-plugin-curly-quotes/scribe-plugin-curly-quotes',
-    'scribe-plugin-formatter-plain-text-convert-new-lines-to-html': '/src/scribe-plugin-formatter-plain-text-convert-new-lines-to-html/scribe-plugin-formatter-plain-text-convert-new-lines-to-html',
-    'scribe-plugin-heading-command': '/src/scribe-plugin-heading-command/scribe-plugin-heading-command',
-    'scribe-plugin-intelligent-unlink-command': '/src/scribe-plugin-intelligent-unlink-command/scribe-plugin-intelligent-unlink-command',
-    'scribe-plugin-keyboard-shortcuts': '/src/scribe-plugin-keyboard-shortcuts/scribe-plugin-keyboard-shortcuts',
-    'scribe-plugin-link-prompt-command': '/src/scribe-plugin-link-prompt-command/scribe-plugin-link-prompt-command',
-    'scribe-plugin-sanitizer': '/src/scribe-plugin-sanitizer/scribe-plugin-sanitizer',
-    'scribe-plugin-smart-lists': '/src/scribe-plugin-smart-lists/scribe-plugin-smart-lists',
-    'scribe-plugin-toolbar': '/src/scribe-plugin-toolbar/scribe-plugin-toolbar',
-    'scribe-plugin-content-cleaner': '/src/scribe-plugin-content-cleaner/scribe-plugin-content-cleaner'
+    'scribe': '/src/scribe/scribe.min',
+    'scribe-plugin-blockquote-command': '/src/scribe-plugin-blockquote-command/scribe-plugin-blockquote-command.min',
+    'scribe-plugin-code-command': '/src/scribe-plugin-code-command/scribe-plugin-code-command.min',
+    'scribe-plugin-curly-quotes': '/src/scribe-plugin-curly-quotes/scribe-plugin-curly-quotes.min',
+    'scribe-plugin-formatter-plain-text-convert-new-lines-to-html': '/src/scribe-plugin-formatter-plain-text-convert-new-lines-to-html/scribe-plugin-formatter-plain-text-convert-new-lines-to-html.min',
+    'scribe-plugin-heading-command': '/src/scribe-plugin-heading-command/scribe-plugin-heading-command.min',
+    'scribe-plugin-intelligent-unlink-command': '/src/scribe-plugin-intelligent-unlink-command/scribe-plugin-intelligent-unlink-command.min',
+    'scribe-plugin-keyboard-shortcuts': '/src/scribe-plugin-keyboard-shortcuts/scribe-plugin-keyboard-shortcuts.min',
+    'scribe-plugin-link-prompt-command': '/src/scribe-plugin-link-prompt-command/scribe-plugin-link-prompt-command.min',
+    'scribe-plugin-sanitizer': '/src/scribe-plugin-sanitizer/scribe-plugin-sanitizer.min',
+    'scribe-plugin-smart-lists': '/src/scribe-plugin-smart-lists/scribe-plugin-smart-lists.min',
+    'scribe-plugin-toolbar': '/src/scribe-plugin-toolbar/scribe-plugin-toolbar.min',
+    'scribe-plugin-content-cleaner': '/src/scribe-plugin-content-cleaner/scribe-plugin-content-cleaner.min'
   }
 });
 
