@@ -1,31 +1,20 @@
-<%letters = ('B'..'Z').to_a%>
 <div class="mdl-grid">
   <div class="mdl-cell mdl-cell--12-col mdl-shadow--2dp">
     <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
       <div class="mdl-tabs__tab-bar">
-        <a href="#letra-A" class="mdl-tabs__tab is-active">A</a>
-        <%letters.each do |letter|%>
-        <a href="#letra-<%=letter%>" class="mdl-tabs__tab"><%=letter%></a>
-        <%end%>
+        <a href="#usuarios" class="mdl-tabs__tab is-active">Usuários</a>
       </div>
 
-      <div id="letra-A" class="mdl-tabs__panel is-active">
-        <%=partial 'administracao/usuarios/list', locals: { usuarios: @usuarios['A'] }%>
-      </div>
-
-      <%letters.each do |letter|%>
-      <div id="letra-<%=letter%>" class="mdl-tabs__panel">
+      <div id="usuarios" class="mdl-tabs__panel is-active">
+      <%('A'..'Z').each do |letter|%>
         <%if @usuarios[letter] && @usuarios[letter].any?%>
-          <%=partial 'administracao/usuarios/list', locals: { usuarios: @usuarios[letter] }%>
-        <%else%>
-          <div class="prd-layout--centered mdl-card mdl-card--expandable mdl-shadow--2dp">
-            <p class="mdl-typography--headline mdl-typography--text-center">
-              Não há usuários com a letra "<%=letter%>".
-            </p>
+          <div id="letra-<%=letter.downcase%>" class="">
+            <%=partial 'administracao/usuarios/list', locals: { usuarios: @usuarios[letter] }%>
           </div>
+        <%else%>
         <%end%>
-      </div>
       <%end%>
+      </div>
     </div>
   </div>
 </div>
