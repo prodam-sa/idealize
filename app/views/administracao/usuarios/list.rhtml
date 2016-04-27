@@ -5,10 +5,10 @@
       <a href="<%=path_to :administracao, :usuarios, usuario.to_url_param%>">
         <img src="<%=gravatar usuario.email%>" class="mdl-list__item-avatar"/>
       </a>
-      <span><%=usuario.nome%></span>
-      <p class="mdl-list__item-text-body">
-      usuario
-      </p>
+      <span><%=usuario.nome%> (<%=usuario.nome_usuario%>)</span>
+      <div class="mdl-list__item-text-body mdl-layout--large-screen-only">
+      <%=usuario.email%>
+      </div>
     </div>
     <div class="mdl-list__item-secondary-content">
       <%if authenticated? or usuario_autor? usuario%>
