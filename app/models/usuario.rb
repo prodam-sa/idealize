@@ -6,7 +6,7 @@ class Prodam::Idealize::Usuario < Prodam::Idealize::Model[:usuario]
   include Prodam::Idealize::Model
 
   plugin :validation_helpers
-  set_allowed_columns :nome_usuario, :nome, :email, :ad
+  set_allowed_columns :nome_usuario, :nome, :email, :ad, :mi
 
   def validate
     super
