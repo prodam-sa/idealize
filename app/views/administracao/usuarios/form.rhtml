@@ -15,11 +15,19 @@
         <input type="text" id="usuario_nome" name="usuario[nome]" class="mdl-textfield__input" value="<%=@usuario.nome%>"/>
       </div>
       <div class="mdl-cell mdl-cell--12-col">
-        <%checked = 'checked="checked"' if @usuario.administrador?%>
+        <%check_administrador = 'checked="checked"' if @usuario.administrador?%>
         <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="usuario_ad_s">
           <input type="hidden" id="usuario_ad_n" name="usuario[ad]" value="N"/>
-          <input type="checkbox" id="usuario_ad_s" name="usuario[ad]" value="S" class="mdl-switch__input" <%=checked%>/>
+          <input type="checkbox" id="usuario_ad_s" name="usuario[ad]" value="S" class="mdl-switch__input" <%=check_administrador%>/>
           <span class="mdl-switch__label">Administrador de dados</span>
+        </label>
+      </div>
+      <div class="mdl-cell mdl-cell--12-col">
+        <%check_moderador = 'checked="checked"' if @usuario.moderador?%>
+        <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="usuario_mi_s">
+          <input type="hidden" id="usuario_mi_n" name="usuario[mi]" value="N"/>
+          <input type="checkbox" id="usuario_mi_s" name="usuario[mi]" value="S" class="mdl-switch__input" <%=check_moderador%>/>
+          <span class="mdl-switch__label">Moderador de ideias</span>
         </label>
       </div>
     </div>
