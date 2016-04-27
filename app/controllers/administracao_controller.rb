@@ -21,4 +21,9 @@ class Prodam::Idealize::AdministracaoController < Prodam::Idealize::ApplicationC
   get '/usuarios/:id' do |id|
     view 'administracao/usuarios/form'
   end
+
+  put '/usuarios/:id' do |id|
+    @usuario.update(params[:usuario])
+    redirect to(path_to('/usuarios/' + id))
+  end
 end
