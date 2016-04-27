@@ -29,11 +29,11 @@ class Prodam::Idealize::Usuario < Prodam::Idealize::Model[:usuario]
   end
 
   def administrador?
-    self[:ad] == 'S'
+    self[:ad] && self[:ad] == 'S'
   end
 
   def moderador?
-    self[:mi] == 'S'
+    self[:mi] && self[:mi] == 'S'
   end
 
   def self.authenticate(options)
