@@ -28,7 +28,7 @@ class Prodam::Idealize::IdeiasController < Prodam::Idealize::ApplicationControll
 
   post '/', authenticate: true do
     @ideia = Prodam::Idealize::Ideia.new(params[:ideia])
-    @ideia.autor_id = session[:user_id]
+    @ideia.autor_id = usuario_id
     @ideia.save
     view 'ideias/page'
   end
@@ -74,7 +74,7 @@ private
       latest: Prodam::Idealize::Ideia.latest(5),
       all_by_autor: nil
     }
-    if session[:user_id] && autor = Prodam::Idealize::Autor[session[:user_id]]
+    if usuario_id && autor = Prodam::Idealize::Autor[usuario_id]
       @ideias[:all_by_autor] = Prodam::Idealize::Ideia.all_by_autor(autor.id)
     end
   end
