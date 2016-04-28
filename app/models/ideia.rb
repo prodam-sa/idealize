@@ -23,6 +23,10 @@ class Prodam::Idealize::Ideia < Prodam::Idealize::Model[:ideia]
     validates_presence :texto_solucao, message: 'deve conter algum conteúdo.'
   end
 
+  def data(data, formato = '%d/%m/%Y')
+    self["data_#{data}".to_sym].strftime(formato)
+  end
+
   def param_name
     "#{id}-#{titulo.downcase.tr(' ', '-')}"
   end

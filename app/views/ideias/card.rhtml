@@ -23,9 +23,9 @@
     <div class="mdl-card__supporting-text mdl-card--expand">
       <p class="mdl-typography--text-right">
       <%unless ideia.rascunho?%>
-        Publicado em <%=ideia.data_publicacao.strftime('%d/%m/%Y')%>
+        Publicado em <%=ideia.data :publicacao%>
       <%else%>
-        Criado em <%=ideia.data_criacao.strftime('%d/%m/%Y')%>
+        Criado em <%=ideia.data :criacao%>
       <%end%>
       </p>
       <%=ideia.texto_oportunidade%>
