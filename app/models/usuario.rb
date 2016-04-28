@@ -36,6 +36,11 @@ class Prodam::Idealize::Usuario < Prodam::Idealize::Model[:usuario]
     self[:mi] && self[:mi] == 'S'
   end
 
+  def papel
+    return :administrador if administrador?
+    return :moderador if moderador?
+  end
+
   def self.authenticate(options)
     usuario = find nome_usuario: options[:nome_usuario]
     usuario && usuario.authenticate?(options[:senha]) && usuario
