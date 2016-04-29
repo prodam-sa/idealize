@@ -1,0 +1,23 @@
+:formularios:
+- :titulo:
+    Moderação
+  :descricao:
+    Formulário de moderação de ideia para publicação.
+  :criterios:
+  - :titulo:
+      É coerente?
+    :descricao:
+      Verificar se o texto descrito na ideia é concistente.
+  - :titulo:
+      É compreensível?
+    :descricao:
+      Verificar se o conteúdo é de compreensível para quem lê.
+  - :titulo:
+      É completa?
+    :descricao:
+      Verificar se o conteúdo está completo falta algum dado para avaliação.
+  - :titulo:
+      É única?
+    :descricao:
+      Verificar se há outra ideia igual, similar ou parte de alguma outra já
+      mencionada no banco de ideias.
