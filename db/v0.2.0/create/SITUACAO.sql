@@ -22,5 +22,6 @@ begin
 end;
 /
 
-comment on table  situacao        is 'Situação da ideia publicada.';
-comment on column situacao.titulo is 'Título da situação.';
+comment on table  situacao           is 'Situação da ideia publicada.';
+comment on column situacao.titulo    is 'Título da situação.';
+comment on column situacao.descricao is 'Descrição da situação.';
