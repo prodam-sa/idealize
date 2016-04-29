@@ -19,7 +19,7 @@ yaml[:formularios].each do |data|
 end
 
 yaml[:situacoes].each do |data|
-  situacao = Situacao.new(titulo: data[:titulo], descricao: data[:descricao])
+  situacao = Situacao.new(data)
   situacao.save
   if !situacao.errors.empty?
     printf("- %-32s %s", situacao.titulo, :error)
