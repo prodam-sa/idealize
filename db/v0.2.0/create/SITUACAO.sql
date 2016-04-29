@@ -11,6 +11,8 @@ create table situacao (
 , titulo varchar2(64)
          constraint situacao_titulo_nn not null
 , descricao varchar2(256)
+, publicar char(1)
+           default 'N'
 ) tablespace &data;
 
 create or replace trigger situacao_insert
@@ -22,6 +24,7 @@ begin
 end;
 /
 
-comment on table  situacao           is 'Situação da ideia publicada.';
+comment on table  situacao           is 'Situação da ideia postada.';
 comment on column situacao.titulo    is 'Título da situação.';
 comment on column situacao.descricao is 'Descrição da situação.';
+comment on column situacao.publicar  is 'Publicar ideia (S) sim ou (N) não.';
