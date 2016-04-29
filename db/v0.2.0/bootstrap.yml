@@ -21,3 +21,43 @@
     :descricao:
       Verificar se há outra ideia igual, similar ou parte de alguma outra já
       mencionada no banco de ideias.
+
+:situacoes:
+- :titulo:
+    Rascunho
+  :descricao:
+    Ideia está em edição e seu acesso ocorre apenas pelo autor e administrador.
+- :titulo:
+    Postada
+  :descricao:
+    Ideia foi postada para moderação.
+- :titulo:
+    Revisão
+  :descricao:
+    Ideia foi publicada pelo autor, mas o moderador solicitou modificações.
+- :titulo:
+    Publicada
+  :descricao:
+    Ideia foi finalizada e publicada pelo autor para moderação.
+- :titulo:
+    Arquivada
+  :descricao:
+    Ideia foi arquivada por não apresentar viabilidade no momento de sua
+    moderação, mas será remoderada em outro momento.
+- :titulo:
+    Avaliação
+  :descricao:
+    Ideia foi avaliada e será analisada para 
+- :titulo:
+    Aprovada
+  :descricao:
+    Ideia foi avaliada e aprovada com viabilidade de desenvolvimento.
+- :titulo:
+    Desenvolvimento
+  :descricao:
+    Ideia em desenvolvimento.
+- :titulo:
+    Implantação
+  :descricao:
+    Ideia desenvolvida e implantada.
+

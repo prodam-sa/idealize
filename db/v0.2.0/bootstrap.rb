@@ -17,3 +17,11 @@ yaml[:formularios].each do |data|
     printf("- %-32s %s", formulario.titulo, :error)
   end
 end
+
+yaml[:situacoes].each do |data|
+  situacao = Situacao.new(titulo: data[:titulo], descricao: data[:descricao])
+  situacao.save
+  if !situacao.errors.empty?
+    printf("- %-32s %s", situacao.titulo, :error)
+  end
+end
