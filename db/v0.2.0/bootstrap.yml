@@ -26,38 +26,53 @@
 - :titulo:
     Rascunho
   :descricao:
-    Ideia está em edição e seu acesso ocorre apenas pelo autor e administrador.
+    Ideia está em edição e seu acesso é permitido apenas pelo autor e
+    administrador. A ideia não será exibida.
+  :publicar: N
 - :titulo:
     Postada
   :descricao:
-    Ideia foi postada para moderação.
+    Ideia foi postada para moderação e não será exibida publicamente.
+  :publicar: N
 - :titulo:
     Revisão
   :descricao:
-    Ideia foi publicada pelo autor, mas o moderador solicitou modificações.
+    Ideia foi postada pelo autor, mas o moderador solicitou modificações.
+    Portanto, ainda não será exibida publicamente.
+  :publicar: N
 - :titulo:
     Publicada
   :descricao:
-    Ideia foi finalizada e publicada pelo autor para moderação.
+    Ideia publicada.
+  :publicar: S
 - :titulo:
     Arquivada
   :descricao:
     Ideia foi arquivada por não apresentar viabilidade no momento de sua
-    moderação, mas será remoderada em outro momento.
+    moderação ou avaliação, mas será revista em outro momento.
+  :publicar: N
 - :titulo:
     Avaliação
   :descricao:
-    Ideia foi avaliada e será analisada para 
+    Ideia está em avaliação pelo comitê de inovação.
+  :publicar: S
 - :titulo:
     Aprovada
   :descricao:
-    Ideia foi avaliada e aprovada com viabilidade de desenvolvimento.
+    Ideia foi avaliada e aprovada com viabilidade para desenvolvimento.
+  :publicar: S
 - :titulo:
     Desenvolvimento
   :descricao:
     Ideia em desenvolvimento.
+  :publicar: S
 - :titulo:
     Implantação
   :descricao:
-    Ideia desenvolvida e implantada.
-
+    Ideia desenvolvida e está em implantação.
+  :publicar: S
+- :titulo:
+    Finalizada
+  :descricao:
+    Ideia promovida e implantada.
+  :publicar: S
