@@ -4,6 +4,7 @@ module Prodam::Idealize
 
 class IdeiasController < ApplicationController
   helpers IdeiasHelper
+  helpers DateHelper
 
   before do
     @page = controllers[:ideias_controller]
