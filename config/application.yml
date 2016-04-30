@@ -30,3 +30,9 @@
     :navigation: [top]
     :roles: ['ad']
     :icon: settings
+  '/moderacao':
+    :title: Moderação
+    :controller: ModeracaoController
+    :navigation: []
+    :roles: ['mi']
+    :icon: assignment_turned_in
