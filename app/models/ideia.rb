@@ -24,10 +24,6 @@ class Prodam::Idealize::Ideia < Prodam::Idealize::Model[:ideia]
     validates_presence :texto_solucao, message: 'deve conter algum conteúdo.'
   end
 
-  def data(data, formato = '%d/%m/%Y')
-    self["data_#{data}".to_sym].strftime(formato)
-  end
-
   def param_name
     "#{id}-#{titulo.downcase.tr(' ', '-')}"
   end
@@ -37,7 +33,7 @@ class Prodam::Idealize::Ideia < Prodam::Idealize::Model[:ideia]
   end
 
   def modificacao
-    modificacoes.last
+    modificacoes_dataset.order(:data_registro).reverse.first
   end
 
   def publicar!
