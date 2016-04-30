@@ -15,4 +15,10 @@ class Prodam::Idealize::Situacao < Prodam::Idealize::Model[:situacao]
   def param_name
     "#{id}-#{titulo.downcase.tr(' ', '-')}"
   end
+
+  class << self
+    def chave(nome)
+      where(chave: nome.to_s).first
+    end
+  end
 end

@@ -23,56 +23,76 @@
       mencionada no banco de ideias.
 
 :situacoes:
-- :titulo:
-    Rascunho
+- :chave:
+    rascunho
+  :titulo:
+    Ideia em rascunho
   :descricao:
     Ideia está em edição e seu acesso é permitido apenas pelo autor e
     administrador. A ideia não será exibida.
-  :publicar: N
-- :titulo:
-    Postada
+  :restrito: N
+- :chave:
+    postagem
+  :titulo:
+    Ideia postada
   :descricao:
     Ideia foi postada para moderação e não será exibida publicamente.
-  :publicar: N
-- :titulo:
-    Revisão
+  :restrito: S
+- :chave:
+    revisao
+  :titulo:
+    Ideia em revisão
   :descricao:
     Ideia foi postada pelo autor, mas o moderador solicitou modificações.
     Portanto, ainda não será exibida publicamente.
-  :publicar: N
-- :titulo:
-    Publicada
+  :restrito: S
+- :chave:
+    publicacao
+  :titulo:
+    Ideia publicada
   :descricao:
-    Ideia publicada.
-  :publicar: S
-- :titulo:
-    Arquivada
+    Ideia foi moderada e publicada para avaliação dos usuários.
+  :restrito: N
+- :chave:
+    arquivo
+  :titulo:
+    Ideia arquivada
   :descricao:
     Ideia foi arquivada por não apresentar viabilidade no momento de sua
     moderação ou avaliação, mas será revista em outro momento.
-  :publicar: N
-- :titulo:
-    Avaliação
+  :restrito: S
+- :chave:
+    avaliacao
+  :titulo:
+    Ideia em avaliação
   :descricao:
     Ideia está em avaliação pelo comitê de inovação.
-  :publicar: S
-- :titulo:
+  :restrito: N
+- :chave:
+    aprovacao
+  :titulo:
     Aprovada
   :descricao:
     Ideia foi avaliada e aprovada com viabilidade para desenvolvimento.
-  :publicar: S
-- :titulo:
-    Desenvolvimento
+  :restrito: N
+- :chave:
+    desenvolvimento
+  :titulo:
+    Ideia em desenvolvimento
   :descricao:
-    Ideia em desenvolvimento.
-  :publicar: S
-- :titulo:
-    Implantação
+    Ideia foi aproada em desenvolvimento.
+  :restrito: N
+- :chave:
+    implantacao
+  :titulo:
+    Ideia em implantação
   :descricao:
     Ideia desenvolvida e está em implantação.
-  :publicar: S
-- :titulo:
-    Finalizada
+  :restrito: N
+- :chave:
+    finalizacao
+  :titulo:
+    Ideia finalizada
   :descricao:
-    Ideia promovida e implantada.
-  :publicar: S
+    Ideia foi promovida, desenvolvida e implantada.
+  :restrito: N
