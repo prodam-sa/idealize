@@ -32,8 +32,12 @@ class Prodam::Idealize::Ideia < Prodam::Idealize::Model[:ideia]
     "#{id}-#{titulo.downcase.tr(' ', '-')}"
   end
 
-  def rascunho?
-    self[:data_publicacao].nil?
+  def situacao?(chave)
+    self[:situacao] == chave.to_s
+  end
+
+  def modificacao
+    modificacoes.last
   end
 
   def publicar!
