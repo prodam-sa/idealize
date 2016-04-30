@@ -32,8 +32,12 @@ class Prodam::Idealize::Ideia < Prodam::Idealize::Model[:ideia]
     self[:situacao] == chave.to_s
   end
 
+  def historico
+    modificacoes_dataset.order(:data_registro).reverse.all
+  end
+
   def modificacao
-    modificacoes_dataset.order(:data_registro).reverse.first
+    historico.first
   end
 
   def publicar!
@@ -52,6 +56,10 @@ class Prodam::Idealize::Ideia < Prodam::Idealize::Model[:ideia]
 
     def all_by_autor(autor_id, limit = 10)
       where(autor_id: autor_id).reverse(:data_criacao).limit(limit).all
+    end
+
+    def all_by_situacao(chave, limit = 10)
+      where(situacao: chave.to_s).reverse(:data_atualizacao).limit(limit).all
     end
   end
 end
