@@ -13,6 +13,7 @@ class Prodam::Idealize::Ideia < Prodam::Idealize::Model[:ideia]
     join_table: :ideia_coautor,
     right_key: :coautor_id
   }
+  one_to_many :modificacoes
 
   def validate
     super
@@ -27,8 +28,16 @@ class Prodam::Idealize::Ideia < Prodam::Idealize::Model[:ideia]
     "#{id}-#{titulo.downcase.tr(' ', '-')}"
   end
 
-  def rascunho?
-    self[:data_publicacao].nil?
+  def situacao?(chave)
+    self[:situacao] == chave.to_s
+  end
+
+  def historico
+    modificacoes_dataset.order(:data_registro).reverse.all
+  end
+
+  def modificacao
+    historico.first
   end
 
   def publicar!
@@ -47,6 +56,10 @@ class Prodam::Idealize::Ideia < Prodam::Idealize::Model[:ideia]
 
     def all_by_autor(autor_id, limit = 10)
       where(autor_id: autor_id).reverse(:data_criacao).limit(limit).all
+    end
+
+    def all_by_situacao(chave, limit = 10)
+      where(situacao: chave.to_s).reverse(:data_atualizacao).limit(limit).all
     end
   end
 end

@@ -1,7 +1,10 @@
 # encoding: utf-8
 
-class Prodam::Idealize::IdeiasController < Prodam::Idealize::ApplicationController
-  helpers Prodam::Idealize::IdeiasHelper
+module Prodam::Idealize
+
+class IdeiasController < ApplicationController
+  helpers IdeiasHelper
+  helpers DateHelper
 
   before do
     @page = controllers[:ideias_controller]
@@ -9,27 +12,28 @@ class Prodam::Idealize::IdeiasController < Prodam::Idealize::ApplicationControll
 
   before '/:id/?:action?' do |id, action|
     if (ideia_id = id.to_i) > 0
-      @ideia = Prodam::Idealize::Ideia[ideia_id]
+      @ideia = Ideia[ideia_id]
     else
-      @ideia = Prodam::Idealize::Ideia.new
+      @ideia = Ideia.new
     end
   end
 
   get '/' do
     ideias_list
-    @ideia = Prodam::Idealize::Ideia.new
+    @ideia = Ideia.new
     view 'ideias/index'
   end
   
   get '/nova', authenticate: true do
-    @categorias = Prodam::Idealize::Categoria.all
+    @categorias = Categoria.all
     view 'ideias/form'
   end
 
   post '/', authenticate: true do
-    @ideia = Prodam::Idealize::Ideia.new(params[:ideia])
-    @ideia.autor_id = session[:user_id]
+    @ideia = Ideia.new(params[:ideia])
+    @ideia.autor_id = usuario_id
     @ideia.save
+    registrar_historico(:rascunho, mensagem: 'Ideia criada em rascunho para edição.').save
     view 'ideias/page'
   end
 
@@ -38,12 +42,12 @@ class Prodam::Idealize::IdeiasController < Prodam::Idealize::ApplicationControll
   end
 
   get '/:id/editar' do |id|
-    @categorias = Prodam::Idealize::Categoria.all
+    @categorias = Categoria.all
     view 'ideias/form'
   end
 
   put '/:id' do |id|
-    @ideia.update(params[:ideia])
+    registrar_historico(:revisao, mensagem: 'Ideia revisada pelo autor').update(params[:ideia])
     @ideia.remove_all_categorias
     params[:categorias].each do |categoria|
       @ideia.add_categoria categoria
@@ -51,19 +55,23 @@ class Prodam::Idealize::IdeiasController < Prodam::Idealize::ApplicationControll
     view 'ideias/page'
   end
 
-  put '/:id/publicar' do |id|
-    @ideia.publicar!
+  put '/:id/postar' do |id|
+    registrar_historico(:postagem, mensagem: 'Ideia postada pelo autor para moderação.').save
     redirect to("/#{@ideia.to_url_param}")
   end
 
-  delete '/:id' do |id|
+  delete '/:id', authenticate: true  do |id|
+    registrar_historico(:arquivo, mensagem: 'Ideia excluída pelo autor.').save
+    @ideia.remove_all_coautores
+    @ideia.remove_all_categorias
+    @ideia.remove_all_modificacoes
     @ideia.delete
     ideias_list
     view 'ideias/index'
   end
 
   get '/autor/:autor_id' do |autor_id|
-    @ideias = Prodam::Idealize::Ideia.all_by_autor(autor_id.to_i)
+    @ideias = Ideia.all_by_autor(autor_id.to_i)
     @ideias.to_s
   end
 
@@ -71,11 +79,13 @@ private
 
   def ideias_list
     @ideias = {
-      latest: Prodam::Idealize::Ideia.latest(5),
+      latest: Ideia.latest(5),
       all_by_autor: nil
     }
-    if session[:user_id] && autor = Prodam::Idealize::Autor[session[:user_id]]
-      @ideias[:all_by_autor] = Prodam::Idealize::Ideia.all_by_autor(autor.id)
+    if usuario_id && autor = Autor[usuario_id]
+      @ideias[:all_by_autor] = Ideia.all_by_autor(autor.id)
     end
   end
 end
+
+end # module

@@ -216,3 +216,9 @@ img.prd-brand {
   font-size: 8rem;
   color: rgba(0, 0, 0, 0.50);
 }
+
+.prd-card .mdl-card__supporting-text {
+  width: auto;
+  text-align: justify;
+}
+

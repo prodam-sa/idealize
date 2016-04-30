@@ -1,0 +1,42 @@
+{
+  "name": "idealize",
+  "authors": [
+    "Hallison Batista <hallison.batista@prodam.am.gov.br>"
+  ],
+  "description": "Programa de sujestões e ideias Prodam",
+  "main": "",
+  "keywords": [
+    "material-design",
+    "prodam",
+    "dinov"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/src",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "dialog-polyfill": "*",
+    "material-design-lite": "*",
+    "requirejs": "*",
+    "scribe": "*",
+    "scribe-plugin-blockquote-command": "*",
+    "scribe-plugin-code-command": "*",
+    "scribe-plugin-content-cleaner": "*",
+    "scribe-plugin-curly-quotes": "*",
+    "scribe-plugin-formatter-plain-text-convert-new-lines-to-html": "*",
+    "scribe-plugin-heading-command": "*",
+    "scribe-plugin-intelligent-unlink-command": "*",
+    "scribe-plugin-keyboard-shortcuts": "*",
+    "scribe-plugin-link-prompt-command": "*",
+    "scribe-plugin-sanitizer": "*",
+    "scribe-plugin-smart-lists": "*",
+    "scribe-plugin-toolbar": "*"
+  }
+}

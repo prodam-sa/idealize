@@ -4,19 +4,35 @@
     :title: Home
     :controller: HomeController
     :navigation: [header, drawer]
+    :roles: []
     :icon: home
   '/categorias':
     :title: Categorias
     :controller: CategoriasController
     :navigation: [header, drawer]
+    :roles: []
     :icon: group_work
   '/ideias':
     :title: Ideias
     :controller: IdeiasController
     :navigation: [header, drawer]
+    :roles: []
     :icon: wb_incandescent
   '/conta':
     :title: Conta
     :controller: AcessoController
     :navigation: [top]
+    :roles: []
     :icon: account_box
+  '/administracao':
+    :title: Administração
+    :controller: AdministracaoController
+    :navigation: [top]
+    :roles: ['ad']
+    :icon: settings
+  '/moderacao':
+    :title: Moderação
+    :controller: ModeracaoController
+    :navigation: []
+    :roles: ['mi']
+    :icon: assignment_turned_in

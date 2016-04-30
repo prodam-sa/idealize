@@ -49,6 +49,16 @@
             <input class="mdl-textfield__input" type="text" name="sample" id="ideias-campo-pesquisa" placeholder="Procure por ideias">
           </div>
         </div>
+        <%if authorized?%>
+          <a href="<%=path_to :administracao%>" class="mdl-button mdl-js-button mdl-button--icon">
+            <i class="material-icons">settings</i>
+          </a>
+        <%end%>
+        <%if authorized_by? :moderator%>
+          <a href="<%=path_to :moderacao%>" class="mdl-button mdl-js-button mdl-button--icon">
+            <i class="material-icons">assignment</i>
+          </a>
+        <%end%>
         <%if authenticated?%>
           <a href="<%=path_to :conta%>" class="mdl-button mdl-js-button mdl-button--icon">
             <i class="material-icons">account_box</i>

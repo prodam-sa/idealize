@@ -1,0 +1,20 @@
+<div class="mdl-grid">
+  <div class="mdl-cell mdl-cell--12-col mdl-shadow--2dp">
+    <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
+      <div class="mdl-tabs__tab-bar">
+        <a href="#usuarios" class="mdl-tabs__tab is-active">Usuários</a>
+      </div>
+
+      <div id="usuarios" class="mdl-tabs__panel is-active">
+      <%('A'..'Z').each do |letter|%>
+        <%if @usuarios[letter] && @usuarios[letter].any?%>
+          <div id="letra-<%=letter.downcase%>" class="">
+            <%=partial 'administracao/usuarios/list', locals: { usuarios: @usuarios[letter] }%>
+          </div>
+        <%else%>
+        <%end%>
+      <%end%>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,21 @@
+<ul class="mdl-list">
+<%usuarios.each_with_index do |usuario, i|%>
+  <li class="mdl-list__item mdl-list__item--two-line">
+    <div class="mdl-list__item-primary-content">
+      <a href="<%=path_to :administracao, :usuarios, usuario.to_url_param%>">
+        <img src="<%=gravatar usuario.email%>" class="mdl-list__item-avatar"/>
+      </a>
+      <span><%=usuario.nome%> (<%=usuario.nome_usuario%>)</span>
+      <div class="mdl-list__item-text-body mdl-layout--large-screen-only">
+      <%=usuario.email%>
+      </div>
+    </div>
+    <div class="mdl-list__item-secondary-content">
+      <a id="usuario-<%=usuario.id%>-editar" href="<%=path_to :administracao, :usuarios, usuario.to_url_param%>" class="mdl-list__item-secondary-action mdl-button mdl-button--icon mdl-js-button">
+        <i class="material-icons">edit</i>
+      </a>
+      <span class="mdl-tooltip mdl-tooltip--left" for="usuario-<%=usuario.id%>-editar">Editar <%=usuario.nome%></span>
+    </div>
+  </li>
+<%end%>
+</ul>

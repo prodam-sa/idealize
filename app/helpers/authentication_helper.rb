@@ -8,20 +8,26 @@ module Prodam::Idealize::AuthenticationHelper
   end
 
   def authenticated?
-    !session[:user_id].nil? && !session[:user_admin].nil?
+    !session[:user].nil?
   end
 
   def authorized?
-    authenticated? && session[:user_admin]
+    authenticated? && session[:user][:administrator]
   end
 
-  def authenticate(user_id, user_admin = false)
-    session[:user_id] = user_id
-    session[:user_admin] = user_admin
+  def authorized_by?(role)
+    authenticated? && session[:user][role]
+  end
+
+  def authenticate(user_id, user_administrator = false, user_moderator = false)
+    session[:user] = {
+      id: user_id,
+      administrator: user_administrator,
+      moderator: user_moderator,
+    }
   end
 
   def disconect!
-    session[:user_id] = nil
-    session[:user_admin] = nil
+    session[:user] = nil
   end
 end

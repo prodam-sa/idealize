@@ -1,0 +1,98 @@
+:formularios:
+- :titulo:
+    Moderação
+  :descricao:
+    Formulário de moderação de ideia para publicação.
+  :criterios:
+  - :titulo:
+      É coerente?
+    :descricao:
+      Verificar se o texto descrito na ideia é consistente.
+  - :titulo:
+      É compreensível?
+    :descricao:
+      Verificar se o conteúdo é de compreensível para quem lê.
+  - :titulo:
+      É completa?
+    :descricao:
+      Verificar se o conteúdo está completo falta algum dado para avaliação.
+  - :titulo:
+      É única?
+    :descricao:
+      Verificar se há outra ideia igual, similar ou parte de alguma outra já
+      mencionada no banco de ideias.
+
+:situacoes:
+- :chave:
+    rascunho
+  :titulo:
+    Ideia em rascunho
+  :descricao:
+    Ideia está em edição e seu acesso é permitido apenas pelo autor e
+    administrador. A ideia não será exibida.
+  :restrito: N
+- :chave:
+    postagem
+  :titulo:
+    Ideia postada
+  :descricao:
+    Ideia foi postada para moderação e não será exibida publicamente.
+  :restrito: S
+- :chave:
+    revisao
+  :titulo:
+    Ideia em revisão
+  :descricao:
+    Ideia foi postada pelo autor, mas o moderador solicitou modificações.
+    Portanto, ainda não será exibida publicamente.
+  :restrito: S
+- :chave:
+    publicacao
+  :titulo:
+    Ideia publicada
+  :descricao:
+    Ideia foi moderada e publicada para avaliação dos usuários.
+  :restrito: N
+- :chave:
+    arquivo
+  :titulo:
+    Ideia arquivada
+  :descricao:
+    Ideia foi arquivada por não apresentar viabilidade no momento de sua
+    moderação ou avaliação, mas será revista em outro momento.
+  :restrito: S
+- :chave:
+    avaliacao
+  :titulo:
+    Ideia em avaliação
+  :descricao:
+    Ideia está em avaliação pelo comitê de inovação.
+  :restrito: N
+- :chave:
+    aprovacao
+  :titulo:
+    Aprovada
+  :descricao:
+    Ideia foi avaliada e aprovada com viabilidade para desenvolvimento.
+  :restrito: N
+- :chave:
+    desenvolvimento
+  :titulo:
+    Ideia em desenvolvimento
+  :descricao:
+    Ideia foi aproada em desenvolvimento.
+  :restrito: N
+- :chave:
+    implantacao
+  :titulo:
+    Ideia em implantação
+  :descricao:
+    Ideia desenvolvida e está em implantação.
+  :restrito: N
+- :chave:
+    finalizacao
+  :titulo:
+    Ideia finalizada
+  :descricao:
+    Ideia foi promovida, desenvolvida e implantada.
+  :restrito: N

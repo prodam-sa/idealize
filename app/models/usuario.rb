@@ -6,7 +6,7 @@ class Prodam::Idealize::Usuario < Prodam::Idealize::Model[:usuario]
   include Prodam::Idealize::Model
 
   plugin :validation_helpers
-  set_allowed_columns :nome_usuario, :nome, :email, :ad
+  set_allowed_columns :nome_usuario, :nome, :email, :ad, :mi
 
   def validate
     super
@@ -29,7 +29,16 @@ class Prodam::Idealize::Usuario < Prodam::Idealize::Model[:usuario]
   end
 
   def administrador?
-    self[:ad] == 'S'
+    self[:ad] && self[:ad] == 'S'
+  end
+
+  def moderador?
+    self[:mi] && self[:mi] == 'S'
+  end
+
+  def papel
+    return :administrador if administrador?
+    return :moderador if moderador?
   end
 
   def self.authenticate(options)
