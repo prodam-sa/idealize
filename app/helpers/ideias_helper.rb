@@ -2,7 +2,7 @@
 
 module Prodam::Idealize::IdeiasHelper
   def usuario_id
-    session[:user][:id]
+    session[:user] && session[:user][:id]
   end
 
   def usuario_autor?(ideia)
