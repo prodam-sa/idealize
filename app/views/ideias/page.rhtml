@@ -27,6 +27,24 @@
     </div>
 
     <%if authorized? or usuario_autor? @ideia%>
+      <div class="mdl-card__supporting-text mdl-card--border">
+        <h3 class="mdl-card__title-text mdl-typography--headline">Histórico de avaliação</h3>
+        <table class="mdl-data-table prd-max-width">
+          <thead>
+            <th class="mdl-data-table__cell--non-numeric">Data</th>
+            <th class="mdl-data-table__cell--non-numeric">Responsável</th>
+            <th class="mdl-data-table__cell--non-numeric">Mensagem</th>
+          </thead>
+          <tbody>
+          <%@ideia.historico.each_with_index do |historico, h|%>
+            <td class="mdl-data-table__cell--non-numeric"><%=historico.data_registro%></td>
+            <td class="mdl-data-table__cell--non-numeric"><%=historico.responsavel.nome%></td>
+            <td class="mdl-data-table__cell--non-numeric"><%=historico.descricao%></td>
+          <%end%>
+          </tbody>
+        </table>
+      </div>
+
       <div class="mdl-card__actions mdl-card--border">
         <div class="mdl-grid mdl-grid--no-spacing">
           <div class="mdl-cell mdl-cell--6-col-desktop mdl-cell--12-phone">
