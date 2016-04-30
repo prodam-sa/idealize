@@ -13,6 +13,7 @@ class Prodam::Idealize::Ideia < Prodam::Idealize::Model[:ideia]
     join_table: :ideia_coautor,
     right_key: :coautor_id
   }
+  one_to_many :modificacoes
 
   def validate
     super

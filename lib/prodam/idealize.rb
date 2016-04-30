@@ -81,6 +81,7 @@ module Prodam
 
       Sequel.inflections do |inflect|
         inflect.irregular 'coautor', 'coautores'
+        inflect.irregular 'modificacao', 'modificacoes'
       end
 
       class << self
