@@ -14,8 +14,6 @@ create table historico (
               constraint historico_situacao_fk references situacao(id)
 , responsavel_id number(15,0)
                  constraint historico_responsavel_fk references usuario(id)
-, destinatario_id number(15,0)
-                  constraint historico_destinatario_fk references usuario(id)
 , data_registro date
                 default sysdate
 , descricao varchar2(512)

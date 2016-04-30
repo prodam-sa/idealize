@@ -27,8 +27,7 @@ yaml[:situacoes].each do |data|
 end
 
 Ideia.all.each do |ideia|
-  modificacao = Modificacao.new responsavel_id: ideia.autor_id,
-                                destinatario_id: ideia.autor_id
+  modificacao = Modificacao.new responsavel_id: ideia.autor_id
   if ideia.data_publicacao
     situacao = Situacao.chave :postagem
     modificacao.data_registro = ideia.data_publicacao
