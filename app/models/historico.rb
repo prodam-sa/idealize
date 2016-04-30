@@ -1,12 +1,18 @@
 # encoding: utf-8
 
-class Prodam::Idealize::Historico < Prodam::Idealize::Model[:historico]
+module Prodam::Idealize
+
+class Historico < Model[:historico]
   include Prodam::Idealize::Model
 
   plugin :validation_helpers
 
   many_to_one :ideia
   many_to_one :situacao
+  many_to_one :responsavel, {
+    class: Usuario,
+    key: :responsavel_id
+  }
 
   def validate
     super
@@ -17,3 +23,5 @@ class Prodam::Idealize::Historico < Prodam::Idealize::Model[:historico]
     "#{id}-#{titulo.downcase.tr(' ', '-')}"
   end
 end
+
+end # module
