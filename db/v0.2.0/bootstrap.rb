@@ -25,3 +25,18 @@ yaml[:situacoes].each do |data|
     printf("- %-32s %s", situacao.titulo, :error)
   end
 end
+
+Ideia.latest.each do |ideia|
+  situacao = Situacao.chave :rascunho
+  modificacao = Modificacao.new ideia_id: ideia.id,
+                                situacao_id: situacao.id,
+                                responsavel_id: ideia.autor_id,
+                                destinatario_id: ideia.autor_id,
+                                data_registro: ideia.data_publicacao,
+                                descricao: 'Ideia postada pelo autor.'
+  modificacao.save
+  ideia.data_publicacao = nil
+  ideia.data_atualizacao = Time.now
+  ideia.add_modificacao modificacao
+  ideia.save
+end
