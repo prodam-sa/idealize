@@ -26,17 +26,23 @@ yaml[:situacoes].each do |data|
   end
 end
 
-Ideia.latest.each do |ideia|
-  situacao = Situacao.chave :rascunho
-  modificacao = Modificacao.new ideia_id: ideia.id,
-                                situacao_id: situacao.id,
-                                responsavel_id: ideia.autor_id,
-                                destinatario_id: ideia.autor_id,
-                                data_registro: ideia.data_publicacao,
-                                descricao: 'Ideia postada pelo autor.'
+Ideia.all.each do |ideia|
+  modificacao = Modificacao.new responsavel_id: ideia.autor_id,
+                                destinatario_id: ideia.autor_id
+  if ideia.data_publicacao
+    situacao = Situacao.chave :postagem
+    modificacao.data_registro = ideia.data_publicacao
+    modificacao.descricao = 'Ideia postada pelo autor.'
+    ideia.data_publicacao = nil
+    ideia.situacao = 'postagem'
+  else
+    situacao = Situacao.chave :rascunho
+    modificacao.data_registro = ideia.data_criacao
+    modificacao.descricao = 'Ideia criada pelo autor.'
+    ideia.situacao = 'rascunho'
+  end
+  modificacao.situacao = situacao
   modificacao.save
-  ideia.data_publicacao = nil
-  ideia.data_atualizacao = Time.now
   ideia.add_modificacao modificacao
   ideia.save
 end
