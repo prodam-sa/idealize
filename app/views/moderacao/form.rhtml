@@ -7,7 +7,7 @@
       
       <div class="mdl-card__supporting-text">
         <p class="mdl-typography--text-right">
-          Postada em <%=@ideia.data :publicacao%>
+          <%=@ideia.modificacao.situacao.titulo%>, <%=formated_date @ideia.modificacao.data_registro%>
         </p>
         <h3 class="mdl-card__title-text">Oportunidade/Problema</h3>
         <%=@ideia.texto_oportunidade%>
@@ -30,14 +30,40 @@
       <hr/>
 
       <div class="mdl-card__supporting-text mdl-card--border">
+        <h3 class="mdl-card__title-text mdl-typography--headline">Histórico de avaliação</h3>
+        <table class="mdl-data-table prd-max-width">
+          <thead>
+            <th class="mdl-data-table__cell--non-numeric">Data</th>
+            <th class="mdl-data-table__cell--non-numeric">Responsável</th>
+            <th class="mdl-data-table__cell--non-numeric">Mensagem</th>
+          </thead>
+          <tbody>
+          <%@ideia.historico.each_with_index do |registro, h|%>
+            <td class="mdl-data-table__cell--non-numeric"><%=registro.data_registro%></td>
+            <td class="mdl-data-table__cell--non-numeric"><%=registro.responsavel.nome%></td>
+            <td class="mdl-data-table__cell--non-numeric"><%=registro.descricao%></td>
+          <%end%>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="mdl-card__supporting-text mdl-card--border">
         <h3 class="mdl-card__title-text mdl-typography--headline"><%=@formulario.titulo%></h3>
         <%@formulario.criterios.each_with_index do |criterio, c|%>
-          <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="criterio_<%=c%>_s">
-            <input type="hidden" id="criterio_<%=c%>_n" name="criterios[<%=criterio.id%>]" value="N"/>
-            <input type="checkbox" id="criterio_<%=c%>_s" name="criterios[<%=criterio.id%>]" value="S" class="mdl-switch__input"/>
+          <input type="hidden" id="criterio_<%=c%>_id" name="criterios[][id]" value="<%=criterio.id%>"/>
+          <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="criterio_<%=c%>_resposta_s">
+            <input type="checkbox" id="criterio_<%=c%>_resposta_s" name="criterios[][resposta]" value="S" class="mdl-switch__input"/>
             <p class="mdl-switch__label"><%=criterio.titulo%> <small><em>(<%=criterio.descricao%>)</em></small></p>
           </label>
         <%end%>
+      </div>
+
+      <div class="mdl-card__supporting-text mdl-card--border">
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--12-col">
+          <label class="mdl-textfield__label" for="ideia_titulo">Mensagem para o autor da ideia</label>
+          <input type="text" id="moderacao_mensagem" name="moderacao[mensagem]" class="mdl-textfield__input" pattern="[\w\W\s\S]*"/>
+          <span class="mdl-textfield__error">Digite um texto válido para o autor.</span>
+        </div>
       </div>
 
       <div class="mdl-card__actions mdl-card--border">

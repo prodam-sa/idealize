@@ -7,7 +7,7 @@
       </a>
       <span><%=ideia.titulo%></span>
       <div class="mdl-list__item-text-body">
-        Criado em <%=ideia.data(:criacao)%> e publicado em <%=ideia.data(:publicacao)%>.
+      <%=ideia.modificacao.situacao.titulo%>, <%=formated_date ideia.modificacao.data_registro%>
       </div>
     </div>
     <div class="mdl-list__item-secondary-content">
