@@ -10,7 +10,7 @@ all: check
 install: install.libraries
 
 install.libraries:
-	$(bundle) install --path vendor
+	$(bundle) install
 	bower install
 
 app.console:
