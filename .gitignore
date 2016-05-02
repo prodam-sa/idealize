@@ -1,4 +1,4 @@
-vendors/**
+vendor/**
 tmp/**
 public/src/**
 !public/src/*/*.min.css

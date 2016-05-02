@@ -1,44 +1,27 @@
 name = idealize
-version ?= 0.1.0
+version ?= 0.0.0
 database = $(name)
 environment ?= development
 
-vendors  = material-design-lite dialog-polyfill requirejs
-vendors += scribe
-vendors += scribe-plugin-blockquote-command
-vendors += scribe-plugin-code-command
-vendors += scribe-plugin-content-cleaner
-vendors += scribe-plugin-curly-quotes
-vendors += scribe-plugin-formatter-plain-text-convert-new-lines-to-html
-vendors += scribe-plugin-heading-command
-vendors += scribe-plugin-intelligent-unlink-command
-vendors += scribe-plugin-keyboard-shortcuts
-vendors += scribe-plugin-link-prompt-command
-vendors += scribe-plugin-sanitizer
-vendors += scribe-plugin-smart-lists
-vendors += scribe-plugin-toolbar
-
-$(vendors):
-	bower install $(@) --save
+bundle = ruby -S bundle
 
 all: check
 
-install: app.libraries app.vendors
+install: install.libraries
 
-app.libraries:
-	bundle install
-
-app.vendors: $(vendors)
+install.libraries:
+	$(bundle) install
+	bower install
 
 app.console:
-	exec ruby -S pry -Ilib:app -r prodam/idealize
+	exec ruby -Ilib:app -r prodam/idealize
 
 # make app.server environment=production
 app.server.start:
-	ruby -S puma --environment $(environment) --port 8091 --pidfile tmp/$(environment).pid --debug --log-requests --daemon
+	exec $(bundle) exec puma --environment $(environment) --port 8091 --pidfile tmp/$(environment).pid --debug --log-requests
 
 app.server.stop:
-	ruby -S pumactl --pidfile tmp/$(environment).pid stop
+	exec $(bundle) exec pumactl --pidfile tmp/$(environment).pid stop
 
 app.server.restart: app.server.stop app.server.start
 
@@ -66,8 +49,8 @@ db.drop.version:
 	sh db/sqlrun.sh db/v$(version)/drop.sql
 
 db.bootstrap:
-	sh db/sqlrun.sh db/bootstrap.sql
-	ruby -Ilib:app db/bootstrap.rb
+	test -f db/v$(version)/bootstrap.sql && sh db/sqlrun.sh db/v$(version)/bootstrap.sql || true
+	test -f db/v$(version)/bootstrap.rb  && ruby -Ilib:app db/v$(version)/bootstrap.rb || true
 
 check:
 	ruby test/all.rb

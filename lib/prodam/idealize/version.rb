@@ -2,7 +2,7 @@
 
 module Prodam
   module Idealize
-    VERSION   = '0.2.0'
+    VERSION   = '0.2.1'
     RELEASE   = Date.today
     TIMESTAMP = '2016-01-13 09:19:08 -0400'
 

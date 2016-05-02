@@ -30,7 +30,7 @@
   :descricao:
     Ideia está em edição e seu acesso é permitido apenas pelo autor e
     administrador. A ideia não será exibida.
-  :restrito: N
+  :restrito: S
 - :chave:
     postagem
   :titulo:
@@ -80,7 +80,7 @@
   :titulo:
     Ideia em desenvolvimento
   :descricao:
-    Ideia foi aproada em desenvolvimento.
+    Ideia foi aprovada em desenvolvimento.
   :restrito: N
 - :chave:
     implantacao
