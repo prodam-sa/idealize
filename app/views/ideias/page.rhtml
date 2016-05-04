@@ -36,10 +36,12 @@
             <th class="mdl-data-table__cell--non-numeric">Mensagem</th>
           </thead>
           <tbody>
-          <%@ideia.historico.each_with_index do |historico, h|%>
-            <td class="mdl-data-table__cell--non-numeric"><%=historico.data_registro%></td>
-            <td class="mdl-data-table__cell--non-numeric"><%=historico.responsavel.nome%></td>
-            <td class="mdl-data-table__cell--non-numeric"><%=historico.descricao%></td>
+          <%@ideia.historico.each do |mudanca|%>
+            <tr>
+              <td class="mdl-data-table__cell--non-numeric"><%=mudanca.data_registro%></td>
+              <td class="mdl-data-table__cell--non-numeric"><%=perfil_responavel_historico(@ideia, mudanca.responsavel)%></td>
+              <td class="mdl-data-table__cell--non-numeric"><%=mudanca.descricao%></td>
+            </tr>
           <%end%>
           </tbody>
         </table>

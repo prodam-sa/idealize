@@ -29,6 +29,13 @@ module IdeiasHelper
       mensagem
     end
   end
+
+  def perfil_responavel_historico(ideia, responsavel)
+    return 'Autor' if responsavel.id == ideia.autor_id
+    return 'Administrador' if responsavel.administrador?
+    return 'Moderador' if responsavel.moderador?
+    'Usuário'
+  end
 end
 
 end # module
