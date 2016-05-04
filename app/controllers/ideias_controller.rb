@@ -51,7 +51,7 @@ class IdeiasController < ApplicationController
     @ideia.remove_all_categorias
     params[:categorias].each do |categoria|
       @ideia.add_categoria categoria
-    end
+    end if params[:categorias]
     view 'ideias/page'
   end
 
