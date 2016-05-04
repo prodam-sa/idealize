@@ -14,7 +14,7 @@ install.libraries:
 	bower install
 
 app.console:
-	exec ruby -Ilib:app -r prodam/idealize
+	exec $(bundle) exec pry -Ilib:app -r prodam/idealize
 
 # make app.server environment=production
 app.server.start:
