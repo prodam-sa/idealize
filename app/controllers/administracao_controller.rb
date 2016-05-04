@@ -3,6 +3,10 @@
 class Prodam::Idealize::AdministracaoController < Prodam::Idealize::ApplicationController
   helpers Prodam::Idealize::GravatarHelper
 
+  before do
+    @page = controllers[:administracao_controller]
+  end
+
   before authorize: true do
     @page = controllers[:administracao_controller]
   end
