@@ -12,14 +12,22 @@ module IdeiasHelper
     usuario_id == ideia.autor_id
   end
 
-  def registrar_historico(chave, opcoes = {})
-    opcoes.update de: @ideia.autor_id, para: @ideia.autor_id
+  def registrar_historico(chave, mensagem)
     modificacao = Modificacao.create situacao_id: Situacao.chave(chave).id,
-                                     responsavel_id: opcoes[:de],
-                                     descricao: opcoes[:mensagem]
+                                     responsavel_id: usuario_id,
+                                     descricao: mensagem
     @ideia.situacao = chave.to_s
     @ideia.add_modificacao modificacao
     @ideia
+  end
+
+  def mensagem(texto)
+    mensagem = params[:historico] && params[:historico][:mensagem] || ''
+    if mensagem.empty?
+      texto
+    else
+      mensagem
+    end
   end
 end
 

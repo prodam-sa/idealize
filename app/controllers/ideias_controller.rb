@@ -33,7 +33,7 @@ class IdeiasController < ApplicationController
     @ideia = Ideia.new(params[:ideia])
     @ideia.autor_id = usuario_id
     @ideia.save
-    registrar_historico(:rascunho, mensagem: 'Ideia criada em rascunho para edição.').save
+    registrar_historico(:rascunho, mensagem('Ideia criada em rascunho para edição.')).save
     view 'ideias/page'
   end
 
@@ -47,7 +47,7 @@ class IdeiasController < ApplicationController
   end
 
   put '/:id' do |id|
-    registrar_historico(:revisao, mensagem: 'Ideia revisada pelo autor').update(params[:ideia])
+    registrar_historico(:revisao, mensagem('Ideia revisada pelo autor')).update(params[:ideia])
     @ideia.remove_all_categorias
     params[:categorias].each do |categoria|
       @ideia.add_categoria categoria
@@ -56,12 +56,12 @@ class IdeiasController < ApplicationController
   end
 
   put '/:id/postar' do |id|
-    registrar_historico(:postagem, mensagem: 'Ideia postada pelo autor para moderação.').save
+    registrar_historico(:postagem, mensagem('Ideia postada pelo autor para moderação.')).save
     redirect to("/#{@ideia.to_url_param}")
   end
 
   delete '/:id', authenticate: true  do |id|
-    registrar_historico(:arquivo, mensagem: 'Ideia excluída pelo autor.').save
+    registrar_historico(:arquivo, mensagem('Ideia excluída pelo autor.')).save
     @ideia.remove_all_coautores
     @ideia.remove_all_categorias
     @ideia.remove_all_modificacoes
