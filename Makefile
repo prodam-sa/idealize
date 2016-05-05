@@ -20,6 +20,9 @@ app.console:
 app.server.start:
 	exec $(bundle) exec puma --environment $(environment) --port 8091 --pidfile tmp/$(environment).pid --debug --log-requests
 
+app.server.daemon:
+	exec $(bundle) exec puma --environment $(environment) --port 8091 --pidfile tmp/$(environment).pid --daemon
+
 app.server.stop:
 	exec $(bundle) exec pumactl --pidfile tmp/$(environment).pid stop
 
