@@ -2,8 +2,8 @@
 
 module Prodam
   module Idealize
-    VERSION   = '0.2.1'
-    RELEASE   = Date.today
+    VERSION   = '0.3.0'
+    RELEASE   = '2016-05-06'
     TIMESTAMP = '2016-01-13 09:19:08 -0400'
 
     def self.info
