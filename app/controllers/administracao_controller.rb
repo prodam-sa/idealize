@@ -3,11 +3,15 @@
 class Prodam::Idealize::AdministracaoController < Prodam::Idealize::ApplicationController
   helpers Prodam::Idealize::GravatarHelper
 
+  before do
+    @page = controllers[:administracao_controller]
+  end
+
   before authorize: true do
     @page = controllers[:administracao_controller]
   end
 
-  before '/usuarios/:id/?' do |id|
+  before '/usuarios/:id/?:action?' do |id, action|
     @usuario = Prodam::Idealize::Usuario[id.to_i]
   end
 
@@ -24,6 +28,15 @@ class Prodam::Idealize::AdministracaoController < Prodam::Idealize::ApplicationC
 
   put '/usuarios/:id' do |id|
     @usuario.update(params[:usuario])
+    redirect to(path_to('/usuarios/' + id))
+  end
+
+  put '/usuarios/:id/senha' do |id|
+    if @usuario.save_password(*params[:usuario].values)
+      message.update(level: :success, text: 'Senha do usuário foi atualizada.')
+    else
+      message.update(level: :error, text: 'A senha informada não foi confirmada corretamente.')
+    end
     redirect to(path_to('/usuarios/' + id))
   end
 end

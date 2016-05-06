@@ -1,0 +1,36 @@
+- version: 0.3.0
+  release: 2016-05-06
+  summary:
+    Melhorias nas informações e correções de administração.
+  changes:
+  - Correção do erro de atualização da senha do usuário.
+  - Correção do erro da página de categorias como administrador.
+  - Remoção da informação do responsável pelos eventos das ideias.
+
+- version: 0.2.1
+  release: 2016-05-02
+  summary:
+    Correções no projeto e melhorias de _deploy_.
+  changes:
+  - Pequenas correções na estrutura de diretórios.
+  - Melhorias no processo de _deploy_.
+
+- version: 0.2.0
+  release: 2016-04-20
+  summary:
+    Moderação e histórico das ideias.
+  changes:
+  - Registro do histórico de eventos das ideias.
+  - Perfil de usuário moderador.
+  - Processo de moderação das ideias.
+
+- version: 0.1.0
+  release: 2016-03-24
+  summary:
+    Versão inicial do Idealize.
+  changes:
+  - Páginas para apresentação das categorias e das respectivas ideias
+    publicadas.
+  - Controle de acesso do usuário e administração de seus respectivos dados.
+  - Publicação de ideias com editor _Rich Text_.
+  - Layout responsivo utilizando o Material Design Lite.

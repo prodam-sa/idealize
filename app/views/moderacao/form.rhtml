@@ -38,10 +38,12 @@
             <th class="mdl-data-table__cell--non-numeric">Mensagem</th>
           </thead>
           <tbody>
-          <%@ideia.historico.each_with_index do |registro, h|%>
-            <td class="mdl-data-table__cell--non-numeric"><%=registro.data_registro%></td>
-            <td class="mdl-data-table__cell--non-numeric"><%=registro.responsavel.nome%></td>
-            <td class="mdl-data-table__cell--non-numeric"><%=registro.descricao%></td>
+          <%@ideia.historico.each_with_index do |mudanca, h|%>
+            <tr>
+              <td class="mdl-data-table__cell--non-numeric"><%=mudanca.data_registro%></td>
+              <td class="mdl-data-table__cell--non-numeric"><%=perfil_responavel_historico(@ideia, mudanca.responsavel)%></td>
+              <td class="mdl-data-table__cell--non-numeric"><%=mudanca.descricao%></td>
+            </tr>
           <%end%>
           </tbody>
         </table>
@@ -61,7 +63,7 @@
       <div class="mdl-card__supporting-text mdl-card--border">
         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--12-col">
           <label class="mdl-textfield__label" for="ideia_titulo">Mensagem para o autor da ideia</label>
-          <input type="text" id="moderacao_mensagem" name="moderacao[mensagem]" class="mdl-textfield__input" pattern="[\w\W\s\S]*"/>
+          <input type="text" id="historico_mensagem" name="historico[mensagem]" class="mdl-textfield__input" pattern="[\w\W\s\S]*"/>
           <span class="mdl-textfield__error">Digite um texto válido para o autor.</span>
         </div>
       </div>
