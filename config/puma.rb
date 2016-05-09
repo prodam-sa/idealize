@@ -6,7 +6,7 @@
 
 environment @environment
 
-daemonize true
+daemonize true if @environment == 'production'
 
 pidfile "tmp/idealize-#{@environment}.pid"
 
