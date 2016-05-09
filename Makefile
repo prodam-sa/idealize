@@ -1,11 +1,25 @@
+SHELL = /bin/bash
+.SUFFIXES:
+
 name = idealize
-version ?= 0.0.0
+version ?= 0.4.0
+release ?= 2016-05-11
 database = $(name)
 environment ?= development
 
+munge  = m4
+munge += -D_NAME='$(name)'
+munge += -D_VERSION='$(version)'
+munge += -D_RELEASE='$(release)'
+
 bundle = ruby -S bundle
 
+.SUFFIXES: .m4 .rb
+
 all: check
+
+.m4.rb:
+	$(munge) $(<) > $(@)
 
 install: install.libraries
 
@@ -13,7 +27,9 @@ install.libraries:
 	$(bundle) install
 	bower install
 
-app.console:
+app.version: lib/prodam/$(name)/version.rb
+
+app.console: app.version
 	exec $(bundle) exec pry -Ilib:app -r prodam/idealize
 
 # make app.server environment=production
@@ -51,6 +67,9 @@ db.drop.version:
 db.bootstrap:
 	test -f db/v$(version)/bootstrap.sql && sh db/sqlrun.sh db/v$(version)/bootstrap.sql || true
 	test -f db/v$(version)/bootstrap.rb  && ruby -Ilib:app db/v$(version)/bootstrap.rb || true
+
+clean:
+	rm -f lib/prodam/idealize/version.rb
 
 check:
 	ruby test/all.rb
