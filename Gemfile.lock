@@ -16,6 +16,7 @@ GEM
       rack
     rack-test (0.6.3)
       rack (>= 1.0)
+    rdiscount (2.2.0.1)
     ruby-oci8 (2.2.2)
     sequel (4.34.0)
     sinatra (1.4.7)
@@ -39,6 +40,7 @@ DEPENDENCIES
   json
   pry
   puma
+  rdiscount
   ruby-oci8
   sequel
   sinatra
