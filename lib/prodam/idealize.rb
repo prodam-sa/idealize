@@ -67,6 +67,14 @@ module Prodam
         @controllers
       end
 
+      def pages
+        @pages ||= application_config[:pages].each_with_object({}) do |(path, data), page|
+          id = path.gsub('/','').underscore.to_sym
+          data[:url_path] = path
+          page[id] = data
+        end
+      end
+
       def sources_from(*pathnames)
         pathnames.each_with_object({}) do |pathname, sources|
           Dir[root_directory.join('app').join(pathname.to_s).join('*.rb')].each do |source|

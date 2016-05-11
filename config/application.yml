@@ -42,3 +42,11 @@
     :navigation: []
     :roles: ['mi']
     :icon: assignment_turned_in
+:pages:
+  '/faq':
+    :title: Informações
+    :description: Perguntas frequentes sobre o Idealize.
+    :data: faq
+    :navigation: [header, drawer]
+    :roles: []
+    :icon: help
