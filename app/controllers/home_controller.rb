@@ -1,16 +1,25 @@
 # encoding: utf-8
 
-class Prodam::Idealize::HomeController < Prodam::Idealize::ApplicationController
-  helpers Prodam::Idealize::IdeiasHelper
+module Prodam::Idealize
+
+class HomeController < ApplicationController
+  helpers IdeiasHelper, DateHelper
 
   before do
     @page = controllers[:home_controller]
   end
 
   get '/' do
-    @categorias = Prodam::Idealize::Categoria.all
-    @ideias = Prodam::Idealize::Ideia.latest 10
+    @categorias = Categoria.all
+    @situacoes = Situacao.all_by_sem_restricao(:chave).map(&:chave)
+    @ideias = Ideia.all_by_situacao(@situacoes)
     view 'index'
+  end
+
+  get '/faq' do
+    @page = pages[:faq]
+    @faq = data @page[:data]
+    view 'paginas/faq'
   end
 
   get '/ajuda' do
@@ -18,3 +27,5 @@ class Prodam::Idealize::HomeController < Prodam::Idealize::ApplicationController
     redirect path_to('/pesquisas'), 303
   end
 end
+
+end # module
