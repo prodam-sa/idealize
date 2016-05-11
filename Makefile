@@ -1,11 +1,25 @@
+SHELL = /bin/bash
+.SUFFIXES:
+
 name = idealize
-version ?= 0.0.0
+version ?= 0.4.0
+release ?= 2016-05-11
 database = $(name)
 environment ?= development
 
+munge  = m4
+munge += -D_NAME='$(name)'
+munge += -D_VERSION='$(version)'
+munge += -D_RELEASE='$(release)'
+
 bundle = ruby -S bundle
 
+.SUFFIXES: .m4 .rb
+
 all: check
+
+.m4.rb:
+	$(munge) $(<) > $(@)
 
 install: install.libraries
 
@@ -13,20 +27,19 @@ install.libraries:
 	$(bundle) install
 	bower install
 
-app.console:
+version: lib/prodam/$(name)/version.rb
+
+console: version
 	exec $(bundle) exec pry -Ilib:app -r prodam/idealize
 
-# make app.server environment=production
-app.server.start:
-	exec $(bundle) exec puma --environment $(environment) --port 8091 --pidfile tmp/$(environment).pid --debug --log-requests
+# make server environment=production
+server.start: version
+	exec $(bundle) exec puma
 
-app.server.daemon:
-	exec $(bundle) exec puma --environment $(environment) --port 8091 --pidfile tmp/$(environment).pid --daemon
-
-app.server.stop:
+server.stop:
 	exec $(bundle) exec pumactl --pidfile tmp/$(environment).pid stop
 
-app.server.restart: app.server.stop app.server.start
+server.restart: server.stop server.start
 
 # make db.console environment=production
 db.console:
@@ -54,6 +67,9 @@ db.drop.version:
 db.bootstrap:
 	test -f db/v$(version)/bootstrap.sql && sh db/sqlrun.sh db/v$(version)/bootstrap.sql || true
 	test -f db/v$(version)/bootstrap.rb  && ruby -Ilib:app db/v$(version)/bootstrap.rb || true
+
+clean:
+	rm -f lib/prodam/idealize/version.rb
 
 check:
 	ruby test/all.rb

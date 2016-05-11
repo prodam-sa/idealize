@@ -35,7 +35,11 @@ module Prodam
       end
 
       def load_config(file)
-        YAML.load_file(root_directory.join('config').join("#{file}.yml"))
+        load_yaml(:config, file)
+      end
+
+      def load_data(file)
+        load_yaml(:db, file)
       end
 
       def application_config
@@ -63,6 +67,14 @@ module Prodam
         @controllers
       end
 
+      def pages
+        @pages ||= application_config[:pages].each_with_object({}) do |(path, data), page|
+          id = path.gsub('/','').underscore.to_sym
+          data[:url_path] = path
+          page[id] = data
+        end
+      end
+
       def sources_from(*pathnames)
         pathnames.each_with_object({}) do |pathname, sources|
           Dir[root_directory.join('app').join(pathname.to_s).join('*.rb')].each do |source|
@@ -73,6 +85,12 @@ module Prodam
             }
           end
         end
+      end
+
+    private
+
+      def load_yaml(prefix, file)
+        YAML.load_file(root_directory.join(prefix.to_s, "#{file}.yml"))
       end
     end
 

@@ -24,4 +24,16 @@ module Prodam::Idealize::ViewHelper
   def controllers
     Prodam::Idealize.controllers
   end
+
+  def pages
+    Prodam::Idealize.pages
+  end
+
+  def sections
+    controllers.merge(pages)
+  end
+
+  def data(filename)
+    Prodam::Idealize.load_data(filename)
+  end
 end

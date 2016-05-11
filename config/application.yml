@@ -2,37 +2,51 @@
 :routes:
   '/':
     :title: Home
+    :description: Bem-vindo ao Idealize.
     :controller: HomeController
     :navigation: [header, drawer]
     :roles: []
     :icon: home
   '/categorias':
     :title: Categorias
+    :description: As ideias são organizadas em categorias.
     :controller: CategoriasController
     :navigation: [header, drawer]
     :roles: []
     :icon: group_work
   '/ideias':
     :title: Ideias
+    :description: Ideias criadas pelos colaboradores.
     :controller: IdeiasController
     :navigation: [header, drawer]
     :roles: []
     :icon: wb_incandescent
   '/conta':
     :title: Conta
+    :description: Administre sua conta.
     :controller: AcessoController
     :navigation: [top]
     :roles: []
     :icon: account_box
   '/administracao':
     :title: Administração
+    :description: Configurações e ajustes.
     :controller: AdministracaoController
     :navigation: [top]
     :roles: ['ad']
     :icon: settings
   '/moderacao':
     :title: Moderação
+    :description: Análise preliminar das ideias postadas.
     :controller: ModeracaoController
     :navigation: []
     :roles: ['mi']
     :icon: assignment_turned_in
+:pages:
+  '/faq':
+    :title: Informações
+    :description: Perguntas frequentes sobre o Idealize.
+    :data: faq
+    :navigation: [header, drawer]
+    :roles: []
+    :icon: help

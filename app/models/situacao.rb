@@ -20,5 +20,9 @@ class Prodam::Idealize::Situacao < Prodam::Idealize::Model[:situacao]
     def chave(nome)
       where(chave: nome.to_s).first
     end
+
+    def all_by_sem_restricao(*fields)
+      where(restrito: 'N').select(*fields).all
+    end
   end
 end

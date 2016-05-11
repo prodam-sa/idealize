@@ -29,7 +29,7 @@ class ModeracaoController < ApplicationController
   end
 
   post '/:ideia_id' do |ideia_id|
-    validar_ideia params[:criterios], params[:moderacao][:mensagem]
+    validar_ideia params[:criterios], params[:historico][:mensagem]
     ideias_list
     view 'moderacao/index'
   end

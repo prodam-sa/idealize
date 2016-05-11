@@ -1,3 +1,12 @@
+- version: 0.4.0
+  release: 2016-05-11
+  summary:
+    Melhorias nas configurações, correções de moderação e página de ajuda.
+  changes:
+  - Correção do erro na mensagem de moderação.
+  - Melhorias nas configurações do servidor.
+  - Inclusão da página de FAQ para auxiliar os usuários na postagem de ideias.
+
 - version: 0.3.0
   release: 2016-05-06
   summary:

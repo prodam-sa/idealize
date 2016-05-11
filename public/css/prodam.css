@@ -222,3 +222,13 @@ img.prd-brand {
   text-align: justify;
 }
 
+.prd-page {
+  padding: 1.25em 2.00em;
+}
+
+.prd-page h1 { font-size: 2.00em; }
+.prd-page h2 { font-size: 1.90em; }
+.prd-page h3 { font-size: 1.80em; }
+.prd-page h4 { font-size: 1.70em; }
+.prd-page h5 { font-size: 1.60em; }
+.prd-page h6 { font-size: 1.50em; }
