@@ -6,8 +6,6 @@
   - Correção do erro na mensagem de moderação.
   - Melhorias nas configurações do servidor.
   - Inclusão da página de FAQ para auxiliar os usuários na postagem de ideias.
-  - Inclusão de apoio às ideias. Os usuários poderão apoiar ideias de outros
-    usuários.
 
 - version: 0.3.0
   release: 2016-05-06
