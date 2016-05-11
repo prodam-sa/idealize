@@ -1,4 +1,5 @@
 lib/prodam/idealize/version.rb
+log/**
 vendor/**
 tmp/**
 public/src/**
