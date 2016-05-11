@@ -35,7 +35,11 @@ module Prodam
       end
 
       def load_config(file)
-        YAML.load_file(root_directory.join('config').join("#{file}.yml"))
+        load_yaml(:config, file)
+      end
+
+      def load_data(file)
+        load_yaml(:db, file)
       end
 
       def application_config
@@ -73,6 +77,12 @@ module Prodam
             }
           end
         end
+      end
+
+    private
+
+      def load_yaml(prefix, file)
+        YAML.load_file(root_directory.join(prefix.to_s, "#{file}.yml"))
       end
     end
 
