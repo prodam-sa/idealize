@@ -27,19 +27,19 @@ install.libraries:
 	$(bundle) install
 	bower install
 
-app.version: lib/prodam/$(name)/version.rb
+version: lib/prodam/$(name)/version.rb
 
-app.console: app.version
+console: version
 	exec $(bundle) exec pry -Ilib:app -r prodam/idealize
 
-# make app.server environment=production
-app.server.start: app.version
+# make server environment=production
+server.start: version
 	exec $(bundle) exec puma
 
-app.server.stop:
+server.stop:
 	exec $(bundle) exec pumactl --pidfile tmp/$(environment).pid stop
 
-app.server.restart: app.server.stop app.server.start
+server.restart: server.stop server.start
 
 # make db.console environment=production
 db.console:
