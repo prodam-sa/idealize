@@ -1,5 +1,5 @@
 var dialog = document.querySelector('dialog');
-var button = document.querySelector('#dialog-show');
+var button = document.querySelector('.mdl-button--open-dialog');
 if (! dialog.showModal) {
   dialogPolyfill.registerDialog(dialog);
 }

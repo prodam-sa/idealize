@@ -3,6 +3,11 @@ button:hover, button:active, button:focus {
   outline: none;
 }
 
+body {
+  background-color: #fafafa;
+  color: #212121;
+}
+
 .prd-navigation__link {
   display: flex !important;
   flex-direction: row;
