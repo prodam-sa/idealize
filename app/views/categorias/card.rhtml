@@ -1,0 +1,14 @@
+<a href="<%=path_to :categorias, categoria.to_url_param%>" class="prd-minicard categoria mdl-card mdl-shadow--2dp mdl-js-button mdl-js-ripple-effect">
+  <div class="mdl-card__media">
+    <i class="material-icons"><%=categoria.icone%></i>
+  </div>
+  <div class="mdl-card__title">
+    <div class="mdl-card__subtitle-text">
+      <small>Ideias sobre</small><br/>
+      <span class="mdl-typography--text-uppercase"><%=categoria.titulo%></span>
+    </div>
+  </div>
+  <div class="mdl-card__supporting-text mdl-typography--text-italic">
+    <%=categoria.descricao%>
+  </div>
+</a>
