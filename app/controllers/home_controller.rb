@@ -10,10 +10,15 @@ class HomeController < ApplicationController
   end
 
   get '/' do
-    @categorias = Categoria.all
-    @situacoes = Situacao.all_by_sem_restricao(:chave).map(&:chave)
-    @ideias = Ideia.all_by_situacao(@situacoes)
-    view 'index'
+    @categorias = Categoria.limit(6).all
+    if authenticated?
+      @situacoes = Situacao.all_by_sem_restricao(:chave).map(&:chave)
+      @ideias = Ideia.all_by_situacao(@situacoes)
+      view 'index'
+    else
+      @total_ideias = Ideia.count
+      view 'wellcome', layout: :landpage
+    end
   end
 
   get '/faq' do

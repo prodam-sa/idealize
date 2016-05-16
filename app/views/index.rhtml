@@ -1,13 +1,17 @@
-<div class="mdl-grid">
-  <div class="mdl-cell mdl-cell--12-col">
-  <%unless @ideias.empty? %>
-    <%=partial 'ideias/gallery', locals: { ideias: @ideias }%>
-  <%else%>
-    <div class="prd-layout--centered mdl-card mdl-card--expandable mdl-shadow--2dp">
-      <p class="mdl-typography--headline mdl-typography--text-center">
-        Nenhuma ideia foi publicada, ainda.
-      </p>
+<div class="mdl-grid mdl-grid--no-spacing">
+  <div class="mdl-cell mdl-cell--1-col">
+    <!-- coluna esquerda para centralizacao do conteudo -->
+  </div>
+
+  <div class="mdl-cell mdl-cell--10-col mdl-grid">
+    <div class="mdl-cell mdl-cell--12-col mdl-typography--text-center">
+      <h2>Programa de Ideias e Sugestões Prodam</h2>
     </div>
-  <%end%>
+
+    <%@categorias.each_with_index do |categoria, c|%>
+      <div class="mdl-cell mdl-cell--2-col">
+        <%=partial 'categorias/card', locals: { categoria: categoria }%>
+      </div>
+    <%end%>
   </div>
 </div>

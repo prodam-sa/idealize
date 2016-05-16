@@ -1,0 +1,31 @@
+<div class="mdl-grid mdl-grid--no-spacing">
+  <div class="mdl-cell mdl-cell--1-col">
+    <!-- coluna esquerda para centralizacao do conteudo -->
+  </div>
+
+  <div class="mdl-cell mdl-cell--10-col mdl-grid">
+    <div class="mdl-cell mdl-cell--12-col mdl-typography--text-center">
+      <h1 class="mdl-typography--font-bold">Tem uma ideia? Compartilhe conosco!</h1>
+    </div>
+
+    <%@categorias.each_with_index do |categoria, c|%>
+      <div class="mdl-cell mdl-cell--2-col">
+        <%=partial 'categorias/card', locals: { categoria: categoria }%>
+      </div>
+    <%end%>
+
+    <div class="mdl-cell mdl-cell--12-col mdl-typography--text-center">
+      <h3 class="mdl-typography--font-bold">Programa de Ideias e Sugestões Prodam</h3>
+      <div class="prd-page">
+      <%if authenticated?%>
+        <a href="<%=path_to :ideias%>" class="mdl-button mdl-js-button"><%=@total_ideias%> ideias já foram criadas</a>
+      <%else%>
+        <a href="<%=path_to :conta, :acessar%>" class="mdl-button mdl-button--colored mdl-button--open-dialog mdl-js-button mdl-js-ripple-effect">
+          Acesse sua conta
+        </a>
+      <%end%>
+      </div>
+    </div>
+  </div>
+
+</div>
