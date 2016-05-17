@@ -34,12 +34,16 @@
 </head>
 <body>
   <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--no-desktop-drawer-button">
-    <header class="prd-layout__header mdl-layout__header mdl-layout__header--scroll mdl-layout__header--transparen-t">
+    <header class="prd-layout__header mdl-layout__header mdl-layout__header--scroll">
       <div class="mdl-layout__header-row">
-        <span class="mdl-layout-title prd-layout-icon-expanded">
-          <img src="<%=path_to '/img/brand-colored.svg'%>" alt="Idealize" title="Idealize"/>
-        </span>
+        <div class="mdl-layout--large-screen-only">
+          <span class="mdl-layout-title prd-layout-icon-expanded">
+            <img src="<%=path_to '/img/brand-colored.svg'%>" alt="Idealize" title="Idealize"/>
+          </span>
+        </div>
+
         <div class="mdl-layout-spacer"></div>
+
         <div class="prd-searchbox mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label mdl-textfield--align-right">
           <div class="mdl-textfield__expandable-holder">
             <input class="mdl-textfield__input" type="text" name="sample" id="ideias-campo-pesquisa" placeholder="Procure por ideias">
@@ -69,11 +73,18 @@
         <%end%>
       </div><!--/.mdl-layout__header-row-->
     </header>
-    <div class="prd-ribbon"></div>
-    <main class="prd-content mdl-layout__content">
-      <div class="">
+
+    <main class="mdl-layout__content">
+      <div class="prd-content prd-landpage">
         <%=yield%>
       </div>
+
+      <footer class="prd-footer mdl-mini-footer mdl-color--brown-900 mdl-color-text--white">
+        <div class="mdl-mini-footer__left-section"></div>
+        <div class="mdl-mini-footer__center-section">
+          <%=Date.today.year%> &copy; PRODAM - Processamento de Dados Amazonas S/A
+        </div>
+      </footer>
     </main>
   </div>
   <%unless authenticated?%>

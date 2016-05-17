@@ -4,7 +4,7 @@ button:hover, button:active, button:focus {
 }
 
 body {
-  background-color: #fafafa;
+  background-color: #efebe9; /* brown-50 */
   color: #212121;
 }
 
@@ -17,10 +17,17 @@ body {
   -webkit-flex-shrink: 0;
   -ms-flex-negative: 0;
   flex-shrink: 0;
-
 }
 
 .prd-content {
+  min-height: 700px;
+}
+
+.prd-landpage {
+  background-color: #e0f7fa;
+}
+
+.prd-content--with-ribbon {
   margin-top: -40vh;
 }
 
@@ -231,13 +238,15 @@ img.prd-brand {
 
 .prd-header__button-add {
   position: absolute;
+  top: 96px;
+  right: 32px;
 }
 
 .prd-footer__button-add {
   position: fixed;
   display: block;
   right: 0;
-  bottom: 0;
+  bottom: 8px;
   margin-right: 40px;
   margin-bottom: 40px;
   z-index: 900;
@@ -278,7 +287,7 @@ a.prd-minicard:hover {
 }
 
 .prd-minicard {
-  max-width: 170px;
+  width: 170px;
 }
 
 .prd-minicard .material-icons {
@@ -297,3 +306,6 @@ a.prd-minicard:hover {
   border-top: solid 8px #ffab00; /* amber-a700 /**/
 }
 
+img.prd-image-expanded {
+  width: 100%;
+}
