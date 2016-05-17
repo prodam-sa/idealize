@@ -8,10 +8,10 @@
       <h2>Programa de Ideias e Sugestões Prodam</h2>
     </div>
 
+    <div class="mdl-cell mdl-cell--12-col prd-board">
     <%@categorias.each_with_index do |categoria, c|%>
-      <div class="mdl-cell mdl-cell--2-col">
         <%=partial 'categorias/card', locals: { categoria: categoria }%>
-      </div>
     <%end%>
+    </div>
   </div>
 </div>

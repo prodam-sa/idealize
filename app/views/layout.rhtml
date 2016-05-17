@@ -34,7 +34,7 @@
 </head>
 <body>
   <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--no-desktop-drawer-button">
-    <header class="prd-layout__header mdl-layout__header">
+    <header class="prd-layout__header mdl-layout__header mdl-layout__header--scroll">
       <div class="mdl-layout__header-row">
         <div class="mdl-layout--small-screen-only">
           <span class="mdl-layout-title prd-layout-title">
@@ -42,6 +42,7 @@
             <span><%=@page[:title]%></span>
           </span>
         </div>
+
         <div class="mdl-layout--large-screen-only">
           <span class="mdl-layout-title prd-layout-icon-expanded">
             <a href="<%=path_to :home%>">
@@ -49,7 +50,9 @@
             </a>
           </span>
         </div>
+
         <div class="mdl-layout-spacer"></div>
+
         <div class="prd-searchbox mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label mdl-textfield--align-right">
           <label class="mdl-button mdl-js-button mdl-button--icon" for="ideias-campo-pesquisa">
             <i class="material-icons">search</i>
@@ -58,6 +61,7 @@
             <input class="mdl-textfield__input" type="text" name="sample" id="ideias-campo-pesquisa" placeholder="Procure por ideias">
           </div>
         </div>
+
         <%if authorized?%>
           <a href="<%=path_to :administracao%>" class="mdl-button mdl-js-button mdl-button--icon">
             <i class="material-icons">settings</i>
@@ -81,6 +85,7 @@
           </button>
         <%end%>
       </div><!--/.mdl-layout__header-row-->
+
       <div class="mdl-layout__header-row mdl-layout--large-screen-only mdl-color--white">
         <div class="prd-max-width prd-frame-centered">
           <nav class="prd-navigation mdl-navigation">
@@ -92,8 +97,16 @@
             </a>
           <%end%>
         </div>
+
+        <%if authenticated?%>
+          <a id="nova-ideia" href="<%=path_to :ideias, :nova%>" class="prd-header__button-add mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--colored mdl-shadow--4dp mdl-layout--large-screen-only">
+            <i class="material-icons">add</i>
+          </a>
+          <span class="mdl-tooltip mdl-tooltip--left" for="nova-ideia">Nova ideia!</span>
+        <%end%>
       </div><!--/.mdl-layout__header-row-->
     </header>
+
     <div class="mdl-layout__drawer prd-layout__drawer">
       <span class="mdl-layout-title"></span>
       <a href="<%=path_to :home%>"><img src="<%=path_to '/img/brand-colored.svg'%>" class="prd-drawer__brand"/></a>
@@ -114,17 +127,24 @@
         <%=version_info%>
       </small>
     </div>
-    <div class="prd-ribbon"></div>
-    <main class="prd-content mdl-layout__content">
-      <div class="">
+
+    <main class="mdl-layout__content">
+      <div class="prd-content">
         <%=yield%>
       </div>
-      <%if authenticated?%>
-        <a id="nova-ideia" href="<%=path_to :ideias, :nova%>" class="prd-footer__button-add mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--colored mdl-shadow--4dp">
-          <i class="material-icons">add</i>
-        </a>
-        <span class="mdl-tooltip mdl-tooltip--top" for="nova-ideia">Nova ideia!</span>
-      <%end%>
+
+      <footer class="prd-footer mdl-mini-footer mdl-color--brown-900 mdl-color-text--white">
+        <div class="mdl-mini-footer__left-section"></div>
+        <div class="mdl-mini-footer__center-section">
+          <%=Date.today.year%> &copy; PRODAM - Processamento de Dados Amazonas S/A
+          <%if authenticated?%>
+            <a id="nova-ideia" href="<%=path_to :ideias, :nova%>" class="prd-footer__button-add mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--colored mdl-shadow--4dp mdl-layout--small-screen-only">
+              <i class="material-icons">add</i>
+            </a>
+            <span class="mdl-tooltip mdl-tooltip--top" for="nova-ideia">Nova ideia!</span>
+          <%end%>
+        </div>
+      </footer>
     </main>
   </div>
   <%unless authenticated?%>

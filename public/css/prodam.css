@@ -287,7 +287,6 @@ a.prd-minicard:hover {
 }
 
 .prd-minicard {
-  width: 170px;
 }
 
 .prd-minicard .material-icons {
@@ -304,6 +303,20 @@ a.prd-minicard:hover {
 
 .prd-minicard.categoria {
   border-top: solid 8px #ffab00; /* amber-a700 /**/
+}
+
+.prd-board {
+  display: flex;
+  justify-content: center;
+  flex-flow: row wrap;
+}
+
+.prd-board .prd-minicard {
+  width: 170px;
+  margin: 0.33vh 0.25vw;
+}
+
+.prd-footer {
 }
 
 img.prd-image-expanded {
