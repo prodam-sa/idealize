@@ -214,12 +214,8 @@ img.prd-brand {
   background-color: #d50000;
 }
 
-.mdl-list__item {
+.mdl-list__item:not(:last-child) {
   border-bottom: 1px solid #ddd;
-}
-
-.mdl-list__item:last-child {
-  border-bottom: none;
 }
 
 .prd-button--float-right {

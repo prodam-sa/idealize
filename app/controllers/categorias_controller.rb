@@ -1,22 +1,27 @@
 # encoding: utf-8
 
-class Prodam::Idealize::CategoriasController < Prodam::Idealize::ApplicationController
+module Prodam::Idealize
+
+class CategoriasController < ApplicationController
+  helpers IdeiasHelper, DateHelper
+
   before do
     @page = controllers[:categorias_controller]
   end
 
   before '/:id/?:action?' do |id, action|
-    @categoria = Prodam::Idealize::Categoria[id.to_i]
+    @categoria = Categoria[id.to_i]
   end
 
   get '/' do
-    @categorias = Prodam::Idealize::Categoria.all
-    @categoria = Prodam::Idealize::Categoria.new
+    @categorias = Categoria.all
+    @categoria = Categoria.new
     view 'categorias/index'
   end
 
   get '/:id' do |id|
-    view 'categorias/detail'
+    @categoria.ideias.count # cache para ideias da categoria
+    view 'categorias/page'
   end
 
   get '/:id/editar', authorize: 'editar categoria' do |id|
@@ -27,3 +32,5 @@ class Prodam::Idealize::CategoriasController < Prodam::Idealize::ApplicationCont
     @categoria = params[:categoria]
   end
 end
+
+end # module
