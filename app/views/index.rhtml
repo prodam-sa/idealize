@@ -8,7 +8,7 @@
       <h2>Programa de Ideias e Sugestões Prodam</h2>
     </div>
 
-    <div class="mdl-cell mdl-cell--12-col prd-board">
+    <div class="mdl-cell mdl-cell--12-col prd-board prd-board--centered">
     <%@categorias.each_with_index do |categoria, c|%>
         <%=partial 'categorias/card', locals: { categoria: categoria }%>
     <%end%>

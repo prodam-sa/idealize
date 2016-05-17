@@ -279,6 +279,27 @@ img.prd-brand {
 .prd-page h5 { font-size: 1.60em; }
 .prd-page h6 { font-size: 1.50em; }
 
+.prd-board {
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.prd-board--centered {
+  justify-content: center;
+}
+
+.prd-minicard {
+  margin: 0.33vh 0.25vw;
+}
+
+/* .prd-minicard:first-child { */
+/*   margin-left: 0; */
+/* } */
+
+/* .prd-minicard:last-child { */
+/*   margin-right: 0; */
+/* } */
+
 a.prd-minicard {
   text-decoration:none;
 }
@@ -289,31 +310,29 @@ a.prd-minicard:hover {
 .prd-minicard {
 }
 
-.prd-minicard .material-icons {
-  font-size: 64px;
-  color: #ff6f00;
-}
-
 .prd-minicard .mdl-card__supporting-text {
   width: auto;
-  min-height: 8em;
   text-align: left;
   font-style: italic;
 }
 
 .prd-minicard.categoria {
+  width: 170px;
+  min-height: 8em;
   border-top: solid 8px #ffab00; /* amber-a700 /**/
 }
 
-.prd-board {
-  display: flex;
-  justify-content: center;
-  flex-flow: row wrap;
+.prd-minicard.categoria .material-icons {
+  font-size: 64px;
+  color: #ff6f00;
 }
 
-.prd-board .prd-minicard {
-  width: 170px;
-  margin: 0.33vh 0.25vw;
+.prd-minicard.ideia {
+  width: 50vw;
+}
+
+.prd-minicard.ideia .mdl-card__supporting-text {
+  height: 1rem;
 }
 
 .prd-footer {
