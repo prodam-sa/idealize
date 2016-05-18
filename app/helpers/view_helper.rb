@@ -36,4 +36,8 @@ module Prodam::Idealize::ViewHelper
   def data(filename)
     Prodam::Idealize.load_data(filename)
   end
+
+  def remove_html_tags(text)
+    text.gsub(/<("[^"]*"|'[^']*'|[^'">])*>/, '')
+  end
 end

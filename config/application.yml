@@ -4,7 +4,7 @@
     :title: Home
     :description: Bem-vindo ao Idealize.
     :controller: HomeController
-    :navigation: [header, drawer]
+    :navigation: []
     :roles: []
     :icon: home
   '/categorias':
