@@ -62,9 +62,17 @@ class Prodam::Idealize::Ideia < Prodam::Idealize::Model[:ideia]
       where(situacao: chave).limit(limit).reverse(:data_atualizacao).all
     end
 
-    def search_by_situacao_titulo(situacao, titulo, limit = 10)
-      expressao = format("regexp_like(titulo, '%s', 'i')", titulo)
-      where(situacao: situacao).where(expressao).limit(limit).reverse(:data_atualizacao)
+    def search_by_titulo_situacao(titulo, situacao, limit = 10)
+      regexp_like(:titulo, titulo).where(situacao: situacao).limit(limit).reverse(:data_atualizacao)
+    end
+
+    def search_by_titulo_autor(titulo, autor_id, limit = 10)
+      regexp_like(:titulo, titulo).where(autor_id: autor_id).limit(limit).reverse(:data_atualizacao)
+    end
+
+  private
+    def regexp_like(field, value)
+      where(format("regexp_like(#{field}, '%s', 'i')", value))
     end
   end
 end
