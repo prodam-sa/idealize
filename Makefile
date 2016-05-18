@@ -2,8 +2,8 @@ SHELL = /bin/bash
 .SUFFIXES:
 
 name = idealize
-version ?= 0.5.0
-release ?= 2016-05-18
+version ?= 0.6.0
+release ?= 2016-05-20
 database = $(name)
 environment ?= development
 
