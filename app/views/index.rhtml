@@ -10,7 +10,7 @@
 
     <div class="mdl-cell mdl-cell--12-col prd-board prd-board--centered">
     <%@categorias.each_with_index do |categoria, c|%>
-        <%=partial 'categorias/card', locals: { categoria: categoria }%>
+      <%=partial 'categorias/minicard', locals: { categoria: categoria }%>
     <%end%>
     </div>
   </div>

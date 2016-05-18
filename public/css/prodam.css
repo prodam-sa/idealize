@@ -312,13 +312,13 @@ a.prd-minicard:hover {
   font-style: italic;
 }
 
-.prd-minicard.categoria {
+.prd-minicard.prd-categoria {
   width: 170px;
   min-height: 8em;
   border-top: solid 8px #ffab00; /* amber-a700 /**/
 }
 
-.prd-minicard.categoria .material-icons {
+.prd-minicard.prd-categoria .material-icons {
   font-size: 64px;
   color: #ff6f00;
 }
