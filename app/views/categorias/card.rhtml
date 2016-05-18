@@ -1,0 +1,22 @@
+<a href="<%=path_to :categorias, categoria.to_url_param%>" class="prd-card prd-categoria mdl-card mdl-shadow--2dp mdl-js-button mdl-js-ripple-effect">
+  <div class="prd-background-icon">
+    <i class="material-icons"><%=categoria.icone%></i>
+  </div>
+
+  <div class="mdl-card__title">
+    <div class="mdl-card__subtitle-text mdl-color-text--primary">
+      <span class="mdl-typography--text-uppercase"><strong><%=categoria.titulo%></strong></span>
+    </div>
+  </div>
+
+  <div class="mdl-card__supporting-text mdl-card--expand">
+    <%=categoria.descricao%>
+  </div>
+
+  <div class="mdl-card__actions mdl-typography--text-right mdl-typography--font-bold">
+    <%texto = categoria.ideias.count > 0 ? "%d ideias" : "Sem ideias, ainda"%>
+    <span class="mdl-color-text--primary">
+      <%=format texto, categoria.ideias.count%>
+    </span>
+  </div>
+</a>
