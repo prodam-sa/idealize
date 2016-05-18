@@ -156,13 +156,13 @@ body {
   left: 0;
   min-width: 50%;
   min-height: 50%;
-  opacity: 0.10;
+  /* opacity: 0.10; */
   margin: auto;
   z-index: -9;
   font-size: 9.50em;
   display: flex;
   /* justify-content: center; */
-  color: #789;
+  color: #fff8e1;
 }
 
 .mdl-tabs .mdl-tabs__tab-bar.mdl-tabs__tab-bar--non-centered {
@@ -265,6 +265,7 @@ img.prd-brand {
 }
 
 .prd-page {
+  background-color: #fff;
   padding: 1.25em 2.00em;
 }
 
@@ -284,8 +285,8 @@ img.prd-brand {
   justify-content: center;
 }
 
-.prd-minicard {
-  margin: 0.33vh 0.25vw;
+.prd-card, .prd-minicard {
+  margin: 0.35vh 0.25vw;
 }
 
 /* .prd-minicard:first-child { */
@@ -296,14 +297,11 @@ img.prd-brand {
 /*   margin-right: 0; */
 /* } */
 
-a.prd-minicard {
+a.prd-card, a.prd-minicard {
   text-decoration:none;
 }
 
 a.prd-minicard:hover {
-}
-
-.prd-minicard {
 }
 
 .prd-minicard .mdl-card__supporting-text {
@@ -312,9 +310,22 @@ a.prd-minicard:hover {
   font-style: italic;
 }
 
+.prd-card.prd-categoria {
+  width: 256px;
+  min-height: 16rem;
+  border-top: solid 8px #ffab00; /* amber-a700 /**/
+}
+
+.mdl-cell .prd-card.prd-categoria {
+  width: 100%;
+  min-height: 16rem;
+  margin: 0px;
+  border-top: solid 8px #ffab00; /* amber-a700 /**/
+}
+
 .prd-minicard.prd-categoria {
   width: 170px;
-  min-height: 8em;
+  min-height: 8rem;
   border-top: solid 8px #ffab00; /* amber-a700 /**/
 }
 
@@ -323,11 +334,11 @@ a.prd-minicard:hover {
   color: #ff6f00;
 }
 
-.prd-minicard.ideia {
+.prd-minicard.prd-ideia {
   width: 50vw;
 }
 
-.prd-minicard.ideia .mdl-card__supporting-text {
+.prd-minicard.prd-ideia .mdl-card__supporting-text {
   height: 1rem;
 }
 
