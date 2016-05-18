@@ -61,5 +61,10 @@ class Prodam::Idealize::Ideia < Prodam::Idealize::Model[:ideia]
     def all_by_situacao(chave, limit = 10)
       where(situacao: chave).limit(limit).reverse(:data_atualizacao).all
     end
+
+    def search_by_situacao_titulo(situacao, titulo, limit = 10)
+      expressao = format("regexp_like(titulo, '%s', 'i')", titulo)
+      where(situacao: situacao).where(expressao).limit(limit).reverse(:data_atualizacao)
+    end
   end
 end
