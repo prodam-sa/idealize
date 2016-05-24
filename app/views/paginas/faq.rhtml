@@ -5,7 +5,7 @@
     <ol id="indice">
     <%@faq.each_with_index do |item, i|%>
       <li id="indice-<%=i + 1%>">
-        <a href="#pergunta-<%=i + 1%>" class="mdl-typography--font-bold"><%=item[:ask]%></a>
+        <a href="#pergunta-<%=i + 1%>" class="mdl-typography--font-bold mdl-color-text--primary"><%=item[:ask]%></a>
       </li>
     <%end%>
     </ol>
