@@ -2,22 +2,33 @@
     Quem pode submeter informações no Programa de Sugestões e Ideias da Prodam
     através o Idealize?
   :answer: |
-    Todos os colaboradores que estejam regularmente matriculados que
-    apresentem uma ou mais ideias inovadoras.
+    Todos os colaboradores da Prodam AM: Estagiários, Concursados, Terceirizados e Aprendizes.
 
 - :ask:
     Posso acessar minha ideia para fazer alterações após cadastrá-la?
   :answer: |
     Sim, as ideias poderão ser modificadas até aprovação dos moderadores. Em
     caso da ideia não ser aprovada no processo de moderação, ela será
-    arquivada.
+    arquivada e reavaliada posteriormente. Futuramente será implementado notificações 
+    via e-mail sobre o andamento do processo de avaliação. 
 
 - :ask:
     Como as ideias serão avaliadas?
   :answer:
-    Há um fluxo para avaliação das ideias. O fluxo é iniciado pela moderação
-    seguindo para publicação. Cada ideia será moderada por usuários
-    responsáveis, com formação e experiência em uma ou mais áreas temáticas do
-    programa, homologados pelo Comitê de Inovação. As avaliações seguirão os
-    critérios estabelecidos no edital e, caso haja uma discrepância entre as
-    avaliações, um terceiro especialista irá avaliar a ideia.
+    Há um fluxo para avaliação das ideias:
+    Ao iniciar uma nova ideia o colaborador ao enviar as informações deixará sua ideia para ser moderada
+    por um dos colaboradores do comitê. Caso haja a necessidade de ajuste destas ideias, o moderador irá
+    retornar esta ideia com algumas considerações feitas para posterior correção do colaborador.
+    Caso a ideia seja aprovada na moderação esta estará elegível para o comitê avaliador que usará
+    parâmetros para rankear e também pontuar as ideias conforme sua relevância.
+    Se essa ideia alcançar uma pontuação mínima esta será elegível para avaliação do comitê de 
+    viabilidade de projeto.
+    
+- :ask:
+    O que será premiado?
+  :answer:
+    Com a evolução da plataforma será implantado um modelo de gameficação onde a participação de cada
+    colaborador será pontuado e estes pontos poderão ser trocados por brindes ou pequenas premiações.
+    Ideias aprovadas e implantadas receberão outro nível de premiação que será definido pelos gestores
+    envolvidos no processo. A documentação e quais parâmetros de avaliação das idéias estarão disponíveis 
+    em breve nesta plataforma e também para download.
