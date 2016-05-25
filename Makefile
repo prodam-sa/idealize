@@ -51,21 +51,21 @@ db.table:
 
 # make db.create
 db.create:
-	sh db/sqlrun.sh db/create.sql $(database)_index $(database)_data
+	sh db/sqlrun.sh -e $(environment) db/create.sql $(database)_index $(database)_data
 
 # make db.create.version version=0.1.0
 db.create.version:
-	sh db/sqlrun.sh db/v$(version)/create.sql $(database)_index $(database)_data
+	sh db/sqlrun.sh -e $(environment) db/v$(version)/create.sql $(database)_index $(database)_data
 
 db.drop:
-	sh db/sqlrun.sh db/drop.sql
+	sh db/sqlrun.sh -e $(environment) db/drop.sql
 
 # make db.drop.version version=0.1.0
 db.drop.version:
-	sh db/sqlrun.sh db/v$(version)/drop.sql
+	sh db/sqlrun.sh -e $(environment) db/v$(version)/drop.sql
 
 db.bootstrap:
-	test -f db/v$(version)/bootstrap.sql && sh db/sqlrun.sh db/v$(version)/bootstrap.sql || true
+	test -f db/v$(version)/bootstrap.sql && sh db/sqlrun.sh -e $(environment) db/v$(version)/bootstrap.sql || true
 	test -f db/v$(version)/bootstrap.rb  && ruby -Ilib:app db/v$(version)/bootstrap.rb || true
 
 clean:
