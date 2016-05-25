@@ -52,7 +52,7 @@ module Prodam
 
       def routes
         controllers.each_with_object({}) do |(id, controller), routes|
-          routes[controller[:url_path]] = Prodam::Idealize.const_get controller[:const_name]
+          routes[controller[:url_path]] = const_get controller[:const_name]
         end
       end
 
@@ -94,7 +94,7 @@ module Prodam
       end
     end
 
-    class Prodam::Idealize::Database
+    class Database
       # Sequel::Inflections.clear
 
       Sequel.inflections do |inflect|
@@ -103,17 +103,16 @@ module Prodam
       end
 
       class << self
-        attr_reader :uri
         attr_reader :options
 
-        def connection(env = Prodam::Idealize.environment)
-          @uri = Prodam::Idealize.database_config[env.to_sym][:uri]
-          @options = { prefetch_rows: 50 }
+        def connection(env = Idealize.environment)
+          @options = Idealize.database_config[env.to_sym]
+          @options[:prefetch_rows] = 50
           if env == :development
             require 'logger'
             @options[:loggers] = [Logger.new($stdout)]
           end
-          @connection ||= Sequel.connect @uri, @options
+          @connection ||= Sequel.connect @options
         end
 
         def [](dataset)
