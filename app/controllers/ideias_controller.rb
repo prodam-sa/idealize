@@ -42,8 +42,9 @@ class IdeiasController < ApplicationController
   post '/', authenticate: true do
     @ideia = Ideia.new(params[:ideia])
     @ideia.autor_id = usuario_id
+    @ideia.save_changes
     @ideia.save
-    registrar_historico(:rascunho, mensagem('Ideia criada em rascunho para edição.')).save
+    registrar_historico(:rascunho, mensagem('Ideia criada em rascunho para edição.')).save_changes
     view 'ideias/page'
   end
 

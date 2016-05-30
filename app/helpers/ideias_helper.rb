@@ -16,8 +16,8 @@ module IdeiasHelper
     modificacao = Modificacao.create situacao_id: Situacao.chave(chave).id,
                                      responsavel_id: usuario_id,
                                      descricao: mensagem
-    @ideia.situacao = chave.to_s
     @ideia.add_modificacao modificacao
+    @ideia.situacao = chave.to_s
     @ideia
   end
 
