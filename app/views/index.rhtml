@@ -10,8 +10,12 @@
 
     <div class="mdl-cell mdl-cell--12-col prd-board prd-board--centered">
     <%@categorias.each_with_index do |categoria, c|%>
-        <%=partial 'categorias/card', locals: { categoria: categoria }%>
+      <%=partial 'categorias/minicard', locals: { categoria: categoria }%>
     <%end%>
+    </div>
+
+    <div class="mdl-cell mdl-cell--12-col mdl-typography--text-center">
+      <a href="<%=path_to :categorias%>" class="mdl-button mdl-button--raised mdl-button--colored mdl-js-button mdl-js-ripple-effect">Mais categorias</a>
     </div>
   </div>
 </div>

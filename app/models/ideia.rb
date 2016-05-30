@@ -61,5 +61,17 @@ class Prodam::Idealize::Ideia < Prodam::Idealize::Model[:ideia]
     def all_by_situacao(chave, limit = 10)
       where(situacao: chave).limit(limit).reverse(:data_atualizacao).all
     end
+
+    def search(termo, limit = 10)
+      regexp_like(titulo: termo, texto_oportunidade: termo, texto_solucao: termo).limit(limit).reverse(:data_atualizacao)
+    end
+
+  private
+    def regexp_like(hash)
+      expressao = hash.map do |field, pattern|
+        format("regexp_like(#{field}, '%s', 'i')", pattern.to_s)
+      end.join(' or ')
+      where(expressao)
+    end
   end
 end

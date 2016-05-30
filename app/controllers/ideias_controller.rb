@@ -3,11 +3,11 @@
 module Prodam::Idealize
 
 class IdeiasController < ApplicationController
-  helpers IdeiasHelper
-  helpers DateHelper
+  helpers IdeiasHelper, DateHelper
 
   before do
     @page = controllers[:ideias_controller]
+    @situacoes = Situacao.all_by_sem_restricao(:chave).map(&:chave)
   end
 
   before '/:id/?:action?' do |id, action|
@@ -27,6 +27,16 @@ class IdeiasController < ApplicationController
   get '/nova', authenticate: true do
     @categorias = Categoria.all
     view 'ideias/form'
+  end
+
+  get '/pesquisa' do
+    @termo = params[:termo]
+    if authenticated?
+      @ideias = Ideia.search(@termo).where(autor_id: usuario_id).all
+    else
+      @ideias = Ideia.search(@termo).where(situacao: @situacoes).all
+    end
+    view 'ideias/list'
   end
 
   post '/', authenticate: true do

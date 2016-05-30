@@ -1,8 +1,17 @@
-:test:
-  :uri: oracle://idealize:idealize2016@10.20.1.175:1521/oradds1.prodam.com.br
-:development:
-  :uri: oracle://idealize:idealize2016@10.20.1.175:1521/oradds1.prodam.com.br
-:stage:
-  :uri: oracle://idealize:idealize2016@10.20.1.175:1521/oradds1.prodam.com.br
+:test: &default
+  :adapter: oracle
+  :host: 10.20.1.175
+  :port: 1521
+  :database: oradds1.prodam.com.br
+  :user: idealize
+  :password: idealize2016
+:development: *default
+:stage: *default
 :production:
-  :uri: jdbc:oracle:thin:idealize/<senha>@pdm1-prd-scan.prodam.local:1521/dbpdm01.prodam.com.br
+  :adapter: oracle
+  :host: pdm1-prd-scan.prodam.local
+  :port: 1521
+  :database: idealize.prodam.com.br
+  #:database: dbpdm01.prodam.com.br
+  :user: idealize
+  :password: Me#gh9fu
