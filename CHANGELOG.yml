@@ -1,9 +1,10 @@
 - version: 0.6.0
-  release: 2016-05-20
+  release: 2016-05-25
   summary:
-    
+    Inclusão da pesquisa de ideias.
   changes:
-  - 
+  - Pesquisa de ideias.
+  - Melhorias nas páginas.
 
 - version: 0.5.0
   release: 2016-05-18
