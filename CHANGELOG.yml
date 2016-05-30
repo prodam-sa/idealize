@@ -1,3 +1,11 @@
+- version: 0.7.0
+  release: 2016-06-03
+  summary:
+    Melhorias na administração de dados e suporte à coautores
+  changes:
+  - Administração de dados das categorias.
+  - Inclusão de coautores.
+
 - version: 0.6.1
   release: 2016-05-30
   summary:
