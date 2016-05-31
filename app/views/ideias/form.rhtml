@@ -1,20 +1,30 @@
 <div class="mdl-grid">
+  <%if message[:text]%>
+    <div id="message" class="mdl-cell mdl-cell--12-col">
+      <div class="prd-message-box prd-color--<%=message[:level]%> mdl-shadow--2dp">
+        <%=message[:text]%>
+      </div>
+    </div>
+  <%end%>
   <div class="mdl-cell mdl-cell--12-col mdl-color--white">
     <%path = @ideia.id ? path_to(:ideias, @ideia.to_url_param) : path_to(:ideias)%>
     <form action="<%=path%>" method="post" class="mdl-grid mdl-shadow--2dp">
-      <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--12-col">
+      <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label <%='is-invalid' if @ideia.errors[:titulo]%> mdl-cell mdl-cell--12-col">
         <label class="mdl-textfield__label" for="ideia_titulo">Título da sua ideia...</label>
         <input id="ideia_titulo" name="ideia[titulo]" class="mdl-textfield__input" type="text" value="<%=@ideia.titulo%>"/>
+        <%if @ideia.errors[:titulo]%>
+          <span class="mdl-textfield__error"><%=@ideia.errors[:titulo].join(', ')%></span>
+        <%end%>
       </div>
 
       <div class="mdl-cell mdl-cell--12-col">
         <label for="ideia_texto_oportunidade">Oportunidade/Desafio</label>
-        <%=partial 'ideias/editor', locals: { html_id: 'ideia_texto_oportunidade', html_name: 'ideia[texto_oportunidade]', html_value: @ideia.texto_oportunidade }%>
+        <%=partial 'ideias/editor', locals: { ideia: @ideia, field: :texto_oportunidade }%>
       </div>
       
       <div class="mdl-cell mdl-cell--12-col">
         <label for="ideia_texto_solucao">Proposta/Solução</label>
-        <%=partial 'ideias/editor', locals: { html_id: 'ideia_texto_solucao', html_name: 'ideia[texto_solucao]', html_value: @ideia.texto_solucao }%>
+        <%=partial 'ideias/editor', locals: { ideia: @ideia, field: :texto_solucao }%>
       </div>
 
       <div class="mdl-cell mdl-cell--12-col mdl-grid mdl-grid--no-spacing">

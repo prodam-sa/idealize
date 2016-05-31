@@ -1,4 +1,7 @@
-<div id="<%=html_id%>-editor" class="editor mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
+<%if ideia.errors[field]%>
+  <span class="mdl-color-text--red-A700"><%=ideia.errors[field].join(', ')%></span>
+<%end%>
+<div id="ideia_<%=field%>-editor" class="editor mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
   <div class="mdl-tabs__tab-bar mdl-tabs__tab-bar--non-centered">
     <a href="#text-panel" class="mdl-tabs__tab is-active">Texto</a>
     <a href="#html-panel" class="mdl-tabs__tab">HTML</a>
@@ -45,7 +48,7 @@
     <div class="editor__area mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell-11-phone"></div>
   </div>
 
-  <div id="html-panel" class="mdl-tabs__panel mdl-textfield mdl-js-textfield">
-    <textarea type="text" id="<%=html_id%>" name="<%=html_name%>" class="editor__code"><%=html_value%></textarea>
+  <div id="html-panel" class="mdl-tabs__panel mdl-textfield mdl-js-textfield <%='is-invalid' if ideia.errors[field]%>">
+    <textarea type="text" id="ideia_<%=field%>" name="ideia[<%=field%>]" class="editor__code"><%=ideia[field]%></textarea>
   </div>
 </div>
