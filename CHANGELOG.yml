@@ -1,3 +1,11 @@
+- version: 0.6.2
+  release: 2016-05-31
+  summary:
+    Correção nas validações das ideias
+  changes:
+  - Melhoria nas validações.
+  - Retorno das mensagens de erros no formulário de ideias.
+
 - version: 0.6.1
   release: 2016-05-30
   summary:

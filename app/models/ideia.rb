@@ -51,15 +51,19 @@ class Prodam::Idealize::Ideia < Prodam::Idealize::Model[:ideia]
 
   class << self
     def latest(limit = 10, *fields)
-      select(*fields).limit(limit).exclude(data_publicacao: nil).reverse(:data_criacao).all
+      select(*fields).limit(limit).exclude(data_publicacao: nil).reverse(:data_criacao)
     end
 
     def all_by_autor(autor_id, limit = 10)
-      where(autor_id: autor_id).limit(limit).reverse(:data_criacao).all
+      where(autor_id: autor_id).limit(limit).reverse(:data_criacao)
     end
 
     def all_by_situacao(chave, limit = 10)
-      where(situacao: chave).limit(limit).reverse(:data_atualizacao).all
+      where(situacao: chave).limit(limit).reverse(:data_atualizacao)
+    end
+
+    def all_by_situacao_categoria(chave, categoria_id, limit = 10)
+      join(:categoria, id: categoria_id).where(situacao: chave).limit(limit).reverse(:data_atualizacao)
     end
 
     def search(termo, limit = 10)

@@ -203,15 +203,15 @@ img.prd-brand {
 }
 
 .prd-color--information {
+  background-color: #81c784; /* green-300 */
 }
 
 .prd-color--warning {
-  color: #333;
-  background-color: #fff176;
+  background-color: #fff176; /* yellow-300 */
 }
 
 .prd-color--error {
-  background-color: #d50000;
+  background-color: #e57373; /* red-300 */
 }
 
 .mdl-list__item:not(:last-child) {
@@ -347,4 +347,8 @@ a.prd-minicard:hover {
 
 img.prd-image-expanded {
   width: 100%;
+}
+
+.prd-message-box {
+  padding: 0.75rem;
 }
