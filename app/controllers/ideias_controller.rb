@@ -82,7 +82,7 @@ class IdeiasController < ApplicationController
   end
 
   get '/autor/:autor_id' do |autor_id|
-    @ideias = Ideia.all_by_autor(autor_id.to_i)
+    @ideias = Ideia.all_by_autor(autor_id.to_i).all
     @ideias.to_s
   end
 
@@ -90,11 +90,11 @@ private
 
   def ideias_list
     @ideias = {
-      latest: Ideia.latest(5),
+      latest: Ideia.all_by_situacao(@situacoes, 5).all,
       all_by_autor: nil
     }
     if usuario_id && autor = Autor[usuario_id]
-      @ideias[:all_by_autor] = Ideia.all_by_autor(autor.id)
+      @ideias[:all_by_autor] = Ideia.all_by_autor(autor.id).all
     end
   end
 end

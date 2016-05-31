@@ -13,7 +13,7 @@ class HomeController < ApplicationController
     @categorias = Categoria.limit(6).all
     if authenticated?
       @situacoes = Situacao.all_by_sem_restricao(:chave).map(&:chave)
-      @ideias = Ideia.all_by_situacao(@situacoes)
+      @ideias = Ideia.all_by_situacao(@situacoes).all
       view 'index'
     else
       @total_ideias = Ideia.count
