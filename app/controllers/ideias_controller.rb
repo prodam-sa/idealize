@@ -42,10 +42,16 @@ class IdeiasController < ApplicationController
   post '/', authenticate: true do
     @ideia = Ideia.new(params[:ideia])
     @ideia.autor_id = usuario_id
-    @ideia.save_changes
-    @ideia.save
-    registrar_historico(:rascunho, mensagem('Ideia criada em rascunho para edição.')).save_changes
-    view 'ideias/page'
+    if @ideia.valid?
+      @ideia.save
+      registrar_historico(:rascunho, mensagem('Ideia criada em rascunho para edição.')).save_changes
+      message.update(level: :information, text: 'Ideia registrada!')
+      redirect to("/#{@ideia.to_url_param}")
+    else
+      message.update(level: :error, text: 'Oops! Tem alguma coisa errada. Observe os campos em vermelho.')
+      @categorias = Categoria.all
+      view 'ideias/form'
+    end
   end
 
   get '/:id' do |id|
@@ -58,12 +64,19 @@ class IdeiasController < ApplicationController
   end
 
   put '/:id' do |id|
-    registrar_historico(:revisao, mensagem('Ideia revisada pelo autor')).update(params[:ideia])
-    @ideia.remove_all_categorias
-    params[:categorias].each do |categoria|
-      @ideia.add_categoria categoria
-    end if params[:categorias]
-    view 'ideias/page'
+    @ideia.set_all(params[:ideia])
+    if @ideia.valid?
+      registrar_historico(:revisao, mensagem('Ideia revisada pelo autor'))
+      @ideia.remove_all_categorias
+      params[:categorias].each do |categoria|
+        @ideia.add_categoria categoria
+      end if params[:categorias]
+      view 'ideias/page'
+    else
+      message.update(level: :error, text: 'Oops! Tem alguma coisa errada. Observe os campos em vermelho.')
+      @categorias = Categoria.all
+      view 'ideias/form'
+    end
   end
 
   put '/:id/postar' do |id|
