@@ -1,11 +1,4 @@
 <div class="mdl-grid">
-  <%if message[:text]%>
-    <div id="message" class="mdl-cell mdl-cell--12-col">
-      <div class="prd-message-box prd-color--<%=message[:level]%> mdl-shadow--2dp">
-        <%=message[:text]%>
-      </div>
-    </div>
-  <%end%>
   <div class="mdl-cell mdl-cell--12-col mdl-color--white">
     <%path = @ideia.id ? path_to(:ideias, @ideia.to_url_param) : path_to(:ideias)%>
     <form action="<%=path%>" method="post" class="mdl-grid mdl-shadow--2dp">
