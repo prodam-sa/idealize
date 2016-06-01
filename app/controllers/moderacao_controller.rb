@@ -41,8 +41,12 @@ private
     check = criterios.select do |criterio|
       criterio['resposta'] =~ /S/i
     end
-    situacao = check.size == criterios.size ? :postagem : :revisao
-    registrar_historico(situacao, mensagem).save
+    if check.size == criterios.size
+      @ideia.publicar!
+      historico(@ideia, situacao(:publicacao), mensagem)
+    else
+      historico(@ideia, situacao(:revisao), mensagem)
+    end
   end
 
   def ideias_list

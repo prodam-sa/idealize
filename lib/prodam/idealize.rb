@@ -108,7 +108,7 @@ module Prodam
         def connection(env = Idealize.environment)
           @options = Idealize.database_config[env.to_sym]
           @options[:prefetch_rows] = 50
-          if env == :development
+          if @options[:debug]
             require 'logger'
             @options[:loggers] = [Logger.new($stdout)]
           end

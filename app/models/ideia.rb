@@ -49,6 +49,10 @@ class Prodam::Idealize::Ideia < Prodam::Idealize::Model[:ideia]
     self[:data_atualizacao] = Time.now
   end
 
+  def remove_all_modificacoes
+    modificacoes_dataset.delete
+  end
+
   class << self
     def latest(limit = 10, *fields)
       select(*fields).limit(limit).exclude(data_publicacao: nil).reverse(:data_criacao)
@@ -71,6 +75,7 @@ class Prodam::Idealize::Ideia < Prodam::Idealize::Model[:ideia]
     end
 
   private
+
     def regexp_like(hash)
       expressao = hash.map do |field, pattern|
         format("regexp_like(#{field}, '%s', 'i')", pattern.to_s)

@@ -1,4 +1,5 @@
 :test: &default
+  :debug: true
   :adapter: oracle
   :host: 10.20.1.175
   :port: 1521
@@ -8,6 +9,7 @@
 :development: *default
 :stage: *default
 :production:
+  :debug: false
   :adapter: oracle
   :host: pdm1-prd-scan.prodam.local
   :port: 1521
