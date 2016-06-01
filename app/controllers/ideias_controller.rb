@@ -44,7 +44,7 @@ class IdeiasController < ApplicationController
     @ideia.autor_id = usuario_id
     if @ideia.valid?
       @ideia.save
-      registrar_historico(:rascunho, mensagem('Ideia criada em rascunho para edição.')).save_changes
+      historico(@ideia, situacao(:rascunho), mensagem('Ideia criada em rascunho para edição.'))
       message.update(level: :information, text: 'Ideia registrada!')
       redirect to("/#{@ideia.to_url_param}")
     else
@@ -66,11 +66,12 @@ class IdeiasController < ApplicationController
   put '/:id' do |id|
     @ideia.set_all(params[:ideia])
     if @ideia.valid?
-      registrar_historico(:revisao, mensagem('Ideia revisada pelo autor'))
+      @ideia.save
       @ideia.remove_all_categorias
       params[:categorias].each do |categoria|
         @ideia.add_categoria categoria
       end if params[:categorias]
+      historico(@ideia, situacao(:revisao), mensagem('Ideia revisada pelo autor'))
       view 'ideias/page'
     else
       message.update(level: :error, text: 'Oops! Tem alguma coisa errada. Observe os campos em vermelho.')
@@ -80,12 +81,12 @@ class IdeiasController < ApplicationController
   end
 
   put '/:id/postar' do |id|
-    registrar_historico(:postagem, mensagem('Ideia postada pelo autor para moderação.')).save
+    @ideia.save
+    historico(@ideia, situacao(:postagem), mensagem('Ideia postada pelo autor para moderação.'))
     redirect to("/#{@ideia.to_url_param}")
   end
 
   delete '/:id', authenticate: true  do |id|
-    registrar_historico(:arquivo, mensagem('Ideia excluída pelo autor.')).save
     @ideia.remove_all_coautores
     @ideia.remove_all_categorias
     @ideia.remove_all_modificacoes
