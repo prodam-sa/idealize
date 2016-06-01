@@ -183,15 +183,32 @@
   <%else%>
     <%=yield_content :dialog%>
   <%end%>
+  <script src="<%=path_to '/src/material-design-lite/material.min.js'%>"></script>
   <%if message[:text]%>
-    <div aria-live="assertive" aria-atomic="true" aria-relevant="text" class="mdl-snackbar mdl-js-snackbar">
-      <div class="mdl-snackbar__text"><%=message[:text]%></div>
-      <button type="button" class="mdl-snackbar__action">Ok</button>
+    <div id="notification" aria-live="assertive" aria-atomic="true" aria-relevant="text" class="mdl-snackbar mdl-js-snackbar">
+      <div class="mdl-snackbar__text"></div>
+      <button type="button" class="mdl-snackbar__action"></button>
     </div>
+
+    <script src="<%=path_to '/js/ready.js'%>"></script>
+    <script>
+      ready(function () {
+        var notification = document.querySelector('#notification');
+        var notificationConfig = {
+          message: '<%=message[:text]%>',
+          actionHandler: function(event) {
+          },
+          actionText: 'Ok',
+          timeout: 5000
+        };
+        notification.MaterialSnackbar.showSnackbar(notificationConfig);
+      });
+
+      // setTimeout(function() {
+      // }, 500);
+    </script>
     <%message.update text: nil%>
   <%end%>
   <%=yield_content :script%>
-  <script src="<%=path_to '/src/material-design-lite/material.min.js'%>"></script>
-  <script src="<%=path_to '/js/notification.js'%>"></script>
 </body>
 </html>
