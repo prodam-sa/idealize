@@ -1,3 +1,11 @@
+- version: 0.6.3
+  release: 2016-06-01
+  summary:
+    Correção no registro do histórico das ideias
+  changes:
+  - Correção do histórico das ideias.
+  - Opção pra debug através do log.
+
 - version: 0.6.2
   release: 2016-05-31
   summary:
