@@ -66,13 +66,16 @@ class IdeiasController < ApplicationController
   put '/:id' do |id|
     @ideia.set_all(params[:ideia])
     if @ideia.valid?
+      if params[:categorias]
+        @ideia.remove_all_categorias
+        params[:categorias].each do |categoria|
+          @ideia.add_categoria categoria
+        end
+      end
       @ideia.save
-      @ideia.remove_all_categorias
-      params[:categorias].each do |categoria|
-        @ideia.add_categoria categoria
-      end if params[:categorias]
       historico(@ideia, situacao(:revisao), mensagem('Ideia revisada pelo autor'))
-      view 'ideias/page'
+      message.update(level: :success, text: 'Sua ideia foi atualizada com sucesso!')
+      redirect to(id)
     else
       message.update(level: :error, text: 'Oops! Tem alguma coisa errada. Observe os campos em vermelho.')
       @categorias = Categoria.all
@@ -84,6 +87,7 @@ class IdeiasController < ApplicationController
     @ideia.situacao = :postagem
     @ideia.save
     historico(@ideia, situacao(:postagem), mensagem('Ideia postada pelo autor para moderação.'))
+    message.update(level: :success, text: 'Sua ideia foi postada com sucesso!')
     redirect to("/#{@ideia.to_url_param}")
   end
 
@@ -93,7 +97,8 @@ class IdeiasController < ApplicationController
     @ideia.remove_all_modificacoes
     @ideia.delete
     ideias_list
-    view 'ideias/index'
+    message.update(level: :information, text: 'Sua ideia foi excluída.')
+    redirect to('/')
   end
 
   get '/autor/:autor_id' do |autor_id|
