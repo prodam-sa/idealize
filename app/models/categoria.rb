@@ -15,6 +15,10 @@ class Prodam::Idealize::Categoria < Prodam::Idealize::Model[:categoria]
     validates_presence :descricao, message: 'deve ser preenchido.'
   end
 
+  def ideias_publicadas
+    ideias_dataset.where.exclude(data_publicacao: nil)
+  end
+
   def param_name
     "#{id}-#{titulo.downcase.tr(' ', '-')}"
   end
