@@ -7,7 +7,7 @@ class Prodam::Idealize::AdministracaoController < Prodam::Idealize::ApplicationC
     @page = controllers[:administracao_controller]
   end
 
-  before authorize: true do
+  before authorize: 'administração' do
     @page = controllers[:administracao_controller]
   end
 
