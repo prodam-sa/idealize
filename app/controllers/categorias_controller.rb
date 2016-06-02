@@ -47,8 +47,22 @@ class CategoriasController < ApplicationController
     end
   end
 
-  post '/', authorize: 'criar categoria' do
-    @categoria = params[:categoria]
+  get '/:id/editar', authorize: 'editar categoria' do |id|
+    @icones = data(:icons)
+    view 'categorias/form'
+  end
+
+  put '/:id', authorize: 'editar categoria' do |id|
+    @categoria.set_all(params[:categoria])
+    if @categoria.valid?
+      @categoria.save
+      message.update(level: :success, text: 'Categoria foi atualizada com sucesso!')
+      redirect to(id)
+    else
+      message.update(level: :error, text: 'Oops! Tem alguma coisa errada. Observe os campos em vermelho.')
+      @icones = data(:icons)
+      view 'categorias/form'
+    end
   end
 end
 

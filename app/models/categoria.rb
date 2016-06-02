@@ -13,6 +13,7 @@ class Prodam::Idealize::Categoria < Prodam::Idealize::Model[:categoria]
     validates_unique :titulo, message: 'já registrado.'
     validates_max_length 64, :titulo, message: lambda{ |n| "deve ser de até #{n} caracteres." }
     validates_presence :descricao, message: 'deve ser preenchido.'
+    validates_max_length 256, :descricao, message: lambda{ |n| "deve ser de até #{n} caracteres." }
   end
 
   def ideias_publicadas
