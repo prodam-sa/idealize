@@ -38,7 +38,7 @@ class CategoriasController < ApplicationController
     @categoria = Categoria.new(params[:categoria])
     if @categoria.valid?
       @categoria.save
-      message.update(level: :information, text: 'Ideia registrada!')
+      message.update(level: :information, text: 'Categoria criada com sucesso!')
       redirect to("/#{@categoria.to_url_param}")
     else
       @icones = data(:icons)
@@ -63,6 +63,13 @@ class CategoriasController < ApplicationController
       @icones = data(:icons)
       view 'categorias/form'
     end
+  end
+
+  delete '/:id', authorize: 'excluir categoria'  do |id|
+    @categoria.remove_all_ideias # remoção da associação com as ideias.
+    @categoria.delete
+    message.update(level: :information, text: 'Categoria foi excluída.')
+    redirect to('/')
   end
 end
 

@@ -21,7 +21,7 @@
         <a href="<%=path_to :categorias%>" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
           Cancelar
         </a>
-        <form action="<%=path_to :categorias, @categoria.to_url_param, :excluir%>" method="post" style="display: inline">
+        <form action="<%=path_to :categorias, @categoria.to_url_param%>" method="post" style="display: inline">
           <button name="_method" value="delete" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
             Excluir
           </button>
