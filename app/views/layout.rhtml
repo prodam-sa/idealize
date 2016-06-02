@@ -104,10 +104,10 @@
         </div>
 
         <%if authenticated?%>
-          <a id="nova-ideia" href="<%=path_to :ideias, :nova%>" class="prd-header__button-add mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--colored mdl-shadow--4dp mdl-layout--large-screen-only">
+          <a id="fab" href="<%=@fab[:url]%>" class="prd-header__button-add mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--colored mdl-shadow--4dp mdl-layout--large-screen-only">
             <i class="material-icons">add</i>
           </a>
-          <span class="mdl-tooltip mdl-tooltip--left" for="nova-ideia">Nova ideia!</span>
+          <span class="mdl-tooltip mdl-tooltip--left" for="fab"><%=@fab[:tooltip]%></span>
         <%end%>
       </div><!--/.mdl-layout__header-row-->
     </header>
@@ -143,10 +143,10 @@
         <div class="mdl-mini-footer__center-section">
           <%=Date.today.year%> &copy; PRODAM - Processamento de Dados Amazonas S/A
           <%if authenticated?%>
-            <a id="nova-ideia" href="<%=path_to :ideias, :nova%>" class="prd-footer__button-add mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--colored mdl-shadow--4dp mdl-layout--small-screen-only">
+            <a id="fab" href="<%=@fab[:url]%>" class="prd-footer__button-add mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--colored mdl-shadow--4dp mdl-layout--small-screen-only">
               <i class="material-icons">add</i>
             </a>
-            <span class="mdl-tooltip mdl-tooltip--top" for="nova-ideia">Nova ideia!</span>
+            <span class="mdl-tooltip mdl-tooltip--top" for="fab"><%=@fab[:tooltip]%></span>
           <%end%>
         </div>
       </footer>

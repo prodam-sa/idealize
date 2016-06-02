@@ -51,5 +51,9 @@ class Prodam::Idealize::ApplicationController < Sinatra::Base
 
   before do
     @page = {}
+    @fab = {
+      url: path_to(:ideias, :nova),
+      tooltip: 'Nova ideia!'
+    }
   end
 end

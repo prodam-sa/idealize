@@ -7,6 +7,10 @@ class CategoriasController < ApplicationController
 
   before do
     @page = controllers[:categorias_controller]
+    @fab = {
+      url: path_to(:categorias, :nova),
+      tooltip: 'Nova categoria!'
+    }
   end
 
   before '/:id/?:action?' do |id, action|
