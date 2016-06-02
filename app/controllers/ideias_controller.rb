@@ -81,6 +81,7 @@ class IdeiasController < ApplicationController
   end
 
   put '/:id/postar' do |id|
+    @ideia.situacao = :postagem
     @ideia.save
     historico(@ideia, situacao(:postagem), mensagem('Ideia postada pelo autor para moderação.'))
     redirect to("/#{@ideia.to_url_param}")
