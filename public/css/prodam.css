@@ -207,6 +207,7 @@ img.prd-brand {
 }
 
 .prd-color--warning {
+  color: #999;
   background-color: #fff176; /* yellow-300 */
 }
 

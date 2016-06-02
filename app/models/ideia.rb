@@ -29,8 +29,8 @@ class Prodam::Idealize::Ideia < Prodam::Idealize::Model[:ideia]
     "#{id}-#{titulo.downcase.tr(' ', '-')}"
   end
 
-  def situacao?(chave)
-    self[:situacao] == chave.to_s
+  def situacoes?(*nomes)
+    self[:situacao] && (nomes.include? self[:situacao].to_sym)
   end
 
   def historico
