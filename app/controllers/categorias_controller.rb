@@ -7,6 +7,7 @@ class CategoriasController < ApplicationController
 
   before do
     @page = controllers[:categorias_controller]
+    @situacoes = Situacao.all_by_sem_restricao(:chave).map(&:chave)
     @fab = {
       url: path_to(:categorias, :nova),
       tooltip: 'Nova categoria!'
@@ -24,7 +25,7 @@ class CategoriasController < ApplicationController
   end
 
   get '/:id' do |id|
-    @categoria.ideias.count # cache para ideias da categoria
+    @ideias = Ideia.all_by_situacao_categoria @situacoes, @categoria.id
     view 'categorias/page'
   end
 
