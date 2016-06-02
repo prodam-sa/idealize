@@ -1,0 +1,56 @@
+- :id: healing
+  :title: Saúde
+
+- :id: child_care
+  :title: Cuidado infantil
+
+- :id: child_friendly
+  :title: Infantil
+
+- :id: accessible
+  :title: Acessível
+
+- :id: home
+  :title: Lar
+
+- :id: shopping_cart
+  :title: Compras
+
+- :id: directions_car
+  :title: Carro
+
+- :id: motorcycle
+  :title: Motocicleta
+
+- :id: event
+  :title: Evento
+
+- :id: timeline
+  :title: Tempo
+
+- :id: library_books
+  :title: Biblioteca
+
+- :id: radio
+  :title: Rádio
+
+- :id: book
+  :title: Livro
+
+- :id: alarm
+  :title: Alarme
+
+- :id: access_time
+  :title: Relógio
+
+- :id: person
+  :title: Pessoa
+
+- :id: pregnant_woman
+  :title: Gravidez
+
+- :id: video_library
+  :title: Videoteca
+
+- :id: message
+  :title: Mensagem
