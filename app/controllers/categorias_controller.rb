@@ -31,7 +31,6 @@ class CategoriasController < ApplicationController
   end
 
   get '/:id' do |id|
-    @ideias = Ideia.all_by_situacao_categoria @situacoes, @categoria.id
     view 'categorias/page'
   end
 
