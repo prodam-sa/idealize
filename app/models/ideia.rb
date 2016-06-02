@@ -19,7 +19,7 @@ class Prodam::Idealize::Ideia < Prodam::Idealize::Model[:ideia]
     super
     validates_presence :titulo, message: 'deve ser atribuído.'
     validates_unique :titulo, message: 'já existe.'
-    validates_max_length 64, :titulo, message: 'deve ser de até 64 caracteres.'
+    validates_max_length 128, :titulo, message: lambda{ |n| "deve ser de até #{n} caracteres." }
 
     validates_presence :texto_oportunidade, message: 'deve conter algum conteúdo.'
     validates_presence :texto_solucao, message: 'deve conter algum conteúdo.'

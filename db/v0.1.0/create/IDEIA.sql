@@ -11,7 +11,7 @@ create table ideia (
 , autor_id number(15,0)
            constraint ideia_autor_nn not null
            constraint ideia_autor_fk references usuario(id)
-, titulo varchar2(64)
+, titulo varchar2(128)
          constraint ideia_titulo_nn not null
          constraint ideia_titulo_uk unique
 , texto_oportunidade varchar2(4000)
