@@ -24,13 +24,28 @@ class CategoriasController < ApplicationController
     view 'categorias/index'
   end
 
+  get '/nova', authorize: 'criar nova categoria' do
+    @categoria = Categoria.new
+    @icones = data(:icons)
+    view 'categorias/form'
+  end
+
   get '/:id' do |id|
     @ideias = Ideia.all_by_situacao_categoria @situacoes, @categoria.id
     view 'categorias/page'
   end
 
-  get '/:id/editar', authorize: 'editar categoria' do |id|
-    'TODO: Formulário para editar uma categoria'
+  post '/', authorize: 'criar categoria' do
+    @categoria = Categoria.new(params[:categoria])
+    if @categoria.valid?
+      @categoria.save
+      message.update(level: :information, text: 'Ideia registrada!')
+      redirect to("/#{@categoria.to_url_param}")
+    else
+      @icones = data(:icons)
+      message.update(level: :error, text: 'Oops! Tem alguma coisa errada. Observe os campos em vermelho.')
+      view 'categorias/form'
+    end
   end
 
   post '/', authorize: 'criar categoria' do
