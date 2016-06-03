@@ -55,7 +55,12 @@ class IdeiasController < ApplicationController
   end
 
   get '/:id' do |id|
-    view 'ideias/page'
+    if (usuario_autor? @ideia) or authorized?
+      view 'ideias/page'
+    else
+      message.update(level: :error, text: 'Você só poderá ler essa ideia depois de sua publicação.')
+      redirect to('/')
+    end
   end
 
   get '/:id/editar' do |id|
