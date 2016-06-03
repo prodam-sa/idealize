@@ -1,7 +1,9 @@
 # encoding: utf-8
 
-class Prodam::Idealize::Criterio < Prodam::Idealize::Model[:criterio]
-  include Prodam::Idealize::Model
+module Prodam::Idealize
+
+class Criterio < Model[:criterio]
+  include Model
 
   plugin :validation_helpers
 
@@ -18,3 +20,5 @@ class Prodam::Idealize::Criterio < Prodam::Idealize::Model[:criterio]
     "#{id}-#{titulo.downcase.tr(' ', '-')}"
   end
 end
+
+end # module

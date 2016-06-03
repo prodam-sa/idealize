@@ -1,7 +1,9 @@
 # encoding: utf-8
 
-class Prodam::Idealize::Situacao < Prodam::Idealize::Model[:situacao]
-  include Prodam::Idealize::Model
+module Prodam::Idealize
+
+class Situacao < Model[:situacao]
+  include Model
 
   plugin :validation_helpers
 
@@ -26,3 +28,5 @@ class Prodam::Idealize::Situacao < Prodam::Idealize::Model[:situacao]
     end
   end
 end
+
+end # module

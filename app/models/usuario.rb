@@ -2,8 +2,10 @@
 
 require 'digest'
 
-class Prodam::Idealize::Usuario < Prodam::Idealize::Model[:usuario]
-  include Prodam::Idealize::Model
+module Prodam::Idealize
+
+class Usuario < Model[:usuario]
+  include Model
 
   plugin :validation_helpers
   set_allowed_columns :nome_usuario, :nome, :email, :ad, :mi
@@ -60,3 +62,5 @@ private
     password == confirmation
   end
 end
+
+end # module

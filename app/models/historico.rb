@@ -3,7 +3,7 @@
 module Prodam::Idealize
 
 class Historico < Model[:historico]
-  include Prodam::Idealize::Model
+  include Model
 
   plugin :validation_helpers
 
