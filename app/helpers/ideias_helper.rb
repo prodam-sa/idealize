@@ -9,7 +9,7 @@ module IdeiasHelper
 
   def usuario_autor?(ideia)
     return nil unless authenticated?
-    usuario_id == ideia.autor_id
+    ideia && (usuario_id == ideia.autor_id)
   end
 
   def situacao(chave)
