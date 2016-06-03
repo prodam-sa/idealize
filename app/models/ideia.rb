@@ -1,7 +1,9 @@
 # encoding: utf-8
 
-class Prodam::Idealize::Ideia < Prodam::Idealize::Model[:ideia]
-  include Prodam::Idealize::Model
+module Prodam::Idealize
+
+class Ideia < Model[:ideia]
+  include Model
 
   plugin :validation_helpers
 
@@ -19,6 +21,7 @@ class Prodam::Idealize::Ideia < Prodam::Idealize::Model[:ideia]
     super
     validates_presence :titulo, message: 'deve ser atribuído.'
     validates_unique :titulo, message: 'já existe.'
+    validates_max_length 128, :titulo, message: lambda{ |n| "deve ser de até #{n} caracteres." }
 
     validates_presence :texto_oportunidade, message: 'deve conter algum conteúdo.'
     validates_presence :texto_solucao, message: 'deve conter algum conteúdo.'
@@ -28,8 +31,8 @@ class Prodam::Idealize::Ideia < Prodam::Idealize::Model[:ideia]
     "#{id}-#{titulo.downcase.tr(' ', '-')}"
   end
 
-  def situacao?(chave)
-    self[:situacao] == chave.to_s
+  def situacoes?(*nomes)
+    self[:situacao] && (nomes.include? self[:situacao].to_sym)
   end
 
   def historico
@@ -84,3 +87,5 @@ class Prodam::Idealize::Ideia < Prodam::Idealize::Model[:ideia]
     end
   end
 end
+
+end # module

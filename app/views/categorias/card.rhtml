@@ -14,9 +14,10 @@
   </div>
 
   <div class="mdl-card__actions mdl-typography--text-right mdl-typography--font-bold">
-    <%texto = categoria.ideias.count > 0 ? "%d ideias" : "Sem ideias, ainda"%>
+    <%texto = categoria.ideias_publicadas.count >= 1 ? "%d ideia" : "Sem ideias, ainda"%>
+    <%texto += 's' if categoria.ideias_publicadas.count > 1 %>
     <span class="mdl-color-text--primary">
-      <%=format texto, categoria.ideias.count%>
+      <%=format texto, categoria.ideias_publicadas.count%>
     </span>
   </div>
 </a>

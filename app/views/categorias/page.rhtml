@@ -4,31 +4,24 @@
       <div class="prd-background-icon">
         <i class="material-icons"><%=@categoria.icone%></i>
       </div>
+
       <div class="mdl-card__title mdl-card--border">
         <h2 class="mdl-card__title-text"><%=@categoria.titulo%></h2>
       </div>
-      <%if authorized?%>
-      <div class="mdl-card__menu">
-        <button id="options-<%=@categoria.id%>" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
-          <i class="material-icons">more_vert</i>
-        </button>
-        <div for="options-<%=@categoria.id%>" class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect">
-          <a href="<%=path_to :categorias, @categoria.to_url_param, :editar%>" class="mdl-menu__item">
-            Alterar
-          </a>
-        </div>
-      </div>
-      <%end%>
-      <div class="mdl-card__supporting-text">
+
+      <div class="mdl-card__supporting-text mdl-card--expand">
         <%=@categoria.descricao%>
       </div>
 
       <%if authorized?%>
       <div class="mdl-card__actions mdl-card--border">
-        <!--a href="<%=path_to :categorias, @categoria.to_url_param, :editar%>" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+        <a href="<%=path_to :categorias, @categoria.to_url_param, :editar%>" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
           Alterar
-        </a-->
-        <form action="<%=path_to :categorias, @categoria.to_url_param, :excluir%>" method="post" style="display: inline">
+        </a>
+        <a href="<%=path_to :categorias%>" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+          Cancelar
+        </a>
+        <form action="<%=path_to :categorias, @categoria.to_url_param%>" method="post" style="display: inline">
           <button name="_method" value="delete" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
             Excluir
           </button>
@@ -36,30 +29,32 @@
       </div>
       <%end%>
 
-      <div class="mdl-list">
-      <%@categoria.ideias.each_with_index do |ideia, i|%>
-        <div class="mdl-list__item mdl-list__item--two-line">
-          <div class="mdl-list__item-primary-content">
-            <span class="mdl-list__item-avatar material-icons"><%=@categoria.icone%></span>
-            <div class="mdl-list__item-title">
-              <span><%=ideia.titulo%></span>
-              <small><em>(<%=ideia.modificacao.situacao.titulo%>, <%=formated_date ideia.modificacao.data_registro%>)</em></small>
+      <%unless @categoria.ideias_publicadas.empty?%>
+        <div class="mdl-list">
+        <%@categoria.ideias_publicadas.each_with_index do |ideia, i|%>
+          <div class="mdl-list__item mdl-list__item--two-line">
+            <div class="mdl-list__item-primary-content">
+              <span class="mdl-list__item-avatar material-icons"><%=@categoria.icone%></span>
+              <div class="mdl-list__item-title">
+                <span><%=ideia.titulo%></span>
+                <small><em>(<%=ideia.modificacao.situacao.titulo%>, <%=formated_date ideia.modificacao.data_registro%>)</em></small>
+              </div>
+              <div class="mdl-list__item-text-body">
+                <p>
+                  <%=remove_html_tags(ideia.texto_oportunidade[0..180])%> [...]
+                </p>
+              </div>
             </div>
-            <div class="mdl-list__item-text-body">
-              <p>
-                <%=remove_html_tags(ideia.texto_oportunidade[0..180])%> [...]
-              </p>
+            <div class="mdl-list__item-secondary-content">
+              <a id="mais-<%=i%>" href="<%=path_to :ideias, ideia.to_url_param%>" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+                <i class="material-icons">keyboard_arrow_right</i>
+              </a>
+              <span class="mdl-tooltip mdl-tooltip--left" for="mais-<%=i%>">Mais sobre<br/><b><%=ideia.titulo%></b></span>
             </div>
           </div>
-          <div class="mdl-list__item-secondary-content">
-            <a id="mais-<%=i%>" href="<%=path_to :ideias, ideia.to_url_param%>" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
-              <i class="material-icons">keyboard_arrow_right</i>
-            </a>
-            <span class="mdl-tooltip mdl-tooltip--left" for="mais-<%=i%>">Mais sobre<br/><b><%=ideia.titulo%></b></span>
-          </div>
+        <%end%>
         </div>
       <%end%>
-      </div>
     </div>
   </div><!--./mdl-cell-->
 </div>

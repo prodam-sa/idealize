@@ -1,10 +1,7 @@
 <div class="mdl-grid">
-    <%@categorias.each_with_index do |categoria, c|%>
-      <div class="mdl-cell mdl-cell--2-col mdl-cell--4-col-tablet mdl-cell--6-col-phone prd-board">
-        <%=partial 'categorias/card', locals: { categoria: categoria }%>
-      </div>
-    <%end%>
-</div>
-<%if authorized?%>
-  <%#partial 'categorias/form'%>
+<%@categorias.each_with_index do |categoria, c|%>
+  <div class="mdl-cell mdl-cell--2-col mdl-cell--4-col-tablet mdl-cell--6-col-phone prd-board">
+    <%=partial 'categorias/card', locals: { categoria: categoria }%>
+  </div>
 <%end%>
+</div>

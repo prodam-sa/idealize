@@ -1,3 +1,16 @@
+- version: 0.7.0
+  release: 2016-06-03
+  summary:
+    Melhorias na administração de dados, privacidade das ideias e correções
+  changes:
+  - Administração de dados das categorias.
+  - Inclusão de coautores.
+  - Incremento do tamanho do título da ideia.
+  - Privacidade da lista de ideias.
+  - Correção e melhorias na postagem das ideias.
+  - Correção na notificação de mensagens ao usuário/autor.
+  - Correção dos erros de autoincremento e associação das classes.
+
 - version: 0.6.3
   release: 2016-06-01
   summary:

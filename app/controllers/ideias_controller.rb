@@ -45,7 +45,7 @@ class IdeiasController < ApplicationController
     if @ideia.valid?
       @ideia.save
       historico(@ideia, situacao(:rascunho), mensagem('Ideia criada em rascunho para edição.'))
-      message.update(level: :information, text: 'Ideia registrada!')
+      message.update(level: :information, text: 'Sua ideia foi registrada em rascunho. Não esqueça de postar depois de finalizar.')
       redirect to("/#{@ideia.to_url_param}")
     else
       message.update(level: :error, text: 'Oops! Tem alguma coisa errada. Observe os campos em vermelho.')
@@ -55,7 +55,12 @@ class IdeiasController < ApplicationController
   end
 
   get '/:id' do |id|
-    view 'ideias/page'
+    if (usuario_autor? @ideia) or authorized?
+      view 'ideias/page'
+    else
+      message.update(level: :error, text: 'Você só poderá ler essa ideia depois de sua publicação.')
+      redirect to('/')
+    end
   end
 
   get '/:id/editar' do |id|
@@ -66,13 +71,16 @@ class IdeiasController < ApplicationController
   put '/:id' do |id|
     @ideia.set_all(params[:ideia])
     if @ideia.valid?
+      if params[:categorias]
+        @ideia.remove_all_categorias
+        params[:categorias].each do |categoria|
+          @ideia.add_categoria categoria
+        end
+      end
       @ideia.save
-      @ideia.remove_all_categorias
-      params[:categorias].each do |categoria|
-        @ideia.add_categoria categoria
-      end if params[:categorias]
       historico(@ideia, situacao(:revisao), mensagem('Ideia revisada pelo autor'))
-      view 'ideias/page'
+      message.update(level: :success, text: 'Sua ideia foi atualizada com sucesso!')
+      redirect to(id)
     else
       message.update(level: :error, text: 'Oops! Tem alguma coisa errada. Observe os campos em vermelho.')
       @categorias = Categoria.all
@@ -81,8 +89,10 @@ class IdeiasController < ApplicationController
   end
 
   put '/:id/postar' do |id|
+    @ideia.situacao = :postagem
     @ideia.save
     historico(@ideia, situacao(:postagem), mensagem('Ideia postada pelo autor para moderação.'))
+    message.update(level: :success, text: 'Sua ideia foi postada com sucesso!')
     redirect to("/#{@ideia.to_url_param}")
   end
 
@@ -92,7 +102,8 @@ class IdeiasController < ApplicationController
     @ideia.remove_all_modificacoes
     @ideia.delete
     ideias_list
-    view 'ideias/index'
+    message.update(level: :information, text: 'Sua ideia foi excluída.')
+    redirect to('/')
   end
 
   get '/autor/:autor_id' do |autor_id|

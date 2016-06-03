@@ -107,8 +107,8 @@ function(
     scribe.use(scribePluginBlockquoteCommand());
     scribe.use(scribePluginCodeCommand());
     scribe.use(scribePluginContentCleaner(scribe));
-    scribe.use(scribePluginCurlyQuotes());
-    scribe.use(scribePluginFormatterPlainTextConvertNewLinesToHtml());
+    // scribe.use(scribePluginCurlyQuotes());
+    // scribe.use(scribePluginFormatterPlainTextConvertNewLinesToHtml());
     scribe.use(scribePluginHeadingCommand(2));
     scribe.use(scribePluginIntelligentUnlinkCommand());
     scribe.use(scribePluginKeyboardShortcuts(commandsToKeyboardShortcutsMap));
@@ -125,8 +125,8 @@ function(
 
     scribe.use(scribePluginSanitizer({
       tags: {
-        p: {},
-        br: {},
+        p: true,
+        br: true,
         b: {},
         strong: {},
         i: {},
@@ -136,7 +136,7 @@ function(
         ol: {},
         ul: {},
         li: {},
-        a: { href: true },
+        a: { href: true, target: '_blank' },
         h2: {},
         u: {},
       }

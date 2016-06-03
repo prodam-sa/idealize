@@ -7,6 +7,9 @@ require 'sequel'
 require 'json'
 require 'prodam/idealize/version'
 
+ENV['NLS_LANG'] ||= 'AMERICAN_AMERICA.UTF8'
+DEFAULT_OCI8_ENCODING = 'utf-8'
+
 class String
   def camelcase
     gsub('/', ' :: ').
@@ -122,21 +125,10 @@ module Prodam
     end
 
     module Prodam::Idealize::Model
-      def self.[](dataset)
-        Sequel::Model(Database[dataset])
-      end
-
-      def save(opts = Sequel::Model::OPTS)
-        must_get_id = new?
-        self.class.no_primary_key if must_get_id
-        super(opts)
-        self.class.set_primary_key :id
-        self[:id] = Prodam::Idealize::Database[sql_sequence_currval].first[:id].to_i if must_get_id
-        self
-      end
-
-      def sql_sequence_currval
-        "SELECT s_#{self.class.table_name}.currval as ID FROM DUAL"
+      def self.[](dataset_name)
+        klass = Sequel::Model(Database[dataset_name])
+        klass.dataset = klass.dataset.sequence("s_#{dataset_name}".to_sym)
+        klass
       end
 
       def param_name

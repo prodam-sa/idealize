@@ -1,5 +1,9 @@
 # encoding: utf-8
 
-class Prodam::Idealize::Autor < Prodam::Idealize::Usuario
+module Prodam::Idealize
+
+class Autor < Usuario
   one_to_many :ideias
 end
+
+end # module

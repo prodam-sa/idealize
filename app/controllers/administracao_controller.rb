@@ -7,7 +7,7 @@ class Prodam::Idealize::AdministracaoController < Prodam::Idealize::ApplicationC
     @page = controllers[:administracao_controller]
   end
 
-  before authorize: true do
+  before authorize: 'administração' do
     @page = controllers[:administracao_controller]
   end
 
@@ -28,7 +28,8 @@ class Prodam::Idealize::AdministracaoController < Prodam::Idealize::ApplicationC
 
   put '/usuarios/:id' do |id|
     @usuario.update(params[:usuario])
-    redirect to(path_to('/usuarios/' + id))
+    message.update(level: :success, text: 'Dados do usuário foram atualizados com sucesso.')
+    redirect to('/usuarios/' + id)
   end
 
   put '/usuarios/:id/senha' do |id|
@@ -37,6 +38,6 @@ class Prodam::Idealize::AdministracaoController < Prodam::Idealize::ApplicationC
     else
       message.update(level: :error, text: 'A senha informada não foi confirmada corretamente.')
     end
-    redirect to(path_to('/usuarios/' + id))
+    redirect to('/usuarios/' + id)
   end
 end

@@ -1,16 +1,9 @@
 <div class="mdl-grid">
-  <%if message[:text]%>
-    <div id="message" class="mdl-cell mdl-cell--12-col">
-      <div class="prd-message-box prd-color--<%=message[:level]%> mdl-shadow--2dp">
-        <%=message[:text]%>
-      </div>
-    </div>
-  <%end%>
   <div class="mdl-cell mdl-cell--12-col mdl-color--white">
     <%path = @ideia.id ? path_to(:ideias, @ideia.to_url_param) : path_to(:ideias)%>
     <form action="<%=path%>" method="post" class="mdl-grid mdl-shadow--2dp">
       <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label <%='is-invalid' if @ideia.errors[:titulo]%> mdl-cell mdl-cell--12-col">
-        <label class="mdl-textfield__label" for="ideia_titulo">Título da sua ideia...</label>
+        <label class="mdl-textfield__label" for="ideia_titulo">Título da sua ideia</label>
         <input id="ideia_titulo" name="ideia[titulo]" class="mdl-textfield__input" type="text" value="<%=@ideia.titulo%>"/>
         <%if @ideia.errors[:titulo]%>
           <span class="mdl-textfield__error"><%=@ideia.errors[:titulo].join(', ')%></span>
@@ -49,13 +42,13 @@
             <button type="submit" name="_method" value="<%=@ideia.id ? :put : :post%>" class="mdl-button mdl-button--raised mdl-js-button mdl-js-ripple-effect">
               Salvar
             </button>
-            <a href="<%=path%>" class="mdl-button mdl-js-button mdl-js-ripple-effect">
+            <a href="<%=path%>" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
               Cancelar
             </a>
           </div>
-          <%if @ideia.situacao? :rascunho%>
+          <%if @ideia.situacoes? :rascunho, :revisao%>
           <div class="mdl-cell mdl-cell--6-col-desktop mdl-cell--12-phone mdl-typography--text-right">
-            <button type="submit" name="ideia[situacao]" value="postagem" class="mdl-button mdl-js-button mdl-js-ripple-effect">
+            <button type="submit" name="ideia[situacao]" value="postagem" class="mdl-button mdl-button--raised mdl-button--colored mdl-js-button mdl-js-ripple-effect">
               Postar
             </button>
           </div>

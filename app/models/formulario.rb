@@ -1,7 +1,9 @@
 # encoding: utf-8
 
-class Prodam::Idealize::Formulario < Prodam::Idealize::Model[:formulario]
-  include Prodam::Idealize::Model
+module Prodam::Idealize
+
+class Formulario < Model[:formulario]
+  include Model
 
   plugin :validation_helpers
 
@@ -18,3 +20,5 @@ class Prodam::Idealize::Formulario < Prodam::Idealize::Model[:formulario]
     "#{id}-#{titulo.downcase.tr(' ', '-')}"
   end
 end
+
+end # module

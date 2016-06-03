@@ -1,0 +1,68 @@
+<div class="mdl-grid">
+  <div class="mdl-cell mdl-cell--12-col mdl-color--white">
+    <%path = @categoria.id ? path_to(:categorias, @categoria.to_url_param) : path_to(:categorias)%>
+    <form action="<%=path%>" method="post" class="mdl-grid mdl-shadow--2dp">
+      <div class="mdl-cell mdl-cell--3-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-textfield--full-width <%='is-invalid' if @categoria.errors[:titulo]%>">
+          <label class="mdl-textfield__label" for="categoria_titulo">Título da categoria</label>
+          <input id="categoria_titulo" name="categoria[titulo]" class="mdl-textfield__input" type="text" value="<%=@categoria.titulo%>"/>
+          <%if @categoria.errors[:titulo]%>
+            <span class="mdl-textfield__error"><%=@categoria.errors[:titulo].join(', ')%></span>
+          <%end%>
+        </div>
+      </div>
+
+      <div class="mdl-cell mdl-cell--9-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-textfield--full-width <%='is-invalid' if @categoria.errors[:descricao]%>">
+          <label class="mdl-textfield__label" for="categoria_descricao">Descrição</label>
+          <input id="categoria_titulo" name="categoria[descricao]" class="mdl-textfield__input" type="text" value="<%=@categoria.descricao%>"/>
+          <%if @categoria.errors[:descricao]%>
+            <span class="mdl-textfield__error"><%=@categoria.errors[:descricao].join(', ')%></span>
+          <%end%>
+        </div>
+      </div>
+
+      <div class="mdl-cell mdl-cell--1-col">
+        <i id="icone-exemplo" class="prd-big-icon material-icons"><%=@categoria.icone || :crop_square%></i>
+      </div>
+
+      <div class="mdl-cell mdl-cell--11-col">
+        <input type="hidden" id="categoria_icone" name="categoria[icone]" value="<%=@categoria.icone%>"/>
+        <%@icones.each_with_index do |icon, i|%>
+          <button type="button" id="icone-<%=icon[:id]%>" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect" value="<%=icon[:id]%>">
+            <i class="material-icons"><%=icon[:id]%></i>
+          </button>
+          <span class="mdl-tooltip mdl-tooltip--top" for="icone-<%=icon[:id]%>"><%=icon[:title]%></span>
+        <%end%>
+      </div>
+
+      <div class="mdl-card__actions mdl-card--border">
+        <div class="mdl-grid mdl-grid--no-spacing">
+          <div class="mdl-cell mdl-cell--6-col-desktop mdl-cell--12-phone">
+            <button type="submit" name="_method" value="<%=@categoria.id ? :put : :post%>" class="mdl-button mdl-button--raised mdl-js-button mdl-js-ripple-effect">
+              Salvar
+            </button>
+            <a href="<%=path%>" class="mdl-button mdl-js-button mdl-js-ripple-effect">
+              Cancelar
+            </a>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div><!--/.mdl-cell-->
+</div><!--/.mdl-grid-->
+
+<%content_for :script do%>
+<script>
+icons = ['#<%=@icones.map{|icon| "icone-" + icon[:id] }.join("','#")%>'];
+field = document.querySelector('#categoria_icone');
+frame = document.querySelector('#icone-exemplo');
+
+for (i in icons) {
+  document.querySelector(icons[i]).addEventListener('click', function() {
+    field.value = this.value;
+    frame.innerHTML = this.value;
+  });
+}
+</script>
+<%end%>
