@@ -45,7 +45,7 @@ class IdeiasController < ApplicationController
     if @ideia.valid?
       @ideia.save
       historico(@ideia, situacao(:rascunho), mensagem('Ideia criada em rascunho para edição.'))
-      message.update(level: :information, text: 'Ideia registrada!')
+      message.update(level: :information, text: 'Sua ideia foi registrada em rascunho. Não esqueça de postar depois de finalizar.')
       redirect to("/#{@ideia.to_url_param}")
     else
       message.update(level: :error, text: 'Oops! Tem alguma coisa errada. Observe os campos em vermelho.')
