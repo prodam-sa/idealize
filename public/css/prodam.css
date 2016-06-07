@@ -353,3 +353,99 @@ img.prd-image-expanded {
 .prd-message-box {
   padding: 0.75rem;
 }
+
+.prd-border {
+  border: 1px solid #777;
+}
+
+.prd-timeline {
+}
+
+.prd-timeline .prd-timeline__title {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0.50rem;
+  margin: 0 0 0.50rem 0;
+  border: 2px solid #ccc;
+  border-radius: 3px;
+  background-color: inherit;
+}
+
+.prd-timeline .prd-timeline__title-text {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: bold;
+  line-height: 1.50rem;
+}
+
+.prd-timeline .prd-timeline__event {
+  margin: 0;
+  padding: 0;
+}
+
+.prd-timeline .prd-timeline__event-item {
+  display: flex;
+  list-style: none;
+}
+
+.prd-timeline .prd-timeline__event-item .prd-timeline__event-time,
+.prd-timeline .prd-timeline__event-item .prd-timeline__event-data {
+  position: relative;
+}
+
+.prd-timeline .prd-timeline__event-item .prd-timeline__event-time {
+  width: 6.00rem;
+  padding-right: 1.00rem;
+  text-align: center;
+}
+
+.prd-timeline .prd-timeline__event-item .prd-timeline__event-time:before,
+.prd-timeline .prd-timeline__event-item .prd-timeline__event-data:before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 1.75rem;
+  max-width: 50%;
+  width: 1.00rem;
+  height: 100%;
+  border-top: 2px solid #ccc;
+  z-index: -1;
+}
+
+.prd-timeline .prd-timeline__event-item .prd-timeline__event-time:before {
+  right: 0rem;
+}
+
+.prd-timeline .prd-timeline__event-item:not(:last-child) .prd-timeline__event-time:before {
+  border-right: 1px solid #ccc;
+}
+
+.prd-timeline .prd-timeline__event-time .prd-timeline__event-time-label,
+.prd-timeline .prd-timeline__event-data .prd-timeline__event-data-content {
+  display: block;
+  margin: 0.50rem 0rem;
+  padding: 0.50rem;
+  line-height: 1.50rem;
+  border: 2px solid #ccc;
+  border-radius: 3px;
+  background-color: inherit;
+}
+
+.prd-timeline .prd-timeline__event-item .prd-timeline__event-data {
+  width: 100%;
+  padding-left: 1.00rem;
+  text-align: left;
+}
+
+.prd-timeline .prd-timeline__event-item .prd-timeline__event-data:before {
+  left: 0rem;
+}
+
+.prd-timeline .prd-timeline__event-item:not(:last-child) .prd-timeline__event-data:before {
+  border-left: 1px solid #ccc;
+}
+
+.prd-timeline .prd-timeline__event-data .prd-timeline__event-data-content {
+}
