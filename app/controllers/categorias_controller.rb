@@ -11,7 +11,7 @@ class CategoriasController < ApplicationController
     @fab = {
       url: path_to(:categorias, :nova),
       tooltip: 'Nova categoria!'
-    }
+    } if authorized?
   end
 
   before '/:id/?:action?' do |id, action|
