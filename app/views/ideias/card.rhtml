@@ -5,36 +5,51 @@
     <a href="<%=path_to *path%>" class=""><i class="material-icons prd-big-icon"><%=icon%></i></a>
   </div>
   <div class="mdl-cell mdl-cell--9-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone prd-card mdl-card mdl-card--expandable">
-    <div class="mdl-card__title mdl-card--border">
+    <a href="<%=path_to :ideias, ideia.to_url_param%>" class="mdl-card__title mdl-card--border">
       <h2 class="mdl-card__title-text"><%=ideia.titulo%></h2>
-    </div>
+    </a>
+
     <%if authorized? or usuario_autor? ideia%>
-      <div class="mdl-card__menu">
+      <!--div class="mdl-card__menu">
         <button id="options-<%=ideia.id%>" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
           <i class="material-icons">more_vert</i>
         </button>
-      </div>
+      </div-->
     <%end%>
+
     <div class="mdl-card__supporting-text mdl-card--expand">
       <p class="mdl-typography--text-right">
       <%=ideia.modificacao.situacao.titulo%>, <%=formated_date ideia.modificacao.data_registro%>
       </p>
       <%=ideia.texto_oportunidade%>
     </div>
+
     <div class="mdl-card__actions mdl-card--border">
-      <a href="<%=path_to :ideias, ideia.to_url_param%>" class="mdl-button mdl-button--raised mdl-js-button mdl-js-ripple-effect">
-        Mais
-      </a>
-      <%if authorized? or usuario_autor? ideia%>
-        <a href="<%=path_to :ideias, ideia.to_url_param, :editar%>" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-          Alterar
-        </a>
-        <form action="<%=path_to :ideias, ideia.to_url_param%>" method="post" style="display: inline">
-          <button name="_method" value="delete" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-            Excluir
-          </button>
-        </form>
-      <%end%>
-    </div>
+      <div class="mdl-grid mdl-grid--no-spacing">
+        <div class="mdl-cell mdl-cell--6-col mdl-cell--6-desktop-col mdl-cell--5-tablet-col">
+          <a id="ver-<%=ideia.id%>" href="<%=path_to :ideias, ideia.to_url_param%>" class="mdl-button mdl-button--fab mdl-button--minifab mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+            <i class="material-icons">pageview</i>
+          </a>
+          <span class="mdl-tooltip mdl-tooltip--top" for="ver-<%=ideia.id%>">Visualiar ideia</span>
+          <%if authorized? or usuario_autor? ideia%>
+            <a id="editar-<%=ideia.id%>" href="<%=path_to :ideias, ideia.to_url_param, :editar%>" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+              <i class="material-icons">edit</i>
+            </a>
+            <span class="mdl-tooltip mdl-tooltip--top" for="editar-<%=ideia.id%>">Editar ideia</span>
+          <%end%>
+        </div>
+
+        <%if authorized? or usuario_autor? ideia%>
+          <div class="mdl-cell mdl-cell--6-col mdl-cell--6-desktop-col mdl-cell--5-tablet-col mdl-typography--text-right">
+            <form action="<%=path_to :ideias, ideia.to_url_param%>" method="post" style="display: inline">
+              <button id="excluir-<%=ideia.id%>" name="_method" value="delete" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+                <i class="material-icons">delete</i>
+              </button>
+              <span class="mdl-tooltip mdl-tooltip--top" for="excluir-<%=ideia.id%>">Excluir ideia</span>
+            </form>
+          </div>
+        <%end%>
+      </div>
+    </div><!--/.mdl-card__actions-->
   </div>
 </div>

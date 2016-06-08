@@ -260,6 +260,10 @@ img.prd-brand {
   color: rgba(0, 0, 0, 0.50);
 }
 
+.prd-card .mdl-card__title {
+  text-decoration: none;
+}
+
 .prd-card .mdl-card__supporting-text {
   width: auto;
   text-align: justify;
