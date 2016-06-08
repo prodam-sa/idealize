@@ -41,6 +41,7 @@ private
     check = criterios.select do |criterio|
       criterio['resposta'] =~ /S/i
     end
+
     if check.size == criterios.size
       @ideia.publicar!
       historico(@ideia, situacao(:publicacao), mensagem)

@@ -4,7 +4,7 @@ button:hover, button:active, button:focus {
 }
 
 body {
-  font-family: 'Roboto';
+  font-family: 'Roboto', sans;
   background-color: #efebe9; /* brown-50 */
   color: #212121;
 }
@@ -286,7 +286,7 @@ img.prd-brand {
   justify-content: center;
 }
 
-.prd-card, .prd-minicard {
+.prd-minicard {
   margin: 0.35vh 0.25vw;
 }
 
@@ -359,6 +359,7 @@ img.prd-image-expanded {
 }
 
 .prd-timeline {
+  width: auto;
 }
 
 .prd-timeline .prd-timeline__title {
