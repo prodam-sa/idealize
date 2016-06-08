@@ -1,39 +1,41 @@
 <div class="mdl-grid">
   <div class="mdl-cell mdl-cell--12-col">
-    <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
-      <div class="mdl-tabs__tab-bar mdl-tabs__tab-bar--non-centered">
-        <a href="#todas-ideias" class="mdl-tabs__tab is-active">Todas</a>
-        <%if authenticated? %>
-          <a href="#minhas-ideias" class="mdl-tabs__tab"><span class="mdl-badge" data-badge="<%=@ideias[:all_by_autor].size%>">Minhas Ideias</span></a>
-        <%end%>
-      </div>
-
-      <div id="todas-ideias" class="mdl-tabs__panel is-active">
-      <%unless @ideias[:latest].empty? %>
-        <%=partial 'ideias/gallery', locals: { ideias: @ideias[:latest] }%>
-      <%else%>
-        <div class="prd-layout--centered mdl-card mdl-card--expandable mdl-shadow--2dp">
-          <p class="mdl-typography--headline mdl-typography--text-center">
-            Nenhuma ideia foi publicada, ainda.
-          </p>
+    <div class="mdl-card mdl-card--full-width mdl-shadow--2dp">
+      <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
+        <div class="mdl-tabs__tab-bar mdl-tabs__tab-bar--non-centered">
+          <%if authenticated? %>
+            <a href="#minhas-ideias" class="mdl-tabs__tab is-active"><span class="mdl-badge" data-badge="<%=@ideias[:all_by_autor].size%>">Minhas Ideias</span></a>
+          <%end%>
+          <a href="#todas-ideias" class="mdl-tabs__tab <%='is-active' unless authenticated?%>">Todas</a>
         </div>
-      <%end%>
-      </div>
 
-      <%if authenticated?%>
-        <div id="minhas-ideias" class="mdl-tabs__panel">
-        <%unless @ideias[:all_by_autor].empty? %>
-          <%=partial 'ideias/gallery', locals: { ideias: @ideias[:all_by_autor] }%>
+        <%if authenticated?%>
+          <div id="minhas-ideias" class="mdl-tabs__panel is-active">
+          <%unless @ideias[:all_by_autor].empty? %>
+            <%=partial 'ideias/gallery', locals: { ideias: @ideias[:all_by_autor] }%>
+          <%else%>
+            <div class="prd-layout--centered mdl-card mdl-card--expandable mdl-shadow--2dp">
+              <p class="mdl-typography--headline mdl-typography--text-center">
+                Você ainda não publicou nenhuma ideia.<br/>
+                Se tiver alguma, então <a href="<%=path_to :ideias, :nova%>" class="">compartilhe conosco</a>.
+              </p>
+            </div>
+          <%end%>
+          </div>
+        <%end%>
+
+        <div id="todas-ideias" class="mdl-tabs__panel<%='is-active' unless authenticated?%>">
+        <%unless @ideias[:latest].empty? %>
+          <%=partial 'ideias/gallery', locals: { ideias: @ideias[:latest] }%>
         <%else%>
           <div class="prd-layout--centered mdl-card mdl-card--expandable mdl-shadow--2dp">
             <p class="mdl-typography--headline mdl-typography--text-center">
-              Você ainda não publicou nenhuma ideia.<br/>
-              Se tiver alguma, então <a href="<%=path_to :ideias, :nova%>" class="">compartilhe conosco</a>.
+              Nenhuma ideia foi publicada, ainda.
             </p>
           </div>
         <%end%>
         </div>
-      <%end%>
+      </div><!--/.mdl-tabs-->
     </div>
-  </div>
-</div>
+  </div><!--/.mdl-cell-->
+</div><!--/.mdl-grid-->

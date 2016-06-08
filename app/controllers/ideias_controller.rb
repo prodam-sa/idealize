@@ -13,8 +13,10 @@ class IdeiasController < ApplicationController
   before '/:id/?:action?' do |id, action|
     if (ideia_id = id.to_i) > 0
       @ideia = Ideia[ideia_id]
+      @situacao = @ideia.modificacao.situacao
     else
       @ideia = Ideia.new
+      @situacao = Situacao.chave :rascunho
     end
   end
 
@@ -50,6 +52,7 @@ class IdeiasController < ApplicationController
     else
       message.update(level: :error, text: 'Oops! Tem alguma coisa errada. Observe os campos em vermelho.')
       @categorias = Categoria.all
+      @situacao = Situacao.chave :rascunho
       view 'ideias/form'
     end
   end

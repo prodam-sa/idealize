@@ -1,10 +1,20 @@
+- version: 0.8.0
+  release: 2016-06-08
+  summary:
+    Melhorias no layout das páginas
+  changes:
+  - Melhorias nas páginas das ideias.
+  - Inclusão da linha do tempo das modificações das ideias.
+  - Melhorias nos rótulos e mensagens.
+  - Ajustes no acesso das categorias.
+  - Pequenas correções no formulário de ideias.
+
 - version: 0.7.0
   release: 2016-06-03
   summary:
     Melhorias na administração de dados, privacidade das ideias e correções
   changes:
   - Administração de dados das categorias.
-  - Inclusão de coautores.
   - Incremento do tamanho do título da ideia.
   - Privacidade da lista de ideias.
   - Correção e melhorias na postagem das ideias.
