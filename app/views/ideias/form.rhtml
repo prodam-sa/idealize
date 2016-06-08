@@ -31,7 +31,7 @@
       </div>
 
       <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--12-col">
-        <label class="mdl-textfield__label" for="ideia_titulo">Histórico de alteração</label>
+        <label class="mdl-textfield__label" for="historico_mensagem">Nota de modificação</label>
         <input type="text" id="historico_mensagem" name="historico[mensagem]" class="mdl-textfield__input" pattern="[\w\W\s\S]*"/>
         <span class="mdl-textfield__error">Digite um texto válido registrar a modificação.</span>
       </div>
@@ -39,10 +39,12 @@
       <div class="mdl-card__actions mdl-card--border">
         <div class="mdl-grid mdl-grid--no-spacing">
           <div class="mdl-cell mdl-cell--6-col-desktop mdl-cell--12-phone">
-            <button type="submit" name="_method" value="<%=@ideia.id ? :put : :post%>" class="mdl-button mdl-button--raised mdl-js-button mdl-js-ripple-effect">
-              Salvar
+            <button id="salvar" type="submit" name="_method" value="<%=@ideia.id ? :put : :post%>" class="mdl-button mdl-button--raised mdl-js-button mdl-js-ripple-effect">
+              Salvar <%=@situacao.titulo%>
             </button>
-            <a href="<%=path%>" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+            <span class="mdl-tooltip mdl-tooltip--top" for="salvar"><%=@situacao.descricao%></span>
+
+            <a href="<%=path_to :ideias%>" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
               Cancelar
             </a>
           </div>
