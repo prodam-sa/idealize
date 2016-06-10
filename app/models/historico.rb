@@ -16,7 +16,7 @@ class Historico < Model[:historico]
 
   def validate
     super
-    validates_presence :descricao, message: 'deve ser preenchido.'
+    validates_presence :descricao, message: 'deve ser preenchida.'
   end
 
   def param_name
