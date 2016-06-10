@@ -24,8 +24,16 @@ class ModeracaoController < ApplicationController
   end
 
   get '/:ideia_id' do |ideia_id|
-    @formulario = Formulario.first # Há somente um formulário, por enquanto.
-    view 'moderacao/form'
+    unless @ideia.bloqueada? && @ideia.modificacao.responsavel_id != usuario_id
+      @formulario = Formulario.first # Há somente um formulário, por enquanto.
+      @criterios = @formulario.criterios
+      @historico = historico(@ideia, situacao(:moderacao), 'Ideia em moderação.').save
+      @ideia.bloquear!
+      view 'moderacao/form'
+    else
+      message.update(level: :warning, text: 'Ideia em moderação e bloqueada por outro usuário.')
+      redirect to('/')
+    end
   end
 
   post '/:ideia_id' do |ideia_id|

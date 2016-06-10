@@ -43,6 +43,20 @@ class Ideia < Model[:ideia]
     historico.first
   end
 
+  def bloqueada?
+    !(self[:bloqueada] =~ /S/i).nil?
+  end
+
+  def bloquear!
+    self[:bloqueada] = 'S'
+    save
+  end
+
+  def desbloquear!
+    self[:bloqueada] = 'N'
+    save
+  end
+
   def publicar!
     self[:data_publicacao] = Time.now
     save
