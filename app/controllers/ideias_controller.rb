@@ -46,7 +46,7 @@ class IdeiasController < ApplicationController
     @ideia.autor_id = usuario_id
     if @ideia.valid?
       @ideia.save
-      historico(@ideia, situacao(:rascunho), mensagem('Ideia criada em rascunho para edição.'))
+      historico(@ideia, situacao(:rascunho), mensagem('Ideia criada em rascunho para edição.')).save
       message.update(level: :information, text: 'Sua ideia foi registrada em rascunho. Não esqueça de postar depois de finalizar.')
       redirect to("/#{@ideia.to_url_param}")
     else
@@ -81,8 +81,8 @@ class IdeiasController < ApplicationController
         end
       end
       @ideia.save
-      historico(@ideia, situacao(:revisao), mensagem('Ideia revisada pelo autor'))
-      message.update(level: :success, text: 'Sua ideia foi atualizada com sucesso!')
+      historico(@ideia, situacao(:revisao), mensagem('Ideia revisada pelo autor')).save
+      message.update(level: :information, text: 'Sua ideia foi atualizada com sucesso!')
       redirect to(id)
     else
       message.update(level: :error, text: 'Oops! Tem alguma coisa errada. Observe os campos em vermelho.')
@@ -94,8 +94,8 @@ class IdeiasController < ApplicationController
   put '/:id/postar' do |id|
     @ideia.situacao = :postagem
     @ideia.save
-    historico(@ideia, situacao(:postagem), mensagem('Ideia postada pelo autor para moderação.'))
-    message.update(level: :success, text: 'Sua ideia foi postada com sucesso!')
+    historico(@ideia, situacao(:postagem), mensagem('Ideia postada pelo autor para moderação.')).save
+    message.update(level: :information, text: 'Sua ideia foi postada com sucesso!')
     redirect to("/#{@ideia.to_url_param}")
   end
 

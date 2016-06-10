@@ -17,10 +17,10 @@ module IdeiasHelper
   end
 
   def historico(ideia, situacao, mensagem)
-    Modificacao.create ideia: ideia,
-                       situacao: situacao,
-                       responsavel_id: usuario_id,
-                       descricao: mensagem
+    Modificacao.new ideia: ideia,
+                    situacao: situacao,
+                    responsavel_id: usuario_id,
+                    descricao: mensagem
   end
 
   def mensagem(texto)
