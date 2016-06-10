@@ -2,8 +2,8 @@ SHELL = /bin/bash
 .SUFFIXES:
 
 name = idealize
-version ?= 0.8.0
-release ?= 2016-06-08
+version ?= 0.8.1
+release ?= 2016-06-10
 database = $(name)
 environment ?= development
 
@@ -32,7 +32,7 @@ version: lib/prodam/$(name)/version.rb
 console: version
 	exec $(bundle) exec pry -Ilib:app -r prodam/idealize
 
-# make server environment=production
+# make server environment=[development]
 server.start: version
 	exec $(bundle) exec puma
 
@@ -41,13 +41,13 @@ server.stop:
 
 server.restart: server.stop server.start
 
-# make db.console environment=production
+# make db.console environment=[development]
 db.console:
 	exec rlwrap sqlplus $$(cat db/$(environment).ora)
 
-# make db.table version=0.1.0 table=TABELA
+# make db.table version=[version] table=[table]
 db.table:
-	sh db/table.sh -v$(version) $(table)
+	sh db/table.sh -c -v$(version) $(table)
 
 # make db.create
 db.create:

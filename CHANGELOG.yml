@@ -1,3 +1,10 @@
+- version: 0.8.1
+  release: 2016-06-10
+  summary:
+    Correção na postagem de ideias
+  changes:
+  - Correção da máscara de URL das ideias.
+
 - version: 0.8.0
   release: 2016-06-08
   summary:
