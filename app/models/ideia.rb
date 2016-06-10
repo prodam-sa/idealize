@@ -28,7 +28,7 @@ class Ideia < Model[:ideia]
   end
 
   def param_name
-    "#{id}-#{titulo.downcase.tr(' ', '-')}"
+    "#{id}-#{titulo.downcase.split(/[ "']/).join('-').squeeze}"
   end
 
   def situacoes?(*nomes)
