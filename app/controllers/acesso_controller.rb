@@ -24,7 +24,7 @@ class AcessoController < ApplicationController
 
   put '/:id/senha', authenticate: true do |id|
     if @usuario.save_password(*params[:usuario].values)
-      message.update(level: :success, text: 'Senha atualizada.')
+      message.update(level: :information, text: 'Senha atualizada.')
     else
       message.update(level: :error, text: 'A senha informada não foi confirmada corretamente.')
     end
@@ -38,7 +38,7 @@ class AcessoController < ApplicationController
   post '/acessar' do
     if @usuario = Usuario.authenticate(params[:usuario])
       authenticate(@usuario.id, @usuario.administrador?, @usuario.moderador?)
-      message.update level: :sucess, text: "Olá, #{@usuario.nome}. Bem-vindo!"
+      message.update level: :information, text: "Olá, #{@usuario.nome}. Bem-vindo!"
       redirect path_to(:home), 303
     else
       message.update level: :error, text: 'Usuário não encontrado ou senha inválida'
