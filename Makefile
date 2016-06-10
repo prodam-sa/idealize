@@ -30,7 +30,7 @@ install.libraries:
 version: lib/prodam/$(name)/version.rb
 
 console: version
-	exec $(bundle) exec pry -Ilib:app -r prodam/idealize
+	exec $(bundle) exec pry -Ilib:app -r prodam/idealize -e 'include Prodam::Idealize'
 
 # make server environment=[development]
 server.start: version
