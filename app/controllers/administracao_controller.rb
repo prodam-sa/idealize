@@ -28,13 +28,13 @@ class Prodam::Idealize::AdministracaoController < Prodam::Idealize::ApplicationC
 
   put '/usuarios/:id' do |id|
     @usuario.update(params[:usuario])
-    message.update(level: :success, text: 'Dados do usuário foram atualizados com sucesso.')
+    message.update(level: :information, text: 'Dados do usuário foram atualizados com sucesso.')
     redirect to('/usuarios/' + id)
   end
 
   put '/usuarios/:id/senha' do |id|
     if @usuario.save_password(*params[:usuario].values)
-      message.update(level: :success, text: 'Senha do usuário foi atualizada.')
+      message.update(level: :information, text: 'Senha do usuário foi atualizada.')
     else
       message.update(level: :error, text: 'A senha informada não foi confirmada corretamente.')
     end
