@@ -27,7 +27,12 @@ class ModeracaoController < ApplicationController
     unless @ideia.bloqueada? && @ideia.modificacao.responsavel_id != usuario_id
       @formulario = Formulario.first # Há somente um formulário, por enquanto.
       @criterios = @formulario.criterios
-      @historico = historico(@ideia, situacao(:moderacao), 'Ideia em moderação.').save
+      @situacao = situacao(:moderacao)
+      unless @ideia.modificacao.situacao_id == @situacao.id
+        @historico = historico(@ideia, @situacao, 'Ideia em moderação.').save
+      else
+        @historico = @ideia.modificacao
+      end
       @ideia.bloquear!
       view 'moderacao/form'
     else
@@ -37,25 +42,48 @@ class ModeracaoController < ApplicationController
   end
 
   post '/:ideia_id' do |ideia_id|
-    validar_ideia params[:criterios], params[:historico][:mensagem]
-    ideias_list
-    view 'moderacao/index'
+    @situacao = if ideia_moderada?
+                  situacao(:publicacao)
+                else
+                  situacao(:revisao)
+                end
+    @historico = historico(@ideia, @situacao, params[:historico][:descricao])
+
+    if @historico.valid?
+      if ideia_moderada?
+        @ideia.publicar!
+        message.update(level: :information, text: 'Ideia foi publicada.')
+      else
+        message.update(level: :information, text: 'Ideia foi enviada para revisão.')
+        @ideia.desbloquear!
+      end
+      @historico.save
+      redirect to('/')
+    else
+      @formulario = Formulario.first
+      @criterios = @formulario.criterios.map do |criterio|
+        parametro = params[:criterios].select do |(id, resposta)|
+          puts resposta
+          id == criterio.id
+        end.first
+        criterio.resposta = parametro ? parametro[:resposta] : 'N'
+        criterio
+      end
+      message.update(level: :error, text: 'Oops! Observe os campos em vermelho.')
+      ideias_list
+      view 'moderacao/form'
+    end
   end
 
 private
 
-  def validar_ideia(criterios, mensagem)
-    total = criterios.size
-    check = criterios.select do |criterio|
+  def ideia_moderada?
+    total = params[:criterios].size
+    check = params[:criterios].select do |criterio|
       criterio['resposta'] =~ /S/i
     end
 
-    if check.size == criterios.size
-      @ideia.publicar!
-      historico(@ideia, situacao(:publicacao), mensagem)
-    else
-      historico(@ideia, situacao(:revisao), mensagem)
-    end
+    check.size == params[:criterios].size
   end
 
   def ideias_list
