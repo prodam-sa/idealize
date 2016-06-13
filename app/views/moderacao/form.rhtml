@@ -45,18 +45,22 @@
       </div>
 
       <div class="mdl-card__supporting-text mdl-card--border">
-        <%@formulario.criterios.each_with_index do |criterio, c|%>
+        <%@criterios.each_with_index do |criterio, c|%>
+          <!--<%=criterio%>-->
+          <%checked = ' checked="checked"' if criterio.resposta =~ /S/i%>
           <input type="hidden" id="criterio_<%=c%>_id" name="criterios[][id]" value="<%=criterio.id%>"/>
           <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="criterio_<%=c%>_resposta_s">
-            <input type="checkbox" id="criterio_<%=c%>_resposta_s" name="criterios[][resposta]" value="S" class="mdl-switch__input"/>
+            <input type="checkbox" id="criterio_<%=c%>_resposta_s" name="criterios[][resposta]" value="S" class="mdl-switch__input"<%=checked%>/>
             <p class="mdl-switch__label"><%=criterio.titulo%><small><em>(<%=criterio.descricao%>)</em></small></p>
           </label>
         <%end%>
 
-        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-textfield--full-width">
-          <label class="mdl-textfield__label" for="ideia_titulo">Mensagem para o autor da ideia</label>
-          <input type="text" id="historico_mensagem" name="historico[mensagem]" class="mdl-textfield__input" pattern="[\w\W\s\S]*"/>
-          <span class="mdl-textfield__error">Digite um texto válido para o autor.</span>
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-textfield--full-width <%='is-invalid' if @historico.errors[:descricao]%>">
+          <label class="mdl-textfield__label" for="historico_descricao">Nota de moderação</label>
+          <input type="text" id="historico_descricao" name="historico[descricao]" class="mdl-textfield__input"/>
+          <%if @historico.errors[:descricao]%>
+            <span class="mdl-textfield__error"><%=@historico.errors[:descricao].join(', ')%></span>
+          <%end%>
         </div>
       </div>
 
