@@ -67,27 +67,37 @@ class IdeiasController < ApplicationController
   end
 
   get '/:id/editar' do |id|
-    @categorias = Categoria.all
-    view 'ideias/form'
+    unless @ideia.bloqueada?
+      @categorias = Categoria.all
+      view 'ideias/form'
+    else
+      message.update(level: :warning, text: 'Sua ideia está em moderação. Por enquanto, ela não poderá ser alterada.')
+      redirect to(id)
+    end
   end
 
   put '/:id' do |id|
-    @ideia.set_all(params[:ideia])
-    if @ideia.valid?
-      if params[:categorias]
-        @ideia.remove_all_categorias
-        params[:categorias].each do |categoria|
-          @ideia.add_categoria categoria
+    unless @ideia.bloqueada?
+      @ideia.set_all(params[:ideia])
+      if @ideia.valid?
+        if params[:categorias]
+          @ideia.remove_all_categorias
+          params[:categorias].each do |categoria|
+            @ideia.add_categoria categoria
+          end
         end
+        @ideia.save
+        historico(@ideia, situacao(:revisao), mensagem('Ideia revisada pelo autor')).save
+        message.update(level: :information, text: 'Sua ideia foi atualizada com sucesso!')
+        redirect to(id)
+      else
+        message.update(level: :error, text: 'Oops! Tem alguma coisa errada. Observe os campos em vermelho.')
+        @categorias = Categoria.all
+        view 'ideias/form'
       end
-      @ideia.save
-      historico(@ideia, situacao(:revisao), mensagem('Ideia revisada pelo autor')).save
-      message.update(level: :information, text: 'Sua ideia foi atualizada com sucesso!')
-      redirect to(id)
     else
-      message.update(level: :error, text: 'Oops! Tem alguma coisa errada. Observe os campos em vermelho.')
-      @categorias = Categoria.all
-      view 'ideias/form'
+      message.update(level: :warning, text: 'Sua ideia ainda está em moderação.')
+      redirect to(id)
     end
   end
 

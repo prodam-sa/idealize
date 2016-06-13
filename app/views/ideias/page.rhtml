@@ -38,14 +38,18 @@
       </div>
   
       <%if authorized? or usuario_autor? @ideia%>
+        <%disabled = ' disabled="disabled"' if @ideia.bloqueada?%>
         <div class="mdl-card__actions mdl-card--border">
           <div class="mdl-grid mdl-grid--no-spacing">
             <div class="mdl-cell mdl-cell--6-col-desktop mdl-cell--12-phone">
-              <a href="<%=path_to :ideias, @ideia.to_url_param, :editar%>" class="mdl-button mdl-button--raised mdl-js-button mdl-js-ripple-effect">
-                Alterar <%=@situacao.titulo%>
-              </a>
+              <form action="<%=path_to :ideias, @ideia.to_url_param, :editar%>" method="get" style="display: inline">
+                <button class="mdl-button mdl-button--raised mdl-js-button mdl-js-ripple-effect"<%=disabled%>>
+                  Alterar <%=@situacao.titulo%>
+                </button>
+              </form>
+
               <form action="<%=path_to :ideias, @ideia.to_url_param%>" method="post" style="display: inline">
-                <button name="_method" value="delete" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+                <button name="_method" value="delete" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect"<%=disabled%>>
                   Excluir
                 </button>
               </form>

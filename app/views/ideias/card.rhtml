@@ -31,7 +31,7 @@
             <i class="material-icons">pageview</i>
           </a>
           <span class="mdl-tooltip mdl-tooltip--top" for="ver-<%=ideia.id%>">Visualiar ideia</span>
-          <%if authorized? or usuario_autor? ideia%>
+          <%if ideia.desbloqueada? and (authorized? or usuario_autor? ideia)%>
             <a id="editar-<%=ideia.id%>" href="<%=path_to :ideias, ideia.to_url_param, :editar%>" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
               <i class="material-icons">edit</i>
             </a>
@@ -39,16 +39,22 @@
           <%end%>
         </div>
 
-        <%if authorized? or usuario_autor? ideia%>
-          <div class="mdl-cell mdl-cell--6-col mdl-cell--6-desktop-col mdl-cell--5-tablet-col mdl-typography--text-right">
+        <div class="mdl-cell mdl-cell--6-col mdl-cell--6-desktop-col mdl-cell--5-tablet-col mdl-typography--text-right">
+          <%if ideia.desbloqueada? and (authorized? or usuario_autor? ideia)%>
             <form action="<%=path_to :ideias, ideia.to_url_param%>" method="post" style="display: inline">
               <button id="excluir-<%=ideia.id%>" name="_method" value="delete" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
                 <i class="material-icons">delete</i>
               </button>
               <span class="mdl-tooltip mdl-tooltip--top" for="excluir-<%=ideia.id%>">Excluir ideia</span>
             </form>
-          </div>
-        <%end%>
+          <%end%>
+          <%if ideia.bloqueada?%>
+            <span id="locked-<%=ideia.id%>" class="mdl-button mdl-button--icon mdl-button--raised">
+              <i class="material-icons">lock</i>
+            </span>
+            <span class="mdl-tooltip mdl-tooltip--left" for="locked-<%=ideia.id%>">Ideia bloqueada para edição enquanto estiver em moderação.</span>
+          <%end%>
+        </div>
       </div>
     </div><!--/.mdl-card__actions-->
   </div>

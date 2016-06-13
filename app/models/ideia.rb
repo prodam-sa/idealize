@@ -47,6 +47,10 @@ class Ideia < Model[:ideia]
     !(self[:bloqueada] =~ /S/i).nil?
   end
 
+  def desbloqueada?
+    !bloqueada?
+  end
+
   def bloquear!
     self[:bloqueada] = 'S'
     save
