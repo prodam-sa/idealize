@@ -1,7 +1,7 @@
-<div class="mdl-grid">
-  <div class="mdl-cell mdl-cell--12-col mdl-color--white">
-    <%path = @ideia.id ? path_to(:ideias, @ideia.to_url_param) : path_to(:ideias)%>
-    <form action="<%=path%>" method="post" class="mdl-grid mdl-shadow--2dp">
+<%path = @ideia.id ? path_to(:ideias, @ideia.to_url_param) : path_to(:ideias)%>
+<form action="<%=path%>" method="post" class="mdl-grid">
+  <div class="mdl-cell mdl-cell--8-col mdl-grid mdl-grid--no-spacing mdl-card mdl-shadow--2dp">
+    <div class="mdl-cell mdl-cell--12-col mdl-color--white">
       <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label <%='is-invalid' if @ideia.errors[:titulo]%> mdl-cell mdl-cell--12-col">
         <label class="mdl-textfield__label" for="ideia_titulo">Título da sua ideia</label>
         <input id="ideia_titulo" name="ideia[titulo]" class="mdl-textfield__input" type="text" value="<%=@ideia.titulo%>"/>
@@ -50,15 +50,17 @@
           </div>
         </div>
       </div>
-    </form>
+    </div><!--/.mdl-cell-->
   </div><!--/.mdl-cell-->
-</div><!--/.mdl-grid-->
+</form><!--./mdl-grid-->
 
 <%content_for :stylesheet do%>
 <style>
   .editor__area, .editor__code {
-    height: 280px;
-    width: 100% !important;
+    height: 16rem;
+  }
+
+  .editor__code {
   }
 
   .editor__area {
@@ -79,10 +81,6 @@
     margin: 0;
   }
 
-  textarea {
-    min-width: 100% !important;
-    width: 100%;
-  }
 </style>
 <%end%>
 

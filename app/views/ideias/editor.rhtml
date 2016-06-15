@@ -48,7 +48,9 @@
     <div class="editor__area mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell-11-phone"></div>
   </div>
 
-  <div id="html-panel" class="mdl-tabs__panel mdl-textfield mdl-js-textfield <%='is-invalid' if ideia.errors[field]%>">
-    <textarea type="text" id="ideia_<%=field%>" name="ideia[<%=field%>]" class="editor__code"><%=ideia[field]%></textarea>
+  <div id="html-panel" class="mdl-tabs__panel mdl-grid mdl-grid--no-spacing">
+    <div class="mdl-textfield mdl-textfield--full-width mdl-js-textfield <%='is-invalid' if ideia.errors[field]%>">
+      <textarea type="text" id="ideia_<%=field%>" name="ideia[<%=field%>]" class="mdl-textfield__input editor__code"><%=ideia[field]%></textarea>
+    </div>
   </div>
 </div>
