@@ -456,3 +456,62 @@ img.prd-image-expanded {
 
 .prd-timeline .prd-timeline__event .prd-timeline__event-data .prd-timeline__event-data-content {
 }
+
+select.mdl-textfield__input {
+  border: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+select.mdl-textfield__input optgroup option {
+  width: 100%;
+  padding: 0.25rem 0.75rem;
+  line-height: 3.75rem;
+}
+
+.mdl-tabs.mdl-tabs--vertical {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.mdl-tabs.mdl-tabs--vertical .mdl-tabs__tab-bar {
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 2.50rem;
+  height: inherit;
+  border: none;
+  border-right: 1px solid rgba(0, 0, 0, 0.25);
+  margin: 0;
+}
+
+.mdl-tabs.mdl-tabs--vertical .mdl-tabs__tab {
+  display: block;
+  min-width: 2.50rem;
+}
+
+.mdl-tabs.mdl-tabs--vertical .mdl-tabs__tab.is-active {
+  border-bottom: none;
+  border-right: 2px solid rgba(0, 0, 0, 0.55);
+}
+
+.mdl-tabs.mdl-tabs--vertical .mdl-tabs__tab.is-active::after {
+  left: 100%;
+  bottom: 0;
+  right: 0;
+  width: 2px !important;
+  height: inherit;
+  clear: both;
+}
+
+.mdl-tabs.mdl-tabs--vertical .mdl-tabs__panel.is-active {
+  display: block;
+  height: auto;
+  width: auto;
+  align-self: flex-start;
+  align-items: flex-start;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}

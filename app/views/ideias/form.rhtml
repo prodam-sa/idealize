@@ -51,6 +51,45 @@
         </div>
       </div>
     </div><!--/.mdl-cell-->
+  </div><!--/./mdl-cell.mdl-grid-->
+
+  <div class="mdl-cell mdl-cell--4-col mdl-card mdl-shadow--2dp">
+    <div class="mdl-tabs mdl-tabs--vertical mdl-js-tabs mdl-js-ripple-effect">
+      <div class="mdl-tabs__tab-bar mdl-tabs__tab-bar--non-centered">
+        <%first = letters.keys.first%>
+        <a href="#letra-<%=first%>" class="mdl-tabs__tab is-active">
+          <span class="mdl-badge" data-badge="<%=@coautores[first].size%>"><%=first%></span>
+        </a>
+
+        <%letters.keys[1..-1].each do |letter|%>
+          <a href="#letra-<%=letter%>" class="mdl-tabs__tab">
+            <span class="mdl-badge" data-badge="<%=@coautores[letter].size%>"><%=letter%></span>
+          </a>
+        <%end%>
+      </div>
+
+      <div id="letra-<%=first%>" class="mdl-tabs__panel is-active">
+        <%@coautores[first].each_with_index do |coautor, c|%>
+          <%selected = ' selected="selected"' if @ideia.coautores.include? coautor%>
+          <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="coautor-<%=c%>">
+            <input type="checkbox" id="coautor-<%=c%>" name="coautores[]" class="mdl-checkbox__input"<%=selected%> value="<%=coautor.id%>"/>
+            <span class="mdl-checkbox__label"><%=coautor.nome%></span>
+          </label>
+        <%end%>
+      </div>
+
+      <%letters.keys[1..-1].each do |letter|%>
+        <div id="letra-<%=letter%>" class="mdl-tabs__panel">
+          <%@coautores[letter].each_with_index do |coautor, c|%>
+            <%selected = ' selected="selected"' if @ideia.coautores.include? coautor%>
+            <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="coautor-<%=c%>">
+              <input type="checkbox" id="coautor-<%=c%>" name="coautores[]" class="mdl-checkbox__input"<%=selected%> value="<%=coautor.id%>"/>
+              <span class="mdl-checkbox__label"><%=coautor.nome%></span>
+            </label>
+          <%end%>
+        </div>
+      <%end%>
+    </div><!--/.mdl-tabs-->
   </div><!--/.mdl-cell-->
 </form><!--./mdl-grid-->
 

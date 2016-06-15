@@ -28,6 +28,10 @@ class IdeiasController < ApplicationController
   
   get '/nova', authenticate: true do
     @categorias = Categoria.all
+    @coautores = Coautor.select(:id, :nome).order(:nome).all.group_by do |coautor|
+      sanitize_letter(coautor.nome[0].upcase)
+    end
+    @coautores = letters.merge(@coautores)
     view 'ideias/form'
   end
 
@@ -69,6 +73,10 @@ class IdeiasController < ApplicationController
   get '/:id/editar' do |id|
     unless @ideia.bloqueada?
       @categorias = Categoria.all
+      @coautores = Coautor.select(:id, :nome).order(:nome).all.group_by do |coautor|
+        sanitize_letter(coautor.nome[0].upcase)
+      end
+      @coautores = letters.merge(@coautores)
       view 'ideias/form'
     else
       message.update(level: :warning, text: 'Sua ideia está em moderação. Por enquanto, ela não poderá ser alterada.')
