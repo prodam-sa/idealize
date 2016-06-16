@@ -118,13 +118,18 @@ class IdeiasController < ApplicationController
   end
 
   delete '/:id', authenticate: true  do |id|
-    @ideia.remove_all_coautores
-    @ideia.remove_all_categorias
-    @ideia.remove_all_modificacoes
-    @ideia.delete
-    ideias_list
-    message.update(level: :information, text: 'Sua ideia foi excluída.')
-    redirect to('/')
+    unless @ideia.bloqueada?
+      @ideia.remove_all_coautores
+      @ideia.remove_all_categorias
+      @ideia.remove_all_modificacoes
+      @ideia.delete
+      ideias_list
+      message.update(level: :information, text: 'Sua ideia foi excluída.')
+      redirect to('/')
+    else
+      message.update(level: :warning, text: 'Sua ideia está em moderação e não poderá ser excluída.')
+      redirect to(id)
+    end
   end
 
   get '/autor/:autor_id' do |autor_id|
