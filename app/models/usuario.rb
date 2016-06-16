@@ -61,6 +61,12 @@ private
   def confirm_password(password, confirmation)
     password == confirmation
   end
+
+  class << self
+    def by_letra_inicial(*letras)
+      where("upper(substr(nome, 1, 1)) IN ?",  letras.map(&:upcase))
+    end
+  end
 end
 
 end # module
