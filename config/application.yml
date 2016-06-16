@@ -42,6 +42,13 @@
     :navigation: []
     :roles: ['mi']
     :icon: assignment_turned_in
+  '/usuarios':
+    :title: Usuários
+    :description: Usuários e (co)autores do Idealize.
+    :controller: UsuariosController
+    :navigation: []
+    :roles: []
+    :icon: people
 :pages:
   '/faq':
     :title: Informações
