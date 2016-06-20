@@ -68,7 +68,7 @@ private
     end
 
     def search(termo)
-      regexp_like(nome: termo)
+      regexp_like(nome_usuario: termo, nome: termo)
     end
 
   private
