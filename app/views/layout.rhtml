@@ -74,13 +74,6 @@
           <span class="mdl-tooltip" for="toolbox-settings">Administração e configurações</span>
         <%end%>
 
-        <%if authorized_by? :moderator%>
-          <a id="toolbox-moderation" href="<%=path_to :moderacao%>" class="mdl-button mdl-js-button mdl-button--icon">
-            <i class="material-icons">assignment</i>
-          </a>
-          <span class="mdl-tooltip" for="toolbox-moderation">Moderação de ideias</span>
-        <%end%>
-
         <%if authenticated?%>
           <a id="toolbox-account" href="<%=path_to :conta%>" class="mdl-button mdl-js-button mdl-button--icon">
             <i class="material-icons">account_box</i>

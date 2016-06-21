@@ -35,13 +35,6 @@
     :navigation: [top]
     :roles: ['ad']
     :icon: settings
-  '/moderacao':
-    :title: Moderação
-    :description: Análise preliminar das ideias postadas.
-    :controller: ModeracaoController
-    :navigation: []
-    :roles: ['mi']
-    :icon: assignment_turned_in
   '/usuarios':
     :title: Usuários
     :description: Usuários e (co)autores do Idealize.

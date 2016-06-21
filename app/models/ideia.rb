@@ -87,6 +87,7 @@ class Ideia < Model[:ideia]
     def find_by_situacao(chave)
       where(situacao: chave).reverse(:data_atualizacao)
     end
+    alias find_by_situacoes find_by_situacao
 
     def find_by_situacao_categoria(chave, categoria_id)
       join(:categoria, id: categoria_id).where(situacao: chave).reverse(:data_atualizacao)
