@@ -67,6 +67,10 @@ class Ideia < Model[:ideia]
     save
   end
 
+  def publicada?
+    !self[:data_publicacao].nil?
+  end
+
   def before_save
     self[:data_atualizacao] = Time.now
   end

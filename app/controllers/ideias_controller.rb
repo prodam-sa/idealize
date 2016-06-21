@@ -79,7 +79,12 @@ class IdeiasController < ApplicationController
       @coautores = letters.merge(@coautores)
       view 'ideias/form'
     else
-      message.update(level: :warning, text: 'Sua ideia está em moderação. Por enquanto, ela não poderá ser alterada.')
+      if @ideia.publicada?
+        mensagem = 'Sua ideia já foi publicada.'
+      else
+        mensagem = 'Sua ideia está em moderação. Por enquanto, ela não poderá ser alterada.'
+      end
+      message.update(level: :warning, text: mensagem)
       redirect to(id)
     end
   end
@@ -145,7 +150,12 @@ class IdeiasController < ApplicationController
       @ideia.bloquear!
       view 'ideias/moderacao/form'
     else
-      message.update(level: :warning, text: 'Ideia em moderação por outro usuário.')
+      if @ideia.publicada?
+        mensagem = 'Ideia já foi publicada.'
+      else
+        mensagem = 'Ideia em moderação por outro usuário.'
+      end
+      message.update(level: :warning, text: mensagem)
       redirect to(id)
     end
   end
@@ -164,6 +174,7 @@ class IdeiasController < ApplicationController
       if ideia_moderada?
         @ideia.publicar!
         message.update(level: :information, text: 'Ideia foi publicada.')
+        @ideia.bloquear!
       else
         message.update(level: :information, text: 'Ideia foi enviada para revisão.')
         @ideia.desbloquear!
@@ -174,7 +185,6 @@ class IdeiasController < ApplicationController
       @formulario = Formulario.first
       @criterios = @formulario.criterios.map do |criterio|
         parametro = params[:criterios].select do |(id, resposta)|
-          puts resposta
           id == criterio.id
         end.first
         criterio.resposta = parametro ? parametro[:resposta] : 'N'
@@ -190,7 +200,6 @@ class IdeiasController < ApplicationController
     if params[:desbloquear]
       @ideia.desbloquear!
     end
-
     redirect to(id)
   end
 
