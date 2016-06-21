@@ -75,24 +75,24 @@ class Ideia < Model[:ideia]
   end
 
   class << self
-    def latest(limit = 10, *fields)
-      select(*fields).limit(limit).exclude(data_publicacao: nil).reverse(:data_criacao)
+    def latest(*fields)
+      select(*fields).exclude(data_publicacao: nil).reverse(:data_criacao)
     end
 
-    def all_by_autor(autor_id, limit = 10)
-      where(autor_id: autor_id).limit(limit).reverse(:data_criacao)
+    def find_by_autor(autor_id)
+      where(autor_id: autor_id).reverse(:data_criacao)
     end
 
-    def all_by_situacao(chave, limit = 10)
-      where(situacao: chave).limit(limit).reverse(:data_atualizacao)
+    def find_by_situacao(chave)
+      where(situacao: chave).reverse(:data_atualizacao)
     end
 
-    def all_by_situacao_categoria(chave, categoria_id, limit = 10)
-      join(:categoria, id: categoria_id).where(situacao: chave).limit(limit).reverse(:data_atualizacao)
+    def find_by_situacao_categoria(chave, categoria_id)
+      join(:categoria, id: categoria_id).where(situacao: chave).reverse(:data_atualizacao)
     end
 
-    def search(termo, limit = 10)
-      regexp_like(titulo: termo, texto_oportunidade: termo, texto_solucao: termo).limit(limit).reverse(:data_atualizacao)
+    def search(term)
+      regexp_like(titulo: term, texto_oportunidade: term, texto_solucao: term).reverse(:data_atualizacao)
     end
 
   private
