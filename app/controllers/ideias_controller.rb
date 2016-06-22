@@ -59,7 +59,7 @@ class IdeiasController < ApplicationController
   end
 
   get '/:id' do |id|
-    if (usuario_autor? @ideia) or (authorized_by? :moderator)
+    if (@ideia.publicada?) or (usuario_autor? @ideia) or (authorized_by? :moderator)
       view 'ideias/page'
     else
       message.update(level: :error, text: 'Você só poderá ler essa ideia depois de sua publicação.')
