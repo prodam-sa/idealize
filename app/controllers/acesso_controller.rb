@@ -1,6 +1,8 @@
 # encoding: utf-8
 
-class Prodam::Idealize::AcessoController < Prodam::Idealize::ApplicationController
+module Prodam::Idealize
+
+class AcessoController < ApplicationController
   before do
     @page = controllers[:acesso_controller]
   end
@@ -22,7 +24,7 @@ class Prodam::Idealize::AcessoController < Prodam::Idealize::ApplicationControll
 
   put '/:id/senha', authenticate: true do |id|
     if @usuario.save_password(*params[:usuario].values)
-      message.update(level: :success, text: 'Senha atualizada.')
+      message.update(level: :information, text: 'Senha atualizada.')
     else
       message.update(level: :error, text: 'A senha informada não foi confirmada corretamente.')
     end
@@ -34,8 +36,9 @@ class Prodam::Idealize::AcessoController < Prodam::Idealize::ApplicationControll
   end
 
   post '/acessar' do
-    if @usuario = Prodam::Idealize::Usuario.authenticate(params[:usuario])
+    if @usuario = Usuario.authenticate(params[:usuario])
       authenticate(@usuario.id, @usuario.administrador?, @usuario.moderador?)
+      message.update level: :information, text: "Olá, #{@usuario.nome}. Bem-vindo!"
       redirect path_to(:home), 303
     else
       message.update level: :error, text: 'Usuário não encontrado ou senha inválida'
@@ -49,3 +52,5 @@ class Prodam::Idealize::AcessoController < Prodam::Idealize::ApplicationControll
     redirect path_to('/'), 303
   end
 end
+
+end # module

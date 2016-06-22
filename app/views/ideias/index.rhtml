@@ -3,14 +3,23 @@
     <div class="mdl-card mdl-card--full-width mdl-shadow--2dp">
       <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
         <div class="mdl-tabs__tab-bar mdl-tabs__tab-bar--non-centered">
-          <%if authenticated? %>
-            <a href="#minhas-ideias" class="mdl-tabs__tab is-active"><span class="mdl-badge" data-badge="<%=@ideias[:all_by_autor].size%>">Minhas Ideias</span></a>
+          <%if authorized_by? :moderator%>
+            <a href="#moderacao" class="mdl-tabs__tab">
+              <span class="mdl-badge" data-badge="<%=@ideias[:moderacao].size%>">Moderação</span>
+            </a>
           <%end%>
-          <a href="#todas-ideias" class="mdl-tabs__tab <%='is-active' unless authenticated?%>">Todas</a>
+
+          <%if authenticated? %>
+            <a href="#rascunhos" class="mdl-tabs__tab is-active">
+              <span class="mdl-badge" data-badge="<%=@ideias[:all_by_autor].size%>">Minhas Ideias</span>
+            </a>
+          <%end%>
+
+          <a href="#publicacoes" class="mdl-tabs__tab <%='is-active' unless authenticated?%>">Publicações</a>
         </div>
 
         <%if authenticated?%>
-          <div id="minhas-ideias" class="mdl-tabs__panel is-active">
+          <div id="rascunhos" class="mdl-tabs__panel is-active">
           <%unless @ideias[:all_by_autor].empty? %>
             <%=partial 'ideias/gallery', locals: { ideias: @ideias[:all_by_autor] }%>
           <%else%>
@@ -24,7 +33,21 @@
           </div>
         <%end%>
 
-        <div id="todas-ideias" class="mdl-tabs__panel<%='is-active' unless authenticated?%>">
+        <%if authorized_by? :moderator%>
+          <div id="moderacao" class="mdl-tabs__panel">
+          <%unless @ideias[:moderacao].empty? %>
+            <%=partial 'ideias/gallery', locals: { ideias: @ideias[:moderacao] }%>
+          <%else%>
+            <div class="prd-layout--centered mdl-card mdl-card--expandable mdl-shadow--2dp">
+              <p class="mdl-typography--headline mdl-typography--text-center">
+                Nenhuma ideia foi postada, ainda.
+              </p>
+            </div>
+          <%end%>
+          </div>
+        <%end%>
+
+        <div id="publicacoes" class="mdl-tabs__panel<%='is-active' unless authenticated?%>">
         <%unless @ideias[:latest].empty? %>
           <%=partial 'ideias/gallery', locals: { ideias: @ideias[:latest] }%>
         <%else%>
@@ -36,6 +59,6 @@
         <%end%>
         </div>
       </div><!--/.mdl-tabs-->
-    </div>
+    </div><!--/.mdl-card-->
   </div><!--/.mdl-cell-->
 </div><!--/.mdl-grid-->

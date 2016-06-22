@@ -15,8 +15,12 @@ module Prodam::Idealize::AuthenticationHelper
     authenticated? && session[:user][:administrator]
   end
 
-  def authorized_by?(role)
-    authenticated? && session[:user][role]
+  def authorized_by?(*roles)
+    reply = authenticated?
+    roles.each do |role|
+      reply = reply && session[:user][role]
+    end
+    reply
   end
 
   def authenticate(user_id, user_administrator = false, user_moderator = false)

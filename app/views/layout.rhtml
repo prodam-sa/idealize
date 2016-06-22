@@ -57,9 +57,10 @@
 
         <form action="<%=path_to :ideias, :pesquisa%>" method="get">
           <div class="prd-searchbox mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label mdl-textfield--align-right">
-            <label class="mdl-button mdl-js-button mdl-button--icon" for="ideias-campo-pesquisa">
+            <label id="toolbox-search" class="mdl-button mdl-js-button mdl-button--icon" for="ideias-campo-pesquisa">
               <i class="material-icons">search</i>
             </label>
+            <span class="mdl-tooltip" for="toolbox-search">Procure por ideias</span>
             <div class="mdl-textfield__expandable-holder">
               <input class="mdl-textfield__input" type="text" name="termo" id="ideias-campo-pesquisa" placeholder="Procure por ideias">
             </div>
@@ -67,31 +68,32 @@
         </form>
 
         <%if authorized?%>
-          <a href="<%=path_to :administracao%>" class="mdl-button mdl-js-button mdl-button--icon">
+          <a id="toolbox-settings" href="<%=path_to :administracao%>" class="mdl-button mdl-js-button mdl-button--icon">
             <i class="material-icons">settings</i>
           </a>
+          <span class="mdl-tooltip" for="toolbox-settings">Administração e configurações</span>
         <%end%>
-        <%if authorized_by? :moderator%>
-          <a href="<%=path_to :moderacao%>" class="mdl-button mdl-js-button mdl-button--icon">
-            <i class="material-icons">assignment</i>
-          </a>
-        <%end%>
+
         <%if authenticated?%>
-          <a href="<%=path_to :conta%>" class="mdl-button mdl-js-button mdl-button--icon">
+          <a id="toolbox-account" href="<%=path_to :conta%>" class="mdl-button mdl-js-button mdl-button--icon">
             <i class="material-icons">account_box</i>
           </a>
-          <a href="<%=path_to :conta, :sair%>" class="mdl-button mdl-js-button mdl-button--icon">
+          <span class="mdl-tooltip" for="toolbox-account">Página da sua conta</span>
+
+          <a id="toolbox-sign-out" href="<%=path_to :conta, :sair%>" class="mdl-button mdl-js-button mdl-button--icon">
             <i class="material-icons">power_settings_new</i>
           </a>
+          <span class="mdl-tooltip" for="toolbox-sign-out">Sair do Idealize</span>
         <%else%>
-          <button type="button" class="mdl-button mdl-js-button mdl-button--icon mdl-button--open-dialog">
+          <button id="toolbox-sign-in" type="button" class="mdl-button mdl-js-button mdl-button--icon mdl-button--open-dialog">
             <i class="material-icons">perm_identity</i>
           </button>
+          <span class="mdl-tooltip" for="toolbox-sign-in">Acessar o Idealize</span>
         <%end%>
       </div><!--/.mdl-layout__header-row-->
 
       <div class="mdl-layout__header-row mdl-layout--large-screen-only mdl-color--white">
-        <div class="prd-max-width prd-frame-centered">
+        <div class="prd-max-width">
           <nav class="prd-navigation mdl-navigation">
           <%sections.select { |id, section| section[:navigation].include? 'header' }.each do |id, section|%>
             <%is_active = 'is-active' if @page[:url_path] == section[:url_path]%>
@@ -134,14 +136,16 @@
     </div>
 
     <main class="mdl-layout__content">
-      <div class="prd-content">
+      <div class="prd-ribbon"></div>
+      <div class="prd-content prd-content--with-ribbon prd-content--with-background">
         <%=yield%>
       </div>
 
       <footer class="prd-footer mdl-mini-footer mdl-color--brown-900 mdl-color-text--white">
         <div class="mdl-mini-footer__left-section"></div>
-        <div class="mdl-mini-footer__center-section">
-          <%=Date.today.year%> &copy; PRODAM - Processamento de Dados Amazonas S/A
+        <div class="mdl-mini-footer__center-section mdl-typography--text-center">
+          <span><%=Date.today.year%> &copy; PRODAM - Processamento de Dados Amazonas S/A</span><br/>
+          <small><%=version_info%></small>
           <%if authenticated?%>
             <a id="fab" href="<%=@fab[:url]%>" class="prd-footer__button-add mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--colored mdl-shadow--4dp mdl-layout--small-screen-only">
               <i class="material-icons">add</i>
@@ -172,7 +176,7 @@
           <button type="submit" class="mdl-button mdl-button--raised mdl-js-button mdl-js-ripple-effect">
             Acessar
           </button>
-          <button type="button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--close-dialog">
+          <button type="button" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect mdl-button--close-dialog">
             Cancelar
           </button>
         </div>
@@ -185,7 +189,7 @@
   <%end%>
   <script src="<%=path_to '/src/material-design-lite/material.min.js'%>"></script>
   <%if message[:text]%>
-    <div id="notification" aria-live="assertive" aria-atomic="true" aria-relevant="text" class="mdl-snackbar mdl-js-snackbar">
+    <div id="notification" aria-live="assertive" aria-atomic="true" aria-relevant="text" class="mdl-snackbar mdl-js-snackbar prd-color--<%=message[:level]%>">
       <div class="mdl-snackbar__text"></div>
       <button type="button" class="mdl-snackbar__action"></button>
     </div>

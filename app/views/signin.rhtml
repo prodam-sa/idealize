@@ -32,20 +32,36 @@
 </head>
 <body>
   <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-    <header class="mdl-layout__header prd-layout__header">
-    <%if message[:text]%>
-      <div class="mdl-layout__header-row prd-color--<%=message[:level]%>">
-        <%=message[:text]%><%message.update text: nil%>
-      </div>
-    <%end%>
-    </header>
     <main class="mdl-layout__content">
-      <div class="mdl-grid page-content">
-        <div class="mdl-cell--12-col">
-          <%=yield%>
-        </div>
+      <div class="prd-content prd-frame-centered">
+        <%=yield%>
       </div>
     </main>
   </div>
+  <%if message[:text]%>
+    <div id="notification" aria-live="assertive" aria-atomic="true" aria-relevant="text" class="mdl-snackbar mdl-js-snackbar">
+      <div class="mdl-snackbar__text"><%=message[:text]%></div>
+      <button type="button" class="mdl-snackbar__action">Ok</button>
+    </div>
+
+    <script src="<%=path_to '/js/ready.js'%>"></script>
+    <script>
+      ready(function () {
+        var notification = document.querySelector('#notification');
+        var notificationConfig = {
+          message: '<%=message[:text]%>',
+          actionHandler: function(event) {
+          },
+          actionText: 'Ok',
+          timeout: 5000
+        };
+        notification.MaterialSnackbar.showSnackbar(notificationConfig);
+      });
+
+      // setTimeout(function() {
+      // }, 500);
+    </script>
+    <%message.update text: nil%>
+  <%end%>
 </body>
 </html>

@@ -9,6 +9,8 @@ class Criterio < Model[:criterio]
 
   one_to_one :formulario
 
+  attr_accessor :resposta
+
   def validate
     super
     validates_presence :titulo, message: 'não foi atribuído.'

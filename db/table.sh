@@ -6,6 +6,8 @@
 #?   sqlrun [OPTIONS] <TABLENAME>
 #?
 #? Opções:
+#?   -c   SQL para criação da tabela.
+#?   -u   SQL para atualização da tabela.
 #?   -v   Ajusta a versão.
 #?   -h   Exibe esta mensagem.
 #?
@@ -17,8 +19,10 @@ usage() {
 
 test "$#" = "0" && usage
 
-while getopts hv: option; do
+while getopts cuhv: option; do
   case $option in
+    c  ) create_ddl_file=ddl_create ;;
+    u  ) create_ddl_file=ddl_update ;;
     v  ) APP_VERSION=$OPTARG ;;
     h|?) usage ;;
   esac
@@ -48,6 +52,8 @@ table_alias=$(echo $1 | tr [A-Z] [a-z])
 table_path=$APP_DBDIR/v$APP_VERSION
 table_file=$table_name.sql
 
+mkdir -p $table_path/{create,drop}
+
 test -f $table_path/create/$table_file && {
   echo SQL DDL table $table_name already exists
   exit 1
@@ -55,6 +61,7 @@ test -f $table_path/create/$table_file && {
 
 echo "** $table_path/create/$table_file"
 
+ddl_create() {
 cat <<-end > $table_path/create/$table_file
 prompt ** ${table_name}
 
@@ -92,6 +99,35 @@ drop table ${table_alias} cascade constraints;
 
 drop sequence s_${table_alias};
 end
+}
+
+ddl_update() {
+cat <<-end > $table_path/create/$table_file
+prompt ** ${table_name}
+
+alter table ${table_alias} add {
+-- alter table ${table_alias} modify (
+--  %column% %type%()
+--    constraint ${table_alias}_fk references %column%(id)
+--    constraint ${table_alias}_uk unique
+--    constraint ${table_alias}_nn not null
+);
+
+-- comment on column ${table_alias}.%column% is 'Descrição da coluna.';
+end
+
+echo "** $table_path/drop/$table_file"
+
+cat <<-end > $table_path/drop/$table_file
+prompt ** ${table_name}
+
+alter table ${table_alias} drop (
+-- alter table ${table_alias} modify {
+--  %column%
+);
+end
+}
+
+${create_ddl_file}
 
 exit $?
-

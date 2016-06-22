@@ -39,24 +39,28 @@
 
     <br/>
 
-    <form action="<%=path_to :moderacao, @ideia.to_url_param%>" method="post" class="prd-card mdl-card mdl-card--full-width mdl-shadow--2dp">
+    <form action="<%=path_to :ideias, @ideia.to_url_param, :moderacao%>" method="post" class="prd-card mdl-card mdl-card--full-width mdl-shadow--2dp">
       <div class="mdl-card__title mdl-card--border">
         <h3 class="mdl-card__title-text mdl-typography--headline"><%=@formulario.titulo%></h3>
       </div>
 
       <div class="mdl-card__supporting-text mdl-card--border">
-        <%@formulario.criterios.each_with_index do |criterio, c|%>
+        <%@criterios.each_with_index do |criterio, c|%>
+          <!--<%=criterio%>-->
+          <%checked = ' checked="checked"' if criterio.resposta =~ /S/i%>
           <input type="hidden" id="criterio_<%=c%>_id" name="criterios[][id]" value="<%=criterio.id%>"/>
           <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="criterio_<%=c%>_resposta_s">
-            <input type="checkbox" id="criterio_<%=c%>_resposta_s" name="criterios[][resposta]" value="S" class="mdl-switch__input"/>
+            <input type="checkbox" id="criterio_<%=c%>_resposta_s" name="criterios[][resposta]" value="S" class="mdl-switch__input"<%=checked%>/>
             <p class="mdl-switch__label"><%=criterio.titulo%><small><em>(<%=criterio.descricao%>)</em></small></p>
           </label>
         <%end%>
 
-        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-textfield--full-width">
-          <label class="mdl-textfield__label" for="ideia_titulo">Mensagem para o autor da ideia</label>
-          <input type="text" id="historico_mensagem" name="historico[mensagem]" class="mdl-textfield__input" pattern="[\w\W\s\S]*"/>
-          <span class="mdl-textfield__error">Digite um texto válido para o autor.</span>
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-textfield--full-width <%='is-invalid' if @historico.errors[:descricao]%>">
+          <label class="mdl-textfield__label" for="historico_descricao">Nota de moderação</label>
+          <textarea id="historico_descricao" name="historico[descricao]" class="mdl-textfield__input"></textarea>
+          <%if @historico.errors[:descricao]%>
+            <span class="mdl-textfield__error"><%=@historico.errors[:descricao].join(', ')%></span>
+          <%end%>
         </div>
       </div>
 
@@ -64,9 +68,11 @@
         <button name="_method" value="post" class="mdl-button mdl-button--raised mdl-js-button mdl-js-ripple-effect">
           Enviar
         </button>
-        <a href="<%=path_to :moderacao%>" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+
+        <button name="_method" value="put" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+          <input type="hidden" name="desbloquear" value="true"/>
           Cancelar
-        </a>
+        </button>
       </div>
     </form>
   </div><!--/.mdl-cell-->

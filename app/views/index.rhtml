@@ -1,21 +1,11 @@
-<div class="mdl-grid mdl-grid--no-spacing">
-  <div class="mdl-cell mdl-cell--1-col">
-    <!-- coluna esquerda para centralizacao do conteudo -->
+<div class="mdl-grid">
+  <div class="mdl-cell mdl-cell--12-col mdl-typography--text-center">
+    <h2>Programa de Ideias e Sugestões Prodam</h2>
   </div>
 
-  <div class="mdl-cell mdl-cell--10-col mdl-grid">
-    <div class="mdl-cell mdl-cell--12-col mdl-typography--text-center">
-      <h2>Programa de Ideias e Sugestões Prodam</h2>
+  <%@ideias.each_with_index do |ideia, i|%>
+    <div class="mdl-cell mdl-cell--12-col">
+    <%=partial 'ideias/card', locals: { ideia: ideia }%>
     </div>
-
-    <div class="mdl-cell mdl-cell--12-col prd-board prd-board--centered">
-    <%@categorias.each_with_index do |categoria, c|%>
-      <%=partial 'categorias/minicard', locals: { categoria: categoria }%>
-    <%end%>
-    </div>
-
-    <div class="mdl-cell mdl-cell--12-col mdl-typography--text-center">
-      <a href="<%=path_to :categorias%>" class="mdl-button mdl-button--raised mdl-button--colored mdl-js-button mdl-js-ripple-effect">Mais categorias</a>
-    </div>
-  </div>
+  <%end%>
 </div>

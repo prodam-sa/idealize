@@ -12,15 +12,19 @@ module IdeiasHelper
     ideia && (usuario_id == ideia.autor_id)
   end
 
+  def usuario_moderador?(ideia)
+    (! usuario_autor? ideia) && (ideia.modificacao.responsavel_id == usuario_id)
+  end
+
   def situacao(chave)
     Situacao.chave(chave)
   end
 
   def historico(ideia, situacao, mensagem)
-    Modificacao.create ideia: ideia,
-                       situacao: situacao,
-                       responsavel_id: usuario_id,
-                       descricao: mensagem
+    Modificacao.new ideia: ideia,
+                    situacao: situacao,
+                    responsavel_id: usuario_id,
+                    descricao: mensagem
   end
 
   def mensagem(texto)

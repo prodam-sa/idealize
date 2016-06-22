@@ -37,6 +37,7 @@
     "scribe-plugin-link-prompt-command": "*",
     "scribe-plugin-sanitizer": "*",
     "scribe-plugin-smart-lists": "*",
-    "scribe-plugin-toolbar": "*"
+    "scribe-plugin-toolbar": "*",
+    "fetch": "^1.0.0"
   }
 }

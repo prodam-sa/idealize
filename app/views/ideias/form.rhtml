@@ -1,7 +1,7 @@
-<div class="mdl-grid">
-  <div class="mdl-cell mdl-cell--12-col mdl-color--white">
-    <%path = @ideia.id ? path_to(:ideias, @ideia.to_url_param) : path_to(:ideias)%>
-    <form action="<%=path%>" method="post" class="mdl-grid mdl-shadow--2dp">
+<%path = @ideia.id ? path_to(:ideias, @ideia.to_url_param) : path_to(:ideias)%>
+<form action="<%=path%>" method="post" class="mdl-grid">
+  <div class="mdl-cell mdl-cell--12-col mdl-grid mdl-grid--no-spacing mdl-card mdl-shadow--2dp">
+    <div class="mdl-cell mdl-cell--12-col mdl-card__actions">
       <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label <%='is-invalid' if @ideia.errors[:titulo]%> mdl-cell mdl-cell--12-col">
         <label class="mdl-textfield__label" for="ideia_titulo">Título da sua ideia</label>
         <input id="ideia_titulo" name="ideia[titulo]" class="mdl-textfield__input" type="text" value="<%=@ideia.titulo%>"/>
@@ -14,51 +14,39 @@
         <label for="ideia_texto_oportunidade">Oportunidade/Desafio</label>
         <%=partial 'ideias/editor', locals: { ideia: @ideia, field: :texto_oportunidade }%>
       </div>
-      
+
       <div class="mdl-cell mdl-cell--12-col">
         <label for="ideia_texto_solucao">Proposta/Solução</label>
         <%=partial 'ideias/editor', locals: { ideia: @ideia, field: :texto_solucao }%>
       </div>
 
-      <div class="mdl-cell mdl-cell--12-col mdl-grid mdl-grid--no-spacing">
-      <%@categorias.each_with_index do |categoria, i|%>
-        <%checked = 'checked="checked"' if @ideia.categorias.include? categoria%>
-        <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect mdl-cell mdl-cell--2-col" for="ideia_categorias_<%=i%>">
-          <input type="checkbox" id="ideia_categorias_<%=i%>" name="categorias[]" value="<%=categoria.id%>" class="mdl-checkbox__input" <%=checked%>/>
-          <span class="mdl-checkbox__label"><%=categoria.titulo%></span>
-        </label>
-      <%end%>
-      </div>
-
       <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--12-col">
         <label class="mdl-textfield__label" for="historico_mensagem">Nota de modificação</label>
-        <input type="text" id="historico_mensagem" name="historico[mensagem]" class="mdl-textfield__input" pattern="[\w\W\s\S]*"/>
+        <textarea type="text" id="historico_mensagem" name="historico[mensagem]" class="mdl-textfield__input" pattern="[\w\W\s\S]*"></textarea>
         <span class="mdl-textfield__error">Digite um texto válido registrar a modificação.</span>
       </div>
+    </div><!--/.mdl-cell-->
 
-      <div class="mdl-card__actions mdl-card--border">
-        <div class="mdl-grid mdl-grid--no-spacing">
-          <div class="mdl-cell mdl-cell--6-col-desktop mdl-cell--12-phone">
-            <button id="salvar" type="submit" name="_method" value="<%=@ideia.id ? :put : :post%>" class="mdl-button mdl-button--raised mdl-js-button mdl-js-ripple-effect">
-              Salvar <%=@situacao.titulo%>
-            </button>
-            <span class="mdl-tooltip mdl-tooltip--top" for="salvar"><%=@situacao.descricao%></span>
+    <div class="mdl-cell mdl-cell--12-col mdl-card__actions mdl-card--border">
+      <button id="salvar" type="submit" name="_method" value="<%=@ideia.id ? :put : :post%>" class="mdl-button mdl-button--raised mdl-js-button mdl-js-ripple-effect">
+        Salvar <%=@situacao.titulo%>
+      </button>
+      <span class="mdl-tooltip mdl-tooltip--top" for="salvar"><%=@situacao.descricao%></span>
 
-            <a href="<%=path_to :ideias%>" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-              Cancelar
-            </a>
-          </div>
-        </div>
-      </div>
-    </form>
-  </div><!--/.mdl-cell-->
-</div><!--/.mdl-grid-->
+      <a href="<%=path_to :ideias%>" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+        Cancelar
+      </a>
+    </div><!--/.mdl-cell-->
+  </div><!--/./mdl-cell.mdl-grid-->
+</form><!--./mdl-grid-->
 
 <%content_for :stylesheet do%>
 <style>
   .editor__area, .editor__code {
-    height: 280px;
-    width: 100% !important;
+    height: 16rem;
+  }
+
+  .editor__code {
   }
 
   .editor__area {
@@ -79,10 +67,6 @@
     margin: 0;
   }
 
-  textarea {
-    min-width: 100% !important;
-    width: 100%;
-  }
 </style>
 <%end%>
 

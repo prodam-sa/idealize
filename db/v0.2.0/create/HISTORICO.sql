@@ -16,7 +16,7 @@ create table historico (
                  constraint historico_responsavel_fk references usuario(id)
 , data_registro date
                 default sysdate
-, descricao varchar2(512)
+, descricao varchar2(1024)
             constraint historico_descricao_nn not null
 ) tablespace &data;
 

@@ -40,8 +40,6 @@ class Prodam::Idealize::ApplicationController < Sinatra::Base
       unless authorized_by? role
         message.update level: :warning, text: "Você não possui permissão para acessar esta página."
         redirect path_to(:home), 303
-      else
-        pass
       end
     end
   end

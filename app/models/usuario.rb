@@ -61,6 +61,25 @@ private
   def confirm_password(password, confirmation)
     password == confirmation
   end
+
+  class << self
+    def by_letra_inicial(*letras)
+      where("UPPER(SUBSTR(nome, 1, 1)) IN ?",  letras.map(&:upcase))
+    end
+
+    def search(termo)
+      regexp_like(nome_usuario: termo, nome: termo)
+    end
+
+  private
+
+    def regexp_like(hash)
+      expressao = hash.map do |field, pattern|
+        format("REGEXP_LIKE(#{field}, '%s', 'i')", pattern.to_s)
+      end.join(' OR ')
+      where(expressao)
+    end
+  end
 end
 
 end # module

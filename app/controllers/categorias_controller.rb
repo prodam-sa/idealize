@@ -56,7 +56,7 @@ class CategoriasController < ApplicationController
     @categoria.set_all(params[:categoria])
     if @categoria.valid?
       @categoria.save
-      message.update(level: :success, text: 'Categoria foi atualizada com sucesso!')
+      message.update(level: :information, text: 'Categoria foi atualizada com sucesso!')
       redirect to(id)
     else
       message.update(level: :error, text: 'Oops! Tem alguma coisa errada. Observe os campos em vermelho.')

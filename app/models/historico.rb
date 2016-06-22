@@ -16,7 +16,8 @@ class Historico < Model[:historico]
 
   def validate
     super
-    validates_presence :descricao, message: 'deve ser preenchido.'
+    validates_presence :descricao, message: 'deve ser preenchida.'
+    validates_max_length 1024, :descricao, message: lambda{ |n| "deve ser de até #{n} caracteres." }
   end
 
   def param_name

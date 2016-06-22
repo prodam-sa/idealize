@@ -40,4 +40,19 @@ module Prodam::Idealize::ViewHelper
   def remove_html_tags(text)
     text.gsub(/<("[^"]*"|'[^']*'|[^'">])*>/, '')
   end
+
+  def letters
+    Hash[('A'..'Z').to_a.map{|i| [i, []]}]
+  end
+
+  def sanitize_letter(letter)
+    case letter
+    when /ÁÀÄÔÃáàäôã/ then 'A'
+    when /ÉÈËÊéèëê/   then 'E'
+    when /ÍÌÏÎíìïî/   then 'I'
+    when /ÓÒÖÔÕóòöôõ/ then 'O'
+    when /ÚÙÜÛŨúùüûũ/ then 'U'
+    else letter
+    end
+  end
 end

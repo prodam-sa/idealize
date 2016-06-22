@@ -45,32 +45,11 @@
 
         <div class="mdl-layout-spacer"></div>
 
-        <div class="prd-searchbox mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label mdl-textfield--align-right">
-          <div class="mdl-textfield__expandable-holder">
-            <input class="mdl-textfield__input" type="text" name="sample" id="ideias-campo-pesquisa" placeholder="Procure por ideias">
-          </div>
-        </div>
-        <%if authorized?%>
-          <a href="<%=path_to :administracao%>" class="mdl-button mdl-js-button mdl-button--icon">
-            <i class="material-icons">settings</i>
-          </a>
-        <%end%>
-        <%if authorized_by? :moderator%>
-          <a href="<%=path_to :moderacao%>" class="mdl-button mdl-js-button mdl-button--icon">
-            <i class="material-icons">assignment</i>
-          </a>
-        <%end%>
-        <%if authenticated?%>
-          <a href="<%=path_to :conta%>" class="mdl-button mdl-js-button mdl-button--icon">
-            <i class="material-icons">account_box</i>
-          </a>
-          <a href="<%=path_to :conta, :sair%>" class="mdl-button mdl-js-button mdl-button--icon">
-            <i class="material-icons">power_settings_new</i>
-          </a>
-        <%else%>
-          <button type="button" class="mdl-button mdl-js-button mdl-button--icon mdl-button--open-dialog">
+        <%unless authenticated?%>
+          <button id="toolbox-sign-in" type="button" class="mdl-button mdl-js-button mdl-button--icon mdl-button--open-dialog">
             <i class="material-icons">perm_identity</i>
           </button>
+          <span class="mdl-tooltip" for="toolbox-sign-in">Acessar o Idealize</span>
         <%end%>
       </div><!--/.mdl-layout__header-row-->
     </header>
@@ -82,8 +61,9 @@
 
       <footer class="prd-footer mdl-mini-footer mdl-color--brown-900 mdl-color-text--white">
         <div class="mdl-mini-footer__left-section"></div>
-        <div class="mdl-mini-footer__center-section">
-          <%=Date.today.year%> &copy; PRODAM - Processamento de Dados Amazonas S/A
+        <div class="mdl-mini-footer__center-section mdl-typography--text-center">
+          <span><%=Date.today.year%> &copy; PRODAM - Processamento de Dados Amazonas S/A</span><br/>
+          <small><%=version_info%></small>
         </div>
       </footer>
     </main>
@@ -108,7 +88,7 @@
           <button type="submit" class="mdl-button mdl-button--raised mdl-js-button mdl-js-ripple-effect">
             Acessar
           </button>
-          <button type="button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--close-dialog">
+          <button type="button" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect mdl-button--close-dialog">
             Cancelar
           </button>
         </div>

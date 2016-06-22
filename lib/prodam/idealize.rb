@@ -1,14 +1,16 @@
 # encoding: utf-8
 
+ENV['NLS_LANG'] = 'AMERICAN_AMERICA.UTF8'
+ENV['NLS_SORT'] = 'BINARY_AI'
+ENV['NLS_COMP'] = 'LINGUISTIC'
+DEFAULT_OCI8_ENCODING = 'utf-8'
+
 require 'date'
 require 'pathname'
 require 'yaml'
 require 'sequel'
 require 'json'
 require 'prodam/idealize/version'
-
-ENV['NLS_LANG'] ||= 'AMERICAN_AMERICA.UTF8'
-DEFAULT_OCI8_ENCODING = 'utf-8'
 
 class String
   def camelcase

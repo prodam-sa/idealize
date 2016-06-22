@@ -8,7 +8,14 @@ module Prodam::Idealize::UrlHelper
   end
 
   def path_to(path, *args)
-    subpath = args.join('/') if args.size > 0
+    if args.last.kind_of? Hash
+      slashes = args[0..-2]
+      params = args[-1]
+    else
+      slashes = args
+    end
+    subpath = slashes.join('/') if slashes.size > 0
+    subpath = (subpath + "?" + params.map{|k,v|"#{k}=#{v}"}.join("&")) if params
     if path.is_a? Symbol
       controller = '/' + (path.to_s.match(/^(home|root)/i) ? '' : path).to_s
     else
