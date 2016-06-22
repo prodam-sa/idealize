@@ -17,7 +17,7 @@ body {
   height: 40vh;
   /* background-color: #3F51B5; */
   /* background-color: #e0e0e0; /* gray-300 /**/
-  background-color: #ffe082; /* indigo-50 /**/
+  background-color: #e0f7fa; /* cyan-50 /**/
   -webkit-flex-shrink: 0;
   -ms-flex-negative: 0;
   flex-shrink: 0;
@@ -28,11 +28,15 @@ body {
 }
 
 .prd-landpage {
-  background-color: #e0f7fa;
+  background-color: #e0f7fa /* cyan-50 */;
 }
 
-.prd-content--with-ribbon {
+.prd-content.prd-content--with-ribbon {
   margin-top: -40vh;
+}
+
+.prd-content.prd-content--with-background {
+  background: transparent url('/img/brainstorming.svg') no-repeat 100% 100%;
 }
 
 .prd-navigation__link {
@@ -211,7 +215,7 @@ img.prd-brand {
 
 .prd-color--information {
   color: rgba(255, 255, 255, 0.85);
-  background-color: #1b5e20; /* green-900 */
+  background-color: #2e7d32; /* green-800 */
 }
 
 .prd-color--warning {
