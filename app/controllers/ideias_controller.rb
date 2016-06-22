@@ -13,6 +13,7 @@ class IdeiasController < ApplicationController
   before '/:id/?:action?' do |id, action|
     if (ideia_id = id.to_i) > 0
       @ideia = Ideia[ideia_id]
+      @coautores = @ideia.coautores_dataset.order(:nome).all
       @situacao = @ideia.modificacao.situacao
     else
       @ideia = Ideia.new
@@ -28,10 +29,6 @@ class IdeiasController < ApplicationController
   
   get '/nova', authenticate: true do
     @categorias = Categoria.all
-    @coautores = Coautor.select(:id, :nome).order(:nome).all.group_by do |coautor|
-      sanitize_letter(coautor.nome[0].upcase)
-    end
-    @coautores = letters.merge(@coautores)
     view 'ideias/form'
   end
 
@@ -73,10 +70,6 @@ class IdeiasController < ApplicationController
   get '/:id/editar' do |id|
     unless @ideia.bloqueada?
       @categorias = Categoria.all
-      @coautores = Coautor.select(:id, :nome).order(:nome).all.group_by do |coautor|
-        sanitize_letter(coautor.nome[0].upcase)
-      end
-      @coautores = letters.merge(@coautores)
       view 'ideias/form'
     else
       if @ideia.publicada?
@@ -135,6 +128,19 @@ class IdeiasController < ApplicationController
       message.update(level: :warning, text: 'Sua ideia está em moderação e não poderá ser excluída.')
       redirect to(id)
     end
+  end
+
+  put '/:id/coautores', authenticate: true do |id|
+    if @ideia.desbloqueada? && (usuario_autor? @ideia)
+      @ideia.remove_all_coautores
+      params[:coautores] && params[:coautores].each do |coautor_id|
+        @ideia.add_coautor coautor_id
+      end
+      message.update(level: :information, text: 'Os coautores de sua ideia foram atualizados.')
+    else
+      message.update(level: :warning, text: 'Sua ideia está bloqueada para inclusão de coautores.')
+    end
+    redirect to(id)
   end
 
   get '/:id/moderar', authorize_only: :moderator do |id|

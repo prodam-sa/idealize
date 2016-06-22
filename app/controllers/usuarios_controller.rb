@@ -17,13 +17,12 @@ class UsuariosController < ApplicationController
   end
 
   get '/pesquisa.json' do
-    @termo = params[:termo]
-    if authenticated?
-      @usuarios = Usuario.search(@termo).select(:id, :nome_usuario, :nome, :email).all.map(&:to_hash)
-      @usuarios.to_json
-    else
-      json 'sem permissão'
-    end
+    content_type :json
+    @termo = params[:termo] || 'a'
+    @usuarios = Usuario.search(@termo).select(:id, :nome_usuario, :nome, :email).all.map(&:to_hash)
+    hash = { status: 'ok', data: @usuarios }
+    response.body = json hash
+    response
   end
 
   get '/:id' do |id|

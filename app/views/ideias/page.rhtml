@@ -31,7 +31,7 @@
       <div class="mdl-card__actions mdl-card--border">
         <div class="mdl-grid mdl-grid--no-spacing">
           <div class="mdl-cell mdl-cell--6-col-desktop mdl-cell--12-phone">
-            <%if authorized_by? :moderator and not usuario_autor? @ideia%>
+            <%if (authorized_by? :moderator) and (not usuario_autor? @ideia) and (not @ideia.publicada?)%>
               <a href="<%=path_to :ideias, @ideia.to_url_param, :moderar%>" class="mdl-button mdl-button--raised mdl-js-button mdl-js-ripple-effect">
                 Moderar
               </a>
@@ -40,7 +40,7 @@
               </a>
             <%end%>
 
-            <%if authorized? or usuario_autor? @ideia%>
+            <%if authorized? or (usuario_autor?(@ideia) and @ideia.desbloqueada?)%>
               <form action="<%=path_to :ideias, @ideia.to_url_param, :editar%>" method="get" style="display: inline">
                 <button class="mdl-button mdl-button--raised mdl-js-button mdl-js-ripple-effect"<%=disabled%>>
                   Alterar <%=@situacao.titulo%>
@@ -71,32 +71,96 @@
     </div><!--/.mdl-card-->
   </div><!--/.mdl-cell-->
 
-      <%@ideia.historico.group_by{|m| formated_date(m.data_registro)}.each do |data, mudancas|%>
-        <div class="mdl-card__supporting-text mdl-card--border prd-timeline">
-          <div class="prd-timeline__title mdl-color-text--primary">
-            <i class="material-icons">event</i>
-            <h3 class="prd-timeline__title-text"><%=data%></h3>
-          </div>
-
-          <ul class="prd-timeline__event">
-          <%mudancas.each do |mudanca|%>
-            <li class="prd-timeline__event-item">
-              <div class="prd-timeline__event-time">
-                <div class="prd-timeline__event-time-label"><%=formated_time mudanca.data_registro%></div>
-              </div>
-              <div class="prd-timeline__event-data">
-                <div class="prd-timeline__event-data-content">
-                  <%=perfil_responavel_historico(@ideia, mudanca.responsavel)%>:
-                  <%=mudanca.descricao%>
-                </div>
-              </div>
-            </li>
-          <%end%>
-          </ul>
+  <%if authorized? or usuario_autor? @ideia%>
+    <div class="mdl-cell mdl-cell--6-col">
+      <div class="prd-card mdl-card mdl-card--full-width mdl-shadow--2dp">
+        <div class="mdl-card__title mdl-card--border">
+          <h1 class="mdl-card__title-text">Histórico</h1>
         </div>
+
+        <%@ideia.historico.group_by{|m| formated_date(m.data_registro)}.each do |data, mudancas|%>
+          <div class="mdl-card__actions prd-timeline">
+            <div class="prd-timeline__title mdl-color-text--primary">
+              <i class="material-icons">event</i>
+              <h3 class="prd-timeline__title-text"><%=data%></h3>
+            </div>
+
+            <ul class="prd-timeline__event">
+            <%mudancas.each do |mudanca|%>
+              <li class="prd-timeline__event-item">
+                <div class="prd-timeline__event-time">
+                  <div class="prd-timeline__event-time-label"><%=formated_time mudanca.data_registro%></div>
+                </div>
+                <div class="prd-timeline__event-data">
+                  <div class="prd-timeline__event-data-content">
+                    <%=perfil_responavel_historico(@ideia, mudanca.responsavel)%>:
+                    <%=mudanca.descricao%>
+                  </div>
+                </div>
+              </li>
+            <%end%>
+            </ul>
+          </div>
+        <%end%>
+      </div><!--/.mdl-card-->
+    </div><!--/.mdl-cell-->
+
+    <div class="mdl-cell mdl-cell--6-col">
+      <%if usuario_autor? @ideia%>
+        <form action="<%=path_to :ideias, @ideia.to_url_param, :coautores%>" method="post">
+          <div class="prd-card mdl-card mdl-card--full-width mdl-shadow--2dp">
+            <div class="mdl-card__title mdl-card--border">
+              <h1 class="mdl-card__title-text">Coautores</h1>
+            </div>
+
+            <ul id="coautores" class="mdl-list">
+              <%@coautores.each_with_index do |coautor, c|%>
+                <li id="coautores<%=coautor.id%>" class="mdl-list__item">
+                  <span class="mdl-list__item-primary-content">
+                    <%=coautor.nome%>
+                  </span>
+                  <span class="mdl-list__item-secondary-action">
+                    <input type="hidden" name="coautores[]" value="<%=coautor.id%>"/>
+                    <button type="button" class="mdl-button mdl-button--icon mdl-button--raised mdl-js-button mdl-js-ripple-effect" data-id="<%=coautor.id%>">
+                      <i class="material-icons">close</i>
+                    </button>
+                  </span>
+                </li>
+              <%end%>
+            </ul>
+
+            <%if @ideia.coautores.empty?%>
+              <div id="usuarios-mensagem" class="mdl-card__supporting-text">
+                <p class="mdl-typography--text-center">
+                  Nenhum coautor foi adicionado.
+                </p>
+              </div>
+            <%end%>
+
+            <div class="mdl-card__actions mdl-card--border">
+              <div class="mdl-textfield mdl-textfield--floating-label mdl-textfield--full-width mdl-js-textfield">
+                <label for="pesquisa" class="mdl-textfield__label">Busque pelo nome do usuário</label>
+                <input type="text" id="pesquisa" list="usuarios" data-list="coautores" class="mdl-textfield__input"/>
+                <datalist id="usuarios">
+                </datalist>
+              </div>
+            </div>
+
+            <div class="mdl-card__actions mdl-card--border mdl-card--expand">
+              <button type="submit" name="_method" value="put" class="mdl-button mdl-button--raised mdl-js-button mdl-js-ripple-effect">
+                Salvar
+              </button>
+            </div>
+          </div><!--/.mdl-card-->
+        </form>
+      <%else%>
+        Somente o autor da ideia poderá visualizar os coautores.
       <%end%>
-    </div>
-  </div>
-</div>
+    </div><!--/.mdl-cell-->
+  <%end%>
+</div><!--/.mdl-grid-->
 
-
+<%content_for :script do%>
+  <script src="<%=path_to '/src/fetch/fetch.js'%>"></script>
+  <script src="<%=path_to '/js/usuarios.js'%>"></script>
+<%end%>
