@@ -98,15 +98,15 @@ class Ideia < Model[:ideia]
     end
 
     def search(term)
-      regexp_like(titulo: term, texto_oportunidade: term, texto_solucao: term).reverse(:data_atualizacao)
+      regexp_like(term, :titulo, :texto_oportunidade, :texto_solucao).reverse(:data_atualizacao)
     end
 
   private
 
-    def regexp_like(hash)
-      expressao = hash.map do |field, pattern|
-        format("regexp_like(#{field}, '%s', 'i')", pattern.to_s)
-      end.join(' or ')
+    def regexp_like(pattern, *fields)
+      expressao = fields.map do |field|
+        format("REGEXP_LIKE(#{field}, '%s', 'i')", pattern.to_s)
+      end.join(' OR ')
       where(expressao)
     end
   end
