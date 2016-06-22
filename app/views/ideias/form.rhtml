@@ -1,7 +1,7 @@
 <%path = @ideia.id ? path_to(:ideias, @ideia.to_url_param) : path_to(:ideias)%>
 <form action="<%=path%>" method="post" class="mdl-grid">
-  <div class="mdl-cell mdl-cell--8-col mdl-grid mdl-grid--no-spacing mdl-card mdl-shadow--2dp">
-    <div class="mdl-cell mdl-cell--12-col mdl-color--white">
+  <div class="mdl-cell mdl-cell--12-col mdl-grid mdl-grid--no-spacing mdl-card mdl-shadow--2dp">
+    <div class="mdl-cell mdl-cell--12-col mdl-card__actions">
       <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label <%='is-invalid' if @ideia.errors[:titulo]%> mdl-cell mdl-cell--12-col">
         <label class="mdl-textfield__label" for="ideia_titulo">Título da sua ideia</label>
         <input id="ideia_titulo" name="ideia[titulo]" class="mdl-textfield__input" type="text" value="<%=@ideia.titulo%>"/>
@@ -14,83 +14,30 @@
         <label for="ideia_texto_oportunidade">Oportunidade/Desafio</label>
         <%=partial 'ideias/editor', locals: { ideia: @ideia, field: :texto_oportunidade }%>
       </div>
-      
+
       <div class="mdl-cell mdl-cell--12-col">
         <label for="ideia_texto_solucao">Proposta/Solução</label>
         <%=partial 'ideias/editor', locals: { ideia: @ideia, field: :texto_solucao }%>
       </div>
 
-      <div class="mdl-cell mdl-cell--12-col mdl-grid mdl-grid--no-spacing">
-      <%@categorias.each_with_index do |categoria, i|%>
-        <%checked = 'checked="checked"' if @ideia.categorias.include? categoria%>
-        <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect mdl-cell mdl-cell--2-col" for="ideia_categorias_<%=i%>">
-          <input type="checkbox" id="ideia_categorias_<%=i%>" name="categorias[]" value="<%=categoria.id%>" class="mdl-checkbox__input" <%=checked%>/>
-          <span class="mdl-checkbox__label"><%=categoria.titulo%></span>
-        </label>
-      <%end%>
-      </div>
-
       <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--12-col">
         <label class="mdl-textfield__label" for="historico_mensagem">Nota de modificação</label>
-        <input type="text" id="historico_mensagem" name="historico[mensagem]" class="mdl-textfield__input" pattern="[\w\W\s\S]*"/>
+        <textarea type="text" id="historico_mensagem" name="historico[mensagem]" class="mdl-textfield__input" pattern="[\w\W\s\S]*"></textarea>
         <span class="mdl-textfield__error">Digite um texto válido registrar a modificação.</span>
       </div>
+    </div><!--/.mdl-cell-->
 
-      <div class="mdl-card__actions mdl-card--border">
-        <div class="mdl-grid mdl-grid--no-spacing">
-          <div class="mdl-cell mdl-cell--6-col-desktop mdl-cell--12-phone">
-            <button id="salvar" type="submit" name="_method" value="<%=@ideia.id ? :put : :post%>" class="mdl-button mdl-button--raised mdl-js-button mdl-js-ripple-effect">
-              Salvar <%=@situacao.titulo%>
-            </button>
-            <span class="mdl-tooltip mdl-tooltip--top" for="salvar"><%=@situacao.descricao%></span>
+    <div class="mdl-cell mdl-cell--12-col mdl-card__actions mdl-card--border">
+      <button id="salvar" type="submit" name="_method" value="<%=@ideia.id ? :put : :post%>" class="mdl-button mdl-button--raised mdl-js-button mdl-js-ripple-effect">
+        Salvar <%=@situacao.titulo%>
+      </button>
+      <span class="mdl-tooltip mdl-tooltip--top" for="salvar"><%=@situacao.descricao%></span>
 
-            <a href="<%=path_to :ideias%>" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-              Cancelar
-            </a>
-          </div>
-        </div>
-      </div>
+      <a href="<%=path_to :ideias%>" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+        Cancelar
+      </a>
     </div><!--/.mdl-cell-->
   </div><!--/./mdl-cell.mdl-grid-->
-
-  <div class="mdl-cell mdl-cell--4-col mdl-card mdl-shadow--2dp">
-    <div class="mdl-tabs mdl-tabs--vertical mdl-js-tabs mdl-js-ripple-effect">
-      <div class="mdl-tabs__tab-bar mdl-tabs__tab-bar--non-centered">
-        <%first = letters.keys.first%>
-        <a href="#letra-<%=first%>" class="mdl-tabs__tab is-active">
-          <span class="mdl-badge" data-badge="<%=@coautores[first].size%>"><%=first%></span>
-        </a>
-
-        <%letters.keys[1..-1].each do |letter|%>
-          <a href="#letra-<%=letter%>" class="mdl-tabs__tab">
-            <span class="mdl-badge" data-badge="<%=@coautores[letter].size%>"><%=letter%></span>
-          </a>
-        <%end%>
-      </div>
-
-      <div id="letra-<%=first%>" class="mdl-tabs__panel is-active">
-        <%@coautores[first].each_with_index do |coautor, c|%>
-          <%selected = ' selected="selected"' if @ideia.coautores.include? coautor%>
-          <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="coautor-<%=c%>">
-            <input type="checkbox" id="coautor-<%=c%>" name="coautores[]" class="mdl-checkbox__input"<%=selected%> value="<%=coautor.id%>"/>
-            <span class="mdl-checkbox__label"><%=coautor.nome%></span>
-          </label>
-        <%end%>
-      </div>
-
-      <%letters.keys[1..-1].each do |letter|%>
-        <div id="letra-<%=letter%>" class="mdl-tabs__panel">
-          <%@coautores[letter].each_with_index do |coautor, c|%>
-            <%selected = ' selected="selected"' if @ideia.coautores.include? coautor%>
-            <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="coautor-<%=c%>">
-              <input type="checkbox" id="coautor-<%=c%>" name="coautores[]" class="mdl-checkbox__input"<%=selected%> value="<%=coautor.id%>"/>
-              <span class="mdl-checkbox__label"><%=coautor.nome%></span>
-            </label>
-          <%end%>
-        </div>
-      <%end%>
-    </div><!--/.mdl-tabs-->
-  </div><!--/.mdl-cell-->
 </form><!--./mdl-grid-->
 
 <%content_for :stylesheet do%>
