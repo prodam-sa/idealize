@@ -2,8 +2,8 @@ SHELL = /bin/bash
 .SUFFIXES:
 
 name = idealize
-version ?= 0.8.1
-release ?= 2016-06-10
+version ?= 0.9.0
+release ?= 2016-06-22
 database = $(name)
 environment ?= development
 
@@ -67,6 +67,9 @@ db.drop.version:
 db.bootstrap:
 	test -f db/v$(version)/bootstrap.sql && sh db/sqlrun.sh -e $(environment) db/v$(version)/bootstrap.sql || true
 	test -f db/v$(version)/bootstrap.rb  && ruby -Ilib:app db/v$(version)/bootstrap.rb || true
+
+db.hotfix:
+	test -f db/v$(version)/hotfix.rb  && ruby -Ilib:app db/v$(version)/hotfix.rb || true
 
 clean:
 	rm -f lib/prodam/idealize/version.rb
