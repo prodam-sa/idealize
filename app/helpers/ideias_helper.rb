@@ -28,7 +28,7 @@ module IdeiasHelper
     (permitido_alterar? ideia) && (ideia.situacoes? :rascunho, :revisao)
   end
 
-  def permitido_exluir?(ideia)
+  def permitido_excluir?(ideia)
     (permitido_alterar? ideia) && (ideia.situacoes? :rascunho, :revisao)
   end
 
