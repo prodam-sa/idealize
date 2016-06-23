@@ -24,7 +24,18 @@ class Ideia < Model[:ideia]
     validates_max_length 128, :titulo, message: lambda{ |n| "deve ser de até #{n} caracteres." }
 
     validates_presence :texto_oportunidade, message: 'deve conter algum conteúdo.'
+    validates_max_length 4000, :texto_oportunidade, message: lambda { |n|
+      "deve ser de até #{n} caracteres. " +
+      "O texto possui #{texto_oportunidade.size} caracteres e " +
+      "#{texto_oportunidade.split(/ /).size} palavras."
+    }
+
     validates_presence :texto_solucao, message: 'deve conter algum conteúdo.'
+    validates_max_length 4000, :texto_solucao, message: lambda { |n|
+      "deve ser de até #{n} caracteres. " +
+      "O texto possui #{texto_solucao.size} caracteres e " +
+      "#{texto_solucao.split(/ /).size} palavras."
+    }
   end
 
   def param_name
@@ -69,6 +80,12 @@ class Ideia < Model[:ideia]
 
   def publicada?
     !self[:data_publicacao].nil?
+  end
+
+  def before_validation
+    [:texto_oportunidade, :texto_solucao].each do |texto|
+      self[texto] = self[texto].squeeze(' ').gsub(/[\n\r]/, '')
+    end
   end
 
   def before_save
