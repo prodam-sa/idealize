@@ -1,3 +1,13 @@
+- version: 0.9.1
+  release: 2016-06-23
+  summary:
+    Melhorias para apresentação de informações e correções
+  changes:
+  - Total de ideias publicadas.
+  - Mensagem de informação da ideia bloqueada.
+  - Melhorias nas páginas das ideias.
+  - Correção da validação dos campos de texto das ideias.
+
 - version: 0.9.0
   release: 2016-06-22
   summary:
