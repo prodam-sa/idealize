@@ -8,12 +8,32 @@ module IdeiasHelper
   end
 
   def usuario_autor?(ideia)
-    return nil unless authenticated?
+    return false unless authenticated?
     ideia && (usuario_id == ideia.autor_id)
   end
 
   def usuario_moderador?(ideia)
-    (! usuario_autor? ideia) && (ideia.modificacao.responsavel_id == usuario_id)
+    !(usuario_autor? ideia) && (ideia.modificacao.responsavel_id == usuario_id)
+  end
+
+  def permitido_moderar?(ideia)
+    ideia && !ideia.publicada? && ideia.desbloqueada?
+  end
+
+  def permitido_alterar?(ideia)
+    (usuario_autor? ideia) && (ideia.desbloqueada?)
+  end
+
+  def permitido_postar?(ideia)
+    (permitido_alterar? ideia) && (ideia.situacoes? :rascunho, :revisao)
+  end
+
+  def permitido_exluir?(ideia)
+    (permitido_alterar? ideia) && (ideia.situacoes? :rascunho, :revisao)
+  end
+
+  def permitido_arquivar?(ideia)
+    (permitido_exluir? ideia)
   end
 
   def situacao(chave)
