@@ -1,0 +1,29 @@
+<div class="mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
+  <div class="mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone prd-card prd-card--minicard mdl-card mdl-card--expandable">
+    <%if authorized? or usuario_autor? ideia%>
+      <!--div class="mdl-card__menu">
+        <button id="options-<%=ideia.id%>" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+          <i class="material-icons">more_vert</i>
+        </button>
+      </div-->
+    <%end%>
+
+    <div class="mdl-card__supporting-text mdl-card--expand">
+      <h2 class="mdl-card__title-text">
+        <%=ideia.titulo%>
+      </h2>
+
+      <p class="mdl-typography--text-right">
+      <%=ideia.modificacao.situacao.titulo%>, <%=formated_date ideia.modificacao.data_registro%>
+      </p>
+      <%=ideia.texto_oportunidade[0..256]%>
+    </div>
+
+    <div class="mdl-card__actions mdl-card--border">
+      <a id="ver-<%=ideia.id%>" href="<%=path_to :ideias, ideia.to_url_param%>" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+        Ler mais
+      </a>
+      <span class="mdl-tooltip mdl-tooltip--top" for="ver-<%=ideia.id%>">Visualizar ideia</span>
+    </div><!--/.mdl-card__actions-->
+  </div>
+</div>

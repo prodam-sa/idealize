@@ -108,7 +108,7 @@ function(
     scribe.use(scribePluginCodeCommand());
     scribe.use(scribePluginContentCleaner(scribe));
     // scribe.use(scribePluginCurlyQuotes());
-    // scribe.use(scribePluginFormatterPlainTextConvertNewLinesToHtml());
+    scribe.use(scribePluginFormatterPlainTextConvertNewLinesToHtml());
     scribe.use(scribePluginHeadingCommand(2));
     scribe.use(scribePluginIntelligentUnlinkCommand());
     scribe.use(scribePluginKeyboardShortcuts(commandsToKeyboardShortcutsMap));

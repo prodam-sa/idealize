@@ -28,7 +28,6 @@ class IdeiasController < ApplicationController
   end
   
   get '/nova', authenticate: true do
-    @categorias = Categoria.all
     view 'ideias/form'
   end
 
@@ -52,7 +51,6 @@ class IdeiasController < ApplicationController
       redirect to("/#{@ideia.to_url_param}")
     else
       message.update(level: :error, text: 'Oops! Tem alguma coisa errada. Observe os campos em vermelho.')
-      @categorias = Categoria.all
       @situacao = Situacao.chave :rascunho
       view 'ideias/form'
     end
@@ -69,7 +67,6 @@ class IdeiasController < ApplicationController
 
   get '/:id/editar' do |id|
     unless @ideia.bloqueada?
-      @categorias = Categoria.all
       view 'ideias/form'
     else
       if @ideia.publicada?
@@ -86,12 +83,6 @@ class IdeiasController < ApplicationController
     unless @ideia.bloqueada?
       @ideia.set_all(params[:ideia])
       if @ideia.valid?
-        if params[:categorias]
-          @ideia.remove_all_categorias
-          params[:categorias].each do |categoria|
-            @ideia.add_categoria categoria
-          end
-        end
         @ideia.save
         historico(@ideia, situacao(:revisao), mensagem('Ideia revisada pelo autor')).save
         message.update(level: :information, text: 'Sua ideia foi atualizada com sucesso!')
