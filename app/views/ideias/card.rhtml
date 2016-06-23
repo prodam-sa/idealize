@@ -47,7 +47,7 @@
             <span id="locked-<%=ideia.id%>" class="mdl-button mdl-button--icon mdl-button--raised">
               <i class="material-icons">lock</i>
             </span>
-            <span class="mdl-tooltip mdl-tooltip--left" for="locked-<%=ideia.id%>">Ideia bloqueada para edição enquanto estiver em moderação.</span>
+            <span class="mdl-tooltip mdl-tooltip--left" for="locked-<%=ideia.id%>"><%=ideia.modificacao.situacao.titulo%> e bloqueada para edição.</span>
           <%end%>
         </div>
       </div>
