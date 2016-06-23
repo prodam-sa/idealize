@@ -31,12 +31,13 @@
       <div class="mdl-card__actions mdl-card--border">
         <div class="mdl-grid mdl-grid--no-spacing">
           <div class="mdl-cell mdl-cell--6-col-desktop mdl-cell--12-phone">
+            <a href="<%=path_to :ideias%>" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+              Voltar
+            </a>
+
             <%if (authorized_by? :moderator) and (not usuario_autor? @ideia) and (not @ideia.publicada?)%>
               <a href="<%=path_to :ideias, @ideia.to_url_param, :moderar%>" class="mdl-button mdl-button--raised mdl-js-button mdl-js-ripple-effect">
                 Moderar
-              </a>
-              <a href="<%=path_to :ideias%>" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-                Voltar
               </a>
             <%end%>
 
