@@ -107,7 +107,7 @@
 
         <%if authenticated?%>
           <a id="fab" href="<%=@fab[:url]%>" class="prd-header__button-add mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--colored mdl-shadow--4dp mdl-layout--large-screen-only">
-            <i class="material-icons">add</i>
+            <i class="material-icons">edit</i>
           </a>
           <span class="mdl-tooltip mdl-tooltip--left" for="fab"><%=@fab[:tooltip]%></span>
         <%end%>
@@ -148,7 +148,7 @@
           <small><%=version_info%></small>
           <%if authenticated?%>
             <a id="fab" href="<%=@fab[:url]%>" class="prd-footer__button-add mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--colored mdl-shadow--4dp mdl-layout--small-screen-only">
-              <i class="material-icons">add</i>
+              <i class="material-icons">edit</i>
             </a>
             <span class="mdl-tooltip mdl-tooltip--top" for="fab"><%=@fab[:tooltip]%></span>
           <%end%>
