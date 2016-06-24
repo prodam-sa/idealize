@@ -26,15 +26,6 @@
       <div class="mdl-card__supporting-text">
         <%=@ideia.texto_solucao%>
       </div>
-
-      <div class="mdl-card__supporting-text">
-        <%@ideia.categorias.each_with_index do |categoria, c|%>
-          <a id="categoria-<%=categoria.id%>" href="<%=path_to :categorias, categoria.to_url_param%>" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
-            <i class="material-icons"><%=categoria.icone%></i>
-          </a>
-          <span class="mdl-tooltip mdl-tooltip--top" for="categoria-<%=categoria.id%>"><%=categoria.titulo%></span>
-        <%end%>
-      </div>
     </div><!--/.mdl-card-->
 
     <br/>

@@ -27,11 +27,17 @@
         <%=@ideia.texto_solucao%>
       </div>
 
+      <%if (permitido_moderar? @ideia)%>
+        <div class="mdl-card__supporting-text mdl-color-text--primary">
+          <p>Categorias: <b><%=@ideia.categorias.map(&:titulo).join('</b>, <b>')%></b></p>
+        </div>
+      <%end%>
+
       <%disabled = ' disabled="disabled"' if @ideia.bloqueada?%>
       <div class="mdl-card__actions mdl-card--border">
         <div class="mdl-grid mdl-grid--no-spacing">
           <div class="mdl-cell mdl-cell--6-col-desktop mdl-cell--12-phone">
-            <%if (authorized_by? :moderator) and (not usuario_autor? @ideia) and (not @ideia.publicada?)%>
+            <%if (authorized_by? :moderator) and (permitido_moderar? @ideia)%>
               <a href="<%=path_to :ideias, @ideia.to_url_param, :moderar%>" class="mdl-button mdl-button--raised mdl-js-button mdl-js-ripple-effect">
                 Moderar
               </a>
@@ -45,9 +51,15 @@
               </form>
             <%end%>
 
-            <a href="<%=path_to :ideias%>" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+            <%if permitido_moderar? @ideia%>
+              <button type="button" class="mdl-button mdl-button--colored mdl-button--open-dialog mdl-js-button mdl-js-ripple-effect">
+                Categorias
+              </button>
+            <%end%>
+
+            <button type="button" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect prd-button--backward">
               Voltar
-            </a>
+            </button>
 
             <%if permitido_excluir? @ideia%>
               <form action="<%=path_to :ideias, @ideia.to_url_param%>" method="post" style="display: inline">
@@ -168,9 +180,51 @@
   <%end%>
 </div><!--/.mdl-grid-->
 
-<%if (usuario_autor? @ideia) and (@ideia.desbloqueada?)%>
+<%if permitido_alterar? @ideia%>
   <%content_for :script do%>
     <script src="<%=path_to '/src/fetch/fetch.js'%>"></script>
     <script src="<%=path_to '/js/usuarios.js'%>"></script>
   <%end%>
+<%end%>
+
+<%if permitido_moderar? @ideia%>
+  <%content_for :dialog do%>
+    <dialog class="mdl-dialog">
+      <form action="<%=path_to :ideias, @ideia.to_url_param, :categorias%>" method="post" class="mdl-dialog__content mdl-card mdl-card--full-width mdl-grid mdl-grid--no-spacing">
+          <div class="mdl-cell mdl-cell--12-col mdl-card__title mdl-card--border">
+            <h2 class="mdl-card__title-text">Categorias</h2>
+          </div><!--/.mdl-cell-->
+
+          <div class="mdl-cell mdl-cell--12-col mdl-card__supporting-text">
+            <%@categorias.each_with_index do |categoria, i|%>
+              <%checked = 'checked="checked"' if @ideia.categorias.include? categoria%>
+              <p>
+              <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect mdl-cell mdl-cell--2-col" for="ideia_categorias_<%=i%>">
+                <input type="checkbox" id="ideia_categorias_<%=i%>" name="categorias[]" value="<%=categoria.id%>" class="mdl-checkbox__input" <%=checked%>/>
+                <span class="mdl-checkbox__label"><%=categoria.titulo%></span>
+              </label>
+              </p>
+            <%end%>
+          </div><!--/.mdl-cell-->
+
+          <div class="mdl-card__actions mdl-card--border">
+            <button type="submit" name="_method" value="put" class="mdl-button mdl-button--raised mdl-js-button mdl-js-ripple-effect">
+              Salvar
+            </button>
+            <button type="button" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect mdl-button--close-dialog">
+              Cancelar
+            </button>
+          </div><!--/.mdl-cell-->
+      </form>
+    </dialog>
+    <script src="<%=path_to '/js/dialog.js'%>"></script>
+  <%end%>
+<%end%>
+
+<%content_for :script do%>
+  <script>
+    (document.querySelector('.prd-button--backward').addEventListener('click', function(event) {
+      history.back();
+    }))();
+  </script>
 <%end%>

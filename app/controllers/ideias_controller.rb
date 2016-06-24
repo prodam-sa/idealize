@@ -53,6 +53,7 @@ class IdeiasController < ApplicationController
   end
 
   get '/:id' do |id|
+    @categorias = Categoria.all if permitido_moderar? @ideia
     if (@ideia.publicada?) or (usuario_autor? @ideia) or (authorized_by? :moderator)
       view 'ideias/page'
     else
@@ -126,6 +127,19 @@ class IdeiasController < ApplicationController
       message.update(level: :information, text: 'Os coautores de sua ideia foram atualizados.')
     else
       message.update(level: :warning, text: 'Sua ideia está bloqueada para inclusão de coautores.')
+    end
+    redirect to(id)
+  end
+
+  put '/:id/categorias', authenticate: true do |id|
+    if @ideia.desbloqueada? && (permitido_moderar? @ideia)
+      @ideia.remove_all_categorias
+      params[:categorias] && params[:categorias].each do |categoria_id|
+        @ideia.add_categoria categoria_id
+      end
+      message.update(level: :information, text: 'As categorias foram atualizadas.')
+    else
+      message.update(level: :warning, text: 'A ideia está bloqueada para alteração de categorias.')
     end
     redirect to(id)
   end
