@@ -11,7 +11,7 @@ class HomeController < ApplicationController
 
   get '/' do
     if authenticated?
-      @ideias = Ideia.find_by_situacao('publicacao').order(:data_publicacao).reverse.all
+      @ideias = Ideia.find_by_situacao('publicacao').order(:data_publicacao).all
       view 'index'
     else
       @total_ideias = Ideia.count
