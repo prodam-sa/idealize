@@ -33,11 +33,7 @@ class IdeiasController < ApplicationController
 
   get '/pesquisa' do
     @termo = params[:termo]
-    if authenticated?
-      @ideias = Ideia.search(@termo).where(autor_id: usuario_id).all
-    else
-      @ideias = Ideia.search(@termo).where(situacao: @situacoes).all
-    end
+    @ideias = Ideia.search(@termo).where(situacao: @situacoes).all
     view 'ideias/list'
   end
 
