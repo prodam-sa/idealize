@@ -8,27 +8,12 @@ class AcessoController < ApplicationController
   end
 
   before '/:id/?:action?' do |id, action|
-    @usuario = Prodam::Idealize::Usuario[id.to_i]
+    @usuario = Usuario[id.to_i]
   end
 
   get '/', authenticate: true do
-    @usuario ||= Prodam::Idealize::Usuario[session[:user][:id]]
-    view 'acesso/forms/usuario'
-  end
-
-  put '/:id', authenticate: true do |id|
-    @usuario.update(params[:usuario])
-    message.update(level: :information, text: 'Dados da conta foram atualizados.')
-    redirect path_to(:conta), 303
-  end
-
-  put '/:id/senha', authenticate: true do |id|
-    if @usuario.save_password(*params[:usuario].values)
-      message.update(level: :information, text: 'Senha atualizada.')
-    else
-      message.update(level: :error, text: 'A senha informada não foi confirmada corretamente.')
-    end
-    redirect path_to(:conta), 303
+    @usuario ||= Usuario[session[:user][:id]]
+    view 'usuarios/form'
   end
 
   get '/acessar' do

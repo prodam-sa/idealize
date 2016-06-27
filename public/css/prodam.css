@@ -560,3 +560,16 @@ select.mdl-textfield__input optgroup option {
   max-height: 14rem;
   height: 14rem;
 }
+
+.mdl-card__media.mdl-card__media--transparent {
+  background-color: transparent;
+}
+
+.mdl-card__media.mdl-card__media--full-width img {
+  min-width: 100%;
+  width: 100%;
+}
+.mdl-card__media.mdl-card__media--circle img {
+  border-radius: 360px;
+}
+

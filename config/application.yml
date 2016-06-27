@@ -4,15 +4,15 @@
     :title: Home
     :description: Bem-vindo ao Idealize.
     :controller: HomeController
-    :navigation: []
+    :navigation: [header, drawer]
     :roles: []
     :icon: home
   '/categorias':
     :title: Categorias
     :description: As ideias são organizadas em categorias.
     :controller: CategoriasController
-    :navigation: [header, drawer]
-    :roles: []
+    :navigation: []
+    :roles: ['ad', 'mi']
     :icon: group_work
   '/ideias':
     :title: Ideias

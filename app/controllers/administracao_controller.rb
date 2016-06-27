@@ -33,7 +33,7 @@ class Prodam::Idealize::AdministracaoController < Prodam::Idealize::ApplicationC
   end
 
   put '/usuarios/:id/senha' do |id|
-    if @usuario.save_password(*params[:usuario].values)
+    if @usuario.set_password(*params[:usuario].values).save
       message.update(level: :information, text: 'Senha do usuário foi atualizada.')
     else
       message.update(level: :error, text: 'A senha informada não foi confirmada corretamente.')

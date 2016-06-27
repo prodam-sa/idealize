@@ -7,23 +7,45 @@ module Prodam::Idealize
 class Usuario < Model[:usuario]
   include Model
 
+  EMAIL_PATTERN = /\A([\w+\-].?)+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i
+  USERNAME_PATTERN = /^[a-zA-Z][a-zA-Z0-9-_\.]{6,32}$/
+
   plugin :validation_helpers
   set_allowed_columns :nome_usuario, :nome, :email, :ad, :mi
 
   def validate
     super
-    validates_presence [:nome_usuario, :nome, :email], message: 'não foi atribuído.'
-    validates_unique :nome_usuario, message: 'já existe.'
-    validates_unique :email, message: 'já registrado.'
+    validates_presence :nome_usuario, message: 'deve ser atribuído'
+    validates_unique :nome_usuario, message: 'já existe'
+    validates_min_length 6, :nome_usuario, message: lambda{ |n| "deve ter no mínimo #{n} caracteres" }
+    validates_max_length 32, :nome_usuario, message: lambda{ |n| "deve ser de até #{n} caracteres" }
+    validates_format USERNAME_PATTERN, :nome_usuario, message: 'deve possuir um formato válido'
+
+    validates_presence :nome, message: 'deve ser atribuído'
+    validates_max_length 64, :nome, message: lambda{ |n| "deve ser de até #{n} caracteres" }
+
+    validates_presence :email, message: 'deve ser atribuído'
+    validates_unique :email, message: 'já foi registrado'
+    validates_max_length 256, :email, message: lambda{ |n| "deve ser de até #{n} caracteres" }
+    validates_format EMAIL_PATTERN, :email, message: 'deve possuir um formato válido'
+
+    validates_password_changed
   end
 
-  alias original_update update
+  def set_password(password, confirmation)
+    if @password_matched = confirm_password(password, confirmation)
+      self[:senha_salt] = encript(self[:nome].downcase.tr(' ', ''), self[:email])
+      self[:senha_encriptada] = encript(password, self[:senha_salt])
+    end
+    self
+  end
 
-  def save_password(password, confirmation)
-    return unless confirm_password(password, confirmation)
-    self[:senha_salt] = encript(self[:nome].downcase.tr(' ', ''), self[:email])
-    self[:senha_encriptada] = encript(password, self[:senha_salt])
-    save
+  def validates_password_changed
+    if (!@password_matched.nil? && !@password_matched)
+      errors.add(:senha, 'não combina com a confirmação ou está vazia')
+    else
+      @password_matched
+    end
   end
 
   def authenticate?(password)
@@ -43,11 +65,6 @@ class Usuario < Model[:usuario]
     return :moderador if moderador?
   end
 
-  def self.authenticate(options)
-    usuario = find nome_usuario: options[:nome_usuario]
-    usuario && usuario.authenticate?(options[:senha]) && usuario
-  end
-
   def param_name
     "#{id}-#{nome_usuario.downcase}"
   end
@@ -59,10 +76,15 @@ private
   end
 
   def confirm_password(password, confirmation)
-    password == confirmation
+    ((password && confirmation) && !(password.empty? && confirmation.empty?)) && (password == confirmation)
   end
 
   class << self
+    def authenticate(options)
+      usuario = find nome_usuario: options[:nome_usuario]
+      usuario && (usuario.authenticate? options[:senha]) && usuario
+    end
+
     def by_letra_inicial(*letras)
       where("UPPER(SUBSTR(nome, 1, 1)) IN ?",  letras.map(&:upcase))
     end
