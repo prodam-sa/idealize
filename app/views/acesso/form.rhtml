@@ -1,7 +1,8 @@
-<form action="<%=path_to :conta, :acessar%>" method="post" class="mdl-card mdl-shadow--6dp">
+<form action="<%=path_to :conta, :acessar%>" method="post" enctype="application/x-www-form-urlencoded" class="mdl-card mdl-shadow--6dp">
   <div class="mdl-card__title prd-frame-centered">
     <img src="<%=path_to '/img/brand-colored.svg'%>" class="prd-brand"/>
   </div>
+
   <div class="mdl-card__supporting-text">
     <div class="mdl-textfield mdl-textfield--floating-label mdl-js-textfield">
       <label for="usuario" class="mdl-textfield__label">Usuário</label>
@@ -12,10 +13,12 @@
       <input type="password" id="senha" name="usuario[senha]" class="mdl-textfield__input"/>
     </div>
   </div>
+
   <div class="mdl-card__actions mdl-card--border">
     <button class="mdl-button mdl-button--raised mdl-js-button mdl-js-ripple-effect">Acessar</button>
     <a href="<%=path_to :home%>" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">Cancelar</a>
   </div>
+
   <small class="mdl-color--brown-50 mdl-color-text--brown-600 mdl-typography--text-center">
     <%=Prodam::Idealize.info%>
   </small>

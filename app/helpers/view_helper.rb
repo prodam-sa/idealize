@@ -1,6 +1,8 @@
 # encoding: utf-8
 
-module Prodam::Idealize::ViewHelper
+module Prodam::Idealize
+
+module ViewHelper
   def version
     Prodam::Idealize::VERSION
   end
@@ -55,4 +57,14 @@ module Prodam::Idealize::ViewHelper
     else letter
     end
   end
+
+  def username_pattern
+    Usuario::USERNAME_PATTERN
+  end
+
+  def email_pattern
+    Usuario::EMAIL_PATTERN
+  end
 end
+
+end # Prodam::Idealize
