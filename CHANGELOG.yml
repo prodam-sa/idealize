@@ -1,18 +1,27 @@
-- version: 0.9.1
-  release: 2016-06-23
-  summary:
+- :version: 0.10.0
+  :release: 2016-06-27
+  :summary:
+    Melhorias nas páginas e processo de moderação
+  :changes:
+  - Ajuste na página de boas-vindas.
+  - Ordenação cronológica de publicação das ideias.
+  - Seleção das categorias no formulário de moderação.
+
+- :version: 0.9.1
+  :release: 2016-06-23
+  :summary:
     Melhorias para apresentação de informações e correções
-  changes:
+  :changes:
   - Total de ideias publicadas.
   - Mensagem de informação da ideia bloqueada.
   - Melhorias nas páginas das ideias.
   - Correção da validação dos campos de texto das ideias.
 
-- version: 0.9.0
-  release: 2016-06-22
-  summary:
+- :version: 0.9.0
+  :release: 2016-06-22
+  :summary:
     Melhorias de layout, moderação e correções
-  changes:
+  :changes:
   - Bloqueio das ideias em moderação.
   - Bloqueio das ideias publicadas.
   - Inclusão de coautores.
@@ -21,29 +30,29 @@
   - Correção da URL das ideias.
   - Correção do limite de campo da mensagem de histórico.
 
-- version: 0.8.1
-  release: 2016-06-10
-  summary:
+- :version: 0.8.1
+  :release: 2016-06-10
+  :summary:
     Correção na postagem de ideias
-  changes:
+  :changes:
   - Correção da máscara de URL das ideias.
 
-- version: 0.8.0
-  release: 2016-06-08
-  summary:
+- :version: 0.8.0
+  :release: 2016-06-08
+  :summary:
     Melhorias no layout das páginas
-  changes:
+  :changes:
   - Melhorias nas páginas das ideias.
   - Inclusão da linha do tempo das modificações das ideias.
   - Melhorias nos rótulos e mensagens.
   - Ajustes no acesso das categorias.
   - Pequenas correções no formulário de ideias.
 
-- version: 0.7.0
-  release: 2016-06-03
-  summary:
+- :version: 0.7.0
+  :release: 2016-06-03
+  :summary:
     Melhorias na administração de dados, privacidade das ideias e correções
-  changes:
+  :changes:
   - Administração de dados das categorias.
   - Incremento do tamanho do título da ideia.
   - Privacidade da lista de ideias.
@@ -51,85 +60,85 @@
   - Correção na notificação de mensagens ao usuário/autor.
   - Correção dos erros de autoincremento e associação das classes.
 
-- version: 0.6.3
-  release: 2016-06-01
-  summary:
+- :version: 0.6.3
+  :release: 2016-06-01
+  :summary:
     Correção no registro do histórico das ideias
-  changes:
+  :changes:
   - Correção do histórico das ideias.
   - Opção pra debug através do log.
 
-- version: 0.6.2
-  release: 2016-05-31
-  summary:
+- :version: 0.6.2
+  :release: 2016-05-31
+  :summary:
     Correção nas validações das ideias
-  changes:
+  :changes:
   - Melhoria nas validações.
   - Retorno das mensagens de erros no formulário de ideias.
 
-- version: 0.6.1
-  release: 2016-05-30
-  summary:
+- :version: 0.6.1
+  :release: 2016-05-30
+  :summary:
     Correção na edição de ideia
-  changes:
+  :changes:
   - Correção no registro de histórico de uma ideia.
 
-- version: 0.6.0
-  release: 2016-05-25
-  summary:
+- :version: 0.6.0
+  :release: 2016-05-25
+  :summary:
     Inclusão da pesquisa de ideias.
-  changes:
+  :changes:
   - Pesquisa de ideias.
   - Melhorias nas páginas.
 
-- version: 0.5.0
-  release: 2016-05-18
-  summary:
+- :version: 0.5.0
+  :release: 2016-05-18
+  :summary:
     Novo layout.
-  changes:
+  :changes:
   - Modificação no layout do site.
   - Melhorias nas páginas principal, categorias e ideias.
 
-- version: 0.4.0
-  release: 2016-05-11
-  summary:
+- :version: 0.4.0
+  :release: 2016-05-11
+  :summary:
     Melhorias nas configurações, correções de moderação e página de ajuda.
-  changes:
+  :changes:
   - Correção do erro na mensagem de moderação.
   - Melhorias nas configurações do servidor.
   - Inclusão da página de FAQ para auxiliar os usuários na postagem de ideias.
 
-- version: 0.3.0
-  release: 2016-05-06
-  summary:
+- :version: 0.3.0
+  :release: 2016-05-06
+  :summary:
     Melhorias nas informações e correções de administração.
-  changes:
+  :changes:
   - Correção do erro de atualização da senha do usuário.
   - Correção do erro da página de categorias como administrador.
   - Remoção da informação do responsável pelos eventos das ideias.
 
-- version: 0.2.1
-  release: 2016-05-02
-  summary:
+- :version: 0.2.1
+  :release: 2016-05-02
+  :summary:
     Correções no projeto e melhorias de _deploy_.
-  changes:
+  :changes:
   - Pequenas correções na estrutura de diretórios.
   - Melhorias no processo de _deploy_.
 
-- version: 0.2.0
-  release: 2016-04-20
-  summary:
+- :version: 0.2.0
+  :release: 2016-04-20
+  :summary:
     Moderação e histórico das ideias.
-  changes:
+  :changes:
   - Registro do histórico de eventos das ideias.
   - Perfil de usuário moderador.
   - Processo de moderação das ideias.
 
-- version: 0.1.0
-  release: 2016-03-24
-  summary:
+- :version: 0.1.0
+  :release: 2016-03-24
+  :summary:
     Versão inicial do Idealize.
-  changes:
+  :changes:
   - Páginas para apresentação das categorias e das respectivas ideias
     publicadas.
   - Controle de acesso do usuário e administração de seus respectivos dados.

@@ -60,9 +60,9 @@
             <label id="toolbox-search" class="mdl-button mdl-js-button mdl-button--icon" for="ideias-campo-pesquisa">
               <i class="material-icons">search</i>
             </label>
-            <span class="mdl-tooltip" for="toolbox-search">Procure por ideias</span>
             <div class="mdl-textfield__expandable-holder">
-              <input class="mdl-textfield__input" type="text" name="termo" id="ideias-campo-pesquisa" placeholder="Procure por ideias">
+              <input class="mdl-textfield__input" type="text" name="termo" id="ideias-campo-pesquisa" placeholder="Procure por ideias publicadas">
+              <span class="mdl-tooltip" for="toolbox-search">Procure por ideias publicadas</span>
             </div>
           </div>
         </form>
@@ -107,7 +107,7 @@
 
         <%if authenticated?%>
           <a id="fab" href="<%=@fab[:url]%>" class="prd-header__button-add mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--colored mdl-shadow--4dp mdl-layout--large-screen-only">
-            <i class="material-icons">add</i>
+            <i class="material-icons">edit</i>
           </a>
           <span class="mdl-tooltip mdl-tooltip--left" for="fab"><%=@fab[:tooltip]%></span>
         <%end%>
@@ -148,7 +148,7 @@
           <small><%=version_info%></small>
           <%if authenticated?%>
             <a id="fab" href="<%=@fab[:url]%>" class="prd-footer__button-add mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--colored mdl-shadow--4dp mdl-layout--small-screen-only">
-              <i class="material-icons">add</i>
+              <i class="material-icons">edit</i>
             </a>
             <span class="mdl-tooltip mdl-tooltip--top" for="fab"><%=@fab[:tooltip]%></span>
           <%end%>

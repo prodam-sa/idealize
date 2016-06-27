@@ -33,11 +33,7 @@ class IdeiasController < ApplicationController
 
   get '/pesquisa' do
     @termo = params[:termo]
-    if authenticated?
-      @ideias = Ideia.search(@termo).where(autor_id: usuario_id).all
-    else
-      @ideias = Ideia.search(@termo).where(situacao: @situacoes).all
-    end
+    @ideias = Ideia.search(@termo).where(situacao: @situacoes).all
     view 'ideias/list'
   end
 
@@ -57,6 +53,7 @@ class IdeiasController < ApplicationController
   end
 
   get '/:id' do |id|
+    @categorias = Categoria.all if permitido_moderar? @ideia
     if (@ideia.publicada?) or (usuario_autor? @ideia) or (authorized_by? :moderator)
       view 'ideias/page'
     else
@@ -134,13 +131,26 @@ class IdeiasController < ApplicationController
     redirect to(id)
   end
 
+  put '/:id/categorias', authenticate: true do |id|
+    if @ideia.desbloqueada? && (permitido_moderar? @ideia)
+      @ideia.remove_all_categorias
+      params[:categorias] && params[:categorias].each do |categoria_id|
+        @ideia.add_categoria categoria_id
+      end
+      message.update(level: :information, text: 'As categorias foram atualizadas.')
+    else
+      message.update(level: :warning, text: 'A ideia está bloqueada para alteração de categorias.')
+    end
+    redirect to(id)
+  end
+
   get '/:id/moderar', authorize_only: :moderator do |id|
-    unless @ideia.bloqueada? && (usuario_moderador? @ideia)
+    if (permitido_moderar? @ideia) or (usuario_moderador? @ideia)
       @formulario = Formulario.first # Há somente um formulário, por enquanto.
       @criterios = @formulario.criterios
       @situacao = situacao(:moderacao)
       unless @ideia.modificacao.situacao_id == @situacao.id
-        @historico = historico(@ideia, @situacao, 'Ideia em moderação.').save
+        @historico = historico(@ideia, @situacao, 'Moderação iniciada.').save
       else
         @historico = @ideia.modificacao
       end
@@ -167,7 +177,6 @@ class IdeiasController < ApplicationController
 
     if @historico.valid?
       @ideia.situacao = @situacao.chave
-
       if ideia_moderada?
         @ideia.publicar!
         message.update(level: :information, text: 'Ideia foi publicada.')
@@ -194,9 +203,7 @@ class IdeiasController < ApplicationController
 
   # apenas para desbloqueio
   put '/:id/moderacao', authorize_only: :moderator do |id|
-    if params[:desbloquear]
-      @ideia.desbloquear!
-    end
+    @ideia.desbloquear! if params[:desbloquear]
     redirect to(id)
   end
 

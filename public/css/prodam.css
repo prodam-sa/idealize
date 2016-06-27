@@ -24,7 +24,7 @@ body {
 }
 
 .prd-content {
-  min-height: 100vh;
+  min-height: calc(100vh - 25%);
 }
 
 .prd-landpage {
@@ -363,8 +363,19 @@ a.prd-minicard:hover {
 .prd-footer {
 }
 
-img.prd-image-expanded {
+img.prd-image--full-width {
   width: 100%;
+  height: auto;
+}
+
+img.prd-image--full-height {
+  width: auto;
+  height: 100%;
+}
+
+img.prd-image--adjusted {
+  width: inherit;
+  height: inherit;
 }
 
 .prd-message-box {

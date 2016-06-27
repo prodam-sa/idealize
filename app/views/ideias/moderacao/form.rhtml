@@ -5,10 +5,10 @@
         <h2 class="mdl-card__title-text"><%=@ideia.titulo%></h2>
       </div>
 
-      <div class="mdl-card__title">
-        <span class="mdl-card__subtitle-text mdl-typography--text-right">
-        <%=@ideia.modificacao.situacao.titulo%>, <%=formated_date @ideia.modificacao.data_registro%>
-        </span>
+      <div class="mdl-card__supporting-text">
+        <div class=" mdl-typography--text-right">
+          <%=@situacao.titulo%>, <%=formated_date @ideia.modificacao.data_registro%>
+        </div>
       </div>
 
       <div class="mdl-card__title">
@@ -26,15 +26,6 @@
       <div class="mdl-card__supporting-text">
         <%=@ideia.texto_solucao%>
       </div>
-
-      <div class="mdl-card__supporting-text">
-        <%@ideia.categorias.each_with_index do |categoria, c|%>
-          <a id="categoria-<%=categoria.id%>" href="<%=path_to :categorias, categoria.to_url_param%>" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
-            <i class="material-icons"><%=categoria.icone%></i>
-          </a>
-          <span class="mdl-tooltip mdl-tooltip--top" for="categoria-<%=categoria.id%>"><%=categoria.titulo%></span>
-        <%end%>
-      </div>
     </div><!--/.mdl-card-->
 
     <br/>
@@ -46,18 +37,17 @@
 
       <div class="mdl-card__supporting-text mdl-card--border">
         <%@criterios.each_with_index do |criterio, c|%>
-          <!--<%=criterio%>-->
           <%checked = ' checked="checked"' if criterio.resposta =~ /S/i%>
           <input type="hidden" id="criterio_<%=c%>_id" name="criterios[][id]" value="<%=criterio.id%>"/>
-          <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="criterio_<%=c%>_resposta_s">
-            <input type="checkbox" id="criterio_<%=c%>_resposta_s" name="criterios[][resposta]" value="S" class="mdl-switch__input"<%=checked%>/>
-            <p class="mdl-switch__label"><%=criterio.titulo%><small><em>(<%=criterio.descricao%>)</em></small></p>
+          <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="criterio_<%=c%>_resposta_s">
+            <input type="checkbox" id="criterio_<%=c%>_resposta_s" name="criterios[][resposta]" value="S" class="mdl-checkbox__input"<%=checked%>/>
+            <p class="mdl-check__label"><%=criterio.titulo%><small><em>(<%=criterio.descricao%>)</em></small></p>
           </label>
         <%end%>
 
         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-textfield--full-width <%='is-invalid' if @historico.errors[:descricao]%>">
           <label class="mdl-textfield__label" for="historico_descricao">Nota de moderação</label>
-          <textarea id="historico_descricao" name="historico[descricao]" class="mdl-textfield__input"></textarea>
+          <textarea id="historico_descricao" name="historico[descricao]" class="mdl-textfield__input" rows="3"></textarea>
           <%if @historico.errors[:descricao]%>
             <span class="mdl-textfield__error"><%=@historico.errors[:descricao].join(', ')%></span>
           <%end%>
