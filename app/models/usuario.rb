@@ -8,6 +8,7 @@ class Usuario < Model[:usuario]
   include Model
 
   EMAIL_PATTERN = /\A([\w+\-].?)+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i
+  USERNAME_PATTERN = /^[a-z0-9_-]{6,32}$/
 
   plugin :validation_helpers
   set_allowed_columns :nome_usuario, :nome, :email, :ad, :mi
@@ -16,7 +17,9 @@ class Usuario < Model[:usuario]
     super
     validates_presence :nome_usuario, message: 'deve ser atribuído.'
     validates_unique :nome_usuario, message: 'já existe.'
+    validates_min_length 6, :nome_usuario, message: lambda{ |n| "deve ser de pelo meno #{n} caracteres." }
     validates_max_length 32, :nome_usuario, message: lambda{ |n| "deve ser de até #{n} caracteres." }
+    validates_format USERNAME_PATTERN, :nome_usuario, message: 'possui um formato inválido.'
 
     validates_presence :nome, message: 'deve ser atribuído.'
     validates_max_length 64, :nome, message: lambda{ |n| "deve ser de até #{n} caracteres." }
