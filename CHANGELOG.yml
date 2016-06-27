@@ -1,3 +1,12 @@
+- :version: 0.11.0
+  :release: 2016-06-27
+  :summary:
+    Cadastro de usuário e melhorias nas páginas
+  :changes:
+  - Formulário para cadastro do usuário.
+  - O autor poderá alterar o nome de usuário da conta.
+  - Melhorias na página de boas-vindas e de acesso.
+
 - :version: 0.10.0
   :release: 2016-06-27
   :summary:
