@@ -43,11 +43,8 @@
               <span class="mdl-tooltip mdl-tooltip--top" for="excluir-<%=ideia.id%>">Excluir ideia</span>
             </form>
           <%end%>
-          <%if ideia.bloqueada?%>
-            <span id="locked-<%=ideia.id%>" class="mdl-button mdl-button--icon mdl-button--raised">
-              <i class="material-icons">lock</i>
-            </span>
-            <span class="mdl-tooltip mdl-tooltip--left" for="locked-<%=ideia.id%>"><%=ideia.modificacao.situacao.titulo%> e bloqueada para edição.</span>
+          <%if ideia.bloqueada? and (usuario_autor? ideia)%>
+            <small class="mdl-card__subtitle-text"><%=ideia.modificacao.situacao.titulo%> e bloqueada para edição.</small>
           <%end%>
         </div>
       </div>

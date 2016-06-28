@@ -3,7 +3,7 @@
     <div class="mdl-card mdl-card--full-width mdl-shadow--2dp">
       <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
         <div class="mdl-tabs__tab-bar mdl-tabs__tab-bar--non-centered">
-          <%if authorized_by? :moderator%>
+          <%if authorized_by? :moderador%>
             <a href="#moderacao" class="mdl-tabs__tab">
               <span class="mdl-badge" data-badge="<%=@ideias[:moderacao].size%>">Moderação</span>
             </a>
@@ -35,7 +35,7 @@
           </div>
         <%end%>
 
-        <%if authorized_by? :moderator%>
+        <%if authorized_by? :moderador%>
           <div id="moderacao" class="mdl-tabs__panel">
           <%unless @ideias[:moderacao].empty? %>
             <%=partial 'ideias/gallery', locals: { ideias: @ideias[:moderacao] }%>
