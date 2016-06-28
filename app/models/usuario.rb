@@ -8,10 +8,21 @@ class Usuario < Model[:usuario]
   include Model
 
   EMAIL_PATTERN = /\A([\w+\-].?)+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i
-  USERNAME_PATTERN = /^[a-zA-Z][a-zA-Z0-9-_\.]{6,32}$/
+  USERNAME_PATTERN = /^[a-zA-Z][a-zA-Z0-9\-_\.]{6,32}$/
+  PROFILES = %w{
+    administrador
+    moderador
+    avaliador
+  }.freeze
+
+  COLUMNS = %w{
+    nome_usuario
+    nome
+    email
+  }.freeze
 
   plugin :validation_helpers
-  set_allowed_columns :nome_usuario, :nome, :email, :ad, :mi
+  set_allowed_columns *(COLUMNS+PROFILES).map(&:to_sym)
 
   def validate
     super
@@ -52,17 +63,14 @@ class Usuario < Model[:usuario]
     senha_encriptada == encript(password, senha_salt)
   end
 
-  def administrador?
-    self[:ad] && self[:ad] == 'S'
+  def profiles
+    PROFILES.select do |profile|
+      send(profile) && (send(profile) == 'S')
+    end
   end
 
-  def moderador?
-    self[:mi] && self[:mi] == 'S'
-  end
-
-  def papel
-    return :administrador if administrador?
-    return :moderador if moderador?
+  def has_profile?(nome)
+    profiles.include? nome.to_s
   end
 
   def param_name

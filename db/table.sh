@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 #? PRODAM - 2015
 #? Table - Gerador de SQL para tabelas
 #?
@@ -31,8 +31,6 @@ done
 shift $((OPTIND - 1))
 
 : ${1:?sql file is required}
-
-sqlfile="${1}"
 
 APP_ENV=${APP_ENV:-development}
 APP_HOME=$(CDPATH='' cd $(dirname $0)/.. && pwd -P)

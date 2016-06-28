@@ -1,7 +1,9 @@
 # encoding: utf-8
 
-class Prodam::Idealize::AdministracaoController < Prodam::Idealize::ApplicationController
-  helpers Prodam::Idealize::GravatarHelper
+module Prodam::Idealize
+
+class AdministracaoController < ApplicationController
+  helpers GravatarHelper
 
   before do
     @page = controllers[:administracao_controller]
@@ -12,11 +14,11 @@ class Prodam::Idealize::AdministracaoController < Prodam::Idealize::ApplicationC
   end
 
   before '/usuarios/:id/?:action?' do |id, action|
-    @usuario = Prodam::Idealize::Usuario[id.to_i]
+    @usuario = Usuario[id.to_i]
   end
 
   get '/?' do
-    @usuarios = Prodam::Idealize::Usuario.order(:nome).all.group_by do |usuario|
+    @usuarios = Usuario.order(:nome).all.group_by do |usuario|
       usuario.nome[0].upcase
     end
     view 'administracao/index'
@@ -41,3 +43,5 @@ class Prodam::Idealize::AdministracaoController < Prodam::Idealize::ApplicationC
     redirect to('/usuarios/' + id)
   end
 end
+
+end # Prodam::Idealize

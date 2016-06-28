@@ -1,6 +1,8 @@
 # encoding: utf-8
 
-module Prodam::Idealize::AuthenticationHelper
+module Prodam::Idealize
+
+module AuthenticationHelper
   def protected!
     if authenticated? and !authorized?
       return
@@ -12,22 +14,17 @@ module Prodam::Idealize::AuthenticationHelper
   end
 
   def authorized?
-    authenticated? && session[:user][:administrator]
+    authenticated? && (session[:user][:profiles].include? 'administrador')
   end
 
-  def authorized_by?(*roles)
-    reply = authenticated?
-    roles.each do |role|
-      reply = reply && session[:user][role]
-    end
-    reply
+  def authorized_by?(*profiles)
+    session[:user] && (session[:user][:profiles] & profiles.map(&:to_s)).any?
   end
 
-  def authenticate(user_id, user_administrator = false, user_moderator = false)
+  def authenticate(user_id, *profiles)
     session[:user] = {
       id: user_id,
-      administrator: user_administrator,
-      moderator: user_moderator,
+      profiles: profiles
     }
   end
 
@@ -35,3 +32,5 @@ module Prodam::Idealize::AuthenticationHelper
     session[:user] = nil
   end
 end
+
+end # Prodam::Idealize

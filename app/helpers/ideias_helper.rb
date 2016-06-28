@@ -17,7 +17,7 @@ module IdeiasHelper
   end
 
   def permitido_moderar?(ideia)
-    ideia && !ideia.publicada? && ideia.desbloqueada?
+    ideia && !ideia.publicada? && ideia.desbloqueada? || (usuario_moderador? ideia)
   end
 
   def permitido_alterar?(ideia)
@@ -58,8 +58,8 @@ module IdeiasHelper
 
   def perfil_responavel_historico(ideia, responsavel)
     return 'Autor' if responsavel.id == ideia.autor_id
-    return 'Administrador' if responsavel.administrador?
-    return 'Moderador' if responsavel.moderador?
+    return 'Moderador' if responsavel.has_profile? :moderador
+    return 'Administrador' if responsavel.has_profile? :administrador
     'Usuário'
   end
 end

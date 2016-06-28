@@ -16,7 +16,7 @@
       <p class="mdl-typography--text-right">
       <%=ideia.modificacao.situacao.titulo%>, <%=formated_date ideia.modificacao.data_registro%>
       </p>
-      <%=ideia.texto_oportunidade[0..256]%>
+      <p><%=remove_html_tags(ideia.texto_oportunidade[0..256])%>...</p>
     </div>
 
     <div class="mdl-card__actions mdl-card--border">
