@@ -11,7 +11,7 @@ class Usuario < Model[:usuario]
   USERNAME_PATTERN = /^[a-zA-Z][a-zA-Z0-9-_\.]{6,32}$/
 
   plugin :validation_helpers
-  set_allowed_columns :nome_usuario, :nome, :email, :ad, :mi
+  set_allowed_columns :nome_usuario, :nome, :email, :administrador, :moderador
 
   def validate
     super
@@ -53,11 +53,11 @@ class Usuario < Model[:usuario]
   end
 
   def administrador?
-    self[:ad] && self[:ad] == 'S'
+    self[:administrador] && self[:administrador] == 'S'
   end
 
   def moderador?
-    self[:mi] && self[:mi] == 'S'
+    self[:moderador] && self[:moderador] == 'S'
   end
 
   def papel
