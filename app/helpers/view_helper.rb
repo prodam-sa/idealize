@@ -65,6 +65,10 @@ module ViewHelper
   def email_pattern
     Usuario::EMAIL_PATTERN
   end
+
+  def profiles
+    Usuario::PROFILES
+  end
 end
 
 end # Prodam::Idealize
