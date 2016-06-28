@@ -14,11 +14,11 @@ class AdministracaoController < ApplicationController
   end
 
   before '/usuarios/:id/?:action?' do |id, action|
-    @usuario = Prodam::Idealize::Usuario[id.to_i]
+    @usuario = Usuario[id.to_i]
   end
 
   get '/?' do
-    @usuarios = Prodam::Idealize::Usuario.order(:nome).all.group_by do |usuario|
+    @usuarios = Usuario.order(:nome).all.group_by do |usuario|
       usuario.nome[0].upcase
     end
     view 'administracao/index'

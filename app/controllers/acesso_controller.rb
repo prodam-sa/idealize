@@ -21,8 +21,8 @@ class AcessoController < ApplicationController
   end
 
   post '/acessar' do
-    if @usuario = Usuario.authenticate(params[:usuario])
-      authenticate(@usuario.id, @usuario.administrador?, @usuario.moderador?)
+    if params[:usuario] && (@usuario = Usuario.authenticate(params[:usuario]))
+      authenticate(@usuario.id, *@usuario.profiles)
       message.update level: :information, text: "Olá, #{@usuario.nome}. Bem-vindo!"
       redirect path_to(:home), 303
     else

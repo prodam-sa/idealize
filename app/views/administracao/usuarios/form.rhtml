@@ -14,24 +14,19 @@
         <label for="usuario_nome" class="mdl-textfield__label">Nome</label>
         <input type="text" id="usuario_nome" name="usuario[nome]" class="mdl-textfield__input" value="<%=@usuario.nome%>"/>
       </div>
-      <div class="mdl-cell mdl-cell--12-col">
-        <%check_administrador = 'checked="checked"' if @usuario.administrador?%>
-        <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="usuario_ad_s">
-          <input type="hidden" id="usuario_ad_n" name="usuario[ad]" value="N"/>
-          <input type="checkbox" id="usuario_ad_s" name="usuario[ad]" value="S" class="mdl-switch__input" <%=check_administrador%>/>
-          <span class="mdl-switch__label">Administrador de dados</span>
-        </label>
-      </div>
-      <div class="mdl-cell mdl-cell--12-col">
-        <%check_moderador = 'checked="checked"' if @usuario.moderador?%>
-        <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="usuario_mi_s">
-          <input type="hidden" id="usuario_mi_n" name="usuario[mi]" value="N"/>
-          <input type="checkbox" id="usuario_mi_s" name="usuario[mi]" value="S" class="mdl-switch__input" <%=check_moderador%>/>
-          <span class="mdl-switch__label">Moderador de ideias</span>
-        </label>
-      </div>
-    </div>
-  
+
+      <%profiles.each do |profile|%>
+        <div class="mdl-cell mdl-cell--12-col">
+          <%checked = 'checked="checked"' if @usuario.has_profile? profile%>
+          <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="usuario_<%=profile%>_s">
+            <input type="hidden" id="usuario_<%=profile%>_n" name="usuario[<%=profile%>]" value="N"/>
+            <input type="checkbox" id="usuario_<%=profile%>_s" name="usuario[<%=profile%>]" value="S" class="mdl-switch__input" <%=checked%>/>
+            <span class="mdl-switch__label"><%=profile.capitalize%></span>
+          </label>
+        </div>
+      <%end%>
+    </div><!--/.mdl-cell-->
+
     <div class="mdl-cell mdl-cell--12-col">
       <button type="submit" name="_method" value="<%=@usuario.id ? :put : :post%>" class="mdl-button mdl-button--raised mdl-js-button mdl-js-ripple-effect"/>
         Salvar
