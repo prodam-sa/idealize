@@ -54,7 +54,7 @@ class IdeiasController < ApplicationController
 
   get '/:id' do |id|
     @categorias = Categoria.all if permitido_moderar? @ideia
-    if (@ideia.publicada?) or (usuario_autor? @ideia) or (authorized_by? :moderator)
+    if (@ideia.publicada?) or (usuario_autor? @ideia) or (authorized_by? :moderador)
       view 'ideias/page'
     else
       message.update(level: :error, text: 'Você só poderá ler essa ideia depois de sua publicação.')
@@ -144,7 +144,9 @@ class IdeiasController < ApplicationController
     redirect to(id)
   end
 
-  get '/:id/moderar', authorize_only: :moderator do |id|
+  # Moderação
+
+  get '/:id/moderar', authorize_only: :moderador do |id|
     if (permitido_moderar? @ideia) or (usuario_moderador? @ideia)
       @formulario = Formulario.first # Há somente um formulário, por enquanto.
       @criterios = @formulario.criterios
@@ -167,7 +169,7 @@ class IdeiasController < ApplicationController
     end
   end
 
-  post '/:id/moderacao', authorize_only: :moderator do |id|
+  post '/:id/moderacao', authorize_only: :moderador do |id|
     @situacao = if ideia_moderada?
                   situacao(:publicacao)
                 else
@@ -202,7 +204,7 @@ class IdeiasController < ApplicationController
   end
 
   # apenas para desbloqueio
-  put '/:id/moderacao', authorize_only: :moderator do |id|
+  put '/:id/moderacao', authorize_only: :moderador do |id|
     @ideia.desbloquear! if params[:desbloquear]
     redirect to(id)
   end
