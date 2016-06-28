@@ -4,7 +4,9 @@ require 'sinatra/base'
 require 'sinatra/content_for'
 require 'sinatra/reloader'
 
-class Prodam::Idealize::ApplicationController < Sinatra::Base
+module Prodam::Idealize
+
+class ApplicationController < Sinatra::Base
   configure :development do
     register Sinatra::Reloader
     dont_reload 'lib/prodam/ideialize/version'
@@ -12,10 +14,10 @@ class Prodam::Idealize::ApplicationController < Sinatra::Base
 
   helpers Sinatra::ContentFor
 
-  helpers Prodam::Idealize::AuthenticationHelper
-  helpers Prodam::Idealize::ViewHelper
-  helpers Prodam::Idealize::UrlHelper
-  helpers Prodam::Idealize::GravatarHelper
+  helpers AuthenticationHelper
+  helpers ViewHelper
+  helpers UrlHelper
+  helpers GravatarHelper
 
   set :public_folder, 'public'
   set :views, 'app/views'
@@ -55,3 +57,5 @@ class Prodam::Idealize::ApplicationController < Sinatra::Base
     }
   end
 end
+
+end # Prodam::Idealize
