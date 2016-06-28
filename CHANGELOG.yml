@@ -1,3 +1,12 @@
+- :version: 0.11.1
+  :release: 2016-06-28
+  :summary:
+    Melhorias e correções de controle de acesso
+  :changes:
+  - Melhorias no controle das permissões e acesso.
+  - Inclusão de novo perfil para avaliação das ideias.
+  - Correção do texto no índice das ideias.
+
 - :version: 0.11.0
   :release: 2016-06-27
   :summary:
