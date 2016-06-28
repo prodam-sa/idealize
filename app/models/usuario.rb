@@ -70,7 +70,7 @@ class Usuario < Model[:usuario]
   end
 
   def has_profile?(nome)
-    papeis.include? nome.to_s
+    profiles.include? nome.to_s
   end
 
   def param_name
