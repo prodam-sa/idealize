@@ -17,7 +17,7 @@ module IdeiasHelper
   end
 
   def permitido_moderar?(ideia)
-    ideia && !ideia.publicada? && ideia.desbloqueada?
+    ideia && !ideia.publicada? && ideia.desbloqueada? || (usuario_moderador? ideia)
   end
 
   def permitido_alterar?(ideia)
