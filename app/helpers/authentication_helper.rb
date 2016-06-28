@@ -18,7 +18,7 @@ module AuthenticationHelper
   end
 
   def authorized_by?(*profiles)
-    (session[:user][:profiles] & profiles).any?
+    session[:user] && (session[:user][:profiles] & profiles.map(&:to_s)).any?
   end
 
   def authenticate(user_id, *profiles)
