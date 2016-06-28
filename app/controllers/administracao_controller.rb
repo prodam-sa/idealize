@@ -1,7 +1,9 @@
 # encoding: utf-8
 
-class Prodam::Idealize::AdministracaoController < Prodam::Idealize::ApplicationController
-  helpers Prodam::Idealize::GravatarHelper
+module Prodam::Idealize
+
+class AdministracaoController < ApplicationController
+  helpers GravatarHelper
 
   before do
     @page = controllers[:administracao_controller]
@@ -41,3 +43,5 @@ class Prodam::Idealize::AdministracaoController < Prodam::Idealize::ApplicationC
     redirect to('/usuarios/' + id)
   end
 end
+
+end # Prodam::Idealize
