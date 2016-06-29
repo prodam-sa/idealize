@@ -1,1 +1,1 @@
-@@db/v0.12.0/drop/USUARIO.sql &indx &data
+@@db/v0.11.2/drop/USUARIO.sql &indx &data
