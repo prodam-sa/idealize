@@ -25,6 +25,12 @@ class HomeController < ApplicationController
     view 'paginas/faq'
   end
 
+  get '/versao' do
+    @page = pages[:versao]
+    @changelog = data @page[:data]
+    view 'paginas/changelog'
+  end
+
   get '/ajuda' do
     message.update level: :warning, text: 'Página de "ajuda" está em desenvolvimento.'
     redirect path_to('/pesquisas'), 303

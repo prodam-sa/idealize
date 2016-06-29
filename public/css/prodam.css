@@ -573,3 +573,30 @@ select.mdl-textfield__input optgroup option {
   border-radius: 360px;
 }
 
+.prd-toc {
+  position: relative !important;
+  float: right !important;
+  min-width: 20vw;
+  width: 40%;
+  margin: 0.75rem;
+  padding: 0.75rem;
+  background-color: rgba(0, 0, 0, 0.10);
+}
+
+.prd-toc ul {
+  padding-left: 1.00rem;
+}
+
+.prd-toc__item {
+  text-decoration: none !important;
+  color: #3e2723; /* brown-900 */
+}
+
+.prd-layout--text-hyphenated {
+  text-align: justify;
+  -webkit-hyphens: none;
+  -moz-hyphens: auto;
+  -ms-hyphens: auto;
+  hyphens: auto;
+}
+

@@ -131,7 +131,7 @@
         <a class="mdl-navigation__link prd-navigation__link" href="<%=path_to :ajuda%>"><i class="material-icons" role="presentation">help</i>Ajuda</a>
       </nav>
       <small class="mdl-color--grey-200 mdl-typography--text-center">
-        <%=version_info%>
+        <a href="<%=path_to :versao%>" style="text-decoration: none; color: inherit;"><%=version_info%></a>
       </small>
     </div>
 
@@ -145,7 +145,7 @@
         <div class="mdl-mini-footer__left-section"></div>
         <div class="mdl-mini-footer__center-section mdl-typography--text-center">
           <span><%=Date.today.year%> &copy; PRODAM - Processamento de Dados Amazonas S/A</span><br/>
-          <small><%=version_info%></small>
+          <small><a href="<%=path_to :versao%>" style="text-decoration: none"><%=version_info%></a></small>
           <%if authenticated?%>
             <a id="fab" href="<%=@fab[:url]%>" class="prd-footer__button-add mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--colored mdl-shadow--4dp mdl-layout--small-screen-only">
               <i class="material-icons">edit</i>
