@@ -81,9 +81,9 @@ __end
 }
 
 case $runner in
-  sql ) run_sql  ;;
-  rb  ) run_ruby ;;
-  **  ) usage    ;;
+  sql ) run_sql  $@;;
+  rb  ) run_ruby $@;;
+  **  ) usage      ;;
 esac
 
 err=$?
