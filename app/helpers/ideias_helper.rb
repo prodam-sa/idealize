@@ -12,12 +12,20 @@ module IdeiasHelper
     ideia && (usuario_id == ideia.autor_id)
   end
 
+  def usuario_coautor?(ideia)
+    (ideia.coautores.include? usuario_id)
+  end
+
+  def usuario_colaborador?(ideia)
+    (usuario_autor? ideia) || (usuario_coautor? ideia)
+  end
+
   def usuario_moderador?(ideia)
-    !(usuario_autor? ideia) && (ideia.modificacao.responsavel_id == usuario_id)
+    !(usuario_colaborador? ideia) && (ideia.modificacao.responsavel_id == usuario_id)
   end
 
   def permitido_moderar?(ideia)
-    ideia && !ideia.publicada? && ideia.desbloqueada? || (usuario_moderador? ideia)
+    ideia && !ideia.publicada? && ideia.desbloqueada? && !(usuario_colaborador? ideia)
   end
 
   def permitido_alterar?(ideia)
