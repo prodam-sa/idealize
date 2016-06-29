@@ -1,3 +1,10 @@
+- :version: 0.11.2
+  :release: 2016-06-29
+  :summary:
+    Correções de controle de acesso
+  :changes:
+  - Correção dos perfis de acesso do usuário.
+
 - :version: 0.11.1
   :release: 2016-06-28
   :summary:
