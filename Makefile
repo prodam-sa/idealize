@@ -1,8 +1,10 @@
 SHELL = /bin/bash
 .SUFFIXES:
 
+-include config.mk
+
 name = idealize
-version ?= 0.11.2
+version ?= 0.12.0
 release ?= 2016-06-29
 database = $(name)
 environment ?= development
@@ -11,6 +13,7 @@ munge  = m4
 munge += -D_NAME='$(name)'
 munge += -D_VERSION='$(version)'
 munge += -D_RELEASE='$(release)'
+munge += -D_ENVIRONMENT='$(environment)'
 
 bundle = ruby -S bundle
 
@@ -47,33 +50,36 @@ db.console:
 
 # make db.table version=[version] table=[table]
 db.table:
-	sh db/table.sh -c -v$(version) $(table)
+	bash tools/table.sh -c -v$(version) $(table)
 
 # make db.create
 db.create:
-	sh db/sqlrun.sh -e $(environment) db/create.sql $(database)_index $(database)_data
+	bash tools/run-script.sh -e $(environment) db/create.sql $(database)_index $(database)_data
 
 # make db.create.version version=0.1.0
 db.create.version:
-	sh db/sqlrun.sh -e $(environment) db/v$(version)/create.sql $(database)_index $(database)_data
+	bash tools/run-script.sh -e $(environment) db/v$(version)/create.sql $(database)_index $(database)_data
 
 db.drop:
-	sh db/sqlrun.sh -e $(environment) db/drop.sql
+	bash tools/run-script.sh -e $(environment) db/drop.sql
 
 # make db.drop.version version=0.1.0
 db.drop.version:
-	sh db/sqlrun.sh -e $(environment) db/v$(version)/drop.sql
+	bash tools/run-script.sh -e $(environment) db/v$(version)/drop.sql
 
 db.bootstrap:
-	test -f db/v$(version)/bootstrap.sql && sh db/sqlrun.sh -e $(environment) db/v$(version)/bootstrap.sql || true
-	test -f db/v$(version)/bootstrap.rb  && ruby -Ilib:app db/v$(version)/bootstrap.rb || true
+	bash tools/run-script.sh -e $(environment) db/v$(version)/bootstrap.sql
+	bash tools/run-script.sh -e $(environment) db/v$(version)/bootstrap.rb
 
 db.hotfix:
-	test -f db/v$(version)/hotfix.rb  && ruby -Ilib:app db/v$(version)/hotfix.rb || true
+	bash tools/run-script.sh -e $(environment) db/v$(version)/hotfix.rb
 
 clean:
 	rm -f lib/prodam/idealize/version.rb
 
 check:
-	ruby test/all.rb
+	bash tools/run-script.sh test/all.rb
 
+upgrade: clean install version db.create.version db.bootstrap db.hotfix
+
+downgrade: clean version db.drop.version
