@@ -2,7 +2,7 @@
   <div class="mdl-cell mdl-cell--12-col">
     <div class="prd-card mdl-card mdl-card--full-width mdl-shadow--2dp">
       <div class="mdl-card__supporting-text">
-        <div class="prd-toc prd-layout--text-hyphenated mdl-layout--large-screen-only">
+        <div class="prd-toc prd-text--hyphenated mdl-layout--large-screen-only">
           <p><%=@page[:description]%>. Clique na versão para visualizar as modificações realizadas.</p>
           <ul>
             <%@changelog.each_with_index do |log, l|%>
@@ -30,7 +30,7 @@
           </div>
           <ul>
           <%log[:changes].each do |change|%>
-            <li class="prd-layout--text-hyphenated"><%=markdown change%></li>
+            <li class="prd-text--hyphenated"><%=markdown change%></li>
           <%end%>
           </ul>
         <%end%>

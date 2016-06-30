@@ -592,7 +592,7 @@ select.mdl-textfield__input optgroup option {
   color: #3e2723; /* brown-900 */
 }
 
-.prd-layout--text-hyphenated {
+.prd-text--hyphenated {
   text-align: justify;
   -webkit-hyphens: none;
   -moz-hyphens: auto;

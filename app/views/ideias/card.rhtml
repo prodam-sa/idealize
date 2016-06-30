@@ -12,7 +12,7 @@
       </div-->
     <%end%>
 
-    <div class="mdl-card__supporting-text mdl-card--expand">
+    <div class="mdl-card__supporting-text prd-text--hyphenated mdl-card--expand">
       <p class="mdl-typography--text-right">
       <%=ideia.modificacao.situacao.titulo%>, <%=formated_date ideia.modificacao.data_registro%>
       </p>
@@ -25,7 +25,7 @@
           <a id="ver-<%=ideia.id%>" href="<%=path_to :ideias, ideia.to_url_param%>" class="mdl-button mdl-button--fab mdl-button--minifab mdl-button--icon mdl-js-button mdl-js-ripple-effect">
             <i class="material-icons">pageview</i>
           </a>
-          <span class="mdl-tooltip mdl-tooltip--top" for="ver-<%=ideia.id%>">Visualiar ideia</span>
+          <span class="mdl-tooltip mdl-tooltip--top" for="ver-<%=ideia.id%>">Visualizar ideia</span>
           <%if ideia.desbloqueada? and (authorized? or usuario_autor? ideia)%>
             <a id="editar-<%=ideia.id%>" href="<%=path_to :ideias, ideia.to_url_param, :editar%>" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
               <i class="material-icons">edit</i>
