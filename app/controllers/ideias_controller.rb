@@ -159,9 +159,9 @@ class IdeiasController < ApplicationController
 
   get '/:id/moderar', authorize_only: :moderador do |id|
     if (permitido_moderar? @ideia) or (usuario_moderador? @ideia)
+      @situacao = situacao(:moderacao)
       @formulario = Formulario.first # Há somente um formulário, por enquanto.
       @criterios = @formulario.criterios
-      @situacao = situacao(:moderacao)
       unless @ideia.modificacao.situacao_id == @situacao.id
         @historico = historico(@ideia, @situacao, 'Moderação iniciada.').save
       else
@@ -216,7 +216,14 @@ class IdeiasController < ApplicationController
 
   # apenas para desbloqueio
   put '/:id/moderacao', authorize_only: :moderador do |id|
-    @ideia.desbloquear! if params[:desbloquear]
+    if params[:desbloquear]
+      @situacao = situacao(:postagem)
+      @ideia.situacao = @situacao.chave
+      @ideia.desbloquear!
+      historico(@ideia, @situacao, 'Moderação cancelada').save
+      message.update(level: :information, text: 'Moderação cancelada e ideia em situação de postagem.')
+    end
+
     redirect to(id)
   end
 
