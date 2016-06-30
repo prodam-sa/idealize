@@ -8,6 +8,7 @@ class Criterio < Model[:criterio]
   plugin :validation_helpers
 
   one_to_one :formulario
+  many_to_one :criterio_multiplo
 
   attr_accessor :resposta
 
