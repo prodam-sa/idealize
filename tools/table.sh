@@ -103,7 +103,7 @@ ddl_update() {
 cat <<-end > $table_path/create/$table_file
 prompt ** ${table_name}
 
-alter table ${table_alias} add {
+alter table ${table_alias} add (
 -- alter table ${table_alias} modify (
 --  %column% %type%()
 --    constraint ${table_alias}_fk references %column%(id)
