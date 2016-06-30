@@ -9,6 +9,7 @@ class Formulario < Model[:formulario]
 
   one_to_many :criterios
   one_to_many :criterios_multiplos
+  many_to_one :processo
 
   def validate
     super
