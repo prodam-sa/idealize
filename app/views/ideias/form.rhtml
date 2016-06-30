@@ -28,6 +28,14 @@
     </div><!--/.mdl-cell-->
 
     <div class="mdl-cell mdl-cell--12-col mdl-card__actions mdl-card--border">
+      <%if @ideia.new?%>
+        <button id="postar" type="submit" name="_method" value="post" class="mdl-button mdl-button--raised mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+          <input type="hidden" name="postar" value="S"/>
+          Postar
+        </button>
+        <span class="mdl-tooltip mdl-tooltip--top" for="postar">Salvar e postar ideia</span>
+      <%end%>
+
       <button id="salvar" type="submit" name="_method" value="<%=@ideia.id ? :put : :post%>" class="mdl-button mdl-button--raised mdl-js-button mdl-js-ripple-effect">
         Salvar <%=@situacao.titulo%>
       </button>

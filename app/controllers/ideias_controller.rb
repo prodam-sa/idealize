@@ -38,16 +38,27 @@ class IdeiasController < ApplicationController
   end
 
   post '/', authenticate: true do
+    @situacao = situacao(:rascunho)
     @ideia = Ideia.new(params[:ideia])
     @ideia.autor_id = usuario_id
+
     if @ideia.valid?
       @ideia.save
-      historico(@ideia, situacao(:rascunho), mensagem('Ideia criada em rascunho para edição.')).save
-      message.update(level: :information, text: 'Sua ideia foi registrada em rascunho. Não esqueça de postar depois de finalizar.')
+
+      if params[:postar]
+        @situacao = situacao(:postagem)
+        historico(@ideia, @situacao, mensagem('Ideia postada pelo autor para moderação.')).save
+        message.update(level: :information, text: 'Sua ideia foi postada com sucesso!')
+      else
+        historico(@ideia, @situacao, mensagem('Ideia criada em rascunho para edição.')).save
+        message.update(level: :information, text: 'Sua ideia foi registrada em rascunho. Não esqueça de postar depois de finalizar.')
+      end
+
+      @ideia.situacao = @situacao.chave
+      @ideia.save
       redirect to("/#{@ideia.to_url_param}")
     else
       message.update(level: :error, text: 'Oops! Tem alguma coisa errada. Observe os campos em vermelho.')
-      @situacao = Situacao.chave :rascunho
       view 'ideias/form'
     end
   end
