@@ -1,0 +1,68 @@
+:formularios:
+- :titulo:    Avaliação
+  :descricao: Avaliação de viabilidade da ideia.
+  :processo:  avaliacao
+  :criterios_multiplos:
+  - :titulo:    Satisfação Interna
+    :descricao: Satisfação do cliente dentro da empresa.
+    :criterios:
+    - :titulo:    Tem impacto mínimo?
+      :descricao: A ideia causará algum impacto dentro da empresa.
+      :peso:      1
+    - :titulo:    Tem impacto razoável?
+      :descricao: A ideia terá um impacto razoável dentro da empresa.
+      :peso:      5
+    - :titulo:    Tem impacto maior?
+      :descricao: A ideia terá um impacto em grande parte da empresa.
+      :peso:      10
+    - :titulo:    Tem impacto abrangente?
+      :descricao: A ideia terá um impacto que abrange quase toda a empresa.
+      :peso:      20
+
+  - :titulo:    Satisfação Externa
+    :descricao: Satisfação do cliente fora da empresa.
+    :criterios:
+    - :titulo:    Tem impacto mínimo?
+      :descricao: A ideia causará algum impacto para o cliente.
+      :peso:      1
+    - :titulo:    Tem impacto razoável?
+      :descricao: A ideia terá um impacto razoável para o cliente.
+      :peso:      5
+    - :titulo:    Tem impacto maior?
+      :descricao: A ideia terá um impacto em grande parte para o cliente.
+      :peso:      10
+    - :titulo:    Tem impacto abrangente?
+      :descricao: A ideia terá um impacto que abrange quase todas as expectativas do cliente.
+      :peso:      20
+
+  - :titulo:    Retorno Financeiro
+    :descricao: Viabilidade de lucros e retorno financeiro para a empresa.
+    :criterios:
+    - :titulo:    Sem retorno financeiro?
+      :descricao: A ideia não oferece retorno financeiro para a empresa.
+      :peso:      1
+    - :titulo:    Trás pouco retorno financeiro?
+      :descricao: A ideia oferece retorno financeiro mínimo para a empresa.
+      :peso:      5
+    - :titulo:    Trás retorno financeiro relevante?
+      :descricao: A ideia oferece retorno financeiro relevante para a empresa.
+      :peso:      10
+    - :titulo:    Trás grande retorno financeiro?
+      :descricao: A ideia oferece retorno financeiro significativamente grande para a empresa.
+      :peso:      20
+
+  - :titulo:    Aplicabilidade
+    :descricao: Avaliação do período de tempo para desenvolvimento e implantação da ideia.
+    :criterios:
+    - :titulo:    Aplicável?
+      :descricao: A ideia não é aplicável, não há possibilidade de desenvolvimento e implantação.
+      :peso:      1
+    - :titulo:    Aplicável em longo prazo?
+      :descricao: A ideia é aplicável, mas o desenvolvimento e implantação serão em um longo prazo de tempo.
+      :peso:      5
+    - :titulo:    Aplicável em médio prazo, de 6 a 12 meses?
+      :descricao: A ideia é aplicável e seu desenvolvimento e implantação serão em um médio prazo de tempo.
+      :peso:      10
+    - :titulo:    Aplicável em curto prazo, em até 6 meses?
+      :descricao: A ideia é aplicável e seu desenvolvimento e implantação serão em um curto prazo de tempo.
+      :peso:      20
