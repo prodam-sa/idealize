@@ -537,6 +537,11 @@ select.mdl-textfield__input optgroup option {
   padding: 0;
 }
 
+.prd-card.prd-card--minicard {
+  max-height: 18rem;
+  height: 18rem;
+}
+
 .prd-card.prd-card--minicard .mdl-card__title-text {
   text-align: left;
 }
