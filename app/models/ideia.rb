@@ -16,6 +16,9 @@ class Ideia < Model[:ideia]
     right_key: :coautor_id
   }
   one_to_many :modificacoes
+  many_to_many :apoiadores, {
+    join_table: :ideia_apoiador
+  }
 
   def validate
     super
