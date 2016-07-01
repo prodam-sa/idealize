@@ -31,6 +31,9 @@
         </div>
 
         <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--2-col-phone mdl-typography--text-right mdl-cell--bottom">
+            <span id="supporters-<%=ideia.id%>" class="material-icons mdl-badge mdl-badge-overlap" data-badge="<%=total[:apoiadores_ideia][ideia.id] || 0%>">thumb_up</span>
+            <span class="mdl-tooltip mdl-tooltip--left" for="supporters-<%=ideia.id%>">Apoiadores da ideia</span>
+
             <span id="coauthors-<%=ideia.id%>" class="material-icons mdl-badge mdl-badge-overlap" data-badge="<%=total[:coautores_ideia][ideia.id] || 0%>">people</span>
             <span class="mdl-tooltip mdl-tooltip--left" for="coauthors-<%=ideia.id%>">Coautores da ideia</span>
         </div>

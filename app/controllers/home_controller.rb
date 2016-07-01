@@ -13,6 +13,7 @@ class HomeController < ApplicationController
     if authenticated?
       @total = {
         coautores_ideia: Relatorio.total_coautores_ideia,
+        apoiadores_ideia: Relatorio.total_apoiadores_ideia
       }
       @ideias = Ideia.find_by_situacao('publicacao').order(:data_publicacao).all
       view 'index'
