@@ -6,6 +6,7 @@ module IdeiasHelper
   def usuario_id
     session[:user] && session[:user][:id]
   end
+  alias usuario_autenticado? usuario_id
 
   def usuario_autor?(ideia)
     return false unless authenticated?
@@ -13,6 +14,7 @@ module IdeiasHelper
   end
 
   def usuario_coautor?(ideia)
+    return false unless authenticated?
     (ideia.coautores.include? usuario_id)
   end
 
@@ -21,7 +23,7 @@ module IdeiasHelper
   end
 
   def usuario_moderador?(ideia)
-    !(usuario_colaborador? ideia) && (ideia.modificacao.responsavel_id == usuario_id)
+    (authenticated_as? :moderador) && !(usuario_colaborador? ideia) && (ideia.modificacao.responsavel_id == usuario_id)
   end
 
   def permitido_moderar?(ideia)
