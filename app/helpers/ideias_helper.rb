@@ -15,7 +15,7 @@ module IdeiasHelper
 
   def usuario_coautor?(ideia)
     return false unless authenticated?
-    (ideia.coautores.include? usuario_id)
+    ideia.coautores_dataset.where(coautor_id: usuario_id).any?
   end
 
   def usuario_colaborador?(ideia)
@@ -44,6 +44,10 @@ module IdeiasHelper
 
   def permitido_arquivar?(ideia)
     (permitido_exluir? ideia)
+  end
+
+  def permitido_apoiar?(ideia)
+    usuario_autenticado? && !(usuario_colaborador? ideia) && !(usuario_moderador? ideia)
   end
 
   def situacao(chave)
