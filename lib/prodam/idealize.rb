@@ -104,6 +104,7 @@ module Prodam
 
       Sequel.inflections do |inflect|
         inflect.irregular 'coautor', 'coautores'
+        inflect.irregular 'apoiador', 'apoiadores'
         inflect.irregular 'modificacao', 'modificacoes'
         inflect.irregular 'criterio_multiplo', 'criterios_multiplos'
       end
