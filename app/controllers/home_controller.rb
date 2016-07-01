@@ -11,10 +11,13 @@ class HomeController < ApplicationController
 
   get '/' do
     if authenticated?
+      @total = {
+        coautores_ideia: Relatorio.total_coautores_ideia,
+      }
       @ideias = Ideia.find_by_situacao('publicacao').order(:data_publicacao).all
       view 'index'
     else
-      @total_ideias = Ideia.count
+      @total = { ideias: Ideia.find_by_situacao('publicacao').count }
       view 'wellcome', layout: :landpage
     end
   end
