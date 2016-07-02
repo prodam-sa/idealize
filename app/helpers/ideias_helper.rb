@@ -56,9 +56,13 @@ module IdeiasHelper
     Situacao.chave(chave)
   end
 
+  def processo(chave)
+    Processo.chave(chave)
+  end
+
   def historico(ideia, situacao, mensagem)
-    Modificacao.new ideia: ideia,
-                    situacao: situacao,
+    Modificacao.new ideia_id: ideia.id,
+                    situacao_id: situacao.id,
                     responsavel_id: usuario_id,
                     descricao: mensagem
   end

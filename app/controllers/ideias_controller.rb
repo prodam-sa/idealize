@@ -177,11 +177,11 @@ class IdeiasController < ApplicationController
 
   get '/:id/moderar', authorize_only: :moderador do |id|
     if (permitido_moderar? @ideia) or (usuario_moderador? @ideia)
-      @situacao = situacao(:moderacao)
-      @formulario = Formulario.first # Há somente um formulário, por enquanto.
+      @processo = processo(:moderacao)
+      @formulario = @processo.formulario
       @criterios = @formulario.criterios
-      unless @ideia.modificacao.situacao_id == @situacao.id
-        @historico = historico(@ideia, @situacao, 'Moderação iniciada.').save
+      unless @ideia.modificacao.situacao_id == @processo.id
+        @historico = historico(@ideia, @processo, 'Moderação iniciada.').save
       else
         @historico = @ideia.modificacao
       end
@@ -219,7 +219,7 @@ class IdeiasController < ApplicationController
       @historico.save
       redirect to('/')
     else
-      @formulario = Formulario.first
+      @formulario = processo(:moderacao).formulario
       @criterios = @formulario.criterios.map do |criterio|
         parametro = params[:criterios].select do |(id, resposta)|
           id == criterio.id
