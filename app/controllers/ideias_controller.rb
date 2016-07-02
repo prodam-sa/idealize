@@ -65,6 +65,7 @@ class IdeiasController < ApplicationController
 
   get '/:id' do |id|
     @categorias = Categoria.all if permitido_moderar? @ideia
+    @apoiadores = Relatorio.new.lista_apoiadores_ideia @ideia
     if (@ideia.publicada?) or (usuario_autor? @ideia) or (authorized_by? :moderador)
       view 'ideias/page'
     else
@@ -112,6 +113,23 @@ class IdeiasController < ApplicationController
     historico(@ideia, situacao(:postagem), mensagem('Ideia postada pelo autor para moderação.')).save
     message.update(level: :information, text: 'Sua ideia foi postada com sucesso!')
     redirect to("/#{@ideia.to_url_param}")
+  end
+
+  put '/:id/apoiar' do |id|
+    if (permitido_apoiar? @ideia) && !(authenticated_as? :administrador, :moderador, :avaliador)
+      unless usuario_apoiador? @ideia
+        @ideia.add_apoiador usuario_id
+        texto = 'Ideia apoiada pelo usuário.'
+      else
+        @ideia.remove_apoiador usuario_id
+        texto = 'Apoio do usuário foi removido.'
+      end
+      historico(@ideia, @ideia.modificacao.situacao, mensagem(texto)).save
+      message.update(level: :information, text: 'Seu apoio foi registrado.')
+    else
+      message.update(level: :error, text: 'Infelizmente, você não poderá apoiar essa ideia.')
+    end
+    redirect to(id)
   end
 
   delete '/:id', authenticate: true  do |id|

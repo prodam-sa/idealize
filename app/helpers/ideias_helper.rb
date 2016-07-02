@@ -24,6 +24,10 @@ module IdeiasHelper
     (authenticated_as? :moderador) && !(usuario_colaborador? ideia) && (ideia.modificacao.responsavel_id == usuario_id)
   end
 
+  def usuario_apoiador?(ideia)
+    usuario_autenticado? && ideia && ideia.apoiadores_dataset.where(apoiador_id: usuario_id).any?
+  end
+
   def permitido_moderar?(ideia)
     ideia && !ideia.publicada? && ideia.desbloqueada? && !(usuario_colaborador? ideia)
   end

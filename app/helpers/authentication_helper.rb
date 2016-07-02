@@ -20,6 +20,7 @@ module AuthenticationHelper
   def authorized_by?(*profiles)
     session[:user] && (session[:user][:profiles] & profiles.map(&:to_s)).any?
   end
+  alias authenticated_as? authorized_by?
 
   def authenticate(user_id, *profiles)
     session[:user] = {
