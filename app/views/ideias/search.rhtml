@@ -1,0 +1,16 @@
+<div class="mdl-grid">
+  <div class="mdl-cell mdl-cell--12-col mdl-shadow--2dp mdl-card">
+    <div class="mdl-card__title mdl-card--border">
+      <span class="mdl-card__title-text">Ideias publicadas com o termo "<%=@termo%>"</span>
+    </div>
+    <%if @relatorio.ideias.size > 0%>
+      <%=partial 'ideias/list', locals: { relatorio: @relatorio, ideias: @relatorio.ideias }%>
+    <%else%>
+      <div class="mdl-card__supporting-text">
+        <p>
+          Que pena, mas nenhum resultado foi encontrado com "<%=@termo%>".
+        </p>
+      </div>
+    <%end%>
+  </div>
+</div>

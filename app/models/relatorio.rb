@@ -11,6 +11,12 @@ class Relatorio
   attr_accessor :ideia
   attr_accessor :ideias
 
+  def initialize(atributos = {})
+    atributos.each do |atributo, valor|
+      send("#{atributo}=", valor)
+    end
+  end
+
   # Coautores
   def total_coautores_por_ideia
     @total_coautores_por_ideia || total_coautores_por_ideia!

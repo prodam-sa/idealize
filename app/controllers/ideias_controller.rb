@@ -23,7 +23,6 @@ class IdeiasController < ApplicationController
 
   get '/' do
     ideias_list
-    @ideia = Ideia.new
     view 'ideias/index'
   end
   
@@ -33,8 +32,8 @@ class IdeiasController < ApplicationController
 
   get '/pesquisa' do
     @termo = params[:termo]
-    @ideias = Ideia.search(@termo).where(situacao: @situacoes).all
-    view 'ideias/list'
+    @relatorio = Relatorio.new ideias: Ideia.search(@termo).where(situacao: @situacoes).all
+    view 'ideias/search'
   end
 
   post '/', authenticate: true do
@@ -153,6 +152,7 @@ class IdeiasController < ApplicationController
       params[:coautores] && params[:coautores].each do |coautor_id|
         @ideia.add_coautor coautor_id
       end
+      @ideia.remove_coautor usuario_id
       message.update(level: :information, text: 'Os coautores de sua ideia foram atualizados.')
     else
       message.update(level: :warning, text: 'Sua ideia está bloqueada para inclusão de coautores.')
@@ -262,19 +262,11 @@ private
   end
 
   def ideias_list
-    @ideias = {
-      latest: Ideia.find_by_situacoes(@situacoes).all,
-      moderacao: Ideia.find_by_situacao(['postagem', 'moderacao']).reject do |ideia|
-        ideia.autor_id == usuario_id
-      end,
-      all_by_autor: nil
+    @relatorio = {
+      publicacoes: Relatorio.new(ideias: Ideia.find_by_situacoes(@situacoes).all),
+      moderacao: Relatorio.new(ideias: Ideia.find_by_situacao(['postagem', 'moderacao']).reject{|i| i.autor_id == usuario_id}),
+      rascunhos: Relatorio.new(ideias: Ideia.find_by_autor(usuario_id).all),
     }
-    if authorized?
-      @ideias[:all_by_situacao] = Ideia.all.group_by do |ideia|
-        ideia.situacao.to_sym
-      end
-    end
-    @ideias[:all_by_autor] = Ideia.find_by_autor(usuario_id).all
   end
 end
 
