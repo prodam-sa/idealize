@@ -32,6 +32,10 @@ module IdeiasHelper
     ideia && !ideia.publicada? && ideia.desbloqueada? && !(usuario_colaborador? ideia)
   end
 
+  def permitido_avaliar?(ideia)
+    ideia && ideia.publicada? && ideia.bloqueada? && !(usuario_colaborador? ideia)
+  end
+
   def permitido_alterar?(ideia)
     (usuario_autor? ideia) && (ideia.desbloqueada?)
   end
