@@ -1,3 +1,19 @@
+- :version: 0.12.0
+  :release: 2016-07-02
+  :summary:
+    Melhorias de layout e apoio das ideias
+  :changes:
+  - Funcionalidade para apoio das ideias. Usuários poderão ser apoiadores.
+  - Página sobre as informações de versionamento do Idealize.
+  - Hifenização dos textos das ideias, mas sem compatibilidade com
+    [Google Chrome](http://caniuse.com/#search=hyphens).
+  - Nova paleta de cores.
+  - Alteração na listagem de ideias.
+  - Início do processo de avaliação das ideias publicadas.
+  - Melhoria no processo de _upgrade_ do sistema.
+  - Melhoria na postagem de ideias.
+  - Correção da permissão de moderação para autores e coautores moderadores.
+
 - :version: 0.11.2
   :release: 2016-06-29
   :summary:
@@ -83,7 +99,7 @@
   - Privacidade da lista de ideias.
   - Correção e melhorias na postagem das ideias.
   - Correção na notificação de mensagens ao usuário/autor.
-  - Correção dos erros de autoincremento e associação das classes.
+  - Correção dos erros de alto-incremento e associação das classes.
 
 - :version: 0.6.3
   :release: 2016-06-01
