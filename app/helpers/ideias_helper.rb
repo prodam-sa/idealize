@@ -9,13 +9,11 @@ module IdeiasHelper
   alias usuario_autenticado? usuario_id
 
   def usuario_autor?(ideia)
-    return false unless authenticated?
-    ideia && (usuario_id == ideia.autor_id)
+    usuario_autenticado? && ideia && (usuario_id == ideia.autor_id)
   end
 
   def usuario_coautor?(ideia)
-    return false unless authenticated?
-    ideia.coautores_dataset.where(coautor_id: usuario_id).any?
+    usuario_autenticado? && ideia && ideia.coautores_dataset.where(coautor_id: usuario_id).any?
   end
 
   def usuario_colaborador?(ideia)
