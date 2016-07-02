@@ -5,7 +5,7 @@ button:hover, button:active, button:focus {
 
 body {
   font-family: 'Roboto', sans;
-  background-color: #efebe9; /* brown-50 */
+  background-color: #ede7f6; /* deep-purple-50 */
   color: #212121;
 }
 
@@ -15,9 +15,7 @@ body {
 .prd-ribbon {
   width: 100%;
   height: 40vh;
-  /* background-color: #3F51B5; */
-  /* background-color: #e0e0e0; /* gray-300 /**/
-  background-color: #e0f7fa; /* cyan-50 /**/
+  background-color: #d1c4e9; /* deep-purple-100 /**/
   -webkit-flex-shrink: 0;
   -ms-flex-negative: 0;
   flex-shrink: 0;
@@ -28,7 +26,7 @@ body {
 }
 
 .prd-landpage {
-  background-color: #e0f7fa /* cyan-50 */;
+  background-color: #ede7f6 /* deep-purple-50 */;
 }
 
 .prd-content.prd-content--with-ribbon {
@@ -43,7 +41,7 @@ body {
   display: flex !important;
   flex-direction: row;
   align-items: center;
-  color: #4e342e !important; /* brown-800 */
+  color: #4527a0 !important; /* deep-purple-800 */
 }
 
 .prd-navigation__link .material-icons {
@@ -88,7 +86,7 @@ body {
   position: absolute;
   bottom: 0;
   left: 15%;
-  background-color: #6d4c41; /* brown-600*/
+  background-color: #5e35b1; /* deep-purple-600*/
 }
 
 .prd-layout__drawer .prd-drawer__brand {
@@ -594,7 +592,7 @@ select.mdl-textfield__input optgroup option {
 
 .prd-toc__item {
   text-decoration: none !important;
-  color: #3e2723; /* brown-900 */
+  color: #311b92; /* deep-purple-900 */
 }
 
 .prd-text--hyphenated {
