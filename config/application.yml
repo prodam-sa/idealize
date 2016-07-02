@@ -50,3 +50,10 @@
     :navigation: [header, drawer]
     :roles: []
     :icon: help
+  '/versao':
+    :title: Versões
+    :description: Histórico das modificações do Idealize
+    :data: ../CHANGELOG
+    :navigation: []
+    :roles: []
+    :icon: info

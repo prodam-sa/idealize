@@ -5,25 +5,25 @@
         <div class="mdl-tabs__tab-bar mdl-tabs__tab-bar--non-centered">
           <%if authorized_by? :moderador%>
             <a href="#moderacao" class="mdl-tabs__tab">
-              <span class="mdl-badge" data-badge="<%=@ideias[:moderacao].size%>">Moderação</span>
+              <span class="mdl-badge" data-badge="<%=@relatorio[:moderacao].ideias.size%>">Moderação</span>
             </a>
           <%end%>
 
           <%if authenticated? %>
             <a href="#rascunhos" class="mdl-tabs__tab is-active">
-              <span class="mdl-badge" data-badge="<%=@ideias[:all_by_autor].size%>">Minhas Ideias</span>
+              <span class="mdl-badge" data-badge="<%=@relatorio[:rascunhos].ideias.size%>">Minhas Ideias</span>
             </a>
           <%end%>
 
           <a href="#publicacoes" class="mdl-tabs__tab <%='is-active' unless authenticated?%>">
-            <span class="mdl-badge" data-badge="<%=@ideias[:latest].size%>">Publicações</span>
+            <span class="mdl-badge" data-badge="<%=@relatorio[:publicacoes].ideias.size%>">Publicações</span>
           </a>
         </div>
 
         <%if authenticated?%>
           <div id="rascunhos" class="mdl-tabs__panel is-active">
-          <%unless @ideias[:all_by_autor].empty? %>
-            <%=partial 'ideias/gallery', locals: { ideias: @ideias[:all_by_autor] }%>
+          <%unless @relatorio[:rascunhos].ideias.empty? %>
+            <%=partial 'ideias/list', locals: { relatorio: @relatorio[:rascunhos], ideias: @relatorio[:rascunhos].ideias }%>
           <%else%>
             <div class="prd-layout--centered mdl-card mdl-card--expandable mdl-shadow--2dp">
               <p class="mdl-typography--headline mdl-typography--text-center">
@@ -37,8 +37,8 @@
 
         <%if authorized_by? :moderador%>
           <div id="moderacao" class="mdl-tabs__panel">
-          <%unless @ideias[:moderacao].empty? %>
-            <%=partial 'ideias/gallery', locals: { ideias: @ideias[:moderacao] }%>
+          <%unless @relatorio[:moderacao].ideias.empty? %>
+            <%=partial 'ideias/list', locals: { relatorio: @relatorio[:moderacao], ideias: @relatorio[:moderacao].ideias }%>
           <%else%>
             <div class="prd-layout--centered mdl-card mdl-card--expandable mdl-shadow--2dp">
               <p class="mdl-typography--headline mdl-typography--text-center">
@@ -50,8 +50,8 @@
         <%end%>
 
         <div id="publicacoes" class="mdl-tabs__panel<%='is-active' unless authenticated?%>">
-        <%unless @ideias[:latest].empty? %>
-          <%=partial 'ideias/gallery', locals: { ideias: @ideias[:latest] }%>
+        <%unless @relatorio[:publicacoes].ideias.empty? %>
+          <%=partial 'ideias/list', locals: { relatorio: @relatorio[:publicacoes], ideias: @relatorio[:publicacoes].ideias }%>
         <%else%>
           <div class="prd-layout--centered mdl-card mdl-card--expandable mdl-shadow--2dp">
             <p class="mdl-typography--headline mdl-typography--text-center">

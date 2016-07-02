@@ -6,18 +6,34 @@ module IdeiasHelper
   def usuario_id
     session[:user] && session[:user][:id]
   end
+  alias usuario_autenticado? usuario_id
 
   def usuario_autor?(ideia)
-    return false unless authenticated?
-    ideia && (usuario_id == ideia.autor_id)
+    usuario_autenticado? && ideia && (usuario_id == ideia.autor_id)
+  end
+
+  def usuario_coautor?(ideia)
+    usuario_autenticado? && ideia && ideia.coautores_dataset.where(coautor_id: usuario_id).any?
+  end
+
+  def usuario_colaborador?(ideia)
+    (usuario_autor? ideia) || (usuario_coautor? ideia)
   end
 
   def usuario_moderador?(ideia)
-    !(usuario_autor? ideia) && (ideia.modificacao.responsavel_id == usuario_id)
+    (authenticated_as? :moderador) && !(usuario_colaborador? ideia) && (ideia.modificacao.responsavel_id == usuario_id)
+  end
+
+  def usuario_apoiador?(ideia)
+    usuario_autenticado? && ideia && ideia.apoiadores_dataset.where(apoiador_id: usuario_id).any?
   end
 
   def permitido_moderar?(ideia)
-    ideia && !ideia.publicada? && ideia.desbloqueada? || (usuario_moderador? ideia)
+    ideia && !ideia.publicada? && ideia.desbloqueada? && !(usuario_colaborador? ideia)
+  end
+
+  def permitido_avaliar?(ideia)
+    ideia && ideia.publicada? && ideia.bloqueada? && !(usuario_colaborador? ideia)
   end
 
   def permitido_alterar?(ideia)
@@ -36,13 +52,21 @@ module IdeiasHelper
     (permitido_exluir? ideia)
   end
 
+  def permitido_apoiar?(ideia)
+    usuario_autenticado? && !(usuario_colaborador? ideia) && !(usuario_moderador? ideia)
+  end
+
   def situacao(chave)
     Situacao.chave(chave)
   end
 
+  def processo(chave)
+    Processo.chave(chave)
+  end
+
   def historico(ideia, situacao, mensagem)
-    Modificacao.new ideia: ideia,
-                    situacao: situacao,
+    Modificacao.new ideia_id: ideia.id,
+                    situacao_id: situacao.id,
                     responsavel_id: usuario_id,
                     descricao: mensagem
   end

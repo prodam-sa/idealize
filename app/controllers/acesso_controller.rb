@@ -24,7 +24,8 @@ class AcessoController < ApplicationController
     if params[:usuario] && (@usuario = Usuario.authenticate(params[:usuario]))
       authenticate(@usuario.id, *@usuario.profiles)
       message.update level: :information, text: "Olá, #{@usuario.nome}. Bem-vindo!"
-      redirect path_to(:home), 303
+      path = params[:url] ? to(params[:url]) : path_to(:home)
+      redirect path, 303
     else
       message.update level: :error, text: 'Usuário não encontrado ou senha inválida'
       redirect to('/acessar'), 303

@@ -10,11 +10,12 @@ class HomeController < ApplicationController
   end
 
   get '/' do
+    @relatorio = Relatorio.new
     if authenticated?
       @ideias = Ideia.find_by_situacao('publicacao').order(:data_publicacao).all
+      @relatorio.ideias = @ideias
       view 'index'
     else
-      @total_ideias = Ideia.count
       view 'wellcome', layout: :landpage
     end
   end
@@ -23,6 +24,12 @@ class HomeController < ApplicationController
     @page = pages[:faq]
     @faq = data @page[:data]
     view 'paginas/faq'
+  end
+
+  get '/versao' do
+    @page = pages[:versao]
+    @changelog = data @page[:data]
+    view 'paginas/changelog'
   end
 
   get '/ajuda' do

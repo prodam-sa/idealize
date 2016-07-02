@@ -23,7 +23,7 @@
   <!-- Page styles -->
   <link rel="stylesheet" href="<%=path_to '/src/dialog-polyfill/dialog-polyfill.css'%>"/>
   <link rel="stylesheet" href="<%=path_to '/src/material-design-lite/material.min.css'%>"/>
-  <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.brown-amber.min.css"/>
+  <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.deep_purple-orange.min.css"/>
   <link rel="stylesheet" href="<%=path_to '/css/prodam.css'%>"/>
   <%=yield_content :stylesheet%>
 
@@ -131,7 +131,7 @@
         <a class="mdl-navigation__link prd-navigation__link" href="<%=path_to :ajuda%>"><i class="material-icons" role="presentation">help</i>Ajuda</a>
       </nav>
       <small class="mdl-color--grey-200 mdl-typography--text-center">
-        <%=version_info%>
+        <a href="<%=path_to :versao%>" style="text-decoration: none; color: inherit;"><%=version_info%></a>
       </small>
     </div>
 
@@ -141,11 +141,11 @@
         <%=yield%>
       </div>
 
-      <footer class="prd-footer mdl-mini-footer mdl-color--brown-900 mdl-color-text--white">
+      <footer class="prd-footer mdl-mini-footer">
         <div class="mdl-mini-footer__left-section"></div>
         <div class="mdl-mini-footer__center-section mdl-typography--text-center">
           <span><%=Date.today.year%> &copy; PRODAM - Processamento de Dados Amazonas S/A</span><br/>
-          <small><%=version_info%></small>
+          <small><a href="<%=path_to :versao%>" style="text-decoration: none"><%=version_info%></a></small>
           <%if authenticated?%>
             <a id="fab" href="<%=@fab[:url]%>" class="prd-footer__button-add mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--colored mdl-shadow--4dp mdl-layout--small-screen-only">
               <i class="material-icons">edit</i>
@@ -173,6 +173,7 @@
           <input type="password" id="senha" name="usuario[senha]" class="mdl-textfield__input"/>
         </div>
         <div class="mdl-cell mdl-cell--12-col">
+          <input type="hidden" name="url" value="<%=request.url%>"/>
           <button type="submit" class="mdl-button mdl-button--raised mdl-js-button mdl-js-ripple-effect">
             Acessar
           </button>
