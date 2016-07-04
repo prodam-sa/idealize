@@ -57,38 +57,39 @@
 
         <form action="<%=path_to :ideias, :pesquisa%>" method="get">
           <div class="prd-searchbox mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label mdl-textfield--align-right">
-            <label id="toolbox-search" class="mdl-button mdl-js-button mdl-button--icon" for="ideias-campo-pesquisa">
+            <label id="toolbar-search" class="mdl-button mdl-js-button mdl-button--icon" for="ideias-campo-pesquisa">
               <i class="material-icons">search</i>
             </label>
             <div class="mdl-textfield__expandable-holder">
               <input class="mdl-textfield__input" type="text" name="termo" id="ideias-campo-pesquisa" placeholder="Procure por ideias publicadas">
-              <span class="mdl-tooltip" for="toolbox-search">Procure por ideias publicadas</span>
+              <span class="mdl-tooltip" for="toolbar-search">Procure por ideias publicadas</span>
             </div>
           </div>
         </form>
 
         <%if authorized?%>
-          <a id="toolbox-settings" href="<%=path_to :administracao%>" class="mdl-button mdl-js-button mdl-button--icon">
+          <a id="toolbar-settings" href="<%=path_to :administracao%>" class="mdl-button mdl-js-button mdl-button--icon">
             <i class="material-icons">settings</i>
           </a>
-          <span class="mdl-tooltip" for="toolbox-settings">Administração e configurações</span>
+          <span class="mdl-tooltip" for="toolbar-settings">Administração e configurações</span>
         <%end%>
 
         <%if authenticated?%>
-          <a id="toolbox-account" href="<%=path_to :conta%>" class="mdl-button mdl-js-button mdl-button--icon">
+          <a href="<%=path_to :painel%>" class="mdl-button mdl-button--icon"><i class="material-icons">dashboard</i></a>
+          <button id="toolbar-account" class="mdl-button mdl-button--icon">
             <i class="material-icons">account_box</i>
-          </a>
-          <span class="mdl-tooltip" for="toolbox-account">Página da sua conta</span>
+          </button>
+          <span class="mdl-tooltip" for="toolbar-account">Sua conta</span>
 
-          <a id="toolbox-sign-out" href="<%=path_to :conta, :sair%>" class="mdl-button mdl-js-button mdl-button--icon">
-            <i class="material-icons">power_settings_new</i>
-          </a>
-          <span class="mdl-tooltip" for="toolbox-sign-out">Sair do Idealize</span>
+          <div class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="toolbar-account">
+            <a href="<%=path_to :conta%>" class="mdl-menu__item">Conta</a>
+            <a href="<%=path_to :conta, :sair%>" class="mdl-menu__item">Sair</a>
+          </div>
         <%else%>
-          <button id="toolbox-sign-in" type="button" class="mdl-button mdl-js-button mdl-button--icon mdl-button--open-dialog">
+          <button id="toolbar-sign-in" type="button" class="mdl-button mdl-js-button mdl-button--icon mdl-button--open-dialog">
             <i class="material-icons">perm_identity</i>
           </button>
-          <span class="mdl-tooltip" for="toolbox-sign-in">Acessar o Idealize</span>
+          <span class="mdl-tooltip" for="toolbar-sign-in">Acessar o Idealize</span>
         <%end%>
       </div><!--/.mdl-layout__header-row-->
 
