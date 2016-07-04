@@ -263,8 +263,8 @@ private
 
   def ideias_list
     @relatorio = {
-      publicacoes: Relatorio.new(ideias: Ideia.find_by_situacoes(@situacoes).all),
-      moderacao: Relatorio.new(ideias: Ideia.find_by_situacao(['postagem', 'moderacao']).reject{|i| i.autor_id == usuario_id}),
+      publicacoes: Relatorio.new(ideias: Ideia.find_by_situacoes(@situacoes).order(:data_criacao, :data_publicacao).all),
+      moderacao: Relatorio.new(ideias: Ideia.find_by_situacao(['postagem', 'moderacao']).exclude(autor_id: usuario_id).order(:data_criacao, :data_publicacao)),
       rascunhos: Relatorio.new(ideias: Ideia.find_by_autor(usuario_id).all),
     }
   end
