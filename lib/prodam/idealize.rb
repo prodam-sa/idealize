@@ -55,30 +55,34 @@ module Prodam
         @database_config ||= load_config(:database)
       end
 
-      def routes
-        controllers.each_with_object({}) do |(id, controller), routes|
-          routes[controller[:url_path]] = const_get controller[:const_name]
+      def routing(routing = controllers)
+        @routes ||= routing.each_with_object({}) do |(id, controller), routers|
+          controller[:routes] && routers.merge(routing(controller[:routes]))
+          routers[controller[:url_path]] = const_get controller[:const_name]
         end
+        @routes
       end
 
-      def controllers
-        @controllers ||= application_config[:routes].each_with_object({}) do |(path, data), controller|
+      def controllers(routing = application_config[:routes], prefix_path = '')
+        @controllers ||= routing.each_with_object({}) do |(path, data), controller|
           id = data[:controller].underscore.to_sym
           data[:require_path] = format('%s/%s', :controllers, id)
-          data[:url_path] = path
+          data[:url_path] = prefix_path + path
           data[:const_name] = data[:controller].to_sym
+          data[:routes] = data[:routes] && controllers(data[:routes], data[:url_path])
           controller[id] = data
         end
         @controllers
       end
 
-      def pages
-        @pages ||= application_config[:pages].each_with_object({}) do |(path, data), page|
+      def sections(sections = nil)
+        (sections || application_config[:pages]).each_with_object({}) do |(path, data), page|
           id = path.gsub('/','').underscore.to_sym
           data[:url_path] = path
           page[id] = data
         end
       end
+      alias pages sections
 
       def sources_from(*pathnames)
         pathnames.each_with_object({}) do |pathname, sources|
@@ -99,60 +103,69 @@ module Prodam
       end
     end
 
-    class Database
-      # Sequel::Inflections.clear
+  class Database
+    # Sequel::Inflections.clear
 
-      Sequel.inflections do |inflect|
-        inflect.irregular 'coautor', 'coautores'
-        inflect.irregular 'apoiador', 'apoiadores'
-        inflect.irregular 'modificacao', 'modificacoes'
-        inflect.irregular 'criterio_multiplo', 'criterios_multiplos'
-      end
-
-      class << self
-        attr_reader :options
-
-        def connection(env = Idealize.environment)
-          @options = Idealize.database_config[env.to_sym]
-          @options[:prefetch_rows] = 50
-          if @options[:debug]
-            require 'logger'
-            @options[:loggers] = [Logger.new($stdout)]
-          end
-          @connection ||= Sequel.connect @options
-        end
-
-        def [](dataset)
-          connection[dataset]
-        end
-      end
+    Sequel.inflections do |inflect|
+      inflect.irregular 'coautor', 'coautores'
+      inflect.irregular 'apoiador', 'apoiadores'
+      inflect.irregular 'modificacao', 'modificacoes'
+      inflect.irregular 'criterio_multiplo', 'criterios_multiplos'
     end
 
-    module Prodam::Idealize::Model
-      def self.[](dataset_name)
-        klass = Sequel::Model(Database[dataset_name])
-        klass.dataset = klass.dataset.sequence("s_#{dataset_name}".to_sym)
-        klass
+    class << self
+      attr_reader :options
+
+      def connection(env = Idealize.environment)
+        @options = Idealize.database_config[env.to_sym]
+        @options[:prefetch_rows] = 50
+        if @options[:debug]
+          require 'logger'
+          @options[:loggers] = [Logger.new($stdout)]
+        end
+        @connection ||= Sequel.connect @options
       end
 
-      def param_name
-        id || ''
-      end
-
-      def to_url_param(prefix = nil)
-        [prefix, param_name].compact.join('/')
+      def [](dataset)
+        connection[dataset]
       end
     end
+  end # Database
 
-    # Controllers
-    autoload :ApplicationController, 'controllers/application_controller'
+  module Model
+    def self.[](dataset_name)
+      klass = Sequel::Model(Database[dataset_name])
+      klass.dataset = klass.dataset.sequence("s_#{dataset_name}".to_sym)
+      klass
+    end
 
+    def param_name
+      id || ''
+    end
+
+    def to_url_param(prefix = nil)
+      [prefix, param_name].compact.join('/')
+    end
+  end # Model
+
+  # Controllers
+  autoload :ApplicationController, 'controllers/application_controller'
+
+  def self.autoload_controllers(controllers = self.controllers)
     controllers.each do |id, controller|
       autoload controller[:const_name], controller[:require_path]
+      controller[:routes] && autoload_controllers(controller[:routes])
     end
+  end
 
+  def self.autoload_sources
     sources_from(:models, :helpers).each do |id, source|
       autoload source[:const_name], source[:require_path]
     end
   end
+
+  autoload_controllers
+  autoload_sources
 end
+
+end # Prodam::idealize

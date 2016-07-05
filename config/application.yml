@@ -1,59 +1,60 @@
 :title: 'Idealize!'
 :routes:
   '/':
+    :controller: HomeController
     :title: Home
     :description: Bem-vindo ao Idealize.
-    :controller: HomeController
     :navigation: [header, drawer]
-    :roles: []
+    :profiles: []
     :icon: home
-  '/categorias':
-    :title: Categorias
-    :description: As ideias são organizadas em categorias.
-    :controller: CategoriasController
-    :navigation: []
-    :roles: ['ad', 'mi']
-    :icon: group_work
   '/ideias':
+    :controller: IdeiasController
     :title: Ideias
     :description: Ideias criadas pelos colaboradores.
-    :controller: IdeiasController
     :navigation: [header, drawer]
-    :roles: []
+    :profiles: []
     :icon: wb_incandescent
   '/conta':
+    :controller: AcessoController
     :title: Conta
     :description: Administre sua conta.
-    :controller: AcessoController
     :navigation: [top]
-    :roles: []
+    :profiles: []
     :icon: account_box
-  '/administracao':
-    :title: Administração
-    :description: Configurações e ajustes.
-    :controller: AdministracaoController
-    :navigation: [top]
-    :roles: ['ad']
-    :icon: settings
   '/usuarios':
+    :controller: UsuariosController
     :title: Usuários
     :description: Usuários e (co)autores do Idealize.
-    :controller: UsuariosController
     :navigation: []
-    :roles: []
+    :profiles: []
     :icon: people
+  '/painel':
+    :controller: PainelController
+    :title: Painel de Controle
+    :description: Painel de controle para administração.
+    :navigation: [top]
+    :profiles: []
+    :icon: dashboard
+    :routes:
+      '/categorias':
+        :controller: CategoriasController
+        :title: Categorias
+        :description: Administração das categorias.
+        :icon: group_work
+        :profiles: ['administrador', 'moderador']
+
 :pages:
   '/faq':
-    :title: Informações
-    :description: Perguntas frequentes sobre o Idealize.
+    :title: Dúvidas
+    :description: Dúvidas frequentes sobre o Idealize.
     :data: faq
     :navigation: [header, drawer]
-    :roles: []
+    :profiles: []
     :icon: help
   '/versao':
     :title: Versões
     :description: Histórico das modificações do Idealize
     :data: ../CHANGELOG
     :navigation: []
-    :roles: []
+    :profiles: []
     :icon: info

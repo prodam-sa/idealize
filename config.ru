@@ -5,7 +5,7 @@ $LOAD_PATH.unshift 'app'
 
 require 'prodam/idealize'
 
-Prodam::Idealize.routes.each do |path, controller|
+Prodam::Idealize.routing.each do |path, controller|
   map path do
     run controller
   end
