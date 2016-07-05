@@ -1,3 +1,11 @@
+- :version: 0.12.1
+  :release: 2016-07-05
+  :summary:
+    Correções
+  :changes:
+  - Correção da inclusão de coautores.
+  - Correção da ordenação das ideias publicadas.
+
 - :version: 0.12.0
   :release: 2016-07-02
   :summary:
