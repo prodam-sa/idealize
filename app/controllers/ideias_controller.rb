@@ -152,7 +152,7 @@ class IdeiasController < ApplicationController
       params[:coautores] && params[:coautores].each do |coautor_id|
         @ideia.add_coautor coautor_id
       end
-      @ideia.remove_coautor usuario_id
+      @ideia.remove_coautor usuario_id if (@ideia.coautores.include? usuario_id)
       message.update(level: :information, text: 'Os coautores de sua ideia foram atualizados.')
     else
       message.update(level: :warning, text: 'Sua ideia está bloqueada para inclusão de coautores.')
@@ -263,8 +263,8 @@ private
 
   def ideias_list
     @relatorio = {
-      publicacoes: Relatorio.new(ideias: Ideia.find_by_situacoes(@situacoes).all),
-      moderacao: Relatorio.new(ideias: Ideia.find_by_situacao(['postagem', 'moderacao']).reject{|i| i.autor_id == usuario_id}),
+      publicacoes: Relatorio.new(ideias: Ideia.find_by_situacoes(@situacoes).order(:data_criacao, :data_publicacao).all),
+      moderacao: Relatorio.new(ideias: Ideia.find_by_situacao(['postagem', 'moderacao']).exclude(autor_id: usuario_id).order(:data_criacao, :data_publicacao)),
       rascunhos: Relatorio.new(ideias: Ideia.find_by_autor(usuario_id).all),
     }
   end
