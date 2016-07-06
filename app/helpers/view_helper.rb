@@ -23,18 +23,6 @@ module ViewHelper
     session[:message] ||= { level: :information, text: nil, url: nil }
   end
 
-  def controllers
-    Prodam::Idealize.controllers
-  end
-
-  def pages
-    Prodam::Idealize.pages
-  end
-
-  def sections
-    controllers.merge(pages)
-  end
-
   def data(filename)
     Prodam::Idealize.load_data(filename)
   end
