@@ -59,18 +59,21 @@ module Prodam
         @routes ||= routing.each_with_object({}) do |(id, controller), routers|
           controller[:routes] && routers.merge(routing(controller[:routes]))
           routers[controller[:url_path]] = const_get controller[:const_name]
+          routers
         end
         @routes
       end
 
       def controllers(routing = application_config[:routes], prefix_path = '')
-        @controllers ||= routing.each_with_object({}) do |(path, data), controller|
+        @controllers ||= {}
+        routing.each do |path, data|
           id = data[:controller].underscore.to_sym
+          routes = data.delete :routes
           data[:require_path] = format('%s/%s', :controllers, id)
           data[:url_path] = prefix_path + path
           data[:const_name] = data[:controller].to_sym
-          data[:routes] = data[:routes] && controllers(data[:routes], data[:url_path])
-          controller[id] = data
+          @controllers[id] = data
+          routes && @controllers.merge(controllers(routes, data[:url_path]))
         end
         @controllers
       end
