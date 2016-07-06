@@ -64,28 +64,30 @@ module Prodam
         @routes
       end
 
-      def controllers(routing = application_config[:routes], prefix_path = '')
-        @controllers ||= {}
-        routing.each do |path, data|
-          id = data[:controller].underscore.to_sym
-          routes = data.delete :routes
-          data[:require_path] = format('%s/%s', :controllers, id)
-          data[:url_path] = prefix_path + path
+      def controllers(routers = application_config[:routes])
+        @controllers ||= routers.each_with_object({}) do |(path, data), controllers|
+          id = path.split('/').reject(&:empty?)
+          id = id.any? && id.join('_').to_sym || :home
+          data[:require_path] = format('%s/%s', :controllers, data[:controller].underscore)
+          data[:url_path] = path
           data[:const_name] = data[:controller].to_sym
-          @controllers[id] = data
-          routes && @controllers.merge(controllers(routes, data[:url_path]))
+          controllers[id] = data
         end
         @controllers
       end
 
-      def sections(sections = nil)
-        (sections || application_config[:pages]).each_with_object({}) do |(path, data), page|
+      def pages(pages = application_config[:pages])
+        @pages ||= pages.each_with_object({}) do |(path, data), pages|
           id = path.gsub('/','').underscore.to_sym
           data[:url_path] = path
-          page[id] = data
+          pages[id] = data
         end
+        @pages
       end
-      alias pages sections
+
+      def sections
+        @sections || (@sections = controllers.merge(pages))
+      end
 
       def sources_from(*pathnames)
         pathnames.each_with_object({}) do |pathname, sources|
