@@ -36,7 +36,7 @@
 
 <body>
   <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--no-desktop-drawer-button">
-    <header class="prd-layout__header mdl-layout__header mdl-layout__header--scroll">
+    <header class="prd-layout__header mdl-layout__header">
       <div class="mdl-layout__header-row">
         <div class="mdl-layout--small-screen-only">
           <span class="mdl-layout-title prd-layout-title">
@@ -55,62 +55,48 @@
 
         <div class="mdl-layout-spacer"></div>
 
-        <form action="<%=path_to :ideias, :pesquisa%>" method="get">
-          <div class="prd-searchbox mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label mdl-textfield--align-right">
-            <label id="toolbar-search" class="mdl-button mdl-js-button mdl-button--icon" for="ideias-campo-pesquisa">
-              <i class="material-icons">search</i>
-            </label>
-            <div class="mdl-textfield__expandable-holder">
-              <input class="mdl-textfield__input" type="text" name="termo" id="ideias-campo-pesquisa" placeholder="Procure por ideias publicadas">
-              <span class="mdl-tooltip" for="toolbar-search">Procure por ideias publicadas</span>
+        <nav class="prd-navigation mdl-navigation">
+          <form action="<%=path_to :ideias, :pesquisa%>" method="get">
+            <div class="prd-searchbox mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label mdl-textfield--align-right">
+              <label id="toolbar-search" class="mdl-button mdl-button--icon mdl-js-button" for="ideias-termo-pesquisa">
+                <i class="material-icons">search</i>
+              </label>
+              <div class="mdl-textfield__expandable-holder">
+                <input class="mdl-textfield__input" type="text" name="termo" id="ideias-termo-pesquisa" placeholder="Pesquise por ideias ...">
+                <span class="mdl-tooltip" for="toolbar-search">Procure por ideias publicadas</span>
+              </div>
             </div>
-          </div>
-        </form>
+          </form>
+        </nav>
 
-        <%if authorized?%>
-          <a id="toolbar-settings" href="<%=path_to :administracao%>" class="mdl-button mdl-js-button mdl-button--icon">
-            <i class="material-icons">settings</i>
-          </a>
-          <span class="mdl-tooltip" for="toolbar-settings">Administração e configurações</span>
-        <%end%>
+        <nav class="prd-navigation mdl-navigation mdl-layout--large-screen-only">
+          <%sections.select { |id, section| section[:navigation].include? 'header' }.each do |id, section|%>
+            <%is_active = 'is-active' if @page[:url_path] == section[:url_path]%>
+            <a class="mdl-navigation__link prd-navigation__link <%=is_active%>" href="<%=path_to section[:url_path]%>">
+              <%=section[:title]%>
+            </a>
+          <%end%>
+        </nav>
 
         <%if authenticated?%>
-          <a href="<%=path_to :painel%>" class="mdl-button mdl-button--icon"><i class="material-icons">dashboard</i></a>
-          <button id="toolbar-account" class="mdl-button mdl-button--icon">
-            <i class="material-icons">account_box</i>
+          <button id="account-options" class="mdl-button mdl-button--fab mdl-button--mini-fab mdl-js-button">
+            <img src="<%=gravatar usuario_email, size: '40', default: :mm%>"/>
           </button>
-          <span class="mdl-tooltip" for="toolbar-account">Sua conta</span>
 
-          <div class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="toolbar-account">
+          <div class="mdl-menu mdl-menu--bottom-right mdl-js-menu" for="account-options">
+            <a href="<%=path_to :painel%>" class="mdl-menu__item">Painel</a>
             <a href="<%=path_to :conta%>" class="mdl-menu__item">Conta</a>
             <a href="<%=path_to :conta, :sair%>" class="mdl-menu__item">Sair</a>
           </div>
         <%else%>
-          <button id="toolbar-sign-in" type="button" class="mdl-button mdl-js-button mdl-button--icon mdl-button--open-dialog">
-            <i class="material-icons">perm_identity</i>
-          </button>
-          <span class="mdl-tooltip" for="toolbar-sign-in">Acessar o Idealize</span>
-        <%end%>
-      </div><!--/.mdl-layout__header-row-->
-
-      <div class="mdl-layout__header-row mdl-layout--large-screen-only mdl-color--white">
-        <div class="prd-max-width">
           <nav class="prd-navigation mdl-navigation">
-          <%sections.select { |id, section| section[:navigation].include? 'header' }.each do |id, section|%>
-            <%is_active = 'is-active' if @page[:url_path] == section[:url_path]%>
-            <a class="mdl-navigation__link prd-navigation__link <%=is_active%>" href="<%=path_to section[:url_path]%>">
-              <!--i class="material-icons" role="presentation"><%=section[:icon]%></i-->
-              <%=section[:title]%>
+            <a href="#login" class="prd-navigation__link mdl-navigation__link mdl-js-ripple-effect mdl-button--open-dialog">
+              Login
             </a>
-          <%end%>
+            <a href="<%=path_to :usuarios, :novo%>" class="mdl-button mdl-button--raised mdl-color--accent mdl-js-button mdl-js-ripple-effect mdl-button--open-dialog">
+              Cadastro
+            </a>
           </nav>
-        </div>
-
-        <%if authenticated?%>
-          <a id="fab" href="<%=@fab[:url]%>" class="prd-header__button-add mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--colored mdl-shadow--4dp mdl-layout--large-screen-only">
-            <i class="material-icons">edit</i>
-          </a>
-          <span class="mdl-tooltip mdl-tooltip--left" for="fab"><%=@fab[:tooltip]%></span>
         <%end%>
       </div><!--/.mdl-layout__header-row-->
     </header>
@@ -122,7 +108,7 @@
       <%sections.select { |id, section| section[:navigation].include? 'header' }.each do |id, section|%>
         <%is_active = 'is-active' if @page[:url_path] == section[:url_path]%>
         <a class="mdl-navigation__link prd-navigation__link <%=is_active%>" href="<%=path_to section[:url_path]%>">
-          <!--i class="material-icons" role="presentation"><%=section[:icon]%></i-->
+          <i class="material-icons" role="presentation"><%=section[:icon]%></i>
           <%=section[:title]%>
         </a>
       <%end%>
@@ -143,17 +129,20 @@
       </div>
 
       <footer class="prd-footer mdl-mini-footer">
-        <div class="mdl-mini-footer__left-section"></div>
-        <div class="mdl-mini-footer__center-section mdl-typography--text-center">
+        <div class="mdl-mini-footer__left-section mdl-cell--4-col-desktop mdl-cell--2-col-tablet mdl-cell--4-phone">
+          <p>Estamos melhorando a página para receber suas ideias.</p>
+        </div>
+        <div class="mdl-mini-footer__center-section mdl-typography--text-center mdl-cell--4-col-desktop mdl-cell--4-col-tablet mdl-cell--4-phone">
           <span><%=Date.today.year%> &copy; PRODAM - Processamento de Dados Amazonas S/A</span><br/>
           <small><a href="<%=path_to :versao%>" style="text-decoration: none"><%=version_info%></a></small>
           <%if authenticated?%>
-            <a id="fab" href="<%=@fab[:url]%>" class="prd-footer__button-add mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--colored mdl-shadow--4dp mdl-layout--small-screen-only">
+            <a id="fab" href="<%=@fab[:url]%>" class="prd-footer__button-add mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--colored mdl-shadow--4dp">
               <i class="material-icons">edit</i>
             </a>
             <span class="mdl-tooltip mdl-tooltip--top" for="fab"><%=@fab[:tooltip]%></span>
           <%end%>
         </div>
+        <div class="mdl-mini-footer__right-section mdl-cell--4-col-desktop mdl-cell--2-col-tablet mdl-cell--4-phone"></div>
       </footer>
     </main>
   </div>

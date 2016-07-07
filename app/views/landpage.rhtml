@@ -38,19 +38,43 @@
     <header class="prd-layout__header mdl-layout__header mdl-layout__header--scroll">
       <div class="mdl-layout__header-row">
         <div class="mdl-layout--large-screen-only">
-          <span class="mdl-layout-title prd-layout-icon-expanded">
+          <span class="mdl-layout-title prd-landpage-icon-expanded">
             <img src="<%=path_to '/img/brand-colored.svg'%>" alt="Idealize" title="Idealize"/>
           </span>
         </div>
 
         <div class="mdl-layout-spacer"></div>
 
-        <%unless authenticated?%>
-          <button id="toolbox-sign-in" type="button" class="mdl-button mdl-js-button mdl-button--icon mdl-button--open-dialog">
-            <i class="material-icons">perm_identity</i>
-          </button>
-          <span class="mdl-tooltip" for="toolbox-sign-in">Acessar o Idealize</span>
-        <%end%>
+        <nav class="prd-navigation mdl-navigation">
+          <form action="<%=path_to :ideias, :pesquisa%>" method="get">
+            <div class="prd-searchbox mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label mdl-textfield--align-right">
+              <label id="toolbar-search" class="mdl-button mdl-js-button mdl-button--icon" for="ideias-campo-pesquisa">
+                <i class="material-icons">search</i>
+              </label>
+              <div class="mdl-textfield__expandable-holder">
+                <input class="mdl-textfield__input" type="text" name="termo" id="ideias-campo-pesquisa" placeholder="Pesquise por ideias ...">
+                <span class="mdl-tooltip" for="toolbar-search">Procure por ideias publicadas</span>
+              </div>
+            </div>
+          </form>
+        </nav>
+
+        <nav class="prd-navigation mdl-navigation mdl-layout--large-screen-only">
+          <%sections.select { |id, section| section[:navigation].include? 'header' }.each do |id, section|%>
+            <%is_active = 'is-active' if @page[:url_path] == section[:url_path]%>
+            <a class="mdl-navigation__link prd-navigation__link <%=is_active%>" href="<%=path_to section[:url_path]%>">
+              <%=section[:title]%>
+            </a>
+          <%end%>
+          <%unless authenticated?%>
+            <a href="#login" class="prd-navigation__link mdl-navigation__link mdl-js-ripple-effect mdl-button--open-dialog">
+              Login
+            </a>
+            <a href="<%=path_to :usuarios, :novo%>" class="mdl-button mdl-button--raised mdl-color--accent mdl-js-button mdl-js-ripple-effect mdl-button--open-dialog">
+              Cadastro
+            </a>
+          <%end%>
+        </nav>
       </div><!--/.mdl-layout__header-row-->
     </header>
 
@@ -60,11 +84,14 @@
       </div>
 
       <footer class="prd-footer mdl-mini-footer">
-        <div class="mdl-mini-footer__left-section"></div>
-        <div class="mdl-mini-footer__center-section mdl-typography--text-center">
+        <div class="mdl-mini-footer__left-section mdl-cell--4-col-desktop mdl-cell--2-col-tablet mdl-cell--4-phone">
+          <p>Estamos melhorando a página para receber suas ideias.</p>
+        </div>
+        <div class="mdl-mini-footer__center-section mdl-typography--text-center mdl-cell--4-col-desktop mdl-cell--4-col-tablet mdl-cell--4-phone">
           <span><%=Date.today.year%> &copy; PRODAM - Processamento de Dados Amazonas S/A</span><br/>
           <small><a href="<%=path_to :versao%>" style="text-decoration: none"><%=version_info%></a></small>
         </div>
+        <div class="mdl-mini-footer__right-section mdl-cell--4-col-desktop mdl-cell--2-col-tablet mdl-cell--4-phone"></div>
       </footer>
     </main>
   </div>
