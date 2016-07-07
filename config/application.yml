@@ -4,6 +4,7 @@
     :controller: HomeController
     :title: Home
     :description: Bem-vindo ao Idealize.
+    :layout:
     :navigation: [header, drawer]
     :profiles: []
     :icon: home
@@ -11,43 +12,56 @@
     :controller: IdeiasController
     :title: Ideias
     :description: Ideias criadas pelos colaboradores.
-    :navigation: [header, drawer]
+    :layout:
+    :navigation: [header, drawer, dashboard]
     :profiles: []
     :icon: wb_incandescent
   '/conta':
     :controller: AcessoController
     :title: Conta
     :description: Administre sua conta.
-    :navigation: [top]
+    :layout:
+    :navigation: [menu]
     :profiles: []
     :icon: account_box
   '/usuarios':
     :controller: UsuariosController
     :title: Usuários
     :description: Usuários e (co)autores do Idealize.
-    :navigation: []
+    :layout: dashboard
+    :navigation: [dashboard]
     :profiles: []
     :icon: people
-  '/painel':
-    :controller: PainelController
-    :title: Painel de Controle
-    :description: Painel de controle para administração.
-    :navigation: [top]
-    :profiles: []
-    :icon: dashboard
-    :routes:
-      '/categorias':
-        :controller: CategoriasController
-        :title: Categorias
-        :description: Administração das categorias.
-        :icon: group_work
-        :profiles: ['administrador', 'moderador']
+  '/administracao':
+    :controller: AdministracaoController
+    :title: Configurações
+    :description: Configurações e ajustes.
+    :layout: dashboard
+    :icon: settings
+    :navigation: [dashboard]
+    :profiles: ['administrador']
+  '/categorias':
+    :controller: CategoriasController
+    :title: Categorias
+    :description: Administração das categorias.
+    :icon: group_work
+    :navigation: [dashboard]
+    :profiles: ['administrador', 'moderador']
 
 :pages:
+  '/painel':
+    :title: Painel de Controle
+    :description: Painel de controle para administração.
+    :data:
+    :layout: dashboard
+    :navigation: [menu]
+    :profiles: []
+    :icon: dashboard
   '/faq':
     :title: Dúvidas
     :description: Dúvidas frequentes sobre o Idealize.
     :data: faq
+    :layout:
     :navigation: [header, drawer]
     :profiles: []
     :icon: help
@@ -55,6 +69,7 @@
     :title: Versões
     :description: Histórico das modificações do Idealize
     :data: ../CHANGELOG
+    :layout:
     :navigation: []
     :profiles: []
     :icon: info
