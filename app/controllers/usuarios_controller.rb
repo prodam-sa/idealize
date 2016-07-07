@@ -8,7 +8,7 @@ class UsuariosController < ApplicationController
   helpers IdeiasHelper, DateHelper
 
   before do
-    @page = controllers[:usuarios_controller]
+    @page = controllers[:usuarios]
   end
 
   before '/:id/?:action?' do |id, action|

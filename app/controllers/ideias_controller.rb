@@ -6,7 +6,7 @@ class IdeiasController < ApplicationController
   helpers IdeiasHelper, DateHelper
 
   before do
-    @page = controllers[:ideias_controller]
+    @page = controllers[:ideias]
     @situacoes = Situacao.all_by_sem_restricao(:chave).map(&:chave)
   end
 

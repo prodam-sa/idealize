@@ -6,7 +6,7 @@ class HomeController < ApplicationController
   helpers IdeiasHelper, DateHelper
 
   before do
-    @page = controllers[:home_controller]
+    @page = controllers[:home]
   end
 
   get '/' do

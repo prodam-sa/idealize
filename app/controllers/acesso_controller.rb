@@ -4,7 +4,7 @@ module Prodam::Idealize
 
 class AcessoController < ApplicationController
   before do
-    @page = controllers[:acesso_controller]
+    @page = controllers[:acesso]
   end
 
   before '/:id/?:action?' do |id, action|

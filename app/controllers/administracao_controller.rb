@@ -6,11 +6,11 @@ class AdministracaoController < ApplicationController
   helpers GravatarHelper
 
   before do
-    @page = controllers[:administracao_controller]
+    @page = controllers[:administracao]
   end
 
   before authorize: 'administração' do
-    @page = controllers[:administracao_controller]
+    @page = controllers[:administracao]
   end
 
   before '/usuarios/:id/?:action?' do |id, action|
