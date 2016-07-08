@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="pt">
+<head>
+  <%=partial 'layout-http-head'%>
+</head>
+
+<body>
+  <div class="prd-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
+    <%=partial 'dashboard-header'%>
+    <%=partial 'dashboard-drawer'%>
+
+    <main class="mdl-layout__content">
+      <div class="prd-content">
+        <%=yield%>
+        <%if authenticated?%>
+          <a id="fab" href="<%=@fab[:url]%>" class="prd-footer__button-add mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--colored mdl-shadow--4dp mdl-layout--small-screen-only">
+            <i class="material-icons">edit</i>
+          </a>
+          <span class="mdl-tooltip mdl-tooltip--top" for="fab"><%=@fab[:tooltip]%></span>
+        <%end%>
+      </div>
+      <%=partial 'layout-footer'%>
+    </main>
+  </div>
+
+  <%unless authenticated?%>
+    <%=partial 'layout-dialog-signin'%>
+  <%else%>
+    <%=yield_content :dialog%>
+  <%end%>
+
+  <script src="<%=path_to '/src/material-design-lite/material.min.js'%>"></script>
+
+  <%if message[:text]%>
+    <%=partial 'layout-notification'%>
+  <%end%>
+
+  <%=yield_content :script%>
+</body>
+</html>
