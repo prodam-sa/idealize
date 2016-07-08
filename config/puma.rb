@@ -11,13 +11,12 @@ tag 'idealize'
 if @environment == 'production'
   daemonize true
   bind "unix:///tmp/idealize-#{@environment}.sock"
+  stdout_redirect "log/#{@environment}.out.log", "log/#{@environment}.err.log", true
 else
   daemonize false
   quiet false
   bind 'tcp://0.0.0.0:8091'
 end
-
-stdout_redirect "log/#{@environment}.out.log", "log/#{@environment}.err.log", true
 
 pidfile "tmp/idealize-#{@environment}.pid"
 

@@ -11,8 +11,10 @@ module UrlHelper
     Prodam::Idealize.pages
   end
 
-  def sections
-    Prodam::Idealize.sections
+  def sections(navigation = nil)
+    navigation && Prodam::Idealize.sections.select do |id, section|
+      section[:navigation].include? navigation.to_s
+    end || Prodam::Idealize.sections
   end
 
   # Helper descrito como solução para sub URI nas aplicações em jRuby.
