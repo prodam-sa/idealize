@@ -1,8 +1,5 @@
 <%path = @usuario.id ? path_to(:usuarios, @usuario.to_url_param) : path_to(:usuarios)%>
 <div class="mdl-grid">
-  <div class="mdl-cell mdl-cell--2-col-desktop mdl-cell--1-col-tablet mdl-cell--hide-phone">
-  </div>
-
   <div class="mdl-cell mdl-cell--3-col-desktop mdl-cell--2-col-tablet mdl-cell--4-phone prd-card mdl-card mdl-shadow--2dp">
     <div class="mdl-card__media mdl-card__media--transparent mdl-card__media--full-width prd-layout--centered">
       <img src="<%=gravatar @usuario.email, size: 480, default: 'mm'%>" alt="Usuário: <%=@usuario.nome%>" class="">

@@ -13,7 +13,7 @@ class AcessoController < ApplicationController
 
   get '/', authenticate: true do
     @usuario ||= Usuario[session[:user][:id]]
-    view 'usuarios/form'
+    view 'usuarios/form', layout: :dashboard
   end
 
   get '/acessar' do
