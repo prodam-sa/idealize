@@ -32,9 +32,13 @@ class HomeController < ApplicationController
     view 'paginas/changelog'
   end
 
-  get '/ajuda' do
-    message.update level: :warning, text: 'Página de "ajuda" está em desenvolvimento.'
-    redirect path_to('/pesquisas'), 303
+  get '/painel', authenticate: true do
+    unless authorized?
+      redirect path_to(:postagem)
+    else
+      @page = pages[:painel]
+      view 'painel/index'
+    end
   end
 end
 
