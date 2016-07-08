@@ -4,7 +4,7 @@ module Prodam::Idealize
 
 module IdeiasHelper
   def usuario_id
-    session[:user] && session[:user][:id]
+    session[:user] && session[:user][:id].to_i
   end
   alias usuario_autenticado? usuario_id
 
