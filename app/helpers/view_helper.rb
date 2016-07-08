@@ -12,11 +12,12 @@ module ViewHelper
   end
 
   def view(path, options = {})
-    erb(path.to_sym, options)
+    @page && @page[:layout] && options.update(layout: @page[:layout].to_sym)
+    partial(path, options)
   end
 
-  def partial(name, options = {})
-    view(name, options)
+  def partial(path, options = {})
+    erb(path.to_sym, options)
   end
 
   def message
