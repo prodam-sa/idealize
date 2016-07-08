@@ -18,9 +18,7 @@ class AdministracaoController < ApplicationController
   end
 
   get '/?' do
-    @usuarios = Usuario.order(:nome).all.group_by do |usuario|
-      usuario.nome[0].upcase
-    end
+    @usuarios = Usuario.order(:nome).all
     view 'administracao/index'
   end
 
