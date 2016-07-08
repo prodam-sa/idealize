@@ -10,6 +10,7 @@ body {
 }
 
 .prd-layout {
+  min-height: calc(100vh - 176px);
 }
 
 .prd-ribbon {
@@ -244,6 +245,11 @@ img.prd-brand {
 
 .mdl-list__item:not(:last-child) {
   border-bottom: 1px solid #ddd;
+}
+
+.mdl-list__item:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+  );
 }
 
 .prd-button--float-right {
