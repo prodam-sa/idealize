@@ -63,6 +63,24 @@
     :navigation: [dashboard]
     :profiles: [usuario]
 
+  '/moderacao':
+    :controller: ModeracaoController
+    :title: Moderação
+    :description: Moderação das ideias.
+    :layout: dashboard
+    :icon: playlist_add_check
+    :navigation: [dashboard]
+    :profiles: [moderador]
+
+  '/avaliacao':
+    :controller: AvaliacaoController
+    :title: Avaliação
+    :description: Avaliação das ideias publicadas.
+    :layout: dashboard
+    :icon: play_for_work
+    :navigation: [dashboard]
+    :profiles: [avaliador]
+
 :pages:
   '/painel':
     :title: Painel de Controle
