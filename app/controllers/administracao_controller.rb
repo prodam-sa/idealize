@@ -6,11 +6,11 @@ class AdministracaoController < ApplicationController
   helpers GravatarHelper
 
   before do
-    @page = controllers[:administracao_controller]
+    @page = controllers[:administracao]
   end
 
   before authorize: 'administração' do
-    @page = controllers[:administracao_controller]
+    @page = controllers[:administracao]
   end
 
   before '/usuarios/:id/?:action?' do |id, action|
@@ -18,9 +18,7 @@ class AdministracaoController < ApplicationController
   end
 
   get '/?' do
-    @usuarios = Usuario.order(:nome).all.group_by do |usuario|
-      usuario.nome[0].upcase
-    end
+    @usuarios = Usuario.order(:nome).all
     view 'administracao/index'
   end
 

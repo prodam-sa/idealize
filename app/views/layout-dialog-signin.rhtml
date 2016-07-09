@@ -1,0 +1,28 @@
+<dialog class="mdl-dialog">
+  <form action="<%=path_to :conta, :acessar%>" method="post">
+    <div class="mdl-dialog__content mdl-grid mdl-grid--no-spacing">
+      <img src="<%=path_to '/img/brand-colored.svg'%>" class="mdl-cell mdl-cell--12-col prd-brand"/>
+      <div class="mdl-cell mdl-cell--12-col mdl-typography--text-right">
+        <small><%=version_info%></small>
+      </div>
+      <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-textfield--floating-label mdl-js-textfield">
+        <label for="usuario" class="mdl-textfield__label">Usuário</label>
+        <input type="text" id="usuario" name="usuario[nome_usuario]" class="mdl-textfield__input"/>
+      </div>
+      <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-textfield--floating-label mdl-js-textfield">
+        <label for="senha" class="mdl-textfield__label">Password</label>
+        <input type="password" id="senha" name="usuario[senha]" class="mdl-textfield__input"/>
+      </div>
+      <div class="mdl-cell mdl-cell--12-col">
+        <input type="hidden" name="url" value="<%=request.url%>"/>
+        <button type="submit" class="mdl-button mdl-button--raised mdl-js-button mdl-js-ripple-effect">
+          Acessar
+        </button>
+        <button type="button" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect mdl-button--close-dialog">
+          Cancelar
+        </button>
+      </div>
+    </div>
+  </form>
+</dialog>
+<script src="<%=path_to '/js/dialog.js'%>"></script>

@@ -6,13 +6,13 @@ class HomeController < ApplicationController
   helpers IdeiasHelper, DateHelper
 
   before do
-    @page = controllers[:home_controller]
+    @page = controllers[:home]
   end
 
   get '/' do
     @relatorio = Relatorio.new
     if authenticated?
-      @ideias = Ideia.find_by_situacao('publicacao').order(:data_publicacao).all
+      @ideias = Ideia.find_by_situacao(['publicacao', 'avaliacao']).order(:data_publicacao).limit(6).all
       @relatorio.ideias = @ideias
       view 'index'
     else
@@ -32,9 +32,13 @@ class HomeController < ApplicationController
     view 'paginas/changelog'
   end
 
-  get '/ajuda' do
-    message.update level: :warning, text: 'Página de "ajuda" está em desenvolvimento.'
-    redirect path_to('/pesquisas'), 303
+  get '/painel', authenticate: true do
+    unless authorized?
+      redirect path_to(:postagens)
+    else
+      @page = pages[:painel]
+      view 'painel/index'
+    end
   end
 end
 

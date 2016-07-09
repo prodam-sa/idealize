@@ -1,6 +1,22 @@
 # encoding: utf-8
 
-module Prodam::Idealize::UrlHelper
+module Prodam::Idealize
+
+module UrlHelper
+  def controllers
+    Prodam::Idealize.controllers
+  end
+
+  def pages
+    Prodam::Idealize.pages
+  end
+
+  def sections(navigation = nil)
+    navigation && Prodam::Idealize.sections.select do |id, section|
+      section[:navigation].include? navigation.to_s
+    end || Prodam::Idealize.sections
+  end
+
   # Helper descrito como solução para sub URI nas aplicações em jRuby.
   # Detalhes: https://github.com/jruby/warbler/issues/110
   def context_path
@@ -14,16 +30,12 @@ module Prodam::Idealize::UrlHelper
     else
       slashes = args
     end
-    subpath = slashes.join('/') if slashes.size > 0
-    subpath = (subpath + "?" + params.map{|k,v|"#{k}=#{v}"}.join("&")) if params
-    if path.is_a? Symbol
-      controller = '/' + (path.to_s.match(/^(home|root)/i) ? '' : path).to_s
-    else
-      controller = path.to_s
-    end
-    controller = "#{controller}/#{subpath}" if subpath
-    controller = controller.squeeze '/'
-    "#{context_path}#{controller}"
+    (slashes.size > 0) && (subpath = slashes.join('/'))
+    params && (subpath = (subpath + "?" + params.map{|k,v|"#{k}=#{v}"}.join("&")))
+    url_path = sections[path] && sections[path][:url_path] || path.to_s
+    subpath && (url_path = format("%s/%s", url_path, subpath))
+    url_path = url_path.squeeze '/'
+    "#{context_path}#{url_path}"
   end
 
 private
@@ -36,3 +48,5 @@ private
     end
   end
 end
+
+end # Prodam::Idealize

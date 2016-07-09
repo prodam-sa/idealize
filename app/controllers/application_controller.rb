@@ -52,7 +52,7 @@ class ApplicationController < Sinatra::Base
   before do
     @page = {}
     @fab = {
-      url: path_to(:ideias, :nova),
+      url: path_to(:postagens, :nova),
       tooltip: 'Nova ideia!'
     }
   end

@@ -1,130 +1,33 @@
 <!doctype html>
 <html lang="pt">
 <head>
-  <meta charset="utf-8"/>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-  <meta name="description" content=""/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>Prodam - <%=@page[:title]%></title>
-
-  <!-- Fallback to homescreen for Chrome <39 on Android -->
-  <meta name="mobile-web-app-capable" content="yes"/>
-  <meta name="application-name" content="Material Design Lite"/>
-  <link rel="icon" sizes="192x192" href=""/>
-
-  <!-- Add to homescreen for Safari on iOS -->
-  <meta name="apple-mobile-web-app-capable" content="yes"/>
-  <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
-  <meta name="apple-mobile-web-app-title" content=""/>
-
-  <link rel="apple-touch-icon" href="<%=path_to '/img/ios-desktop.png'%>"/>
-  <link rel="shortcut icon" href="<%=path_to '/img/favicon.png'%>"/>
-
-  <!-- Page styles -->
-  <link rel="stylesheet" href="<%=path_to '/src/dialog-polyfill/dialog-polyfill.css'%>"/>
-  <link rel="stylesheet" href="<%=path_to '/src/material-design-lite/material.min.css'%>"/>
-  <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.deep_purple-orange.min.css"/>
-  <link rel="stylesheet" href="<%=path_to '/css/prodam.css'%>"/>
-  <%=yield_content :stylesheet%>
-
-  <!-- Fonts -->
-  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en"/>
-  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/icon?family=Material+Icons"/>
-
-  <script src="<%=path_to '/src/dialog-polyfill/dialog-polyfill.js'%>"></script>
+  <%=partial 'layout-http-head'%>
 </head>
+
 <body>
-  <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--no-desktop-drawer-button">
-    <header class="prd-layout__header mdl-layout__header mdl-layout__header--scroll">
-      <div class="mdl-layout__header-row">
-        <div class="mdl-layout--large-screen-only">
-          <span class="mdl-layout-title prd-layout-icon-expanded">
-            <img src="<%=path_to '/img/brand-colored.svg'%>" alt="Idealize" title="Idealize"/>
-          </span>
-        </div>
-
-        <div class="mdl-layout-spacer"></div>
-
-        <%unless authenticated?%>
-          <button id="toolbox-sign-in" type="button" class="mdl-button mdl-js-button mdl-button--icon mdl-button--open-dialog">
-            <i class="material-icons">perm_identity</i>
-          </button>
-          <span class="mdl-tooltip" for="toolbox-sign-in">Acessar o Idealize</span>
-        <%end%>
-      </div><!--/.mdl-layout__header-row-->
-    </header>
+  <div class="prd-layout mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--no-drawer-button">
+    <%=partial 'landpage-header'%>
 
     <main class="mdl-layout__content">
       <div class="prd-content prd-landpage">
         <%=yield%>
       </div>
-
-      <footer class="prd-footer mdl-mini-footer">
-        <div class="mdl-mini-footer__left-section"></div>
-        <div class="mdl-mini-footer__center-section mdl-typography--text-center">
-          <span><%=Date.today.year%> &copy; PRODAM - Processamento de Dados Amazonas S/A</span><br/>
-          <small><a href="<%=path_to :versao%>" style="text-decoration: none"><%=version_info%></a></small>
-        </div>
-      </footer>
+      <%=partial 'layout-footer'%>
     </main>
   </div>
+
   <%unless authenticated?%>
-  <dialog class="mdl-dialog">
-    <form action="<%=path_to :conta, :acessar%>" method="post">
-      <div class="mdl-dialog__content mdl-grid mdl-grid--no-spacing">
-        <img src="<%=path_to '/img/brand-colored.svg'%>" class="mdl-cell mdl-cell--12-col prd-brand"/>
-        <div class="mdl-cell mdl-cell--12-col mdl-typography--text-center">
-          <small><%=version_info%></small>
-        </div>
-        <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-textfield--floating-label mdl-js-textfield">
-          <label for="usuario" class="mdl-textfield__label">Usuário</label>
-          <input type="text" id="usuario" name="usuario[nome_usuario]" class="mdl-textfield__input"/>
-        </div>
-        <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-textfield--floating-label mdl-js-textfield">
-          <label for="senha" class="mdl-textfield__label">Password</label>
-          <input type="password" id="senha" name="usuario[senha]" class="mdl-textfield__input"/>
-        </div>
-        <div class="mdl-cell mdl-cell--12-col">
-          <button type="submit" class="mdl-button mdl-button--raised mdl-js-button mdl-js-ripple-effect">
-            Acessar
-          </button>
-          <button type="button" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect mdl-button--close-dialog">
-            Cancelar
-          </button>
-        </div>
-      </div>
-    </form>
-  </dialog>
-  <script src="<%=path_to '/js/dialog.js'%>"></script>
+    <%=partial 'layout-dialog-signin'%>
   <%else%>
     <%=yield_content :dialog%>
   <%end%>
-  <%if message[:text]%>
-    <div id="notification" aria-live="assertive" aria-atomic="true" aria-relevant="text" class="mdl-snackbar mdl-js-snackbar prd-color--<%=message[:level]%>">
-      <div class="mdl-snackbar__text"><%=message[:text]%></div>
-      <button type="button" class="mdl-snackbar__action">Ok</button>
-    </div>
 
-    <script src="<%=path_to '/js/ready.js'%>"></script>
-    <script>
-      ready(function () {
-        var notification = document.querySelector('#notification');
-        var notificationConfig = {
-          message: '<%=message[:text]%>',
-          actionHandler: function(event) {
-          },
-          actionText: 'Ok',
-          timeout: 5000
-        };
-        notification.MaterialSnackbar.showSnackbar(notificationConfig);
-      });
-
-      // setTimeout(function() {
-      // }, 500);
-    </script>
-    <%message.update text: nil%>
-  <%end%>
-  <%=yield_content :script%>
   <script src="<%=path_to '/src/material-design-lite/material.min.js'%>"></script>
+
+  <%if message[:text]%>
+    <%=partial 'layout-notification'%>
+  <%end%>
+
+  <%=yield_content :script%>
 </body>
 </html>

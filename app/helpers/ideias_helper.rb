@@ -4,7 +4,7 @@ module Prodam::Idealize
 
 module IdeiasHelper
   def usuario_id
-    session[:user] && session[:user][:id]
+    session[:user] && session[:user][:id].to_i
   end
   alias usuario_autenticado? usuario_id
 
@@ -82,6 +82,7 @@ module IdeiasHelper
 
   def perfil_responavel_historico(ideia, responsavel)
     return 'Autor' if responsavel.id == ideia.autor_id
+    return 'Avaliador' if responsavel.has_profile? :avaliador
     return 'Moderador' if responsavel.has_profile? :moderador
     return 'Administrador' if responsavel.has_profile? :administrador
     'Usuário'

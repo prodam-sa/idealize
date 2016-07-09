@@ -1,59 +1,110 @@
 :title: 'Idealize!'
 :routes:
   '/':
+    :controller: HomeController
     :title: Home
     :description: Bem-vindo ao Idealize.
-    :controller: HomeController
-    :navigation: [header, drawer]
-    :roles: []
+    :layout:
     :icon: home
-  '/categorias':
-    :title: Categorias
-    :description: As ideias são organizadas em categorias.
-    :controller: CategoriasController
-    :navigation: []
-    :roles: ['ad', 'mi']
-    :icon: group_work
+    :navigation: [header, drawer, dashboard]
+    :profiles: [usuario]
+
   '/ideias':
+    :controller: IdeiasController
     :title: Ideias
     :description: Ideias criadas pelos colaboradores.
-    :controller: IdeiasController
-    :navigation: [header, drawer]
-    :roles: []
+    :layout:
     :icon: wb_incandescent
+    :navigation: [header, drawer]
+    :profiles: [usuario]
+
   '/conta':
+    :controller: AcessoController
     :title: Conta
     :description: Administre sua conta.
-    :controller: AcessoController
-    :navigation: [top]
-    :roles: []
+    :layout:
     :icon: account_box
-  '/administracao':
-    :title: Administração
-    :description: Configurações e ajustes.
-    :controller: AdministracaoController
-    :navigation: [top]
-    :roles: ['ad']
-    :icon: settings
+    :navigation: [menu]
+    :profiles: [usuario]
+
   '/usuarios':
+    :controller: UsuariosController
     :title: Usuários
     :description: Usuários e (co)autores do Idealize.
-    :controller: UsuariosController
-    :navigation: []
-    :roles: []
+    :layout: dashboard
     :icon: people
+    :navigation: []
+    :profiles: [usuario]
+
+  '/administracao':
+    :controller: AdministracaoController
+    :title: Configurações
+    :description: Configurações e ajustes.
+    :layout: dashboard
+    :icon: settings
+    :navigation: [dashboard]
+    :profiles: [administrador]
+
+  '/categorias':
+    :controller: CategoriasController
+    :title: Categorias
+    :description: Administração das categorias.
+    :layout: dashboard
+    :icon: group_work
+    :navigation: [dashboard]
+    :profiles: [administrador, moderador]
+
+  '/postagens':
+    :controller: PostagensController
+    :title: Ideias
+    :description: Postagem de ideias.
+    :layout: dashboard
+    :icon: wb_incandescent
+    :navigation: [dashboard]
+    :profiles: [usuario]
+
+  '/moderacao':
+    :controller: ModeracaoController
+    :title: Moderação
+    :description: Moderação das ideias.
+    :layout: dashboard
+    :icon: playlist_add_check
+    :navigation: [dashboard]
+    :profiles: [moderador]
+
+  '/avaliacao':
+    :controller: AvaliacaoController
+    :title: Avaliação
+    :description: Avaliação das ideias publicadas.
+    :layout: dashboard
+    :icon: play_for_work
+    :navigation: [dashboard]
+    :profiles: [avaliador]
+
 :pages:
+  '/painel':
+    :title: Painel de Controle
+    :description: Painel de controle para administração.
+    :data:
+    :layout: dashboard
+    :navigation: [menu]
+    :profiles: [usuario]
+    :icon: dashboard
+
   '/faq':
-    :title: Informações
-    :description: Perguntas frequentes sobre o Idealize.
+    :title: Dúvidas
+    :description: Dúvidas frequentes sobre o Idealize.
     :data: faq
+    :layout:
     :navigation: [header, drawer]
-    :roles: []
+    :profiles: []
     :icon: help
+
   '/versao':
     :title: Versões
     :description: Histórico das modificações do Idealize
     :data: ../CHANGELOG
+    :layout:
     :navigation: []
-    :roles: []
+    :profiles: []
     :icon: info

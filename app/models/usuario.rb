@@ -66,7 +66,7 @@ class Usuario < Model[:usuario]
   def profiles
     PROFILES.select do |profile|
       send(profile) && (send(profile) == 'S')
-    end
+    end << 'usuario'
   end
 
   def has_profile?(nome)

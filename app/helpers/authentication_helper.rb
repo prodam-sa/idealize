@@ -22,10 +22,11 @@ module AuthenticationHelper
   end
   alias authenticated_as? authorized_by?
 
-  def authenticate(user_id, *profiles)
+  def authenticate(user_id, user_email, *profiles)
     session[:user] = {
       id: user_id,
-      profiles: profiles
+      email: user_email,
+      profiles: profiles,
     }
   end
 

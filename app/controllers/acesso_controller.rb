@@ -4,7 +4,7 @@ module Prodam::Idealize
 
 class AcessoController < ApplicationController
   before do
-    @page = controllers[:acesso_controller]
+    @page = controllers[:conta]
   end
 
   before '/:id/?:action?' do |id, action|
@@ -13,7 +13,7 @@ class AcessoController < ApplicationController
 
   get '/', authenticate: true do
     @usuario ||= Usuario[session[:user][:id]]
-    view 'usuarios/form'
+    view 'usuarios/form', layout: :dashboard
   end
 
   get '/acessar' do
@@ -22,7 +22,7 @@ class AcessoController < ApplicationController
 
   post '/acessar' do
     if params[:usuario] && (@usuario = Usuario.authenticate(params[:usuario]))
-      authenticate(@usuario.id, *@usuario.profiles)
+      authenticate(@usuario.id, @usuario.email, *@usuario.profiles)
       message.update level: :information, text: "Olá, #{@usuario.nome}. Bem-vindo!"
       path = params[:url] ? to(params[:url]) : path_to(:home)
       redirect path, 303
