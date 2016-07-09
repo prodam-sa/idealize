@@ -6,8 +6,8 @@
     :description: Bem-vindo ao Idealize.
     :layout:
     :icon: home
-    :navigation: [header, drawer]
-    :profiles: []
+    :navigation: [header, drawer, dashboard]
+    :profiles: [usuario]
 
   '/ideias':
     :controller: IdeiasController
@@ -52,7 +52,16 @@
     :layout: dashboard
     :icon: group_work
     :navigation: [dashboard]
-    :profiles: ['administrador', 'moderador']
+    :profiles: [administrador, moderador]
+
+  '/postagens':
+    :controller: PostagensController
+    :title: Ideias
+    :description: Postagem de ideias.
+    :layout: dashboard
+    :icon: wb_incandescent
+    :navigation: [dashboard]
+    :profiles: [usuario]
 
 :pages:
   '/painel':
