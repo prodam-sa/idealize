@@ -34,7 +34,7 @@ class HomeController < ApplicationController
 
   get '/painel', authenticate: true do
     unless authorized?
-      redirect path_to(:postagem)
+      redirect path_to(:postagens)
     else
       @page = pages[:painel]
       view 'painel/index'
