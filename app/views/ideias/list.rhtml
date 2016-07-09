@@ -3,19 +3,13 @@
     <%icon = ideia.categorias.empty? ? :wb_incandescent : ideia.categorias.first.icone%>
     <li class="mdl-list__item mdl-list__item--three-line prd-">
       <div class="mdl-list__item-primary-content">
-        <a href="<%=path_to :ideias, ideia.to_url_param%>" class="mdl-layout--large-screen-only">
+        <a href="<%=path_to :ideias, ideia.to_url_param%>">
           <i class="material-icons mdl-list__item-avatar"><%=icon%></i>
         </a>
 
         <span><%=ideia.titulo%></span>
 
         <div class="mdl-list__item-text-body mdl-layout--large-screen-only">
-          <label id="historic-<%=ideia.id%>" class="prd-chip prd-chip--icon">
-            <i class="material-icons">date_range</i>
-          </label>
-          <small><%=formated_date ideia.modificacao.data_registro%></small>
-          <span class="mdl-tooltip mdl-tooltip--right" for="historic-<%=ideia.id%>"><%=ideia.modificacao.situacao.titulo%></span>
-
           <%apoiadores_ideia = relatorio.lista_ideias_apoiadores[ideia.id]%>
           <%apoiadores_ideia && (apoiadores_ideia.include? usuario_id) && css_apoiador = 'mdl-color-text--accent'%>
 
@@ -32,24 +26,22 @@
           </label>
           <small><%=coautores_ideia && coautores_ideia.size || 0%></small>
           <span class="mdl-tooltip mdl-tooltip--left" for="coauthors-<%=ideia.id%>">Coautores da ideia</span>
+
+          <label id="date-<%=ideia.id%>" class="prd-chip prd-chip--icon">
+            <i class="material-icons">date_range</i>
+          </label>
+          <small><%=formated_date ideia.data_criacao%></small>
+          <span class="mdl-tooltip mdl-tooltip--right" for="date-<%=ideia.id%>">Data de criação da ideia</span>
+
+          <label id="historic-<%=ideia.id%>" class="prd-chip prd-chip--icon">
+            <i class="material-icons">date_range</i>
+          </label>
+          <small><%=formated_date ideia.modificacao.data_registro%></small>
+          <span class="mdl-tooltip mdl-tooltip--right" for="historic-<%=ideia.id%>"><%=ideia.modificacao.situacao.titulo%></span>
         </div>
       </div>
 
       <div class="mdl-list__item-secondary-content">
-        <button id="menu-<%=ideia.id%>" class="mdl-list__item-secondary-action mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
-          <i class="material-icons">more_vert</i>
-        </button>
-
-        <div class="mdl-menu mdl-js-menu mdl-menu--bottom-right" for="menu-<%=ideia.id%>">
-          <%if ideia.desbloqueada? and (authorized? or usuario_autor? ideia)%>
-            <a id="edit-<%=ideia.id%>" href="<%=path_to :ideias, ideia.to_url_param%>" class="mdl-menu__item">
-              Editar
-            </a>
-          <%end%>
-          <a id="view-<%=ideia.id%>" href="<%=path_to :ideias, ideia.to_url_param%>" class="mdl-menu__item">
-            Visualizar
-          </a>
-        </div>
       </div>
     </li>
   <%end%>
