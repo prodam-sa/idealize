@@ -19,6 +19,7 @@ class Ideia < Model[:ideia]
   many_to_many :apoiadores, {
     join_table: :ideia_apoiador
   }
+  one_to_one :avaliacao
 
   def validate
     super
