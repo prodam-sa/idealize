@@ -12,7 +12,7 @@ class HomeController < ApplicationController
   get '/' do
     @relatorio = Relatorio.new
     if authenticated?
-      @ideias = Ideia.find_by_situacao('publicacao').order(:data_publicacao).limit(6).all
+      @ideias = Ideia.find_by_situacao(['publicacao', 'avaliacao']).order(:data_publicacao).limit(6).all
       @relatorio.ideias = @ideias
       view 'index'
     else
