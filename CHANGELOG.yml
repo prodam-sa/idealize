@@ -1,3 +1,13 @@
+- :version: 0.13.0
+  :release: 2016-07-09
+  :summary:
+    Classificação das ideias, melhorias no layout e painel administrativo
+  :changes:
+  - Inclusão da funcionalidade de avaliação/pontuação e classificação das
+    ideias.
+  - Melhorias significativas nos layouts.
+  - Melhorias nas configurações e bibliotecas do sistema.
+
 - :version: 0.12.2
   :release: 2016-07-05
   :summary:
