@@ -1,0 +1,64 @@
+:classificacoes:
+- :titulo       : Nenhuma
+  :descricao    : Agradecimento e ideia arquivada.
+  :ponto_minimo : 0
+  :ponto_maximo : 4
+  :pontuacao    : 0
+
+- :titulo       : Bronze I
+  :descricao    :
+    Agradecimento e ideia arquivada. Divulgar reconhecimento com foto e
+    agradecimento.
+  :ponto_minimo : 5
+  :ponto_maximo : 24
+  :pontuacao    : 1
+
+- :titulo       : Bronze II
+  :descricao    :
+    Agradecimento e um bottom como premiação.
+  :ponto_minimo : 25
+  :ponto_maximo : 30
+  :pontuacao    : 2
+
+- :titulo       : Prata I
+  :descricao    :
+    Agradecimento com 1 dia de ticket como premiação. Custo de R$ 10,01 a R$
+    20,00.
+  :ponto_minimo : 31
+  :ponto_maximo : 40
+  :pontuacao    : 5
+
+- :titulo       : Prata II
+  :descricao    :
+    Agradecimento com 2 dias de tickets como premiação. Custo de R$ 10,01 a R$
+    20,00.
+  :ponto_minimo : 41
+  :ponto_maximo : 50
+  :pontuacao    : 10
+
+- :titulo       : Ouro I
+  :descricao    :
+    Agradecimentos e premiação de 2 dias de estacionamento exclusivo no
+    estacionamento da diretoria e 3 dias de tickets. Custo de R$ 30,01 a R$
+    50,00.
+  :ponto_minimo : 51
+  :ponto_maximo : 60
+  :pontuacao    : 20
+
+- :titulo       : Ouro II
+  :descricao    :
+    Agradecimento e premiação de 1 semana de estacionamento exclusivo no
+    estacionamento da diretoria e 4 dias de ticket. Custo de R$ 30,01 a R$
+    50,00.
+  :ponto_minimo : 61
+  :ponto_maximo : 79
+  :pontuacao    : 50
+
+- :titulo       : Diamante
+  :descricao    :
+    Agradecimento e um brinde relevante. Ticket Mensal e treinamento/viagem de
+    até 3 mil. Custo acima de R$ 50,00.
+  :ponto_minimo : 80
+  :ponto_maximo : 80
+  :pontuacao    : 500
+
