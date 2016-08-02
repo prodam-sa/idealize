@@ -6,7 +6,7 @@ require 'mail'
 
 module Prodam::Idealize
 
-module Mail
+module MailHelper
   def enviar_mensagem(options)
     options[:de] ||= 'nao-responda@prodam.am.gov.br'
     mail = Mail.new do
