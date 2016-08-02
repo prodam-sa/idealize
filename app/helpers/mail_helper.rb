@@ -20,6 +20,7 @@ module MailHelper
       end if options[:arquivos]
     end
     # mail.delivery_method :sendmail
+    mail.delivery_method :smtp, Prodam::Idealize.application_config[:email]
     mail.deliver!
   end
 end

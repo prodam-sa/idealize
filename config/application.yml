@@ -108,3 +108,15 @@
     :navigation: []
     :profiles: []
     :icon: info
+
+:email:
+  # :address: 'smtps.expresso.am.gov.br'
+  # :port: 587
+  # :user_name:
+  # :password:
+  # :authentication: plain
+  # :enable_starttls_auto: false
+  # :openssl_verify_mode: none
+  :address: smtp.expresso.am.gov.br
+  :port: 25
+  :domain: idealize.prodam.am.gov.br
