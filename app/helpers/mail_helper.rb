@@ -16,8 +16,8 @@ module MailHelper
       body     options[:texto]
       options[:arquivos].each do |arquivo|
         add_file filename: arquivo[:nome],
-                 content:  arquivos[:conteudo]
-      end
+                 content:  arquivo[:conteudo]
+      end if options[:arquivos]
     end
     # mail.delivery_method :sendmail
     mail.deliver!
