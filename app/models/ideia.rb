@@ -52,7 +52,7 @@ class Ideia < Model[:ideia]
   end
 
   def historico
-    modificacoes_dataset.order(:data_registro).reverse.all
+    @historico || (@historico = modificacoes_dataset.reverse(:data_registro).all)
   end
 
   def modificacao
