@@ -42,3 +42,85 @@
     </form>
   </div>
 </div>
+
+<div class="mdl-grid">
+  <div class="mdl-cell mdl-cell--12-col mdl-card mdl-shadow--2dp">
+    <form action="<%=path_to :avaliacao, :notificacao%>" method="post" enctype="application/x-www-form-urlencoded">
+      <div class="mdl-card__actions mdl-card--expand">
+        <table id="message-table" class="mdl-data-table mdl-js-data-table mdl-textfield--full-width">
+          <thead>
+            <th>
+              <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect mdl-data-table__select" for="table-header">
+                <input type="checkbox" id="table-header" class="mdl-checkbox__input" />
+              </label>
+            </th>
+            <th class="mdl-data-table__cell--non-numeric">Título</th>
+            <th class="mdl-data-table__cell--numeric">Apoios</th>
+            <th class="mdl-data-table__cell--non-numeric">Criação</th>
+            <th class="mdl-data-table__cell--non-numeric">Atualização</th>
+            <th class="mdl-data-table__cell--non-numeric">Avaliação</th>
+            <th class="mdl-data-table__cell--numeric">Pontuação</th>
+          </thead>
+          <tbody>
+            <%@ideias_avaliadas.each_with_index do |ideia, i|%>
+              <tr>
+                <td>
+                  <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect mdl-data-table__select" for="ideia-<%=i%>">
+                    <input type="checkbox" id="ideia-<%=i%>" class="mdl-checkbox__input" name="ideias[]" value="<%=ideia.id%>"/>
+                  </label>
+                </td>
+                <td class="mdl-data-table__cell--non-numeric">
+                  <a href="<%=path_to :avaliacao, ideia.to_url_param%>" class="mdl-button mdl-button--icon">
+                    <i class="material-icons">pageview</i>
+                  </a>
+                  <%=ideia.titulo%>
+                </td>
+                <td class="mdl-data-table__cell--numeric"><%=@relatorio.total_apoiadores_por_ideia[ideia.id] || 0%></td>
+                <td class="mdl-data-table__cell--non-numeric"><%=formated_date ideia.data_criacao%></td>
+                <td class="mdl-data-table__cell--non-numeric"><%=formated_date ideia.data_atualizacao%></td>
+                <td class="mdl-data-table__cell--non-numeric"><%=formated_date ideia.data_publicacao%></td>
+                <td class="mdl-data-table__cell--numeric"><%=ideia.avaliacao.pontos%></td>
+              </tr>
+            <%end%>
+          </tbody>
+        </table>
+      </div><!--/.mdl-card__actions.mdl-data-table-->
+
+      <div class="mdl-card__actions mdl-card--expand">
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-textfield--full-width">
+          <label class="mdl-textfield__label" for="mensagem">Assunto</label>
+          <input id="assunto" name="assunto" class="mdl-textfield__input"/>
+        </div>
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-textfield--full-width">
+          <label class="mdl-textfield__label" for="mensagem">Mensagem</label>
+          <textarea id="mensagem" name="mensagem" class="mdl-textfield__input"></textarea>
+        </div>
+      </div>
+
+      <div class="mdl-card__actions mdl-card--expand">
+        <button class="mdl-button mdl-button--raised mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+          Enviar
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+<%content_for :script do%>
+<script>
+  var table = document.querySelector('#message-table');
+  var headerCheckbox = table.querySelector('thead .mdl-data-table__select input');
+  var boxes = table.querySelectorAll('tbody .mdl-data-table__select');
+  var headerCheckHandler = function(event) {
+    if (event.target.checked) {
+      for (var i = 0, length = boxes.length; i < length; i++) {
+        boxes[i].MaterialCheckbox.check();
+      }
+    } else {
+      for (var i = 0, length = boxes.length; i < length; i++) {
+        boxes[i].MaterialCheckbox.uncheck();
+      }
+    }
+  };
+  headerCheckbox.addEventListener('change', headerCheckHandler);
+</script>
+<%end%>

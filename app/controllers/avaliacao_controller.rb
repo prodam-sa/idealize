@@ -3,7 +3,7 @@
 module Prodam::Idealize
 
 class AvaliacaoController < ApplicationController
-  helpers IdeiasHelper, AvaliacaoHelper, DateHelper
+  helpers IdeiasHelper, AvaliacaoHelper, DateHelper, MailHelper
 
   before authorize_only: :avaliador do
     @page = controllers[:avaliacao]
@@ -23,12 +23,17 @@ class AvaliacaoController < ApplicationController
 
   get '/' do
     @relatorio = Relatorio.new(ideias: Ideia.find_by_situacao('publicacao').exclude(autor_id: usuario_id).order(:data_criacao, :data_publicacao).all)
+    @ideias_avaliadas = Ideia.
+      find_by_situacao('avaliacao').
+      exclude(autor_id: usuario_id).
+      order(:data_criacao, :data_publicacao).
+      eager(:avaliacao).
+      all
     @ideias = @relatorio.ideias
     view 'ideias/avaliacao/index'
   end
 
   get '/:id' do |id|
-    @categorias = Categoria.all if permitido_moderar? @ideia
     @apoiadores = Relatorio.new.lista_apoiadores_ideia @ideia
     if (@ideia.publicada?) or (usuario_autor? @ideia) or (authorized_by? :moderador)
       view 'ideias/avaliacao/page'
@@ -53,6 +58,23 @@ class AvaliacaoController < ApplicationController
         historico(@avaliacao.ideia, @situacao, "Ideia avaliada com pontuacao #{pontos} e classificada como #{@classificacao.titulo}").save
       end
     end
+    redirect to('/')
+  end
+
+  post '/notificacao' do
+    rodape = "<hr/><p><small>#{version_info}</small></p>"
+    assunto  = (params[:assunto] || 'Ideia avaliada')
+    mensagem = params[:mensagem]
+    @notificacoes = Ideia.eager(:autor, :avaliacao).where(id: params[:ideias]).all.map do |ideia|
+      avaliacao = ideia.avaliacao
+      classificacao = avaliacao.classificacao
+      cabecalho = "<p><b>Ideia</b>: #{ideia.titulo}</p><p><b>Pontuação</b>: #{avaliacao.pontos}</p><p><b>Classificação</b>: #{classificacao.titulo}</p><hr/>"
+      mensagem  = cabecalho + markdown(mensagem) + rodape
+      enviar_notificacao para:    ideia.autor.email,
+                         assunto: assunto,
+                         mensagem_html:   mensagem
+    end
+    message.update(level: :information, text: 'Mensagem enviada para os autores das ideias avaliadas.')
     redirect to('/')
   end
 end
