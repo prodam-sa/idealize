@@ -7,13 +7,22 @@ require 'mail'
 module Prodam::Idealize
 
 module MailHelper
-  def enviar_mensagem(options)
-    options[:de] ||= 'nao-responda@prodam.am.gov.br'
+  def notificacao(options)
+    options[:de] ||= 'Idealize <nao-responda@prodam.am.gov.br>'
     mail = Mail.new do
       from     options[:de]
       to       options[:para]
       subject  options[:assunto]
-      body     options[:texto]
+
+      text_part do
+        body options[:mensagem_texto]
+      end if options[:mensagem_texto]
+
+      html_part do
+        content_type 'text/html; charset=UTF-8'
+        body options[:mensagem_html]
+      end if options[:mensagem_html]
+
       options[:arquivos].each do |arquivo|
         add_file filename: arquivo[:nome],
                  content:  arquivo[:conteudo]
@@ -21,7 +30,11 @@ module MailHelper
     end
     # mail.delivery_method :sendmail
     mail.delivery_method :smtp, Prodam::Idealize.application_config[:email]
-    mail.deliver!
+    mail
+  end
+
+  def enviar_notificacao(options)
+    notificacao(options).deliver!
   end
 end
 
