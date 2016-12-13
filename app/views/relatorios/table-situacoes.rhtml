@@ -1,0 +1,16 @@
+<table class="mdl-data-table mdl-data-table--expandable">
+  <thead>
+    <tr>
+      <th class="mdl-data-table__cell--non-numeric">Situação</th>
+      <th class="mdl-data-table__cell--numeric">Total (<%=@total_ideias_por_situacao.values.reduce(&:+)%>)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <%@situacoes.each do |situacao|%>
+      <tr>
+        <td class="mdl-data-table__cell--non-numeric"><%=situacao.titulo%></td>
+        <td class="mdl-data-table__cell--numeric"><%=@total_ideias_por_situacao[situacao.id] || 0%></td>
+      </tr>
+      <%end%>
+  </tbody>
+</table>
