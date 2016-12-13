@@ -81,6 +81,15 @@
     :navigation: [dashboard]
     :profiles: [avaliador]
 
+  '/relatorios':
+    :controller: RelatoriosController
+    :title: Relatórios
+    :description: Relatórios das ideias e autores.
+    :layout: dashboard
+    :icon: assessment
+    :navigation: [dashboard]
+    :profiles: [administrador]
+
 :pages:
   '/painel':
     :title: Painel de Controle
