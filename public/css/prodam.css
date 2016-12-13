@@ -1,6 +1,8 @@
 a:hover, a:active, a:focus,
-button:hover, button:active, button:focus {
-  outline: none;
+img:hover, img:active, img:focus,
+button:hover, button:active, button:focus,
+select:hover, select:active, select:focus {
+  outline: none !important;
 }
 
 body {
@@ -55,6 +57,10 @@ body {
 }
 
 .prd-layout__drawer .prd-navigation .prd-navigation__link:hover {
+}
+
+.prd-layout__header {
+  /* color: #1a237e; /**/
 }
 
 .prd-layout__header .prd-layout__header-row {
@@ -683,3 +689,22 @@ select.mdl-textfield__input optgroup option {
               transform: translate(-12px, -12px);
       line-height: 24px;
       width: 24px; }
+select.mdl-textfield__input {
+  -webkit-appearance: none;
+  -moz-appearance: none; }
+select.mdl-textfield__input:before {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -moz-font-feature-settings: 'liga';
+  -moz-osx-font-smoothing: grayscale;
+  content: '&#xE313;';
+}
