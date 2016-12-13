@@ -12,6 +12,17 @@ class Relatorio
     total_ideias_por_situacao: 'SELECT s.id AS situacao_id, COUNT(i.id) AS total FROM ideia i INNER JOIN situacao s ON (s.chave = i.situacao) GROUP BY s.id',
     total_ideias_por_autor: 'SELECT a.id AS autor_id, i.id AS ideia_id, COUNT(i.id) AS total FROM usuario a INNER JOIN ideia i ON (i.autor_id = a.id) GROUP BY a.id ORDER BY COUNT(i.id)',
     total_ideias_por_autor_situacao: 'SELECT a.id AS autor_id, s.id AS situacao_id, COUNT(i.id) AS total FROM usuario a INNER JOIN ideia i ON (i.autor_id - a.id) GROUP BY a.id',
+    ideias_por_autor: '
+      SELECT usuario.id AS autor_id
+           , usuario.nome AS autor_nome
+           , ideia.titulo AS ideia_titulo
+           , classificacao.titulo AS classificacao_titulo
+           , avaliacao.pontos AS avaliacao_pontos
+           , classificacao.descricao AS classificacao_descricao
+        FROM usuario
+        INNER JOIN ideia ON (ideia.autor_id = usuario.id)
+        INNER JOIN avaliacao ON (avaliacao.ideia_id = ideia.id)
+        INNER JOIN classificacao ON (classificacao.id = avaliacao.classificacao_id)'
   }.freeze
 
   attr_accessor :autor
@@ -164,6 +175,16 @@ class Relatorio
       @total_ideias_por_data_postagem[row[:data_criacao]] = row[:total].to_i
     end
     @total_ideias_por_data_postagem
+  end
+
+  def ideias_por_autor
+    @ideias_por_autor || ideias_por_autor!
+  end
+
+  def ideias_por_autor!
+    @ideias_por_autor = Database[SQL[:ideias_por_autor]].all.group_by do |row|
+      [ row[:autor_id], row[:autor_nome] ]
+    end
   end
 end
 
