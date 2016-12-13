@@ -39,6 +39,8 @@ class RelatoriosController < ApplicationController
     @situacoes = Situacao.all
     @categorias = Categoria.all
 
+    @ideias_por_autor = @relatorio.ideias_por_autor
+
     view 'relatorios/index'
   end
 end
