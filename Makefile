@@ -83,3 +83,6 @@ check:
 upgrade: clean install version db.create.version db.bootstrap db.hotfix
 
 downgrade: clean version db.drop.version
+
+dist:
+	git archive --format=zip --output=$(name)-$(version).zip --prefix=$(name)/ --verbose v$(version)
