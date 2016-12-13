@@ -15,6 +15,7 @@ class Relatorio
     ideias_por_autor: '
       SELECT usuario.id AS autor_id
            , usuario.nome AS autor_nome
+           , ideia.id AS ideia_id
            , ideia.titulo AS ideia_titulo
            , classificacao.titulo AS classificacao_titulo
            , avaliacao.pontos AS avaliacao_pontos
