@@ -708,3 +708,6 @@ select.mdl-textfield__input:before {
   -moz-osx-font-smoothing: grayscale;
   content: '&#xE313;';
 }
+
+.prd-card--max-height
+{ max-height: 44vh; overflow-y: scroll; }

@@ -1,0 +1,13 @@
+<div class="mdl-list">
+<%@total_ideias_por_data_criacao.each do |data_criacao, total|%>
+  <div class="mdl-list__item mdl-list__item--two-line">
+    <div class="mdl-list__item-primary-content">
+      <span><%=formated_date data_criacao%></span>
+      <span class="mdl-list__item-sub-title"><%=total%> ideias criadas</span>
+    </div>
+    <div class="mdl-list__item-secondary-content">
+      <a href=""><i class="material-icons">keyboard_arrow_right</i></a>
+    </div>
+  </div>
+<%end%>
+</div>

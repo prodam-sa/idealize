@@ -1,0 +1,13 @@
+<div class="mdl-list">
+<%@situacoes.each do |situacao|%>
+  <div class="mdl-list__item mdl-list__item--two-line">
+    <div class="mdl-list__item-primary-content">
+      <span><%=situacao.titulo%></span>
+      <span class="mdl-list__item-sub-title"><%=@total_ideias_por_situacao[situacao.id] || 0%> ideias</span>
+    </div>
+    <div class="mdl-list__item-secondary-content">
+      <a href=""><i class="material-icons">keyboard_arrow_right</i></a>
+    </div>
+  </div>
+<%end%>
+</div>

@@ -242,7 +242,7 @@ class Relatorio
   def total_ideias_por_data_publicacao!
     @total_ideias_por_data_publicacao = {}
     Database[sql :total_ideias_por_data_publicacao, default_filter].all.map do |row|
-      @total_ideias_por_data_publicacao[row[:data_publicacao]] = row[:total].to_i
+      @total_ideias_por_data_publicacao[row[:data_publicacao]] = row[:total].to_i if row[:data_publicacao]
     end
     @total_ideias_por_data_publicacao
   end

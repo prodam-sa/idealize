@@ -21,8 +21,9 @@ class RelatoriosController < ApplicationController
 
   get '/' do
     # @ideias = Ideia.all
-    @relatorio = Relatorio.new
-    @total_ideias_por_data_postagem = @relatorio.total_ideias_por_data_postagem
+    @relatorio = Relatorio.new data_inicial: params[:data_inicial], data_final: params[:data_final]
+    @total_ideias_por_data_criacao = @relatorio.total_ideias_por_data_criacao
+    @total_ideias_por_data_publicacao = @relatorio.total_ideias_por_data_publicacao
     @total_ideias_por_categoria = @relatorio.total_ideias_por_categoria
     @total_ideias_por_autor = @relatorio.total_ideias_por_autor
     @total_ideias_por_situacao = @relatorio.total_ideias_por_situacao
