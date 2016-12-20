@@ -36,8 +36,13 @@ class RelatoriosController < ApplicationController
     @total_ideias_por_categoria = @relatorio.total_ideias_por_categoria
     @total_ideias_por_autor = @relatorio.total_ideias_por_autor
     @total_ideias_por_situacao = @relatorio.total_ideias_por_situacao
+    @total_ideias_por_apoiadores = @relatorio.total_ideias_por_apoiadores
     @total_ideias_por_categoria[0] = @relatorio.total_ideias_sem_categoria
 
+    @ideias = {}
+    Ideia.where(id: @total_ideias_por_apoiadores.keys).limit(10).all.map do |row|
+      @ideias[row[:id]] = row
+    end
     @autores = Autor.where(id: @total_ideias_por_autor.keys).all.map do |row|
       autor = row.to_hash
       autor[:total_ideias] = @total_ideias_por_autor[row.id]

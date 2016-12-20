@@ -139,6 +139,7 @@ class Relatorio
   def total_apoiadores_por_ideia
     @total_apoiadores_por_ideia || total_apoiadores_por_ideia!
   end
+  alias total_ideias_por_apoiadores total_apoiadores_por_ideia
 
   def total_apoiadores_por_ideia!
     @total_apoiadores_por_ideia = {}
