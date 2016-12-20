@@ -9,27 +9,31 @@ class Relatorio
            , COUNT(*) AS total
         FROM ideia
         %s
-        GROUP BY TRUNC(data_criacao)",
+        GROUP BY TRUNC(data_criacao)
+        ORDER BY TRUNC(data_criacao) DESC",
     total_ideias_por_data_publicacao: "
       SELECT TRUNC(data_publicacao) AS data_publicacao
            , COUNT(*) AS total
         FROM ideia
         %s
-        GROUP BY TRUNC(data_publicacao)",
+        GROUP BY TRUNC(data_publicacao)
+        ORDER BY TRUNC(data_publicacao) DESC",
     total_coautores_por_ideia: "
       SELECT ideia_id
            , COUNT(coautor_id) AS total
         FROM ideia
         INNER JOIN ideia_coautor ON (ideia_coautor.ideia_id = ideia.id)
         %s
-        GROUP BY ideia_id",
+        GROUP BY ideia_id
+        ORDER BY COUNT(coautor_id) DESC",
     total_apoiadores_por_ideia: "
       SELECT ideia_id
            , COUNT(apoiador_id) AS total
         FROM ideia
         INNER JOIN ideia_apoiador ON (ideia_apoiador.ideia_id = ideia.id)
         %s
-        GROUP BY ideia_id",
+        GROUP BY ideia_id
+        ORDER BY COUNT(apoiador_id) DESC",
     total_ideias_por_categoria: "
       SELECT categoria_id
            , COUNT(ideia_id) AS total
