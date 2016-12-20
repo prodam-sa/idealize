@@ -22,12 +22,10 @@ class RelatoriosController < ApplicationController
   get '/' do
     if params[:periodo] # periodo=yyyy-mm-dd~yyyy-mm-dd
       data_inicial, data_final = *params[:periodo].split('~')
-    elsif params[:mes]  # mes=yyyy-mm
-      data_inicial = Date.parse("#{params[:mes]}-01")
-      data_final = data_inicial + 30
     else
       data_final = Date.today
       data_inicial = data_final - 30
+      params[:periodo] = "#{data_inicial}~#{data_final}"
     end
 
     @relatorio = Relatorio.new data_inicial: data_inicial, data_final: data_final

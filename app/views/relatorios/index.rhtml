@@ -117,3 +117,11 @@
     </div><!--/.mdl-card-->
   </div><!--/.mdl-cell-->
 </div>
+
+<%content_for :dialog do%>
+  <%=partial 'relatorios/dialog-filter'%>
+<%end%>
+
+<%content_for :fab do%>
+  <%=partial 'fab-dialog', locals: { icon: :filter_list, tooltip: 'Filtros' }%>
+<%end%>
