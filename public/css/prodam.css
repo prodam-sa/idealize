@@ -710,4 +710,4 @@ select.mdl-textfield__input:before {
 }
 
 .prd-card--max-height
-{ max-height: 44vh; overflow-y: scroll; }
+{ max-height: 44vh; height: 44vh; overflow-y: auto; }
