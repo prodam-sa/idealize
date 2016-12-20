@@ -50,14 +50,12 @@ class Relatorio
         %s
         GROUP BY situacao.id",
     total_ideias_por_autor: "
-      SELECT usuario.id AS autor_id
-           , ideia.id AS ideia_id
-           , COUNT(ideia.id) AS total
+      SELECT ideia.autor_id
+           , COUNT(*) AS total
         FROM ideia
-        INNER JOIN usuario ON (usuario.id = ideia.autor_id)
         %s
-        GROUP BY usuario.id
-        ORDER BY COUNT(ideia.id)",
+        GROUP BY ideia.autor_id
+        ORDER BY COUNT(*) DESC",
     total_ideias_por_autor_situacao: "
       SELECT usuario.id AS autor_id
            , situacao.id AS situacao_id
@@ -210,7 +208,7 @@ class Relatorio
 
   # Ideias por autor
   def total_ideias_por_autor
-    @total_ideias_por_situacao || total_ideias_por_situacao!
+    @total_ideias_por_autor || total_ideias_por_autor!
   end
 
   def total_ideias_por_autor!
