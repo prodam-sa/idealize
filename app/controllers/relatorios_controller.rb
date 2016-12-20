@@ -39,10 +39,14 @@ class RelatoriosController < ApplicationController
     @total_ideias_por_apoiadores = @relatorio.total_ideias_por_apoiadores
     @total_ideias_por_categoria[0] = @relatorio.total_ideias_sem_categoria
 
-    @ideias = {}
-    Ideia.where(id: @total_ideias_por_apoiadores.keys).limit(10).all.map do |row|
-      @ideias[row[:id]] = row
-    end
+    @ideias = Ideia.where(id: @total_ideias_por_apoiadores.keys).limit(10).all.map do |row|
+      ideia = row.to_hash
+      ideia[:total_apoiadores] = @total_ideias_por_apoiadores[row.id]
+      ideia
+    end.sort do |a, b|
+      a[:total_apoiadores] <=> b[:total_apoiadores]
+    end.reverse
+
     @autores = Autor.where(id: @total_ideias_por_autor.keys).all.map do |row|
       autor = row.to_hash
       autor[:total_ideias] = @total_ideias_por_autor[row.id]
