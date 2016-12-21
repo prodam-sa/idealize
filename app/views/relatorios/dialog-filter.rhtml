@@ -1,24 +1,24 @@
 <%today = Date.today%>
 <dialog class="mdl-dialog">
   <form action="<%=path_to :relatorios%>" class="">
-    <%periodo = "#{today-1}~#{today}"%><%checked = (periodo == params[:periodo]) ? :selected : nil%>
     <div class="mdl-textfield mdl-textfield--full-width mdl-textfield--floating-label is-dirty">
       <label class="mdl-textfield__label">Filtrar por referência</label>
+      <%periodo = "#{today-1}~#{today}"%><%checked = (periodo == params[:periodo]) ? :checked : nil%>
       <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect mdl-textfield--full-width" for="filter-ontem">
         <input id="filter-ontem" type="radio" class="mdl-radio__button" name="periodo" value="<%=periodo%>" <%=checked%>/>
         <span class="mdl-radio__label">Ontem</span>
       </label>
-      <%periodo = "#{today-7}~#{today}"%><%checked = (periodo == params[:periodo]) ? :selected : nil%>
+      <%periodo = "#{today-7}~#{today}"%><%checked = (periodo == params[:periodo]) ? :checked : nil%>
       <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect mdl-textfield--full-width" for="filter-semana">
         <input id="filter-semana" type="radio" class="mdl-radio__button" name="periodo" value="<%=periodo%>" <%=checked%>/>
         <span class="mdl-radio__label">Última semana</span>
       </label>
-      <%periodo = "#{today-30}~#{today}"%><%checked = (periodo == params[:periodo]) ? :selected : nil%>
+      <%periodo = "#{today-30}~#{today}"%><%checked = (periodo == params[:periodo]) ? :checked : nil%>
       <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect mdl-textfield--full-width" for="filter-30-dias">
         <input id="filter-30-dias" type="radio" class="mdl-radio__button" name="periodo" value="<%=periodo%>" <%=checked%>/>
         <span class="mdl-radio__label">Últimos 30 dias</span>
       </label>
-      <%periodo = "#{today-60}~#{today}"%><%checked = (periodo == params[:periodo]) ? :selected : nil%>
+      <%periodo = "#{today-60}~#{today}"%><%checked = (periodo == params[:periodo]) ? :checked : nil%>
       <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect mdl-textfield--full-width" for="filter-60-dias">
         <input id="filter-60-dias" type="radio" class="mdl-radio__button" name="periodo" value="<%=periodo%>" <%=checked%>/>
         <span class="mdl-radio__label">Últimos 60 dias</span>
