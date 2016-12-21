@@ -118,10 +118,24 @@
   </div><!--/.mdl-cell-->
 </div>
 
+<%content_for :backward do%>
+  <button type="button" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect prd-button--backward">
+    <i class="material-icons">keyboard_arrow_left</i>
+  </button>
+<%end%>
+
 <%content_for :dialog do%>
   <%=partial 'relatorios/dialog-filter'%>
 <%end%>
 
 <%content_for :fab do%>
   <%=partial 'fab-dialog', locals: { icon: :filter_list, tooltip: 'Filtros' }%>
+<%end%>
+
+<%content_for :script do%>
+  <script>
+    (document.querySelector('.prd-button--backward').addEventListener('click', function(event) {
+      history.back();
+    }))();
+  </script>
 <%end%>
