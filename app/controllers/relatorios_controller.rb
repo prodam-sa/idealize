@@ -29,25 +29,18 @@ class RelatoriosController < ApplicationController
     end
 
     @relatorio = Relatorio.new data_inicial: data_inicial, data_final: data_final
-    @total_ideias_por_data_criacao = @relatorio.total_ideias_por_data_criacao
-    @total_ideias_por_data_publicacao = @relatorio.total_ideias_por_data_publicacao
-    @total_ideias_por_categoria = @relatorio.total_ideias_por_categoria
-    @total_ideias_por_autor = @relatorio.total_ideias_por_autor
-    @total_ideias_por_situacao = @relatorio.total_ideias_por_situacao
-    @total_ideias_por_apoiadores = @relatorio.total_ideias_por_apoiadores
-    @total_ideias_por_categoria[0] = @relatorio.total_ideias_sem_categoria
 
-    @ideias = Ideia.where(id: @total_ideias_por_apoiadores.keys).limit(10).all.map do |row|
+    @ideias = Ideia.where(id: @relatorio.total_ideias_por_apoiadores.keys).limit(10).all.map do |row|
       ideia = row.to_hash
-      ideia[:total_apoiadores] = @total_ideias_por_apoiadores[row.id]
+      ideia[:total_apoiadores] = @relatorio.total_ideias_por_apoiadores[row.id]
       ideia
     end.sort do |a, b|
       a[:total_apoiadores] <=> b[:total_apoiadores]
     end.reverse
 
-    @autores = Autor.where(id: @total_ideias_por_autor.keys).all.map do |row|
+    @autores = Autor.where(id: @relatorio.total_ideias_por_autor.keys).all.map do |row|
       autor = row.to_hash
-      autor[:total_ideias] = @total_ideias_por_autor[row.id]
+      autor[:total_ideias] = @relatorio.total_ideias_por_autor[row.id]
       autor
     end.sort do |a, b|
       a[:total_ideias] <=> b[:total_ideias]
