@@ -1,0 +1,13 @@
+<div class="mdl-list">
+<%@relatorio.total_ideias_por_data_publicacao.each do |data_publicacao, total|%>
+  <div class="mdl-list__item mdl-list__item--two-line">
+    <div class="mdl-list__item-primary-content">
+      <span><%=formated_date data_publicacao%></span>
+      <span class="mdl-list__item-sub-title"><%=total%> ideias publicadas</span>
+    </div>
+    <div class="mdl-list__item-secondary-content">
+      <a href="<%=path_to :relatorios, :data, :publicacao, data_publicacao%>"><i class="material-icons">keyboard_arrow_right</i></a>
+    </div>
+  </div>
+<%end%>
+</div>

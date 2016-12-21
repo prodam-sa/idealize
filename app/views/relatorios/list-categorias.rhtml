@@ -1,0 +1,22 @@
+<div class="mdl-list">
+  <%@categorias.each do |categoria|%>
+  <div class="mdl-list__item mdl-list__item--two-line">
+    <div class="mdl-list__item-primary-content">
+      <span><%=categoria.titulo%></span>
+      <span class="mdl-list__item-sub-title"><%=@relatorio.total_ideias_por_categoria[categoria.id] || 0%> ideias</span>
+    </div>
+    <!--div class="mdl-list__item-secondary-content">
+      <a href=""><i class="material-icons">keyboard_arrow_right</i></a>
+    </div-->
+  </div>
+  <%end%>
+  <div class="mdl-list__item mdl-list__item--two-line">
+    <div class="mdl-list__item-primary-content">
+      <span>Sem categoria</span>
+      <span class="mdl-list__item-sub-title"><%=@relatorio.total_ideias_por_categoria[0] || 0%> ideias</span>
+    </div>
+    <!--div class="mdl-list__item-secondary-content">
+      <a href=""><i class="material-icons">keyboard_arrow_right</i></a>
+    </div-->
+  </div>
+</div>

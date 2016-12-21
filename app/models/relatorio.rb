@@ -4,12 +4,89 @@ module Prodam::Idealize
 
 class Relatorio
   SQL = {
-    total_coautores_por_ideia: 'SELECT ideia_id, COUNT(coautor_id) AS total FROM ideia_coautor GROUP BY ideia_id',
-    total_apoiadores_por_ideia: 'SELECT ideia_id, COUNT(apoiador_id) AS total FROM ideia_apoiador GROUP BY ideia_id'
+    total_ideias_por_data_criacao: "
+      SELECT TRUNC(data_criacao) AS data_criacao
+           , COUNT(*) AS total
+        FROM ideia
+        %s
+        GROUP BY TRUNC(data_criacao)
+        ORDER BY TRUNC(data_criacao) DESC",
+    total_ideias_por_data_publicacao: "
+      SELECT TRUNC(data_publicacao) AS data_publicacao
+           , COUNT(*) AS total
+        FROM ideia
+        %s
+        GROUP BY TRUNC(data_publicacao)
+        ORDER BY TRUNC(data_publicacao) DESC",
+    total_coautores_por_ideia: "
+      SELECT ideia_id
+           , COUNT(coautor_id) AS total
+        FROM ideia
+        INNER JOIN ideia_coautor ON (ideia_coautor.ideia_id = ideia.id)
+        %s
+        GROUP BY ideia_id
+        ORDER BY COUNT(coautor_id) DESC",
+    total_apoiadores_por_ideia: "
+      SELECT ideia_id
+           , COUNT(apoiador_id) AS total
+        FROM ideia
+        INNER JOIN ideia_apoiador ON (ideia_apoiador.ideia_id = ideia.id)
+        %s
+        GROUP BY ideia_id
+        ORDER BY COUNT(apoiador_id) DESC",
+    total_ideias_por_categoria: "
+      SELECT categoria_id
+           , COUNT(ideia_id) AS total
+        FROM ideia
+        INNER JOIN ideia_categoria ON (ideia_categoria.ideia_id = ideia.id)
+        %s
+        GROUP BY categoria_id",
+    total_ideias_sem_categoria: "
+      SELECT COUNT(id) AS total
+        FROM ideia
+        FULL OUTER JOIN ideia_categoria ON (ideia_categoria.ideia_id = ideia.id)
+        %s",
+    total_ideias_por_situacao: "
+      SELECT situacao.id AS situacao_id
+           , COUNT(*) AS total
+        FROM ideia
+        INNER JOIN situacao ON (situacao.chave = ideia.situacao)
+        %s
+        GROUP BY situacao.id",
+    total_ideias_por_autor: "
+      SELECT ideia.autor_id
+           , COUNT(*) AS total
+        FROM ideia
+        %s
+        GROUP BY ideia.autor_id
+        ORDER BY COUNT(*) DESC",
+    total_ideias_por_autor_situacao: "
+      SELECT usuario.id AS autor_id
+           , situacao.id AS situacao_id
+           , COUNT(ideia.id) AS total
+        FROM ideia
+        INNER JOIN usuario ON (usuario.id = ideia.autor_id)
+        %s
+        GROUP BY usuario.id",
+    ideias_por_autor: "
+      SELECT usuario.id AS autor_id
+           , usuario.nome AS autor_nome
+           , ideia.id AS ideia_id
+           , ideia.titulo AS ideia_titulo
+           , classificacao.titulo AS classificacao_titulo
+           , avaliacao.pontos AS avaliacao_pontos
+           , classificacao.descricao AS classificacao_descricao
+        FROM ideia
+        INNER JOIN usuario ON (usuario.id = ideia.autor_id)
+        INNER JOIN avaliacao ON (avaliacao.ideia_id = ideia.id)
+        INNER JOIN classificacao ON (classificacao.id = avaliacao.classificacao_id)
+        %s"
   }.freeze
 
+  attr_accessor :autor
   attr_accessor :ideia
   attr_accessor :ideias
+  attr_accessor :data_inicial, :data_final
 
   def initialize(atributos = {})
     atributos.each do |atributo, valor|
@@ -24,7 +101,7 @@ class Relatorio
 
   def total_coautores_por_ideia!
     @total_coautores_por_ideia = {}
-    Database[SQL[:total_coautores_por_ideia]].all.map do |row|
+    Database[sql :total_coautores_por_ideia, filtro_por_data].all.map do |row|
       @total_coautores_por_ideia[row[:ideia_id]] = row[:total].to_i
     end
     @total_coautores_por_ideia
@@ -62,10 +139,11 @@ class Relatorio
   def total_apoiadores_por_ideia
     @total_apoiadores_por_ideia || total_apoiadores_por_ideia!
   end
+  alias total_ideias_por_apoiadores total_apoiadores_por_ideia
 
   def total_apoiadores_por_ideia!
     @total_apoiadores_por_ideia = {}
-    Database[SQL[:total_apoiadores_por_ideia]].all.map do |row|
+    Database[sql :total_apoiadores_por_ideia, filtro_por_data].all.map do |row|
       @total_apoiadores_por_ideia[row[:ideia_id]] = row[:total].to_i
     end
     @total_apoiadores_por_ideia
@@ -97,6 +175,98 @@ class Relatorio
       @lista_ideias_apoiadores[row[:ideia_id]] << row[:apoiador_id]
     end
     @lista_ideias_apoiadores
+  end
+
+  # Categorias
+  def total_ideias_por_categoria
+    @total_ideias_por_categoria || total_ideias_por_categoria!
+  end
+
+  def total_ideias_por_categoria!
+    @total_ideias_por_categoria = {}
+    Database[sql :total_ideias_por_categoria, filtro_por_data].all.map do |row|
+      @total_ideias_por_categoria[row[:categoria_id]] = row[:total].to_i
+    end
+    @total_ideias_por_categoria
+  end
+
+  def total_ideias_sem_categoria
+    @total_ideias_sem_categoria || total_ideias_sem_categoria!
+  end
+
+  def total_ideias_sem_categoria!
+    @total_ideias_sem_categoria = Database[sql :total_ideias_sem_categoria, filtro_por_data].first[:total].to_i
+  end
+
+  # Situações
+  def total_ideias_por_situacao
+    @total_ideias_por_situacao || total_ideias_por_situacao!
+  end
+
+  def total_ideias_por_situacao!
+    @total_ideias_por_situacao = {}
+    Database[sql :total_ideias_por_situacao, filtro_por_data(:criacao)].all.map do |row|
+      @total_ideias_por_situacao[row[:situacao_id]] = row[:total].to_i
+    end
+    @total_ideias_por_situacao
+  end
+
+  # Ideias por autor
+  def total_ideias_por_autor
+    @total_ideias_por_autor || total_ideias_por_autor!
+  end
+
+  def total_ideias_por_autor!
+    @total_ideias_por_autor = {}
+    Database[sql :total_ideias_por_autor, filtro_por_data].all.map do |row|
+      @total_ideias_por_autor[row[:autor_id]] = row[:total].to_i
+    end
+    @total_ideias_por_autor
+  end
+
+  # Ideias por data de criação/postagem
+  def total_ideias_por_data_criacao
+    @total_ideias_por_data_criacao || total_ideias_por_data_criacao!
+  end
+
+  def total_ideias_por_data_criacao!
+    @total_ideias_por_data_criacao = {}
+    Database[sql :total_ideias_por_data_criacao, filtro_por_data(:criacao)].all.map do |row|
+      @total_ideias_por_data_criacao[row[:data_criacao].to_date] = row[:total].to_i
+    end
+    @total_ideias_por_data_criacao
+  end
+
+  def total_ideias_por_data_publicacao
+    @total_ideias_por_data_publicacao || total_ideias_por_data_publicacao!
+  end
+
+  def total_ideias_por_data_publicacao!
+    @total_ideias_por_data_publicacao = {}
+    Database[sql :total_ideias_por_data_publicacao, filtro_por_data].all.map do |row|
+      @total_ideias_por_data_publicacao[row[:data_publicacao].to_date] = row[:total].to_i if row[:data_publicacao]
+    end
+    @total_ideias_por_data_publicacao
+  end
+
+  def ideias_por_autor
+    @ideias_por_autor || ideias_por_autor!
+  end
+
+  def ideias_por_autor!
+    @ideias_por_autor = Database[sql :ideias_por_autor, filtro_por_data].all.group_by do |row|
+      [ row[:autor_id], row[:autor_nome] ]
+    end
+  end
+
+private
+
+  def filtro_por_data(nome = :publicacao)
+    "WHERE (TRUNC(ideia.data_#{nome}) >= DATE'#{data_inicial}') AND (TRUNC(ideia.data_#{nome}) <= DATE'#{data_final}')" if data_inicial
+  end
+
+  def sql(key, filter = nil)
+    format(SQL[key], (filter || ''))
   end
 end
 

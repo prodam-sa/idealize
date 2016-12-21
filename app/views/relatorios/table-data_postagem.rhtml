@@ -1,0 +1,16 @@
+<table class="mdl-data-table mdl-data-table--expandable">
+  <thead>
+    <tr>
+      <th class="mdl-data-table__cell--non-numeric">Data (Postagem)</th>
+      <th class="mdl-data-table__cell--numeric">Total (<%=@total_ideias_por_data_postagem.values.reduce(&:+)%>)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <%@total_ideias_por_data_postagem.each do |data_postagem, total|%>
+      <tr>
+        <td class="mdl-data-table__cell--non-numeric"><%=formated_date(data_postagem)%></td>
+        <td class="mdl-data-table__cell--numeric"><%=total%></td>
+      </tr>
+      <%end%>
+  </tbody>
+</table>

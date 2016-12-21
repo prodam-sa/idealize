@@ -81,6 +81,15 @@
     :navigation: [dashboard]
     :profiles: [avaliador]
 
+  '/relatorios':
+    :controller: RelatoriosController
+    :title: Relatórios
+    :description: Relatórios das ideias e autores.
+    :layout: dashboard
+    :icon: assessment
+    :navigation: [dashboard]
+    :profiles: [administrador]
+
 :pages:
   '/painel':
     :title: Painel de Controle
@@ -108,3 +117,15 @@
     :navigation: []
     :profiles: []
     :icon: info
+
+:email:
+  # :address: 'smtps.expresso.am.gov.br'
+  # :port: 587
+  # :user_name:
+  # :password:
+  # :authentication: plain
+  # :enable_starttls_auto: false
+  # :openssl_verify_mode: none
+  :address: smtp.expresso.am.gov.br
+  :port: 25
+  :domain: idealize.prodam.am.gov.br

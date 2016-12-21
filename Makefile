@@ -4,8 +4,8 @@ SHELL = /bin/bash
 -include config.mk
 
 name = idealize
-version ?= 0.13.0
-release ?= 2016-07-09
+version ?= 0.14.0
+release ?= 2016-12-21
 database = $(name)
 environment ?= development
 
@@ -83,3 +83,6 @@ check:
 upgrade: clean install version db.create.version db.bootstrap db.hotfix
 
 downgrade: clean version db.drop.version
+
+dist:
+	git archive --format=zip --output=$(name)-$(version).zip --prefix=$(name)/ --verbose v$(version)

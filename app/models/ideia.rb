@@ -52,7 +52,7 @@ class Ideia < Model[:ideia]
   end
 
   def historico
-    modificacoes_dataset.order(:data_registro).reverse.all
+    @historico || (@historico = modificacoes_dataset.reverse(:data_registro).all)
   end
 
   def modificacao
@@ -116,6 +116,10 @@ class Ideia < Model[:ideia]
 
     def find_by_situacao_categoria(chave, categoria_id)
       join(:categoria, id: categoria_id).where(situacao: chave).reverse(:data_atualizacao)
+    end
+
+    def find_by_data(nome, data)
+      where("TRUNC(data_#{nome}) = ?", Date.parse(data)).order("data_#{nome}")
     end
 
     def search(term)

@@ -13,12 +13,7 @@
       <div class="prd-ribbon"></div>
       <div class="prd-content prd-content--with-ribbon prd-content--with-background">
         <%=yield%>
-        <%if authenticated?%>
-          <a id="fab" href="<%=@fab[:url]%>" class="prd-footer__button-add mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--colored mdl-shadow--4dp">
-            <i class="material-icons">edit</i>
-          </a>
-          <span class="mdl-tooltip mdl-tooltip--top" for="fab"><%=@fab[:tooltip]%></span>
-        <%end%>
+        <%=yield_content :fab%>
       </div>
       <%=partial 'layout-footer'%>
     </main>

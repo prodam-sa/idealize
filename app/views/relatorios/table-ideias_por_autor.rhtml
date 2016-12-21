@@ -1,0 +1,29 @@
+<table class="mdl-data-table mdl-js-data-table mdl-textfield--full-width" style="white-space: normal">
+  <thead>
+    <tr>
+      <th class="mdl-data-table__cell--non-numeric" colspan="4">Autor</th>
+    </tr>
+    <tr>
+      <th class="mdl-data-table__cell--non-numeric">Ideia</th>
+      <th class="mdl-data-table__cell--non-numeric">Classificação</th>
+      <th class="mdl-data-table__cell--numeric">Pontuação</th>
+      <th class="mdl-data-table__cell--non-numeric">Descrição</th>
+    </tr>
+  </thead>
+  <tbody>
+    <%@ideias_por_autor.each do |(autor_id, autor_nome), ideias|%>
+      <tr>
+        <td class="mdl-data-table__cell--non-numeric" colspan="3"><b><%=autor_nome%></b></td>
+        <td class="mdl-data-table__cell--numeric" colspan="1"><b>Ideias: <%=ideias.size%></b></td>
+      </tr>
+      <%ideias.sort{|a,b|a[:avaliacao_pontos] <=> b[:avaliacao_pontos]}.reverse.each do |ideia|%>
+        <tr>
+          <td class="mdl-data-table__cell--non-numeric"><%=ideia[:ideia_titulo]%></td>
+          <td class="mdl-data-table__cell--non-numeric"><%=ideia[:classificacao_titulo]%></td>
+          <td class="mdl-data-table__cell--numeric"><%=ideia[:avaliacao_pontos]%></td>
+          <td class="mdl-data-table__cell--non-numeric"><%=ideia[:classificacao_descricao]%></td>
+        </tr>
+      <%end%>
+    <%end%>
+  </tbody>
+</table>

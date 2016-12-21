@@ -1,0 +1,16 @@
+<table class="mdl-data-table mdl-data-table--expandable">
+  <thead>
+    <tr>
+      <th class="mdl-data-table__cell--non-numeric">Autor</th>
+      <th class="mdl-data-table__cell--numeric">Total (<%=@total_ideias_por_autor.values.reduce(:+)%>)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <%@autores.each do |autor|%>
+      <tr>
+        <td class="mdl-data-table__cell--non-numeric"><%=autor[:nome]%></td>
+        <td class="mdl-data-table__cell--numeric"><%=autor[:total_ideias]%></td>
+      </tr>
+      <%end%>
+  </tbody>
+</table>

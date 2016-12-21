@@ -1,0 +1,163 @@
+<div class="mdl-grid">
+  <div class="mdl-cell mdl-cell--3-col">
+    <div class="mdl-card mdl-card--full-width mdl-shadow--2dp">
+      <div class="prd-background-icon">
+        <i class="material-icons">wb_incandescent</i>
+      </div>
+
+      <div class="mdl-card__supporting-text mdl-typography--text-center">
+        <big class="mdl-typography--display-2"><%=@relatorio.total_ideias_por_data_criacao.values.reduce(:+) || 0%></big>
+      </div>
+
+      <div class="mdl-card__title mdl-card--border">
+        <h2 class="mdl-card__title-text mdl-typography--text-center">
+          Ideias criadas
+        </h2>
+      </div>
+
+      <div class="prd-card--max-height">
+        <%=partial 'relatorios/list-data_criacao'%>
+      </div>
+    </div><!--/.mdl-card-->
+  </div><!--/.mdl-cell-->
+
+  <div class="mdl-cell mdl-cell--3-col">
+    <div class="mdl-card mdl-card--full-width mdl-shadow--2dp">
+      <div class="prd-background-icon">
+        <i class="material-icons">check</i>
+      </div>
+
+      <div class="mdl-card__supporting-text mdl-typography--text-center">
+        <big class="mdl-typography--display-2"><%=@relatorio.total_ideias_por_data_publicacao.values.reduce(:+) || 0%></big>
+      </div>
+
+      <div class="mdl-card__title mdl-card--border">
+        <h2 class="mdl-card__title-text mdl-typography--text-center">
+          Ideias publicadas
+        </h2>
+      </div>
+
+      <div class="prd-card--max-height">
+        <%=partial 'relatorios/list-data_publicacao'%>
+      </div>
+    </div><!--/.mdl-card-->
+  </div><!--/.mdl-cell-->
+
+  <div class="mdl-cell mdl-cell--3-col">
+    <div class="mdl-card mdl-card--full-width mdl-shadow--2dp">
+      <div class="prd-background-icon">
+        <i class="material-icons">group_work</i>
+      </div>
+
+      <div class="mdl-card__supporting-text mdl-typography--text-center">
+        <big class="mdl-typography--display-2"><%=@relatorio.total_ideias_por_categoria.values.reduce(:+) || 0%></big>
+      </div>
+
+      <div class="mdl-card__title mdl-card--border">
+        <h2 class="mdl-card__title-text mdl-typography--text-center">
+          Ideias por categoria
+        </h2>
+      </div>
+
+      <div class="prd-card--max-height">
+        <%=partial 'relatorios/list-categorias'%>
+      </div>
+    </div><!--/.mdl-card-->
+  </div><!--/.mdl-cell-->
+
+  <div class="mdl-cell mdl-cell--3-col">
+    <div class="mdl-card mdl-card--full-width mdl-shadow--2dp">
+      <div class="prd-background-icon">
+        <i class="material-icons">linear_scale</i>
+      </div>
+
+      <div class="mdl-card__supporting-text mdl-typography--text-center">
+        <big class="mdl-typography--display-2"><%=@relatorio.total_ideias_por_situacao.values.reduce(:+) || 0%></big>
+      </div>
+
+      <div class="mdl-card__title mdl-card--border">
+        <h2 class="mdl-card__title-text mdl-typography--text-center">
+          Ideias por situação
+        </h2>
+      </div>
+
+      <div class="prd-card--max-height">
+        <%=partial 'relatorios/list-situacoes'%>
+      </div>
+    </div><!--/.mdl-card-->
+  </div><!--/.mdl-cell-->
+
+  <div class="mdl-cell mdl-cell--4-col">
+    <div class="mdl-card mdl-card--full-width mdl-shadow--2dp">
+      <div class="mdl-card__title mdl-card--border">
+        <h2 class="mdl-card__title-text">Ideias por autores</h2>
+      </div>
+      <div class="prd-card--max-height">
+        <%=partial 'relatorios/list-autores'%>
+      </div>
+    </div><!--/.mdl-card-->
+  </div><!--/.mdl-cell-->
+
+  <div class="mdl-cell mdl-cell--8-col">
+    <div class="mdl-card mdl-card--full-width mdl-shadow--2dp">
+      <div class="mdl-card__title mdl-card--border">
+        <h2 class="mdl-card__title-text">Ideias mais apoiadas</h2>
+      </div>
+      <div class="prd-card--max-height">
+        <%=partial 'relatorios/list-apoiadores'%>
+      </div>
+    </div><!--/.mdl-card-->
+  </div><!--/.mdl-cell-->
+
+  <div class="mdl-cell mdl-cell--12-col">
+    <div class="mdl-card mdl-card--full-width mdl-shadow--2dp">
+      <div class="mdl-card__actions">
+        <%=partial 'relatorios/table-ideias_por_autor'%>
+      </div>
+    </div><!--/.mdl-card-->
+  </div><!--/.mdl-cell-->
+</div>
+
+<%content_for :backward do%>
+  <button type="button" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect prd-button--backward">
+    <i class="material-icons">keyboard_arrow_left</i>
+  </button>
+<%end%>
+
+<%content_for :toolbar do%>
+  <div class="mdl-navigation__link">
+    <button id="filter-referencia" class="mdl-button mdl-button--icon mdl-js-button">
+      <i class="material-icons">filter_list</i>
+    </button>
+    <span class="mdl-tooltip" for="filter-referencia">Filtro por referência</span>
+
+    <div class="mdl-menu mdl-js-menu" for="filter-referencia">
+      <%@filtros.each do |titulo, periodo|%>
+        <a href="<%=path_to :relatorios, :periodo%>/<%=periodo%>" class="mdl-menu__item">
+          <%=titulo%>
+        </a>
+      <%end%>
+    </div>
+
+    <button id="filter-mensal" class="mdl-button mdl-button--icon mdl-js-button">
+      <i class="material-icons">date_range</i>
+    </button>
+    <span class="mdl-tooltip" for="filter-mensal">Filtro por mês</span>
+
+    <div class="mdl-menu mdl-js-menu" for="filter-mensal">
+      <%months.each do |nr_mes, nome_mes|%><%ref = Date.new(@hoje.year, nr_mes)%><%periodo = "#{ref}~#{ref+30}"%>
+        <a href="<%=path_to :relatorios, :periodo%>/<%=periodo%>" class="mdl-menu__item">
+          <%=nome_mes%>
+        </a>
+      <%end%>
+    </div>
+  </div>
+<%end%>
+
+<%content_for :script do%>
+  <script>
+    (document.querySelector('.prd-button--backward').addEventListener('click', function(event) {
+      history.back();
+    }))();
+  </script>
+<%end%>

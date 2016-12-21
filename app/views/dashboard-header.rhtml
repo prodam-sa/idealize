@@ -1,14 +1,12 @@
 <header class="prd-layout__header mdl-layout__header">
   <div class="mdl-layout__header-row">
+    <nav class="prd-navigation mdl-navigation">
+      <%=yield_content :backward%>
+    </nav>
     <div class="mdl-layout-spacer"></div>
 
-    <nav class="prd-navigation mdl-navigation mdl-layout--large-screen-only">
-      <%sections.select { |id, section| section[:navigation].include? 'header' }.each do |id, section|%>
-        <%is_active = 'is-active' if @page[:url_path] == section[:url_path]%>
-        <a class="mdl-navigation__link prd-navigation__link <%=is_active%>" href="<%=path_to section[:url_path]%>">
-          <%=section[:title]%>
-        </a>
-      <%end%>
+    <nav class="prd-navigation mdl-navigation">
+      <%=yield_content :toolbar%>
     </nav>
 
     <%if authenticated?%>

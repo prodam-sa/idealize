@@ -1,0 +1,13 @@
+<div class="mdl-list">
+<%@autores.each do |autor|%>
+  <div class="mdl-list__item mdl-list__item--two-line">
+    <div class="mdl-list__item-primary-content">
+      <span><%=autor[:nome]%></span>
+      <span class="mdl-list__item-sub-title"><%=autor[:total_ideias] || 0%> ideias postadas</span>
+    </div>
+    <!--div class="mdl-list__item-secondary-content">
+      <a href=""><i class="material-icons">keyboard_arrow_right</i></a>
+    </div-->
+  </div>
+<%end%>
+</div>

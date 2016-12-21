@@ -1,3 +1,12 @@
+- :version: 0.14.0
+  :release: 2016-12-21
+  :summary:
+    Notificação por email e relatórios administrativos
+  :changes:
+  - Notifiações para os autores das ideias.
+  - Lista de ideias por datas de criação e publicação.
+  - Lista de ideias para premiação.
+
 - :version: 0.13.0
   :release: 2016-07-09
   :summary:

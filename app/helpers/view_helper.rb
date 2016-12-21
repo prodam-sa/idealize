@@ -11,6 +11,10 @@ module ViewHelper
     Prodam::Idealize.info
   end
 
+  def timestamp
+    Date.parse(Prodam::Idealize::TIMESTAMP)
+  end
+
   def view(path, options = {})
     @page && @page[:layout] && options.update(layout: @page[:layout].to_sym)
     partial(path, options)

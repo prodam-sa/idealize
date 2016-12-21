@@ -1,0 +1,28 @@
+<table class="mdl-data-table mdl-js-data-table mdl-textfield--full-width" style="white-space: normal">
+  <tbody>
+    <%ideias.each_with_index do |ideia, i|%>
+      <tr>
+        <td class="mdl-data-table__cell--non-numeric">
+          <p class="mdl-typography--subhead prd-text--hyphenated"><%=ideia.titulo%></p>
+          <p class="mdl-typography--caption">
+            <em>
+              Criada em <%=formated_date ideia.data_criacao%>,
+              atualizada em <%=formated_date ideia.data_atualizacao%> e
+              publicada em <%=formated_date ideia.data_publicacao%>
+            </em>
+          </p>
+        </td>
+        <td class="mdl-data-table__cell--non-numeric" style="width: 12%"><%=ideia.modificacao.situacao.titulo%></td>
+        <td class="mdl-data-table__cell--numeric" style="width: 8%">
+          <i class="material-icons">thumb_up</i>
+          <small><%=relatorio.total_apoiadores_por_ideia[ideia.id] || 0%></small>
+        </td>
+      </tr>
+    <%end%>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td colspan="3" class="mdl-data-table__cell--non-numeric"><em>Lista com <%=ideias.size%> ideias</em></td>
+    </tr>
+  </tfoot>
+</table><!--/.mdl-data-table-->

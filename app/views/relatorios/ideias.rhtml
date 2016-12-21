@@ -1,0 +1,23 @@
+<div class="mdl-grid">
+  <div class="mdl-cell mdl-cell--12-col">
+    <div class="mdl-card mdl-card--full-width mdl-shadow--2dp">
+      <div class="mdl-card__actions">
+        <%=partial 'relatorios/table-ideias', locals: { ideias: @ideias, relatorio: @relatorio }%>
+      </div><!--/.mdl-card__actions-->
+    </div><!--/.mdl-card-->
+  </div><!--/.mdl-cell-->
+</div><!--/.mdl-grid-->
+
+<%content_for :backward do%>
+  <button type="button" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect prd-button--backward">
+    <i class="material-icons">keyboard_arrow_left</i>
+  </button>
+<%end%>
+
+<%content_for :script do%>
+  <script>
+    (document.querySelector('.prd-button--backward').addEventListener('click', function(event) {
+      history.back();
+    }))();
+  </script>
+<%end%>

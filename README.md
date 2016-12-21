@@ -65,6 +65,6 @@ detalhadas.
 
 Copyright (C) 2016 Processamento de Dados do Amazonas S/A. Todos os direitos reservados.
 
-[1]:http://git.prodam.am.gov.br/dinov/idealize/wikis/home
-[2]:http://git.prodam.am.gov.br/dqdes/guia-de-desenvolvimento-de-software
-[3]:http://git.prodam.am.gov.br/dqdes/guia-de-contribuicao
+[1]: http://git.prodam.am.gov.br/dinov/idealize/wikis/home
+[2]: http://git.prodam.am.gov.br/dqdes/guia-de-desenvolvimento-de-software
+[3]: http://git.prodam.am.gov.br/dqdes/guia-de-contribuicao
