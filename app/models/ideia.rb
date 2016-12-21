@@ -118,6 +118,10 @@ class Ideia < Model[:ideia]
       join(:categoria, id: categoria_id).where(situacao: chave).reverse(:data_atualizacao)
     end
 
+    def find_by_data(nome, data)
+      where("TRUNC(data_#{nome}) = ?", Date.parse(data)).order("data_#{nome}")
+    end
+
     def search(term)
       regexp_like(term, :titulo, :texto_oportunidade, :texto_solucao).reverse(:data_atualizacao)
     end
