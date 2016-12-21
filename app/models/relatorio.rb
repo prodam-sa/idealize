@@ -48,7 +48,7 @@ class Relatorio
         %s",
     total_ideias_por_situacao: "
       SELECT situacao.id AS situacao_id
-           , COUNT(ideia.id) AS total
+           , COUNT(*) AS total
         FROM ideia
         INNER JOIN situacao ON (situacao.chave = ideia.situacao)
         %s
@@ -101,7 +101,7 @@ class Relatorio
 
   def total_coautores_por_ideia!
     @total_coautores_por_ideia = {}
-    Database[sql :total_coautores_por_ideia, default_filter].all.map do |row|
+    Database[sql :total_coautores_por_ideia, filtro_por_data].all.map do |row|
       @total_coautores_por_ideia[row[:ideia_id]] = row[:total].to_i
     end
     @total_coautores_por_ideia
@@ -143,7 +143,7 @@ class Relatorio
 
   def total_apoiadores_por_ideia!
     @total_apoiadores_por_ideia = {}
-    Database[sql :total_apoiadores_por_ideia, default_filter].all.map do |row|
+    Database[sql :total_apoiadores_por_ideia, filtro_por_data].all.map do |row|
       @total_apoiadores_por_ideia[row[:ideia_id]] = row[:total].to_i
     end
     @total_apoiadores_por_ideia
@@ -184,7 +184,7 @@ class Relatorio
 
   def total_ideias_por_categoria!
     @total_ideias_por_categoria = {}
-    Database[sql :total_ideias_por_categoria, default_filter].all.map do |row|
+    Database[sql :total_ideias_por_categoria, filtro_por_data].all.map do |row|
       @total_ideias_por_categoria[row[:categoria_id]] = row[:total].to_i
     end
     @total_ideias_por_categoria
@@ -195,7 +195,7 @@ class Relatorio
   end
 
   def total_ideias_sem_categoria!
-    @total_ideias_sem_categoria = Database[sql :total_ideias_sem_categoria, default_filter].first[:total].to_i
+    @total_ideias_sem_categoria = Database[sql :total_ideias_sem_categoria, filtro_por_data].first[:total].to_i
   end
 
   # Situações
@@ -205,7 +205,7 @@ class Relatorio
 
   def total_ideias_por_situacao!
     @total_ideias_por_situacao = {}
-    Database[sql :total_ideias_por_situacao, default_filter].all.map do |row|
+    Database[sql :total_ideias_por_situacao, filtro_por_data(:criacao)].all.map do |row|
       @total_ideias_por_situacao[row[:situacao_id]] = row[:total].to_i
     end
     @total_ideias_por_situacao
@@ -218,7 +218,7 @@ class Relatorio
 
   def total_ideias_por_autor!
     @total_ideias_por_autor = {}
-    Database[sql :total_ideias_por_autor, default_filter].all.map do |row|
+    Database[sql :total_ideias_por_autor, filtro_por_data].all.map do |row|
       @total_ideias_por_autor[row[:autor_id]] = row[:total].to_i
     end
     @total_ideias_por_autor
@@ -231,8 +231,7 @@ class Relatorio
 
   def total_ideias_por_data_criacao!
     @total_ideias_por_data_criacao = {}
-    filter = "WHERE (ideia.data_publicacao IS NULL) AND (ideia.data_criacao >= date'#{data_inicial}') AND (ideia.data_criacao <= date'#{data_final}')" if data_inicial
-    Database[sql :total_ideias_por_data_criacao, filter].all.map do |row|
+    Database[sql :total_ideias_por_data_criacao, filtro_por_data(:criacao)].all.map do |row|
       @total_ideias_por_data_criacao[row[:data_criacao].to_date] = row[:total].to_i
     end
     @total_ideias_por_data_criacao
@@ -244,7 +243,7 @@ class Relatorio
 
   def total_ideias_por_data_publicacao!
     @total_ideias_por_data_publicacao = {}
-    Database[sql :total_ideias_por_data_publicacao, default_filter].all.map do |row|
+    Database[sql :total_ideias_por_data_publicacao, filtro_por_data].all.map do |row|
       @total_ideias_por_data_publicacao[row[:data_publicacao].to_date] = row[:total].to_i if row[:data_publicacao]
     end
     @total_ideias_por_data_publicacao
@@ -255,15 +254,15 @@ class Relatorio
   end
 
   def ideias_por_autor!
-    @ideias_por_autor = Database[sql :ideias_por_autor, default_filter].all.group_by do |row|
+    @ideias_por_autor = Database[sql :ideias_por_autor, filtro_por_data].all.group_by do |row|
       [ row[:autor_id], row[:autor_nome] ]
     end
   end
 
 private
 
-  def default_filter
-    "WHERE (ideia.data_publicacao IS NOT NULL) AND (ideia.data_publicacao >= date'#{data_inicial}') AND (ideia.data_publicacao <= date'#{data_final}')" if data_inicial
+  def filtro_por_data(nome = :publicacao)
+    "WHERE (TRUNC(ideia.data_#{nome}) >= DATE'#{data_inicial}') AND (TRUNC(ideia.data_#{nome}) <= DATE'#{data_final}')" if data_inicial
   end
 
   def sql(key, filter = nil)
