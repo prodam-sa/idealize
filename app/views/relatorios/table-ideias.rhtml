@@ -1,29 +1,28 @@
-<table class="mdl-data-table mdl-data-table--expandable">
-  <thead>
-    <tr>
-      <th class="mdl-data-table__cell--non-numeric" colspan="4">Autor</th>
-    </tr>
-    <tr>
-      <th class="mdl-data-table__cell--non-numeric">Ideia</th>
-      <th class="mdl-data-table__cell--non-numeric">Classificação</th>
-      <th class="mdl-data-table__cell--numeric">Pontuação</th>
-      <th class="mdl-data-table__cell--non-numeric">Descrição</th>
-    </tr>
-  </thead>
+<table class="mdl-data-table mdl-js-data-table mdl-textfield--full-width">
   <tbody>
-    <%@ideias_por_autor.each do |(autor_id, autor_nome), ideias|%>
+    <%ideias.each_with_index do |ideia, i|%>
       <tr>
-        <td class="mdl-data-table__cell--non-numeric" colspan="3"><b><%=autor_nome%></b></td>
-        <td class="mdl-data-table__cell--numeric" colspan="1"><b>Ideias: <%=ideias.size%></b></td>
+        <td class="mdl-data-table__cell--non-numeric">
+          <p class="mdl-typography--subhead"><%=ideia.titulo%></p>
+          <p class="mdl-typography--caption">
+            <em>
+              Criada em <%=formated_date ideia.data_criacao%>,
+              atualizada em <%=formated_date ideia.data_atualizacao%> e
+              publicada em <%=formated_date ideia.data_publicacao%>
+            </em>
+          </p>
+        </td>
+        <td class="mdl-data-table__cell--non-numeric"><%=ideia.modificacao.situacao.titulo%></td>
+        <td class="mdl-data-table__cell--numeric">
+          <i class="material-icons">thumb_up</i>
+          <small><%=relatorio.total_apoiadores_por_ideia[ideia.id] || 0%></small>
+        </td>
       </tr>
-      <%ideias.sort{|a,b|a[:avaliacao_pontos] <=> b[:avaliacao_pontos]}.reverse.each do |ideia|%>
-        <tr>
-          <td class="mdl-data-table__cell--non-numeric"><%=ideia[:ideia_titulo]%></td>
-          <td class="mdl-data-table__cell--non-numeric"><%=ideia[:classificacao_titulo]%></td>
-          <td class="mdl-data-table__cell--numeric"><%=ideia[:avaliacao_pontos]%></td>
-          <td class="mdl-data-table__cell--non-numeric"><%=ideia[:classificacao_descricao]%></td>
-        </tr>
-      <%end%>
     <%end%>
   </tbody>
-</table>
+  <tfoot>
+    <tr>
+      <td colspan="3" class="mdl-data-table__cell--non-numeric"><em>Lista com <%=ideias.size%> ideias</em></td>
+    </tr>
+  </tfoot>
+</table><!--/.mdl-data-table-->
