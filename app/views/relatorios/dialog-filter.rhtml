@@ -23,6 +23,11 @@
         <input id="filter-60-dias" type="radio" class="mdl-radio__button" name="periodo" value="<%=periodo%>" <%=checked%>/>
         <span class="mdl-radio__label">Últimos 60 dias</span>
       </label>
+      <%periodo = "#{today-(today-timestamp).to_i}~#{today}"%><%checked = (periodo == params[:periodo]) ? :checked : nil%>
+      <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect mdl-textfield--full-width" for="filter-tuto">
+        <input id="filter-tuto" type="radio" class="mdl-radio__button" name="periodo" value="<%=periodo%>" <%=checked%>/>
+        <span class="mdl-radio__label">Tudo</span>
+      </label>
     </div><!--/.mdl-textfield-->
 
     <div class="mdl-textfield mdl-textfield--full-width mdl-textfield--floating-label is-dirty">
