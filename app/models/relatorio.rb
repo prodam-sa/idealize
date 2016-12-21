@@ -233,7 +233,7 @@ class Relatorio
     @total_ideias_por_data_criacao = {}
     filter = "WHERE (ideia.data_publicacao IS NULL) AND (ideia.data_criacao >= date'#{data_inicial}') AND (ideia.data_criacao <= date'#{data_final}')" if data_inicial
     Database[sql :total_ideias_por_data_criacao, filter].all.map do |row|
-      @total_ideias_por_data_criacao[row[:data_criacao]] = row[:total].to_i
+      @total_ideias_por_data_criacao[row[:data_criacao].to_date] = row[:total].to_i
     end
     @total_ideias_por_data_criacao
   end
@@ -245,7 +245,7 @@ class Relatorio
   def total_ideias_por_data_publicacao!
     @total_ideias_por_data_publicacao = {}
     Database[sql :total_ideias_por_data_publicacao, default_filter].all.map do |row|
-      @total_ideias_por_data_publicacao[row[:data_publicacao]] = row[:total].to_i if row[:data_publicacao]
+      @total_ideias_por_data_publicacao[row[:data_publicacao].to_date] = row[:total].to_i if row[:data_publicacao]
     end
     @total_ideias_por_data_publicacao
   end
