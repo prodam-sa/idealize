@@ -53,6 +53,18 @@ class RelatoriosController < ApplicationController
 
     view 'relatorios/index'
   end
+
+  get '/ideias' do
+    @ideias = if params[:criadas_em]
+                Ideia.find_by_data(:criacao, params[:criadas_em]).reverse.all
+              elsif params[:publicadas_em]
+                Ideia.find_by_data(:publicacao, params[:publicadas_em]).reverse.all
+              end
+
+    @relatorio = Relatorio.new ideias: @ideias
+
+    view 'relatorios/ideias'
+  end
 end
 
 end # module

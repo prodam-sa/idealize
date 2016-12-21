@@ -6,7 +6,7 @@
       <span class="mdl-list__item-sub-title"><%=total%> ideias publicadas</span>
     </div>
     <div class="mdl-list__item-secondary-content">
-      <a href=""><i class="material-icons">keyboard_arrow_right</i></a>
+      <a href="<%=path_to :relatorios, :ideias, publicadas_em: data_publicacao.iso8601%>"><i class="material-icons">keyboard_arrow_right</i></a>
     </div>
   </div>
 <%end%>
