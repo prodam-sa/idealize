@@ -5,7 +5,7 @@ SHELL = /bin/bash
 
 name = idealize
 version ?= 0.14.0
-release ?= 2016-12-13
+release ?= 2016-12-21
 database = $(name)
 environment ?= development
 
