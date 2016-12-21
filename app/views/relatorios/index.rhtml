@@ -124,12 +124,34 @@
   </button>
 <%end%>
 
-<%content_for :dialog do%>
-  <%=partial 'relatorios/dialog-filter'%>
-<%end%>
+<%content_for :toolbar do%>
+  <div class="mdl-navigation__link">
+    <button id="filter-referencia" class="mdl-button mdl-button--icon mdl-js-button">
+      <i class="material-icons">filter_list</i>
+    </button>
+    <span class="mdl-tooltip" for="filter-referencia">Filtro por referência</span>
 
-<%content_for :fab do%>
-  <%=partial 'fab-dialog', locals: { icon: :filter_list, tooltip: 'Filtros' }%>
+    <div class="mdl-menu mdl-js-menu" for="filter-referencia">
+      <%@filtros.each do |titulo, periodo|%>
+        <a href="<%=path_to :relatorios, :periodo%>/<%=periodo%>" class="mdl-menu__item">
+          <%=titulo%>
+        </a>
+      <%end%>
+    </div>
+
+    <button id="filter-mensal" class="mdl-button mdl-button--icon mdl-js-button">
+      <i class="material-icons">date_range</i>
+    </button>
+    <span class="mdl-tooltip" for="filter-mensal">Filtro por mês</span>
+
+    <div class="mdl-menu mdl-js-menu" for="filter-mensal">
+      <%months.each do |nr_mes, nome_mes|%><%ref = Date.new(@hoje.year, nr_mes)%><%periodo = "#{ref}~#{ref+30}"%>
+        <a href="<%=path_to :relatorios, :periodo%>/<%=periodo%>" class="mdl-menu__item">
+          <%=nome_mes%>
+        </a>
+      <%end%>
+    </div>
+  </div>
 <%end%>
 
 <%content_for :script do%>

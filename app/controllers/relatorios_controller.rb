@@ -6,22 +6,24 @@ class RelatoriosController < ApplicationController
   helpers IdeiasHelper, DateHelper, MailHelper
 
   before authorize_only: :administrador do
+    @hoje = Date.today
     @page = controllers[:relatorios]
-  end
-
-  before '/:id/?:action?' do |id, action|
-    if (ideia_id = id.to_i) > 0
-      @ideia = Ideia[ideia_id]
-      @situacao = @ideia.modificacao.situacao
-    else
-      @ideia = Ideia.new
-      @situacao = Situacao.chave :rascunho
-    end
+    @filtros = {
+      'Ontem' => "#{@hoje-1}~#{@hoje}",
+      'Última semana' => "#{@hoje-7}~#{@hoje}",
+      'Últimos 30 dias' => "#{@hoje-30}~#{@hoje}",
+      'Últimos 60 dias' => "#{@hoje-60}~#{@hoje}",
+      'Tudo' => "#{@hoje-(@hoje-timestamp).to_i}~#{@hoje}",
+    }
   end
 
   get '/' do
-    if params[:periodo] # periodo=yyyy-mm-dd~yyyy-mm-dd
-      data_inicial, data_final = *params[:periodo].split('~')
+    redirect path_to(:relatorios, :periodo)
+  end
+
+  get '/periodo/?:periodo?' do |periodo|
+    if periodo # periodo=yyyy-mm-dd~yyyy-mm-dd
+      data_inicial, data_final = *periodo.split('~')
     else
       data_final = Date.today
       data_inicial = data_final - 30
