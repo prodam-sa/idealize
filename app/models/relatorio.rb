@@ -80,7 +80,19 @@ class Relatorio
         INNER JOIN usuario ON (usuario.id = ideia.autor_id)
         INNER JOIN avaliacao ON (avaliacao.ideia_id = ideia.id)
         INNER JOIN classificacao ON (classificacao.id = avaliacao.classificacao_id)
-        %s"
+        %s",
+    ranking: "
+      SELECT usuario.id AS autor_id
+           , usuario.nome AS autor_nome
+           , COUNT(ideia.id) AS total_ideias
+           , SUM(avaliacao.pontos) AS total_pontos
+        FROM ideia
+        INNER JOIN usuario ON (usuario.id = ideia.autor_id)
+        INNER JOIN avaliacao ON (avaliacao.ideia_id = ideia.id)
+        %s
+        GROUP BY usuario.id
+               , usuario.nome
+        ORDER BY SUM(avaliacao.pontos) DESC",
   }.freeze
 
   attr_accessor :autor
@@ -256,6 +268,17 @@ class Relatorio
   def ideias_por_autor!
     @ideias_por_autor = Database[sql :ideias_por_autor, filtro_por_data].all.group_by do |row|
       [ row[:autor_id], row[:autor_nome] ]
+    end
+  end
+
+  def ranking
+    @ranking || ranking!
+  end
+
+  def ranking!
+    @ranking = Database[sql :ranking, filtro_por_data].all do |row|
+      row[:total_ideias] = row[:total_ideias].to_i
+      row[:total_pontos] = row[:total_pontos].to_i
     end
   end
 
