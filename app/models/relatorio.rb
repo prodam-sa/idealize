@@ -276,7 +276,7 @@ class Relatorio
   end
 
   def ranking!
-    @ranking = Database[sql :ranking, filtro_por_data].all do |row|
+    @ranking = Database[sql :ranking].all do |row|
       row[:total_ideias] = row[:total_ideias].to_i
       row[:total_pontos] = row[:total_pontos].to_i
     end
