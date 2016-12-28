@@ -51,6 +51,11 @@ class RelatoriosController < ApplicationController
       a[:total_apoiadores] <=> b[:total_apoiadores]
     end.reverse
     @ideias_por_autor = @relatorio.ideias_por_autor
+    @ideias_por_pontuacao = Avaliacao.eager(:ideia, :classificacao).map do |avaliacao|
+      avaliacao.ideia
+    end.sort do |a, b|
+      a.avaliacao.pontos <=> b.avaliacao.pontos
+    end.reverse
 
     view 'relatorios/index'
   end
