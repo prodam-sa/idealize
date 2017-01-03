@@ -14,6 +14,9 @@ body {
 .prd-layout {
   min-height: calc(100vh - 176px);
 }
+.prd-layout--max-height
+{ min-height: 90vh; }
+
 
 .prd-ribbon {
   width: 100%;
@@ -711,3 +714,19 @@ select.mdl-textfield__input:before {
 
 .prd-card--max-height
 { max-height: 44vh; height: 44vh; overflow-y: auto; }
+
+.prd-background--radial-gradient
+{
+  background: rgba(103,58,183,1.00);
+  /* background: -webkit-radial-gradient(red, yellow, green); /1* Safari 5.1 to 6.0 *1/ */
+  /* background: -o-radial-gradient(red, yellow, green); /1* For Opera 11.6 to 12.0 *1/ */
+  /* background: -moz-radial-gradient(30% 40%, rgba(103,58,183,1.00), rgba(103,58,183,1.00), rgba(103,58,183,0.65)); */
+  background:
+    linear-gradient(rgba(103,58,183,1.00), rgba(103,58,183,0.10)),
+    radial-gradient(100% 60%, rgba(103,58,183,1.00) 10px, rgba(103,58,183,0.90), rgba(103,58,183,0.10)),
+    transparent;
+}
+
+.prd-background--transparent {
+  background: transparent !important;
+}
