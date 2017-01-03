@@ -1,11 +1,5 @@
 <header class="prd-layout__header mdl-layout__header mdl-layout__header--scroll">
   <div class="mdl-layout__header-row">
-    <div class="mdl-layout--large-screen-only">
-      <span class="mdl-layout-title prd-landpage-icon-expanded">
-        <img src="<%=path_to '/img/brand-colored.svg'%>" alt="Idealize" title="Idealize"/>
-      </span>
-    </div>
-
     <div class="mdl-layout-spacer"></div>
 
     <nav class="prd-navigation mdl-navigation">
@@ -32,9 +26,6 @@
       <%unless authenticated?%>
         <a href="#login" class="prd-navigation__link mdl-navigation__link mdl-js-ripple-effect mdl-button--open-dialog">
           Login
-        </a>
-        <a href="<%=path_to :usuarios, :novo%>" class="mdl-button mdl-button--raised mdl-color--accent mdl-js-button mdl-js-ripple-effect mdl-button--open-dialog">
-          Cadastro
         </a>
       <%end%>
     </nav>
