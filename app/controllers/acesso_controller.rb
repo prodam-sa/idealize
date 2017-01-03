@@ -11,9 +11,10 @@ class AcessoController < ApplicationController
     @usuario = Usuario[id.to_i]
   end
 
-  get '/', authenticate: true do
-    @usuario ||= Usuario[session[:user][:id]]
-    view 'usuarios/form', layout: :dashboard
+  get '/' do
+    id = session[:user] && session[:user][:id]
+    @usuario = id ? Usuario[id] : Usuario.new
+    view 'acesso/index', layout: :landpage
   end
 
   get '/acessar' do
