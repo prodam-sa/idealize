@@ -12,9 +12,12 @@ class AcessoController < ApplicationController
   end
 
   get '/' do
-    id = session[:user] && session[:user][:id]
-    @usuario = id ? Usuario[id] : Usuario.new
-    view 'acesso/index', layout: :landpage
+    if session[:user] && session[:user][:id]
+      redirect path_to :painel
+    else
+      @usuario = Usuario.new
+      view 'acesso/index', layout: :landpage
+    end
   end
 
   get '/acessar' do
