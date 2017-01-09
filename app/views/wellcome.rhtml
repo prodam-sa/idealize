@@ -89,9 +89,9 @@
         <img src="<%=path_to 'img/ideia-cadastrada.svg'%>" alt=""/>
       </div>
       <div class="mdl-grid">
-        <div class="mdl-cell mdl-cell--5-col-desktop mdl-cell--hide-tablet mdl-cell--hide-phone mdl-typography--text-right"><big class="mdl-typography--display-3"><%=@relatorio.total_ideias%></big></div>
+        <div class="mdl-cell mdl-cell--5-col-desktop mdl-cell--hide-tablet mdl-cell--hide-phone mdl-typography--text-right"><big class="mdl-typography--display-3"><%=@relatorio.total_ideias || :Sem%></big></div>
         <div class="mdl-cell mdl-cell--7-col-desktop mdl-cell--hide-tablet mdl-cell--hide-phone mdl-typography--text-left mdl-cell--middle"><span class="mdl-typography--title">Ideias <strong>cadastradas</strong></span></div>
-        <div class="mdl-cell mdl-cell--hide-desktop mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-typography--text-center"><big class="mdl-typography--display-3"><%=@relatorio.total_ideias%></big></div>
+        <div class="mdl-cell mdl-cell--hide-desktop mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-typography--text-center"><big class="mdl-typography--display-3"><%=@relatorio.total_ideias || :Sem%></big></div>
         <div class="mdl-cell mdl-cell--hide-desktop mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-typography--text-center"><span class="mdl-typography--title">Ideias <strong>cadastradas</strong></span></div>
       </div>
     </div>
@@ -103,9 +103,9 @@
         <img src="<%=path_to 'img/ideia-premiada.svg'%>" alt=""/>
       </div>
       <div class="mdl-grid">
-        <div class="mdl-cell mdl-cell--5-col-desktop mdl-cell--hide-tablet mdl-cell--hide-phone mdl-typography--text-right"><big class="mdl-typography--display-3"><%=@relatorio.total_ideias_por_situacao[@premiacao.id]%></big></div>
+        <div class="mdl-cell mdl-cell--5-col-desktop mdl-cell--hide-tablet mdl-cell--hide-phone mdl-typography--text-right"><big class="mdl-typography--display-3"><%=@relatorio.total_ideias_por_situacao[@premiacao.id] || :Sem%></big></div>
         <div class="mdl-cell mdl-cell--7-col-desktop mdl-cell--hide-tablet mdl-cell--hide-phone mdl-typography--text-left mdl-cell--middle"><span class="mdl-typography--title">Ideias <strong>premiadas</strong></span></div>
-        <div class="mdl-cell mdl-cell--hide-desktop mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-typography--text-center"><big class="mdl-typography--display-3"><%=@relatorio.total_ideias_por_situacao[@premiacao.id]%></big></div>
+        <div class="mdl-cell mdl-cell--hide-desktop mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-typography--text-center"><big class="mdl-typography--display-3"><%=@relatorio.total_ideias_por_situacao[@premiacao.id] || :Sem%></big></div>
         <div class="mdl-cell mdl-cell--hide-desktop mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-typography--text-center"><span class="mdl-typography--title">Ideias <strong>premiadas</strong></span></div>
       </div>
     </div>
@@ -117,9 +117,9 @@
         <img src="<%=path_to 'img/ideia-moderada.svg'%>" alt=""/>
       </div>
       <div class="mdl-grid">
-        <div class="mdl-cell mdl-cell--5-col-desktop mdl-cell--hide-tablet mdl-cell--hide-phone mdl-typography--text-right"><big class="mdl-typography--display-3"><%=@relatorio.total_ideias_por_situacao[@moderacao.id]%></big></div>
+        <div class="mdl-cell mdl-cell--5-col-desktop mdl-cell--hide-tablet mdl-cell--hide-phone mdl-typography--text-right"><big class="mdl-typography--display-3"><%=@relatorio.total_ideias_por_situacao[@moderacao.id] || :Sem%></big></div>
         <div class="mdl-cell mdl-cell--7-col-desktop mdl-cell--hide-tablet mdl-cell--hide-phone mdl-typography--text-left mdl-cell--middle"><span class="mdl-typography--title">Ideias <strong>moderadas</strong></span></div>
-        <div class="mdl-cell mdl-cell--hide-desktop mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-typography--text-center"><big class="mdl-typography--display-3"><%=@relatorio.total_ideias_por_situacao[@moderacao.id]%></big></div>
+        <div class="mdl-cell mdl-cell--hide-desktop mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-typography--text-center"><big class="mdl-typography--display-3"><%=@relatorio.total_ideias_por_situacao[@moderacao.id] || :Sem%></big></div>
         <div class="mdl-cell mdl-cell--hide-desktop mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-typography--text-center"><span class="mdl-typography--title">Ideias <strong>moderadas</strong></span></div>
       </div>
     </div>
