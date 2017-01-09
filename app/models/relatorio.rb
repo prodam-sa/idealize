@@ -106,6 +106,10 @@ class Relatorio
     end
   end
 
+  def total_ideias
+    Ideia.count.to_i
+  end
+
   # Coautores
   def total_coautores_por_ideia
     @total_coautores_por_ideia || total_coautores_por_ideia!
