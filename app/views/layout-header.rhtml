@@ -17,19 +17,17 @@
 
     <div class="mdl-layout-spacer"></div>
 
-    <nav class="prd-navigation mdl-navigation">
-      <form action="<%=path_to :ideias, :pesquisa%>" method="get">
-        <div class="prd-searchbox mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label mdl-textfield--align-right">
-          <label id="toolbar-search" class="mdl-button mdl-button--icon mdl-js-button" for="ideias-termo-pesquisa">
-            <i class="material-icons">search</i>
-          </label>
-          <div class="mdl-textfield__expandable-holder">
-            <input class="mdl-textfield__input" type="text" name="termo" id="ideias-termo-pesquisa" placeholder="Pesquise por ideias ...">
-            <span class="mdl-tooltip" for="toolbar-search">Procure por ideias publicadas</span>
-          </div>
+    <form action="<%=path_to :ideias, :pesquisa%>" method="get" class="prd-navigation mdl-navigation">
+      <div class="prd-searchbox mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label">
+        <label id="toolbar-search" class="mdl-button mdl-button--icon mdl-js-button" for="ideias-termo-pesquisa" style="top: 22px">
+          <i class="material-icons">search</i>
+        </label>
+        <div class="mdl-textfield__expandable-holder">
+          <input class="mdl-textfield__input" type="text" name="termo" id="ideias-termo-pesquisa" placeholder="Pesquise por ideias ...">
+          <span class="mdl-tooltip" for="toolbar-search">Procure por ideias publicadas</span>
         </div>
-      </form>
-    </nav>
+      </div>
+    </form>
 
     <nav class="prd-navigation mdl-navigation mdl-layout--large-screen-only">
       <%sections.select { |id, section| section[:navigation].include? 'header' }.each do |id, section|%>
@@ -41,8 +39,8 @@
     </nav>
 
     <%if authenticated?%>
-      <button id="account-options" class="mdl-button mdl-button--fab mdl-button--mini-fab mdl-js-button">
-        <img src="<%=gravatar usuario_email, size: '40', default: :mm%>"/>
+      <button id="account-options" class="mdl-button mdl-button--icon">
+        <i class="material-icons">account_box</i>
       </button>
 
       <div class="mdl-menu mdl-menu--bottom-right mdl-js-menu" for="account-options">
