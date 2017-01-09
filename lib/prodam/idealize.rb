@@ -166,7 +166,7 @@ module Prodam
   end
 
   def self.autoload_sources
-    sources_from(:models, :helpers).each do |id, source|
+    sources_from(:models, :services, :helpers).each do |id, source|
       autoload source[:const_name], source[:require_path]
     end
   end
