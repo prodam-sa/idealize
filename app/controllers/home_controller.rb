@@ -12,7 +12,7 @@ class HomeController < ApplicationController
   get '/' do
     @relatorio = Relatorio.new
     @premiacao = Situacao.chave(:avaliacao)
-    @moderacao = Situacao.chave(:moderacao)
+    @moderacao = Situacao.chave(:publicacao)
 
     if authenticated?
       @ideias = Ideia.find_by_situacao(['publicacao', 'avaliacao']).order(:data_publicacao).limit(6).all
