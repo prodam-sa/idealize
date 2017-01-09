@@ -11,6 +11,9 @@ class HomeController < ApplicationController
 
   get '/' do
     @relatorio = Relatorio.new
+    @premiacao = Situacao.chave(:avaliacao)
+    @moderacao = Situacao.chave(:moderacao)
+
     if authenticated?
       @ideias = Ideia.find_by_situacao(['publicacao', 'avaliacao']).order(:data_publicacao).limit(6).all
       @relatorio.ideias = @ideias
