@@ -12,8 +12,9 @@ class AcessoController < ApplicationController
   end
 
   get '/' do
-    if session[:user] && session[:user][:id]
-      redirect path_to :painel
+    if id = session[:user] && session[:user][:id]
+      @usuario = Usuario[id]
+      view 'usuarios/form', layout: :dashboard
     else
       @usuario = Usuario.new
       view 'acesso/index', layout: :landpage
