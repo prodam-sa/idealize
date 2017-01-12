@@ -10,17 +10,7 @@ class HomeController < ApplicationController
   end
 
   get '/' do
-    @relatorio = Relatorio.new
-    @premiacao = Situacao.chave(:avaliacao)
-    @moderacao = Situacao.chave(:publicacao)
-
-    if authenticated?
-      @ideias = Ideia.find_by_situacao(['publicacao', 'avaliacao']).order(:data_publicacao).limit(6).all
-      @relatorio.ideias = @ideias
-      view 'index'
-    else
-      view 'wellcome', layout: :landpage
-    end
+    redirect path_to :ideias
   end
 
   get '/faq' do
