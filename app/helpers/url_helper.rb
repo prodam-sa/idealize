@@ -24,18 +24,20 @@ module UrlHelper
   end
 
   def path_to(path, *args)
+    subpath = ""
+    params = ""
     if args.last.kind_of? Hash
       slashes = args[0..-2]
-      params = args[-1]
+      query = args[-1]
     else
       slashes = args
     end
     (slashes.size > 0) && (subpath = slashes.join('/'))
-    params && (subpath = (subpath + "?" + params.map{|k,v|"#{k}=#{v}"}.join("&")))
+    query && (params = ("?" + query.map{|k,v|"#{k}=#{v}"}.join("&")))
     url_path = sections[path] && sections[path][:url_path] || path.to_s
     subpath && (url_path = format("%s/%s", url_path, subpath))
     url_path = url_path.squeeze '/'
-    "#{context_path}#{url_path}"
+    "#{context_path}#{url_path}#{params}"
   end
 
 private
