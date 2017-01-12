@@ -71,6 +71,11 @@ module IdeiasHelper
                     descricao: mensagem
   end
 
+  def imagem_premiacao(ideia)
+    ponto = ideia.avaliacao && ideia.avaliacao && ideia.avaliacao.classificacao.ponto_maximo || 0
+    format("%02d.svg", ponto)
+  end
+
   def mensagem(texto)
     mensagem = params[:historico] && params[:historico][:mensagem] || ''
     if mensagem.empty?
