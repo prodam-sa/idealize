@@ -50,6 +50,7 @@ class Ideia < Model[:ideia]
   def situacoes?(*nomes)
     self[:situacao] && (nomes.include? self[:situacao].to_sym)
   end
+  alias situacao? situacoes?
 
   def historico
     @historico || (@historico = modificacoes_dataset.reverse(:data_registro).all)
