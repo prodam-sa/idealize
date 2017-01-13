@@ -252,9 +252,8 @@ img.prd-brand {
   border-bottom: 1px solid #ddd;
 }
 
-.mdl-list__item:hover {
-  background-color: rgba(0, 0, 0, 0.05);
-  );
+.mdl-list--mouseover.mdl-list__item:hover {
+  background-color: rgba(0,0,0,0.05);
 }
 
 .prd-button--float-right {
@@ -740,3 +739,62 @@ select.mdl-textfield__input:before {
 { font-size: 24px; text-align: center; margin-bottom: 2.50rem; }
   .prd-subtitle .prd-subtitle__text
   { border: 1px solid; border-color: inherit; border-radius: 32px; padding: 14px 18px; overflow: hide; }
+
+.prd-card__action:not(:last-child)
+{ margin-right: 1.50rem; }
+
+.prd-card__media-premiacao
+{ max-width: 80%; }
+
+.prd-list__item--min-height,
+.prd-card--min-height
+{ min-height: 8rem; }
+
+.prd-card-account
+{ height: 12rem; }
+  .prd-card-account
+  .prd-card-account__avatar
+  { width: 100%;
+    height: 6rem;
+    margin: 0 0 6rem 0;
+    background: #9fa8da url('/img/card-avatar-background.svg');
+    background-size: 100%; }
+    .prd-card-account
+    .prd-card-account__avatar
+    .prd-card-account__avatar-image
+    { width: 8rem;
+      height: auto;
+      margin: 2rem 1rem;
+      padding: 0.25rem;
+      box-sizing: border-box;
+      border-radius: 0.50rem;
+      background-color: #fff;
+      color: #fff; }
+  .prd-card-account
+  .prd-card-account__name
+  { margin: -5rem 1rem 1rem 10rem;
+    padding: 0;
+    font-weight: bold; }
+
+.prd-ranking-list
+{ }
+  .prd-ranking-list .prd-ranking-list__item-botton
+  { width: 40px; height: 40px;
+    margin-right: 16px;
+    box-sizing: border-box;
+    border: 4px solid rgba(77,77,77,0.20);
+    border-radius: 50%;
+    background-color: rgba(200,200,200, 0.50);
+    letter-spacing: 0.04em;
+    text-align: center;
+    line-height: 32px;
+    font-size: 120%;
+    text-shadow: 1px 1px 1px #777; }
+    .prd-ranking-list .prd-ranking-list__item-botton.prd-ranking-list__item-botton--coin
+    { background-image: radial-gradient(100% 60%, rgba(63,81,181,1.00) 10px, rgba(63,81,181,0.50)); }
+    .prd-ranking-list .prd-ranking-list__item-botton.prd-ranking-list__item-botton--gold
+    { background-image: radial-gradient(100% 60%, rgba(212,175,55,1.00), rgba(212,175,175,0.50)); }
+    .prd-ranking-list .prd-ranking-list__item-botton.prd-ranking-list__item-botton--silver
+    { background-image: radial-gradient(100% 60%, rgba(160,160,160,1.00), rgba(160,160,160,0.50)); }
+    .prd-ranking-list .prd-ranking-list__item-botton.prd-ranking-list__item-botton--bronze
+    { background-image: radial-gradient(100% 60%, rgba(205,127,50,1.00), rgba(205,127,50,0.50)); }
