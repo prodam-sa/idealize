@@ -39,6 +39,12 @@
     </nav>
 
     <%if authenticated?%>
+      <span class="mdl-badge mdl-badge--overlap" data-badge="<%=@info[:total_mensagens]%>">
+        <a href="<%=path_to :conta, :mensagens%>" id="message-list" class="mdl-button mdl-button--icon">
+          <i class="material-icons">notifications</i>
+        </a>
+      </span>
+
       <button id="account-options" class="mdl-button mdl-button--icon">
         <i class="material-icons">account_box</i>
       </button>
