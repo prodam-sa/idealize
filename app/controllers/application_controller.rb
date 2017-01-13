@@ -51,11 +51,22 @@ class ApplicationController < Sinatra::Base
 
   before do
     @page = {}
-    @fab = {
-      url: path_to(:postagens, :nova),
-      icon: :edit,
-      tooltip: 'Nova ideia!'
-    }
+    @fab = { url: path_to(:postagens, :nova), icon: :edit, tooltip: 'Nova ideia!' }
+    if authenticated?
+      @info = {}
+      @usuario ||= Autor.eager(ideias: :avaliacao).where(id: session_user[:id]).all.first
+      @info[:total_mensagens] ||= Mensagem.find_nao_lidas_para(session_user[:id]).count
+      @info[:total_ideias] ||= @usuario.ideias.size
+      @info[:total_premiadas] ||= @usuario.ideias.map do |ideia|
+        ideia if ideia.avaliacao
+      end.compact.size
+      @info[:total_moderadas] ||= @usuario.ideias.map do |ideia|
+        ideia if ideia.data_publicacao and ideia.avaliacao.nil?
+      end.compact.size
+      @info[:total_rascunhos] ||= @usuario.ideias.map do |ideia|
+        ideia if ideia.data_publicacao.nil?
+      end.compact.size
+    end
   end
 end
 
