@@ -12,7 +12,7 @@ class AcessoController < ApplicationController
   end
 
   get '/' do
-    if id = session[:user] && session[:user][:id]
+    if id = session_user[:id]
       @usuario = Usuario[id]
       view 'usuarios/form', layout: :dashboard
     else
