@@ -135,16 +135,12 @@ body {
   top: 24px;
 }
 
-.prd-layout-icon-expanded {
-  top: 10px;
-}
-
 .prd-landpage-icon-expanded img {
   max-width: 128px;
 }
 
 .prd-layout-icon-expanded img {
-  max-width: 96px;
+  max-width: 80px;
 }
 
 
