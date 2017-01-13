@@ -10,7 +10,14 @@ class HomeController < ApplicationController
   end
 
   get '/' do
-    redirect path_to :ideias
+    if authenticated?
+      redirect path_to :ideias
+    else
+      @relatorio = Relatorio.new
+      @premiacao = Situacao.chave(:avaliacao)
+      @moderacao = Situacao.chave(:publicacao)
+      view 'wellcome', layout: :landpage
+    end
   end
 
   get '/faq' do
