@@ -22,8 +22,19 @@ class IdeiasController < ApplicationController
   end
 
   get '/' do
-    @relatorio = Relatorio.new(ideias: Ideia.find_by_situacoes(@situacoes).order(:data_criacao, :data_publicacao).all)
-    @ideias = @relatorio.ideias
+    @relatorio = Relatorio.new
+    @premiacao = Situacao.chave(:avaliacao)
+    @moderacao = Situacao.chave(:publicacao)
+
+    @pagination = { limit: 10, offset: 0 }
+    @pagination[:total] = @relatorio.total_ideias / @pagination[:limit] + 1
+    @pagination[:current] = (params[:p] || 1).to_i
+    @pagination[:current] = @pagination[:current] > @pagination[:total] ? @pagination[:total] : @pagination[:current]
+    @pagination[:offset] = ((@pagination[:current]-1) * @pagination[:limit])
+    @pagination[:next] = @pagination[:current] < @pagination[:total] ? @pagination[:current] + 1 : @pagination[:total]
+    @pagination[:previous] = @pagination[:current] >= @pagination[:next] ? @pagination[:current] - 1 : @pagination[:current]
+
+    @ideias = Ideia.find_by_situacao(['publicacao', 'avaliacao']).eager(:autor, :categorias, avaliacao: :classificacao).reverse(:data_publicacao).limit(@pagination[:limit]).offset(@pagination[:offset]).all
     view 'ideias/index'
   end
 
