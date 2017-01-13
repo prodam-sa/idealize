@@ -24,7 +24,7 @@ module UrlHelper
   end
 
   def path_to(path, *args)
-    subpath = ""
+    subpath = nil
     params = ""
     if args.last.kind_of? Hash
       slashes = args[0..-2]
@@ -32,22 +32,18 @@ module UrlHelper
     else
       slashes = args
     end
-    (slashes.size > 0) && (subpath = slashes.join('/'))
+    (slashes.size > 0) && (subpath = "/" + slashes.join('/'))
     query && (params = ("?" + query.map{|k,v|"#{k}=#{v}"}.join("&")))
     url_path = sections[path] && sections[path][:url_path] || path.to_s
-    subpath && (url_path = format("%s/%s", url_path, subpath))
-    url_path = url_path.squeeze '/'
+    url_path = "/#{url_path}#{subpath}"
+    url_path = url_path.squeeze('/')
     "#{context_path}#{url_path}#{params}"
   end
 
 private
 
   def check_for_context
-    if $servlet_context
-      return $servlet_context.getContextPath
-    else
-      return ""
-    end
+    $servlet_context && $servlet_context.getContextPath || ""
   end
 end
 
