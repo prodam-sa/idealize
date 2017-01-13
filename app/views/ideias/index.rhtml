@@ -105,13 +105,16 @@
           </div>
         <%end%>
 
-        <%if @relatorio.ranking.size.between? 1, 3%>
+        <%if @relatorio.ranking.size >= 3%>
           <%[:gold, :silver, :bronze].each_with_index do |botton, i|%>
             <%=yield_content :ranking_item, @relatorio.ranking[i], i+1, botton if @relatorio.ranking[i]%>
           <%end%>
+          <%@relatorio.ranking[3..9].each_with_index do |info, i|%>
+            <%=yield_content :ranking_item, info, i+4, nil%>
+          <%end%>
         <%else%>
-          <%@relatorio.ranking.each_with_index do |info, i|%>
-            <%=yield_content :ranking_item, info, 3, nil%>
+          <%@relatorio.ranking[0..9].each_with_index do |info, i|%>
+            <%=yield_content :ranking_item, info, i+1, :coin%>
           <%end%>
         <%end%>
       </div><!--/.mdl-list-->
