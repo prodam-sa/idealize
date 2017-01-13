@@ -30,6 +30,10 @@ module AuthenticationHelper
     }
   end
 
+  def session_user
+    @session_user ||= session[:user] && session[:user] || {}
+  end
+
   def disconect!
     session[:user] = nil
   end
