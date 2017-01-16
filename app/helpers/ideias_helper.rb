@@ -71,9 +71,16 @@ module IdeiasHelper
                     descricao: mensagem
   end
 
+  def pontos_avaliacao(ideia)
+    (ideia.avaliacao && ideia.avaliacao) && ideia.avaliacao.pontos || 0
+  end
+
   def imagem_premiacao(ideia)
-    ponto = ideia.avaliacao && ideia.avaliacao && ideia.avaliacao.classificacao.ponto_maximo || 0
-    format("%02d.svg", ponto)
+    format("%02d.svg", (ideia.avaliacao && ideia.avaliacao) && ideia.avaliacao.classificacao.ponto_maximo || 0)
+  end
+
+  def rotulo_premiacao(ideia)
+    (ideia.avaliacao && ideia.avaliacao && ideia.avaliacao.classificacao) && ideia.avaliacao.classificacao.titulo || "Sem avaliação"
   end
 
   def mensagem(texto)
