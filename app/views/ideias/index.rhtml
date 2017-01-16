@@ -44,10 +44,10 @@
       <%@ideias.each_with_index do |ideia, i|%>
         <div class="mdl-cell mdl-cell--12-col-desktop mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card__actions mdl-card--border mdl-grid">
           <%is_avaliado = !ideia.avaliacao.nil?%>
-          <div class="mdl-cell mdl-cell--middle mdl-cell--2-col-desktop mdl-cell--2-col-tablet mdl-cell--1-col-phone">
-            <div class="mdl-typography--text-center">
-              <img src="<%=path_to "img/premiacao/#{imagem_premiacao ideia}"%>" class="prd-card__media-premiacao"/>
-            </div>
+          <div class="mdl-cell mdl-cell--top mdl-cell--2-col-desktop mdl-cell--2-col-tablet mdl-cell--1-col-phone mdl-typography--text-center">
+            <img src="<%=path_to "img/premiacao/#{imagem_premiacao ideia}"%>" class="prd-card__media-premiacao"/>
+            <small><em><%=rotulo_premiacao ideia%></em></small><br/>
+            <small><em><%=pontos_avaliacao ideia%> pontos</em></small>
           </div><!--/.mdl-cell-->
 
           <div class="mdl-cell mdl-cell--9-col-desktop mdl-cell--5-col-tablet mdl-cell--2-col-phone">
