@@ -49,7 +49,7 @@
               <img src="<%=path_to "img/premiacao/#{imagem_premiacao ideia}"%>" class="prd-card__media-premiacao"/>
             </div>
           </div><!--/.mdl-cell-->
-  
+
           <div class="mdl-cell mdl-cell--9-col-desktop mdl-cell--5-col-tablet mdl-cell--2-col-phone">
             <p class="prd-text--hyphenated">
               <%=ideia.titulo%>
@@ -60,12 +60,12 @@
                 <i class="material-icons">thumb_up</i>
                 <%=@relatorio.lista_ideias_apoiadores[ideia.id] && @relatorio.lista_ideias_apoiadores[ideia.id].size || 0%>
               </small>
-  
+
               <small class="prd-card__action">
                 <i class="material-icons">people</i>
                 <%=@relatorio.lista_ideias_coautores[ideia.id] && @relatorio.lista_ideias_coautores[ideia.id].size || 0%>
               </small>
-  
+
               <small class="prd-card__action">
                 <i class="material-icons">share</i>
                 <%=@relatorio.lista_ideias_coautores[ideia.id] && @relatorio.lista_ideias_coautores[ideia.id].size || 0%>
@@ -80,6 +80,44 @@
           </div><!--/.mdl-cell-->
         </div><!--/.mdl-cell-->
       <%end%>
+
+      <div class="mdl-card__actions mdl-card--border mdl-typography--text-center">
+        <%if @pagination[:total] > @pagination[:limit]%>
+        <%end%>
+        <p>Página <%=@pagination[:current]%> de <%=@pagination[:total]%></p>
+
+        <a id="page-previous" href="<%=path_to :ideias, p: @pagination[:previous]%>" class="mdl-button mdl-button--colored mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+          <i class="material-icons">keyboard_arrow_left</i>
+        </a>
+        <span class="mdl-tooltip mdl-tooltip--top" for="page-previous">Página anterior</span>
+
+        <a id="page-first" href="<%=path_to :ideias, p: 1%>" class="mdl-button mdl-button--colored mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+          <i class="material-icons">skip_previous</i>
+        </a>
+        <span class="mdl-tooltip mdl-tooltip--top" for="page-first">Primeira página</span>
+
+        <button id="page-select" class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored">
+          <i class="material-icons">more_horiz</i>
+        </button>
+        <span class="mdl-tooltip mdl-tooltip--top" for="page-select">Selecione uma página</span>
+
+        <div class="mdl-menu mdl-menu--top-left mdl-js-menu" for="page-select">
+          <%(1..@pagination[:total]).each do |page|%>
+            <%is_disabled = @pagination[:current] == page ? :disabled : ''%>
+            <a href="<%=path_to :ideias, p: page%>" class="mdl-menu__item" <%=is_disabled%>><%=page%></a>
+          <%end%>
+        </div>
+
+        <a id="page-last" href="<%=path_to :ideias, p: @pagination[:total]%>" class="mdl-button mdl-button--colored mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+          <i class="material-icons">skip_next</i>
+        </a>
+        <span class="mdl-tooltip mdl-tooltip--top" for="page-last">Última página</span>
+
+        <a id="page-next" href="<%=path_to :ideias, p: @pagination[:next]%>" class="mdl-button mdl-button--colored mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+          <i class="material-icons">keyboard_arrow_right</i>
+        </a>
+        <span class="mdl-tooltip mdl-tooltip--top" for="page-next">Próxima página</span>
+      </div><!--/.mdl-card__actions-->
     </div><!--/.mdl-grid-->
   </div><!--/.mdl-cell-->
 
@@ -120,20 +158,6 @@
       </div><!--/.mdl-list-->
     </div><!--/.mdl-card-->
   </div><!--/.mdl-cell-->
-
-  <p class="mdl-cell mdl-cell--12-col mdl-typography--text-center">
-    <a href="<%=path_to :ideias, p: @pagination[:previous]%>" class="mdl-button mdl-button--colored mdl-button--icon mdl-js-button mdl-js-ripple-effect">
-      <i class="material-icons">keyboard_arrow_left</i>
-    </a>
-    <%(1..@pagination[:total]).each do |page|%>
-      <a href="<%=path_to :ideias, p: @pagination[:previous]%>" class="mdl-button mdl-button--colored mdl-button--icon mdl-js-button mdl-js-ripple-effect">
-        <small><%=page%></small>
-      </a>
-    <%end%>
-    <a href="<%=path_to :ideias, p: @pagination[:next]%>" class="mdl-button mdl-button--colored mdl-button--icon mdl-js-button mdl-js-ripple-effect">
-      <i class="material-icons">keyboard_arrow_right</i>
-    </a>
-  </p>
 </div>
 <%content_for :fab do%>
   <%=partial 'fab'%>
