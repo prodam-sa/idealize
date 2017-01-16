@@ -791,7 +791,7 @@ select.mdl-textfield__input:before {
     font-size: 120%;
     text-shadow: 1px 1px 1px #777; }
     .prd-ranking-list .prd-ranking-list__item-botton.prd-ranking-list__item-botton--coin
-    { background-image: radial-gradient(100% 60%, rgba(63,81,181,1.00) 10px, rgba(63,81,181,0.50)); }
+    { background-image: radial-gradient(100% 60%, rgba(77,77,77,1.00) 10px, rgba(77,77,77,0.50)); }
     .prd-ranking-list .prd-ranking-list__item-botton.prd-ranking-list__item-botton--gold
     { background-image: radial-gradient(100% 60%, rgba(212,175,55,1.00), rgba(212,175,175,0.50)); }
     .prd-ranking-list .prd-ranking-list__item-botton.prd-ranking-list__item-botton--silver
