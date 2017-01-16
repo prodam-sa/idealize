@@ -101,10 +101,14 @@
         </button>
         <span class="mdl-tooltip mdl-tooltip--top" for="page-select">Selecione uma página</span>
 
-        <div class="mdl-menu mdl-menu--top-left mdl-js-menu" for="page-select">
-          <%(1..@pagination[:total]).each do |page|%>
-            <%is_disabled = @pagination[:current] == page ? :disabled : ''%>
-            <a href="<%=path_to :ideias, p: page%>" class="mdl-menu__item" <%=is_disabled%>><%=page%></a>
+        <div class="mdl-menu mdl-menu--top-right mdl-js-menu" for="page-select">
+          <%(1..@pagination[:total]).each_slice 5 do |pages|%>
+            <span class="mdl-menu__item">
+              <%pages.each do |page|%>
+                <%is_disabled = @pagination[:current] == page ? :disabled : ''%>
+                <a href="<%=path_to :ideias, p: page%>" class="mdl-button mdl-button--icon mdl-button--colored" <%=is_disabled%>><small><%=page%></small></a>
+              <%end%>
+            </span>
           <%end%>
         </div>
 
