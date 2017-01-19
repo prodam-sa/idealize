@@ -6,6 +6,7 @@ class HomeController < ApplicationController
   helpers IdeiasHelper, DateHelper
 
   before do
+    @relatorio = Relatorio.new
     @page = controllers[:home]
   end
 
@@ -13,11 +14,14 @@ class HomeController < ApplicationController
     if authenticated?
       redirect path_to :ideias
     else
-      @relatorio = Relatorio.new
       @premiacao = Situacao.chave(:avaliacao)
       @moderacao = Situacao.chave(:publicacao)
       view 'wellcome', layout: :landpage
     end
+  end
+
+  get '/ranking' do
+    view 'ranking'
   end
 
   get '/faq' do
