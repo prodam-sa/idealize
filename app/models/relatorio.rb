@@ -286,6 +286,14 @@ class Relatorio
     end
   end
 
+  def ranking_autor(autor = @autor)
+    @pontuacao_ranking ||= {}
+    @autor && @pontuacao_ranking = ranking.select do |info|
+      info[:autor_id] == autor.id
+    end.first
+    @pontuacao_ranking[:total_pontos] || 0
+  end
+
 private
 
   def filtro_por_data(nome = :publicacao)
