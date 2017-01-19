@@ -1,4 +1,15 @@
 <div class="mdl-card mdl-card--full-width mdl-shadow--2dp">
+  <div class="mdl-card__menu">
+    <button id="user-options" class="mdl-button mdl-button--icon mdl-js-button">
+      <i class="material-icons">keyboard_arrow_down</i>
+    </button>
+
+    <div class="mdl-menu mdl-menu--bottom-right mdl-js-menu" for="user-options">
+      <a class="mdl-menu__item" href="<%=path_to :conta%>">Conta</a>
+      <a class="mdl-menu__item" href="<%=path_to :conta, :sair%>">Sair</a>
+    </div>
+  </div>
+
   <div class="prd-card-account">
     <div class="prd-card-account__avatar">
       <img src="<%=gravatar @usuario.email, size: 320, default: 'mm'%>" alt="<%=@usuario.nome%>" class="prd-card-account__avatar-image">
