@@ -55,7 +55,7 @@ class ApplicationController < Sinatra::Base
     @relatorio = Relatorio.new
     if authenticated?
       @info = {}
-      @usuario ||= Autor.eager(ideias: :avaliacao).where(id: session_user[:id]).all.first
+      @usuario ||= Autor.find_by_id session_user[:id]
       @info[:total_pontos] ||= @relatorio.ranking.select do |info|
         info[:autor_id] == @usuario.id
       end.first[:total_pontos]
