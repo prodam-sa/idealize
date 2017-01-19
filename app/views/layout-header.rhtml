@@ -1,19 +1,18 @@
 <header class="prd-layout__header mdl-layout__header">
   <div class="mdl-layout__header-row">
-    <div class="mdl-layout--small-screen-only">
-      <span class="mdl-layout-title prd-layout-title">
-        <i class="material-icons"><%=@page[:icon]%></i>
-        <span><%=@page[:title]%></span>
-      </span>
-    </div>
+    <span class="mdl-layout__title mdl-layout--large-screen-only">
+      <a href="<%=path_to :home%>" class=" prd-layout__brand-icon">
+        <img src="<%=path_to '/img/brand-colored.svg'%>" alt="Idealize" title="Idealize"/>
+      </a>
+    </span>
 
-    <div class="mdl-layout--large-screen-only">
-      <span class="mdl-layout-title prd-layout-icon-expanded">
-        <a href="<%=path_to :home%>">
-          <img src="<%=path_to '/img/brand-colored.svg'%>" alt="Idealize" title="Idealize"/>
-        </a>
-      </span>
-    </div>
+    <span class="mdl-layout__title mdl-layout--large-screen-only"><%=@page[:title]%></span>
+
+    <div class="">
+      <nav class="prd-navigation mdl-navigation mdl-layout--small-screen-only">
+        <%=yield_content :backward%>
+      </nav>
+    </div><!--/.mdl-layout-small-screen-only-->
 
     <div class="mdl-layout-spacer"></div>
 

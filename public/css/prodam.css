@@ -124,11 +124,12 @@ body {
 }
 
 .prd-landpage-icon-expanded,
-.prd-layout-icon-expanded {
+.prd-layout__brand-icon {
   display: flex !important;
   flex-direction: row;
   align-items: center;
   left: 0px;
+  margin-right: 1rem;
 }
 
 .prd-landpage-icon-expanded {
@@ -139,13 +140,17 @@ body {
   max-width: 128px;
 }
 
-.prd-layout-icon-expanded img {
+.prd-layout__brand-icon img {
   max-width: 80px;
 }
 
 
 .prd-layout-title .material-icons {
   margin-right: 0.50em;
+}
+
+.mdl-layout__drawer-button {
+  line-height: 48px !important;
 }
 
 .mdl-grid.prd-grid--border-bottom {
