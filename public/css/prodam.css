@@ -785,16 +785,23 @@ select.mdl-textfield__input:before {
     border: 4px solid rgba(77,77,77,0.20);
     border-radius: 50%;
     background-color: rgba(200,200,200, 0.50);
+    background-image: url('/img/ranking/coin.svg');
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-position: center;
+    background-size: 46px;
     letter-spacing: 0.04em;
     text-align: center;
     line-height: 32px;
+    color: rgba(200,200,200,0.90);
     font-size: 120%;
-    text-shadow: 1px 1px 1px #777; }
+    text-shadow: 1px 1px 1px transparent;
+    text-shadow: 1px 1px 1px rgba(7,7,7,0.80); }
     .prd-ranking-list .prd-ranking-list__item-botton.prd-ranking-list__item-botton--coin
-    { background-image: radial-gradient(100% 60%, rgba(200,200,200,1.00) 10px, rgba(200,200,200,0.50)); }
+    { background-image: url('/img/ranking/coin.svg'); }
     .prd-ranking-list .prd-ranking-list__item-botton.prd-ranking-list__item-botton--gold
-    { background-image: radial-gradient(100% 60%, rgba(212,175,55,1.00), rgba(212,175,175,0.50)); }
+    { background-image: url('/img/ranking/gold.svg'); }
     .prd-ranking-list .prd-ranking-list__item-botton.prd-ranking-list__item-botton--silver
-    { background-image: radial-gradient(100% 60%, rgba(160,160,160,1.00), rgba(160,160,160,0.50)); }
+    { background-image: url('/img/ranking/silver.svg'); }
     .prd-ranking-list .prd-ranking-list__item-botton.prd-ranking-list__item-botton--bronze
-    { background-image: radial-gradient(100% 60%, rgba(205,127,50,1.00), rgba(205,127,50,0.50)); }
+    { background-image: url('/img/ranking/bronze.svg'); }
