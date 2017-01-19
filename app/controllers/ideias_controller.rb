@@ -22,7 +22,7 @@ class IdeiasController < ApplicationController
   end
 
   get '/' do
-    limit = (params[:l] && params[:l].to_i > 0 && params[:l] || 5).to_i
+    limit = (params[:l] && params[:l].to_i > 0 && params[:l] || 7).to_i
     page  = (params[:p] && params[:p].to_i > 0 && params[:p] || 1).to_i
     dataset = Ideia.find_by_situacao(['publicacao', 'avaliacao']).eager(:autor, :categorias, avaliacao: :classificacao)
     dataset = case params[:o]
