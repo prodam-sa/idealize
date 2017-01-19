@@ -52,10 +52,14 @@ class ApplicationController < Sinatra::Base
   before do
     @page = {}
     @fab = { url: path_to(:postagens, :nova), icon: :edit, tooltip: 'Nova ideia!' }
+    @relatorio = Relatorio.new
     if authenticated?
       @info = {}
       @usuario ||= Autor.eager(ideias: :avaliacao).where(id: session_user[:id]).all.first
-      @info[:total_mensagens] ||= Mensagem.find_nao_lidas_para(session_user[:id]).count
+      @info[:total_pontos] ||= @relatorio.ranking.select do |info|
+        info[:autor_id] == @usuario.id
+      end.first[:total_pontos]
+      @info[:total_mensagens] ||= Mensagem.find_nao_lidas_para(@usuario.id).count
       @info[:total_ideias] ||= @usuario.ideias.size
       @info[:total_premiadas] ||= @usuario.ideias.map do |ideia|
         ideia if ideia.avaliacao

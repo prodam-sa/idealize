@@ -33,7 +33,6 @@ class IdeiasController < ApplicationController
                 else dataset.reverse(:data_publicacao)
               end
 
-    @relatorio = Relatorio.new
     @premiacao = Situacao.chave(:avaliacao)
     @moderacao = Situacao.chave(:publicacao)
 
@@ -51,7 +50,6 @@ class IdeiasController < ApplicationController
 
   get '/pesquisa' do
     @termo = params[:termo]
-    @relatorio = Relatorio.new ideias: Ideia.search(@termo).where(situacao: @situacoes).all
     view 'ideias/search'
   end
 
