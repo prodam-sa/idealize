@@ -50,6 +50,7 @@ class IdeiasController < ApplicationController
 
   get '/pesquisa' do
     @termo = params[:termo]
+    @relatorio.ideias = Ideia.search(@termo).all
     view 'ideias/search'
   end
 
