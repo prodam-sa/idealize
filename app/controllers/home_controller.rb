@@ -20,6 +20,13 @@ class HomeController < ApplicationController
     end
   end
 
+  get '/perfil', authenticate: true do
+    unless authorized?
+      view 'home/profile'
+    else
+    end
+  end
+
   get '/ranking' do
     view 'home/ranking'
   end
@@ -34,15 +41,6 @@ class HomeController < ApplicationController
     @page = pages[:versao]
     @changelog = data @page[:data]
     view 'paginas/changelog'
-  end
-
-  get '/painel', authenticate: true do
-    unless authorized?
-      redirect path_to(:postagens)
-    else
-      @page = pages[:painel]
-      view 'painel/index'
-    end
   end
 end
 
