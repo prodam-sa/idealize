@@ -1,81 +1,13 @@
-<div class="mdl-grid prd-background--radial-gradient prd-layout--max-height mdl-shadow--2dp">
-  <div class="mdl-cell mdl-cell--4-col-desktop mdl-cell--2-offset-desktop mdl-cell--4-col-tablet mdl-cell--4-col-phone">
-    <form action="<%=path_to :conta, :acessar%>" method="post" enctype="application/x-www-form-urlencoded" class="mdl-card mdl-card--full-width mdl-shadow--6dp">
-      <div class="mdl-card__title mdl-card--border">
-        <h2 class="mdl-card__title-text">Já tem conta? Acesse!</h2>
-      </div>
-      <div class="mdl-card__supporting-text">
-        <div class="mdl-textfield mdl-textfield--floating-label mdl-textfield--full-width mdl-js-textfield">
-          <label for="usuario" class="mdl-textfield__label">Usuário</label>
-          <input type="text" id="usuario" name="usuario[nome_usuario]" class="mdl-textfield__input"/>
-        </div>
-        <div class="mdl-textfield mdl-textfield--floating-label mdl-textfield--full-width mdl-js-textfield">
-          <label for="senha" class="mdl-textfield__label">Password</label>
-          <input type="password" id="senha" name="usuario[senha]" class="mdl-textfield__input"/>
-        </div>
-      </div>
-
-      <div class="mdl-card__actions mdl-card--border">
-        <button class="mdl-button mdl-button--raised mdl-js-button mdl-js-ripple-effect">Acessar</button>
-        <a href="<%=path_to :home%>" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">Cancelar</a>
-      </div>
-    </form>
+<div class="mdl-grid prd-background--radial-gradient" style="">
+  <div class="mdl-cell mdl-cell--3-col-desktop mdl-cell--4-col-tablet mdl-cell--order-2-tablet mdl-cell--4-col-phone mdl-cell--order-2-phone">
+    <%=partial 'conta/card-usuario-resumo'%>
   </div><!--/.mdl-cell-->
 
-  <div class="mdl-cell mdl-cell--4-col-desktop mdl-cell--4-col-tablet mdl-cell--4-col-phone">
-    <form action="<%=path_to :usuarios%>" method="post" enctype="application/x-www-form-urlencoded" class="mdl-card mdl-card--full-width mdl-shadow--2dp">
-      <div class="mdl-card__title mdl-card--border">
-        <h2 class="mdl-card__title-text">Não tem conta? Crie a sua!</h2>
-      </div>
+  <div class="mdl-cell mdl-cell--6-col-desktop mdl-cell--4-col-tablet mdl-cell--order-2-tablet mdl-cell--4-col-phone mdl-cell--order-2-phone">
+    <%=partial 'conta/form', locals: { path: path_to(:conta, :atualizar), title: 'Dados de usuário' }%>
+  </div><!--/.mdl-cell-->
+</div><!--/.mdl-grid-->
 
-      <div class="mdl-card__supporting-text mdl-card--expand">
-        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-textfield--full-width <%='is-invalid' if @usuario.errors[:nome_usuario]%>">
-          <label for="usuario_nome_usuario" class="mdl-textfield__label">Usuário</label>
-          <input type="text" id="usuario_nome_usuario" name="usuario[nome_usuario]" class="mdl-textfield__input" value="<%=@usuario.nome_usuario%>" pattern="<%=username_pattern%>"/>
-          <%if @usuario.errors[:nome_usuario]%>
-            <span class="mdl-textfield__error"><%=@usuario.errors[:nome_usuario].join(', ')%>.</span>
-          <%end%>
-        </div>
-
-        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-textfield--full-width <%='is-invalid' if @usuario.errors[:email]%>">
-          <label for="usuario_email" class="mdl-textfield__label">Email</label>
-          <input type="email" id="usuario_email" name="usuario[email]" class="mdl-textfield__input" pattern="<%=email_pattern%>" value="<%=@usuario.email%>"/>
-          <%if @usuario.errors[:email]%>
-            <span class="mdl-textfield__error"><%=@usuario.errors[:email].join(', ')%>.</span>
-          <%end%>
-        </div>
-
-        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-textfield--full-width <%='is-invalid' if @usuario.errors[:nome]%>">
-          <label for="usuario_nome" class="mdl-textfield__label">Nome</label>
-          <input type="text" id="usuario_nome" name="usuario[nome]" class="mdl-textfield__input" value="<%=@usuario.nome%>"/>
-          <%if @usuario.errors[:nome]%>
-            <span class="mdl-textfield__error"><%=@usuario.errors[:nome].join(', ')%>.</span>
-          <%end%>
-        </div>
-
-        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-textfield--full-width <%='is-invalid' if @usuario.errors[:senha]%>">
-          <label for="acesso_senha" class="mdl-textfield__label">Senha</label>
-          <input type="password" id="acesso_senha" name="acesso[senha]" class="mdl-textfield__input" value="" pattern=".{6,}"/>
-          <%if @usuario.errors[:senha]%>
-            <span class="mdl-textfield__error"><%=@usuario.errors[:senha].join(', ')%>.</span>
-          <%end%>
-        </div>
-
-        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-textfield--full-width">
-          <label for="acesso_confirmacao_senha" class="mdl-textfield__label">Confirmação da senha</label>
-          <input type="password" id="acesso_confirmacao_senha" name="acesso[confirmacao_senha]" class="mdl-textfield__input" value=""/>
-        </div>
-      </div>
-
-      <div class="mdl-card__actions mdl-card--border">
-        <button type="submit" name="_method" value="<%=@usuario.new? ? :post : :put%>" class="mdl-button mdl-button--raised mdl-js-button mdl-js-ripple-effect"/>
-          Salvar
-        </button>
-
-        <a href="/" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-          Cancelar
-        </a>
-      </div>
-    </form>
-  </div>
-</div>
+<%content_for :fab do%>
+  <%=partial 'fab'%>
+<%end%>

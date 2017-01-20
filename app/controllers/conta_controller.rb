@@ -8,21 +8,25 @@ class ContaController < ApplicationController
   end
 
   before '/:id/?:action?' do |id, action|
-    @usuario = Usuario[id.to_i]
+    id.to_i > 0 && @usuario = Usuario[id.to_i]
   end
 
   get '/' do
     if id = session_user[:id]
       @usuario = Usuario[id]
-      view 'conta/nova'
+      view 'conta/index'
     else
       redirect path_to(:conta, :nova)
     end
   end
 
   get '/nova' do
-    @usuario = Usuario.new
-    view 'conta/new', layout: :landpage
+    if id = session_user[:id]
+      redirect path_to(:conta)
+    else
+      @usuario = Usuario.new
+      view 'conta/new'
+    end
   end
 
   get '/acessar' do
