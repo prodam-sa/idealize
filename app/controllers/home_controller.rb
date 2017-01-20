@@ -16,12 +16,12 @@ class HomeController < ApplicationController
     else
       @premiacao = Situacao.chave(:avaliacao)
       @moderacao = Situacao.chave(:publicacao)
-      view 'wellcome', layout: :landpage
+      view 'home/wellcome', layout: :landpage
     end
   end
 
   get '/ranking' do
-    view 'ranking'
+    view 'home/ranking'
   end
 
   get '/faq' do
