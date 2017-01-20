@@ -20,11 +20,6 @@ class UsuariosController < ApplicationController
     redirect path_to :home
   end
 
-  get '/novo' do
-    @usuario = Usuario.new
-    view 'usuarios/form', layout: :signin
-  end
-
   post '/' do
     @usuario = Usuario.new(params[:usuario]).set_password(*params[:acesso].values)
 
