@@ -14,15 +14,19 @@ class ContaController < ApplicationController
   get '/' do
     if id = session_user[:id]
       @usuario = Usuario[id]
-      view 'usuarios/form', layout: :dashboard
+      view 'conta/nova'
     else
-      @usuario = Usuario.new
-      view 'acesso/index', layout: :landpage
+      redirect path_to(:conta, :nova)
     end
   end
 
+  get '/nova' do
+    @usuario = Usuario.new
+    view 'conta/new', layout: :landpage
+  end
+
   get '/acessar' do
-    view 'acesso/form', layout: :signin
+    view 'conta/form', layout: :signin
   end
 
   post '/acessar' do
