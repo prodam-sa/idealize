@@ -26,7 +26,7 @@ class ContaController < ApplicationController
   end
 
   get '/acessar' do
-    view 'conta/form', layout: :signin
+    view 'conta/login', layout: :signin
   end
 
   post '/acessar' do
