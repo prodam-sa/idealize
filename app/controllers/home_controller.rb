@@ -22,6 +22,7 @@ class HomeController < ApplicationController
 
   get '/perfil', authenticate: true do
     unless authorized?
+      @page.update title: 'Perfil', icon: 'account'
       view 'home/profile'
     else
     end
