@@ -49,16 +49,19 @@
       </button>
 
       <div class="mdl-menu mdl-menu--bottom-right mdl-js-menu" for="account-options">
-        <a href="<%=path_to :painel%>" class="mdl-menu__item">Painel</a>
+        <a href="<%=path_to :home, :perfil%>" class="mdl-menu__item">Perfil</a>
         <a href="<%=path_to :conta%>" class="mdl-menu__item">Conta</a>
-        <a href="<%=path_to :conta, :sair%>" class="mdl-menu__item">Sair</a>
       </div>
+
+      <a href="<%=path_to :conta, :sair%>" class="mdl-button mdl-button--icon">
+        <i class="material-icons">settings_power</i>
+      </a>
     <%else%>
       <nav class="prd-navigation mdl-navigation">
         <a href="#login" class="prd-navigation__link mdl-navigation__link mdl-js-ripple-effect mdl-button--open-dialog">
           Login
         </a>
-        <a href="<%=path_to :usuarios, :novo%>" class="mdl-button mdl-button--raised mdl-color--accent mdl-js-button mdl-js-ripple-effect mdl-button--open-dialog">
+        <a href="<%=path_to :conta, :nova%>" class="mdl-button mdl-button--raised mdl-color--accent mdl-js-button mdl-js-ripple-effect mdl-button--open-dialog">
           Cadastro
         </a>
       </nav>
