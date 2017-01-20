@@ -19,7 +19,7 @@
     :profiles: [usuario]
 
   '/conta':
-    :controller: AcessoController
+    :controller: ContaController
     :title: Conta
     :description: Administre sua conta.
     :layout:

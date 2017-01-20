@@ -2,7 +2,7 @@
 
 module Prodam::Idealize
 
-class AcessoController < ApplicationController
+class ContaController < ApplicationController
   before do
     @page = controllers[:conta]
   end
