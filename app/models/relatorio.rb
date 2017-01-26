@@ -290,7 +290,7 @@ class Relatorio
     @pontuacao_ranking ||= {}
     autor && @pontuacao_ranking = ranking.select do |info|
       info[:autor_id] == autor.id
-    end.first
+    end.first || {}
     @pontuacao_ranking[:total_pontos] || 0
   end
 
