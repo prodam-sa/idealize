@@ -83,7 +83,7 @@
 </div><!--/.mdl-grid-->
 
 <div class="mdl-grid mdl-shadow--2dp">
-  <div class="mdl-cell mdl-cell--4-col-desktop mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-color-text--grey-700">
+  <div class="mdl-cell mdl-cell--6-col-desktop mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-color-text--grey-700">
     <div class="mdl-card mdl-card--full-width prd-background--transparent">
       <div class="mdl-card__media prd-background--transparent mdl-typography--text-center">
         <img src="<%=path_to 'img/ideia-cadastrada.svg'%>" alt=""/>
@@ -97,33 +97,19 @@
     </div>
   </div>
 
-  <div class="mdl-cell mdl-cell--4-col-desktop mdl-cell--8-col-tablet mdl-cell--4-col-phone">
+  <div class="mdl-cell mdl-cell--6-col-desktop mdl-cell--4-col-tablet mdl-cell--4-col-phone">
     <div class="mdl-card mdl-card--full-width prd-background--transparent mdl-color-text--deep-purple-300">
       <div class="mdl-card__media prd-background--transparent mdl-typography--text-center">
         <img src="<%=path_to 'img/ideia-premiada.svg'%>" alt=""/>
       </div>
       <div class="mdl-grid">
-        <div class="mdl-cell mdl-cell--5-col-desktop mdl-cell--hide-tablet mdl-cell--hide-phone mdl-typography--text-right"><big class="mdl-typography--display-3"><%=@relatorio.total_ideias_por_situacao[@premiacao.id] || :Sem%></big></div>
+        <div class="mdl-cell mdl-cell--5-col-desktop mdl-cell--hide-tablet mdl-cell--hide-phone mdl-typography--text-right"><big class="mdl-typography--display-3"><%=@relatorio.total_ideias_por_situacao[:avaliacao] || :Sem%></big></div>
         <div class="mdl-cell mdl-cell--7-col-desktop mdl-cell--hide-tablet mdl-cell--hide-phone mdl-typography--text-left mdl-cell--middle"><span class="mdl-typography--title">Ideias <strong>premiadas</strong></span></div>
-        <div class="mdl-cell mdl-cell--hide-desktop mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-typography--text-center"><big class="mdl-typography--display-3"><%=@relatorio.total_ideias_por_situacao[@premiacao.id] || :Sem%></big></div>
+        <div class="mdl-cell mdl-cell--hide-desktop mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-typography--text-center"><big class="mdl-typography--display-3"><%=@relatorio.total_ideias_por_situacao[:avaliacao] || :Sem%></big></div>
         <div class="mdl-cell mdl-cell--hide-desktop mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-typography--text-center"><span class="mdl-typography--title">Ideias <strong>premiadas</strong></span></div>
       </div>
-    </div>
-  </div>
-
-  <div class="mdl-cell mdl-cell--4-col-desktop mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-color-text--grey-700">
-    <div class="mdl-card mdl-card--full-width prd-background--transparent">
-      <div class="mdl-card__media prd-background--transparent mdl-typography--text-center">
-        <img src="<%=path_to 'img/ideia-moderada.svg'%>" alt=""/>
-      </div>
-      <div class="mdl-grid">
-        <div class="mdl-cell mdl-cell--5-col-desktop mdl-cell--hide-tablet mdl-cell--hide-phone mdl-typography--text-right"><big class="mdl-typography--display-3"><%=@relatorio.total_ideias_por_situacao[@moderacao.id] || :Sem%></big></div>
-        <div class="mdl-cell mdl-cell--7-col-desktop mdl-cell--hide-tablet mdl-cell--hide-phone mdl-typography--text-left mdl-cell--middle"><span class="mdl-typography--title">Ideias <strong>moderadas</strong></span></div>
-        <div class="mdl-cell mdl-cell--hide-desktop mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-typography--text-center"><big class="mdl-typography--display-3"><%=@relatorio.total_ideias_por_situacao[@moderacao.id] || :Sem%></big></div>
-        <div class="mdl-cell mdl-cell--hide-desktop mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-typography--text-center"><span class="mdl-typography--title">Ideias <strong>moderadas</strong></span></div>
-      </div>
-    </div>
-  </div>
+    </div><!--/.mdl-card-->
+  </div><!--/.mdl-cell-->
 </div><!--/.mdl-grid-->
 
 <div class="mdl-grid mdl-color--white mdl-color-text--deep-purple-300">

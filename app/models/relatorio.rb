@@ -47,12 +47,11 @@ class Relatorio
         FULL OUTER JOIN ideia_categoria ON (ideia_categoria.ideia_id = ideia.id)
         %s",
     total_ideias_por_situacao: "
-      SELECT situacao.id AS situacao_id
+      SELECT situacao
            , COUNT(*) AS total
         FROM ideia
-        INNER JOIN situacao ON (situacao.chave = ideia.situacao)
         %s
-        GROUP BY situacao.id",
+        GROUP BY situacao",
     total_ideias_por_autor: "
       SELECT ideia.autor_id
            , COUNT(*) AS total
@@ -222,7 +221,7 @@ class Relatorio
   def total_ideias_por_situacao!
     @total_ideias_por_situacao = {}
     Database[sql :total_ideias_por_situacao, filtro_por_data(:criacao)].all.map do |row|
-      @total_ideias_por_situacao[row[:situacao_id]] = row[:total].to_i
+      @total_ideias_por_situacao[row[:situacao].to_sym] = row[:total].to_i
     end
     @total_ideias_por_situacao
   end
