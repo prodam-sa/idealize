@@ -25,27 +25,35 @@
     </div>
 
     <div class="mdl-cell mdl-cell--6-col-desktop mdl-cell--4-cell-tablet mdl-cell--2-col-phone">
-      <img src="<%=path_to 'img/ideia-cadastrada.svg'%>" alt="" style="width: 4rem"/>
-      <p class="mdl-typography--title"><%=@info[:total_ideias]%></p>
-      <small>Ideias<br/><b>criadas</b></small>
+      <a href="<%=path_to :ideias, autor: :usuario%>" class="prd-fake-button">
+        <img src="<%=path_to 'img/ideia-cadastrada.svg'%>" alt="" style="width: 4rem"/>
+        <p class="mdl-typography--title"><%=@info[:total_ideias]%></p>
+        <small>Ideias<br/><b>cadastradas</b></small>
+      </a>
     </div>
 
     <div class="mdl-cell mdl-cell--6-col-desktop mdl-cell--4-cell-tablet mdl-cell--2-col-phone">
-      <img src="<%=path_to 'img/ideia-premiada.svg'%>" alt="" style="width: 4rem"/>
-      <p class="mdl-typography--title"><%=@info[:total_premiadas]%></p>
-      <small>Ideias<br/><b>premiadas</b></small>
+      <a href="<%=path_to :ideias, autor: :usuario, situacao: :avaliacao%>" class="prd-fake-button">
+        <img src="<%=path_to 'img/ideia-premiada.svg'%>" alt="" style="width: 4rem"/>
+        <p class="mdl-typography--title"><%=@info[:total_ideias_avaliadas]%></p>
+        <small>Ideias<br/><b>premiadas</b></small>
+      </a>
     </div>
 
     <div class="mdl-cell mdl-cell--6-col-desktop mdl-cell--4-cell-tablet mdl-cell--2-col-phone">
-      <img src="<%=path_to 'img/ideia-moderada.svg'%>" alt="" style="width: 4rem"/>
-      <p class="mdl-typography--title"><%=@info[:total_moderadas]%></p>
-      <small>Ideias<br/><b>moderadas</b></small>
+      <a href="<%=path_to :ideias, autor: :usuario, situacao: :publicacao%>" class="prd-fake-button">
+        <img src="<%=path_to 'img/ideia-moderada.svg'%>" alt="" style="width: 4rem"/>
+        <p class="mdl-typography--title"><%=@info[:total_ideias_publicadas]%></p>
+        <small>Ideias<br/><b>publicadas</b></small>
+      </a>
     </div>
 
     <div class="mdl-cell mdl-cell--6-col-desktop mdl-cell--4-cell-tablet mdl-cell--2-col-phone">
-      <img src="<%=path_to 'img/ideia-edicao.svg'%>" alt="" style="width: 4rem"/>
-      <p class="mdl-typography--title"><%=@info[:total_rascunhos]%></p>
-      <small>Ideias<br/><b>postadas</b></small>
+      <a href="<%=path_to :ideias, autor: :usuario, situacao: :postagem%>" class="prd-fake-button">
+        <img src="<%=path_to 'img/ideia-edicao.svg'%>" alt="" style="width: 4rem"/>
+        <p class="mdl-typography--title"><%=@info[:total_ideias_postadas]%></p>
+        <small>Ideias<br/><b>postadas</b></small>
+      </a>
     </div>
   </div>
 </div><!--/.mdl-card-->

@@ -59,14 +59,14 @@ class ApplicationController < Sinatra::Base
       @info[:total_pontos] ||= @relatorio.ranking_autor(@usuario)
       @info[:total_mensagens] ||= Mensagem.find_nao_lidas_para(@usuario.id).count
       @info[:total_ideias] ||= @usuario.ideias.size
-      @info[:total_premiadas] ||= @usuario.ideias.map do |ideia|
-        ideia if ideia.avaliacao
+      @info[:total_ideias_avaliadas] ||= @usuario.ideias.select do |ideia|
+        ideia.situacao? :avaliacao
       end.compact.size
-      @info[:total_moderadas] ||= @usuario.ideias.map do |ideia|
-        ideia if ideia.data_publicacao and ideia.avaliacao.nil?
+      @info[:total_ideias_publicadas] ||= @usuario.ideias.select do |ideia|
+        ideia.situacao? :publicacao
       end.compact.size
-      @info[:total_rascunhos] ||= @usuario.ideias.map do |ideia|
-        ideia if ideia.data_publicacao.nil?
+      @info[:total_ideias_postadas] ||= @usuario.ideias.select do |ideia|
+        ideia.situacoes? :rascunho, :revisao
       end.compact.size
     end
   end
