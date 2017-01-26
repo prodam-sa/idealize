@@ -267,10 +267,10 @@ img.prd-brand {
   text-decoration: none;
   color: inherit;
   border-radius: 0.25rem;
-  border: 1px solid rgba(77,77,77,0.10);
+  border: 1px solid rgba(77,77,77,0.25);
   transition: all 0.25s; }
   .prd-fake-button:hover
-  { background-color: rgba(77,77,77,0.05); }
+  { background-color: rgba(77,77,255,0.25); }
 
 .prd-button--float-right {
   display: flex;
