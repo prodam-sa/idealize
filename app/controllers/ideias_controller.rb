@@ -22,29 +22,26 @@ class IdeiasController < ApplicationController
   end
 
   get '/' do
-    limit = (params[:l] && params[:l].to_i > 0 && params[:l] || 7).to_i
-    page  = (params[:p] && params[:p].to_i > 0 && params[:p] || 1).to_i
-    dataset = Ideia.find_by_situacao(['publicacao', 'avaliacao']).eager(:autor, :categorias, avaliacao: :classificacao)
-    dataset = case params[:o]
+    limit = (params[:limite].to_i > 0 && params[:limite] || 7).to_i
+    page  = (params[:pagina].to_i > 0 && params[:pagina] || 1).to_i
+    dataset = params[:autor] && params[:autor] =~ /usuario/i && @usuario.ideias_dataset || Ideia.find_by_situacao(['publicacao', 'avaliacao'])
+    dataset = case params[:ordem]
                 when 'a~z' then dataset.order(:titulo)
                 when 'z~a' then dataset.reverse(:titulo)
                 when 'jan~dez' then dataset.order(:data_publicacao)
                 when 'dez~jan' then dataset.reverse(:data_publicacao)
                 else dataset.reverse(:data_publicacao)
               end
-
-    @premiacao = Situacao.chave(:avaliacao)
-    @moderacao = Situacao.chave(:publicacao)
-
-    @pagination = { limit: limit, offset: 0, order: params[:o] }
-    @pagination[:total] = (Ideia.find_by_situacao(['publicacao', 'avaliacao']).count.to_i / @pagination[:limit].to_f).ceil
-    @pagination[:current] = page
-    @pagination[:current] = @pagination[:current] > @pagination[:total] ? @pagination[:total] : @pagination[:current]
+    @pagination = { limit: limit, offset: 0, order: params[:ordem] }
+    @pagination[:total] = (dataset.count.to_i / @pagination[:limit].to_f).ceil
+    @pagination[:current] = page > @pagination[:total] ? @pagination[:total] : page
     @pagination[:offset] = ((@pagination[:current] - 1) * @pagination[:limit])
     @pagination[:next] = @pagination[:current] < @pagination[:total] ? @pagination[:current] + 1 : @pagination[:total]
     @pagination[:previous] = @pagination[:current] <= @pagination[:next] ? @pagination[:current] - 1 : 1
 
-    @ideias = dataset.limit(@pagination[:limit]).offset(@pagination[:offset]).all
+    dataset = dataset.eager(:autor, avaliacao: :classificacao).limit(@pagination[:limit]).offset(@pagination[:offset])
+
+    @ideias = dataset.all
     view 'ideias/index'
   end
 
