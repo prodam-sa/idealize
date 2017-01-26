@@ -811,13 +811,18 @@ select.mdl-textfield__input:before {
     line-height: 32px;
     color: rgba(200,200,200,0.90);
     font-size: 120%;
+    font-weight: bold;
     text-shadow: 1px 1px 1px transparent;
     text-shadow: 1px 1px 1px rgba(7,7,7,0.80); }
     .prd-ranking-list .prd-ranking-list__item-botton.prd-ranking-list__item-botton--coin
-    { background-image: url('/img/ranking/coin.svg'); }
+    { color: rgba(180,180,180,0.10);
+      background-image: url('/img/ranking/coin.svg'); }
     .prd-ranking-list .prd-ranking-list__item-botton.prd-ranking-list__item-botton--gold
-    { background-image: url('/img/ranking/gold.svg'); }
+    { color: rgba(229,157,35,0.99);
+      background-image: url('/img/ranking/gold.svg'); }
     .prd-ranking-list .prd-ranking-list__item-botton.prd-ranking-list__item-botton--silver
-    { background-image: url('/img/ranking/silver.svg'); }
+    { color: rgba(142,142,142,0.90);
+      background-image: url('/img/ranking/silver.svg'); }
     .prd-ranking-list .prd-ranking-list__item-botton.prd-ranking-list__item-botton--bronze
-    { background-image: url('/img/ranking/bronze.svg'); }
+    { color: rgba(194,100,42,0.90);
+      background-image: url('/img/ranking/bronze.svg'); }
