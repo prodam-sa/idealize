@@ -66,7 +66,7 @@ class ApplicationController < Sinatra::Base
         ideia.situacao? :publicacao
       end.compact.size
       @info[:total_ideias_postadas] ||= @usuario.ideias.select do |ideia|
-        ideia.situacoes? :rascunho, :revisao
+        ideia.situacoes? :postagem
       end.compact.size
     end
   end
