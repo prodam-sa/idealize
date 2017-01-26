@@ -261,6 +261,17 @@ img.prd-brand {
   background-color: rgba(0,0,0,0.05);
 }
 
+.prd-fake-button
+{ display: block;
+  padding: 0.75rem;
+  text-decoration: none;
+  color: inherit;
+  border-radius: 0.25rem;
+  border: 1px solid rgba(77,77,77,0.10);
+  transition: all 0.25s; }
+  .prd-fake-button:hover
+  { background-color: rgba(77,77,77,0.05); }
+
 .prd-button--float-right {
   display: flex;
   justify-content: right;
@@ -772,7 +783,7 @@ select.mdl-textfield__input:before {
       margin: 2rem 1rem;
       padding: 0.25rem;
       box-sizing: border-box;
-      border-radius: 0.50rem;
+      border-radius: 50%;
       background-color: #fff;
       color: #fff; }
   .prd-card-account
