@@ -18,6 +18,11 @@ class Situacao < Model[:situacao]
     "#{id}-#{titulo.downcase.tr(' ', '-')}"
   end
 
+  def restrito?
+    self[:restrito] == 'S'
+  end
+  alias restrita? restrito?
+
   class << self
     def chave(nome)
       where(chave: nome.to_s).first
