@@ -287,10 +287,10 @@ class Relatorio
   end
 
   def ranking_autor(autor = @autor)
-    autor && @pontuacao_ranking ||= ranking.select do |info|
+    autor && @ranking_autor ||= ranking.select do |info|
       info[:autor_id] == autor.id
     end.first || { colocacao: nil, autor_id: nil, autor_nome: nil, total_ideias: 0, total_pontos: 0 }
-    @pontuacao_ranking
+    @ranking_autor
   end
 
 private
