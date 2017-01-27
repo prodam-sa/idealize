@@ -56,7 +56,9 @@ class ApplicationController < Sinatra::Base
     if authenticated?
       @info = {}
       @usuario ||= Autor.find_by_id session_user[:id]
-      @info[:total_pontos] ||= @relatorio.ranking_autor(@usuario)
+      @relatorio.autor = @usuario
+      @info[:colocacao_ranking] ||= @relatorio.ranking_autor[:colocacao]
+      @info[:total_pontos] ||= @relatorio.ranking_autor[:total_pontos]
       @info[:total_mensagens] ||= Mensagem.find_nao_lidas_para(@usuario.id).count
       @info[:total_ideias] ||= @usuario.ideias.size
       @info[:total_ideias_avaliadas] ||= @usuario.ideias.select do |ideia|

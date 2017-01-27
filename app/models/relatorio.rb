@@ -279,18 +279,18 @@ class Relatorio
   end
 
   def ranking!
-    @ranking = Database[sql :ranking].all do |row|
+    @ranking = Database[sql :ranking].all.each_with_index do |row, i|
+      row[:colocacao] = i + 1
       row[:total_ideias] = row[:total_ideias].to_i
       row[:total_pontos] = row[:total_pontos].to_i
     end
   end
 
   def ranking_autor(autor = @autor)
-    @pontuacao_ranking ||= {}
-    autor && @pontuacao_ranking = ranking.select do |info|
+    autor && @pontuacao_ranking ||= ranking.select do |info|
       info[:autor_id] == autor.id
-    end.first || {}
-    @pontuacao_ranking[:total_pontos] || 0
+    end.first || { colocacao: nil, autor_id: nil, autor_nome: nil, total_ideias: 0, total_pontos: 0 }
+    @pontuacao_ranking
   end
 
 private
