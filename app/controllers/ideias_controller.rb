@@ -35,7 +35,7 @@ class IdeiasController < ApplicationController
               end
 
     @pagination = { limit: limit, offset: 0, order: params[:ordem] }
-    @pagination[:total] = (dataset.count.to_i / @pagination[:limit].to_f).ceil
+    @pagination[:total] = ((dataset.count.to_i + 1) / @pagination[:limit].to_f).ceil
     @pagination[:current] = page > @pagination[:total] ? @pagination[:total] : page
     @pagination[:offset] = ((@pagination[:current] - 1) * @pagination[:limit])
     @pagination[:next] = @pagination[:current] < @pagination[:total] ? @pagination[:current] + 1 : @pagination[:total]
