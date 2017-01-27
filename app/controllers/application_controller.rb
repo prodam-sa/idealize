@@ -54,10 +54,10 @@ class ApplicationController < Sinatra::Base
     @fab = { url: path_to(:postagens, :nova), icon: :edit, tooltip: 'Nova ideia!' }
     @relatorio = Relatorio.new
     if authenticated?
-      @info = {}
       @usuario ||= Autor.find_by_id session_user[:id]
       @relatorio.autor = @usuario
-      @info[:colocacao_ranking] ||= @relatorio.ranking_autor[:colocacao]
+      @info = {}
+      @info[:classificacao] ||= @relatorio.ranking_autor[:classificacao]
       @info[:total_pontos] ||= @relatorio.ranking_autor[:total_pontos]
       @info[:total_mensagens] ||= Mensagem.find_nao_lidas_para(@usuario.id).count
       @info[:total_ideias] ||= @usuario.ideias.size

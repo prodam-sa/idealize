@@ -280,7 +280,7 @@ class Relatorio
 
   def ranking!
     @ranking = Database[sql :ranking].all.each_with_index do |row, i|
-      row[:colocacao] = i + 1
+      row[:classificacao] = i + 1
       row[:total_ideias] = row[:total_ideias].to_i
       row[:total_pontos] = row[:total_pontos].to_i
     end
