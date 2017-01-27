@@ -20,14 +20,6 @@ class HomeController < ApplicationController
     end
   end
 
-  get '/perfil', authenticate: true do
-    unless authorized?
-      @page.update title: 'Perfil', icon: 'account'
-      view 'home/profile'
-    else
-    end
-  end
-
   get '/ranking' do
     view 'home/ranking'
   end
