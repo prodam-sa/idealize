@@ -271,6 +271,15 @@ img.prd-brand {
   transition: all 0.25s; }
   .prd-fake-button:hover
   { background-color: rgba(77,77,255,0.25); }
+  .prd-fake-button--badge
+  { display: flex;
+    align-items: center;
+    justify-content: space-between; }
+  .prd-fake-button--badge:after
+  { content: attr(data-badge);
+    display: flex;
+    self-align: right;
+    right: 0; }
 
 .prd-button--float-right {
   display: flex;

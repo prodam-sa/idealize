@@ -56,20 +56,17 @@ class ApplicationController < Sinatra::Base
     if authenticated?
       @usuario ||= Autor.find_by_id session_user[:id]
       @relatorio.autor = @usuario
-      @info = {}
+      @info ||= {}
       @info[:classificacao] ||= @relatorio.ranking_autor[:classificacao]
       @info[:total_pontos] ||= @relatorio.ranking_autor[:total_pontos]
       @info[:total_mensagens] ||= Mensagem.find_nao_lidas_para(@usuario.id).count
       @info[:total_ideias] ||= @usuario.ideias.size
-      @info[:total_ideias_avaliadas] ||= @usuario.ideias.select do |ideia|
-        ideia.situacao? :avaliacao
-      end.compact.size
-      @info[:total_ideias_publicadas] ||= @usuario.ideias.select do |ideia|
-        ideia.situacao? :publicacao
-      end.compact.size
-      @info[:total_ideias_postadas] ||= @usuario.ideias.select do |ideia|
-        ideia.situacoes? :postagem
-      end.compact.size
+      [:avaliacao, :publicacao, :postagem, :rascunho, :revisao, :moderacao].each do |chave|
+        key = "total_ideias_#{chave}"
+        @info[key.to_sym] ||= @usuario.ideias.select do |ideia|
+          ideia.situacao? chave
+        end.compact.size
+      end
     end
   end
 end
