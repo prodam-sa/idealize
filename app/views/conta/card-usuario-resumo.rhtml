@@ -1,13 +1,7 @@
 <div class="mdl-card mdl-card--full-width mdl-shadow--2dp">
   <div class="mdl-card__menu">
-    <button id="user-options" class="mdl-button mdl-button--icon mdl-js-button">
-      <i class="material-icons">keyboard_arrow_down</i>
-    </button>
-
-    <div class="mdl-menu mdl-menu--bottom-right mdl-js-menu" for="user-options">
-      <a href="<%=path_to :conta%>" class="mdl-menu__item">Conta</a>
-    </div>
-  </div>
+    <%=partial 'conta/menu-usuario', locals: { css_id: 'card-actions', icon: 'keyboard_arrow_down', direction: 'bottom-right'}%>
+  </div><!--/.mdl-card__menu-->
 
   <div class="prd-card-account">
     <div class="prd-card-account__avatar">
