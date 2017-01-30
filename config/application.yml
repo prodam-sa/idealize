@@ -27,6 +27,15 @@
     :navigation: [menu]
     :profiles: [usuario]
 
+  '/mensagens':
+    :controller: MensagensController
+    :title: Mensagens
+    :description: Mensagens dos usuários para você.
+    :layout:
+    :icon: message
+    :navigation: [menu]
+    :profiles: [usuario]
+
   '/usuarios':
     :controller: UsuariosController
     :title: Usuários
