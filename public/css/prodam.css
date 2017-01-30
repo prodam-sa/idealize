@@ -444,8 +444,8 @@ img.prd-image--adjusted {
   justify-content: flex-start;
   padding: 0.50rem;
   margin: 0 0 0.50rem 0;
-  border: 2px solid rgba(0, 0, 0, 0.10);
-  border-radius: 0.50rem;
+  border: 1px solid rgba(77,77,77,0.25);
+  border-radius: 0.25rem;
   background-color: inherit;
 }
 
@@ -481,8 +481,8 @@ img.prd-image--adjusted {
   margin: 0.50rem 0rem;
   padding: 0.50rem;
   line-height: 1.50rem;
-  border: 2px solid rgba(0, 0, 0, 0.10);
-  border-radius: 0.50rem;
+  border: 1px solid rgba(77,77,77,0.25);
+  border-radius: 0.25rem;
   background-color: inherit;
 }
 
