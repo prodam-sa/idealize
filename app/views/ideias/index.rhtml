@@ -1,4 +1,4 @@
-<div class="mdl-grid prd-background--radial-gradient" style="">
+<div class="mdl-grid prd-background--radial-gradient">
   <div class="mdl-cell mdl-cell--3-col-desktop mdl-cell--4-col-tablet mdl-cell--order-2-tablet mdl-cell--4-col-phone mdl-cell--order-2-phone">
     <%if authenticated?%>
       <%=partial 'conta/card-usuario-resumo'%>
@@ -27,7 +27,7 @@
           <div class="mdl-list__item mdl-list__item--two-line">
             <div class="mdl-list__item-primary-content">
               <span class="mdl-list__item-avatar prd-ranking-list__item-botton prd-ranking-list__item-botton--<%=botton || :coin%>"><%=order%></span>
-              <span><%=info[:autor_nome][0..20]%></span>
+              <span><%=nome_reduzido info[:autor_nome]%></span>
               <span class="mdl-list__item-sub-title">
                 <small><em><%=info[:total_ideias] || 0%> ideias, <%=info[:total_pontos] || 0%> pontos</em></small>
               </span>

@@ -83,6 +83,10 @@ module IdeiasHelper
     (ideia.avaliacao && ideia.avaliacao && ideia.avaliacao.classificacao) && ideia.avaliacao.classificacao.titulo || "Sem avaliação"
   end
 
+  def nome_reduzido(nome)
+    nome.gsub(/ \w{2,3} /,' ').split(' ').slice(0, 2).join(' ')
+  end
+
   def mensagem(texto)
     mensagem = params[:historico] && params[:historico][:mensagem] || ''
     if mensagem.empty?
