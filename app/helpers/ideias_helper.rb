@@ -24,6 +24,10 @@ module IdeiasHelper
     (authenticated_as? :moderador) && !(usuario_colaborador? ideia) && (ideia.modificacao.responsavel_id == usuario_id)
   end
 
+  def usuario_avaliador?(ideia)
+    (authenticated_as? :avaliador) && !(usuario_colaborador? ideia) && (ideia.modificacao.responsavel_id == usuario_id)
+  end
+
   def usuario_apoiador?(ideia)
     usuario_autenticado? && ideia && ideia.apoiadores_dataset.where(apoiador_id: usuario_id).any?
   end
@@ -53,7 +57,7 @@ module IdeiasHelper
   end
 
   def permitido_apoiar?(ideia)
-    usuario_autenticado? && !(usuario_colaborador? ideia) && !(usuario_moderador? ideia)
+    usuario_autenticado? && !(usuario_colaborador? ideia) && !(usuario_moderador? ideia) && !(usuario_avaliador? ideia) && !(authenticated_as? :administrador)
   end
 
   def situacao(chave)
