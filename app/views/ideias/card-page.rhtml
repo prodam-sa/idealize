@@ -1,5 +1,25 @@
 <%disabled = ' disabled="disabled"' if ideia.bloqueada?%>
 <div class="prd-card mdl-card mdl-card--full-width mdl-shadow--2dp">
+  <div class="mdl-card__menu">
+    <%if permitido_apoiar? ideia%>
+      <form action="<%=path_to :ideias, ideia.to_url_param, :apoiar%>" method="post" style="display: inline">
+        <%apoiadores && (apoiadores.include? usuario_id) && css_apoiador = ' mdl-button--raised mdl-button--colored' %>
+        <span class="mdl-badge mdl-badge--overlap" data-badge="<%=apoiadores.size || 0%>">
+          <button id="support" class="mdl-button mdl-button--icon <%=css_apoiador%>" name="_method" value="put">
+            <i class="material-icons">thumb_up</i>
+          </button>
+        </span>
+        <span class="mdl-tooltip" for="support">Usuários que apoiam essa ideia.</span>
+      </form>
+    <%else%>
+      <span class="mdl-badge mdl-badge--overlap" data-badge="<%=apoiadores.size || 0%>">
+        <label id="support" class="mdl-button mdl-button--icon mdl-button--disabled">
+          <i class="material-icons">thumb_up</i>
+        </label>
+      </span>
+    <%end%>
+  </div>
+
   <div class="mdl-card__supporting-text prd-text--hyphenated">
     <h1 class="mdl-typography--headline mdl-typography--font-bold">
       <%=ideia.titulo%>
@@ -25,50 +45,28 @@
   <%end%>
 
   <div class="mdl-card__actions mdl-card--border">
-    <%if (permitido_apoiar? ideia) && !(authenticated_as? :administrador, :moderador, :avaliador)%>
-      <form action="<%=path_to :ideias, ideia.to_url_param, :apoiar%>" method="post" style="display: inline">
-        <%apoiadores && (apoiadores.include? usuario_id) && css_apoiador = ' mdl-button--raised mdl-button--colored' %>
-        <button id="support" class="mdl-button mdl-button--icon mdl-button--raised mdl-js-button mdl-js-ripple-effect mdl-badge<%=css_apoiador%>" name="_method" value="put"  data-badge="">
-          <i class="material-icons">thumb_up</i>
-        </button>
-        <small><%=apoiadores ? apoiadores.size : 0%></small>
-        <span class="mdl-tooltip mdl-tooltip--right" for="support">
-          <%if apoiadores && apoiadores.any?%>
-            Ideia apoiada por <%=apoiadores.size%> usuário<%=:s if apoiadores.size > 1%>.
-          <%else%>
-            Ideia ainda não tem apoio.
-          <%end%>
-        </span>
-      </form>
-    <%else%>
-      <label id="supporters-<%=ideia.id%>" class="prd-chip prd-chip--icon">
-        <i class="material-icons">thumb_up</i>
-      </label>
-      <small><%=apoiadores ? apoiadores.size : 0%></small>
-    <%end%>
+    <button type="button" class="mdl-button mdl-button--icon mdl-layout--small-screen-only prd-button--backward"><i class="material-icons">arrow_back</i></button>
+    <button type="button" class="mdl-button mdl-button--colored mdl-layout--large-screen-only prd-button--backward">Voltar</button>
 
-    <%if permitido_moderar? ideia%>
-      <button type="button" class="mdl-button mdl-button--colored mdl-button--open-dialog mdl-js-button mdl-js-ripple-effect">
-        Categorias
-      </button>
+    <%if ideia.desbloqueada? and (authorized? or usuario_autor? ideia)%>
+      <a id="editar-ideia" href="<%=path_to :ideias, ideia.to_url_param, :editar%>" class="mdl-button mdl-button--icon mdl-layout--small-screen-only">
+        <i class="material-icons">edit</i>
+      </a>
+      <a id="editar-ideia" href="<%=path_to :ideias, ideia.to_url_param, :editar%>" class="mdl-button mdl-button--colored mdl-layout--large-screen-only">
+        Editar
+      </a>
     <%end%>
-
-    <button type="button" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect prd-button--backward">
-      Voltar
-    </button>
 
     <%if permitido_postar? ideia%>
       <form action="<%=path_to :ideias, ideia.to_url_param, :postar%>" method="post" style="display: inline">
-        <button name="_method" value="put" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-          Postar
-        </button>
+        <button name="_method" value="put" class="mdl-button mdl-button--icon mdl-layout--small-screen-only"><i class="material-icons">publish</i></button>
+        <button name="_method" value="put" class="mdl-button mdl-button--colored mdl-layout--large-screen-only">Postar</button>
       </form>
     <%end%>
 
     <%if permitido_excluir? ideia%>
-      <button class="mdl-button mdl-button--colored mdl-button--open-dialog"<%=disabled%>>
-        Excluir
-      </button>
+      <button class="mdl-button mdl-button--icon mdl-button--open-dialog mdl-layout--small-screen-only"<%=disabled%>><i class="material-icons">delete</i></button>
+      <button class="mdl-button mdl-button--colored mdl-button--open-dialog mdl-layout--large-screen-only"<%=disabled%>>Excluir</button>
     <%end%>
   </div><!--/.mdl-card__actions-->
 </div><!--/.mdl-card-->
@@ -81,15 +79,21 @@
       </div><!--/.mdl-dialog__content-->
 
       <div class="mdl-dialog__actions">
-        <button type="submit" name="_method" value="delete" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect"<%=disabled%>>
-          Sim
-        </button>
-        <button type="button" class="mdl-button mdl-button--raised mdl-button--colored mdl-js-button mdl-js-ripple-effect mdl-button--close-dialog">
-          Não
-        </button>
-      </div>
+        <button type="submit" name="_method" value="delete" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect"<%=disabled%>>Sim</button>
+        <button type="button" class="mdl-button mdl-button--raised mdl-button--colored mdl-js-button mdl-js-ripple-effect mdl-button--close-dialog">Não</button>
       </div>
     </form>
   </dialog>
   <script src="<%=path_to '/js/dialog.js'%>"></script>
 <%end if permitido_excluir? ideia%>
+
+<%content_for :script do%>
+  <script>
+    buttons = document.querySelectorAll('.prd-button--backward');
+    for (i = 0; i <= buttons.length - 1; i++) {
+      buttons[i].addEventListener('click', function(event) {
+        history.back();
+      });
+    };
+  </script>
+<%end%>
