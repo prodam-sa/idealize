@@ -11,7 +11,7 @@
       <div class="mdl-cell mdl-cell--9-col-desktop mdl-cell--5-col-tablet mdl-cell--2-col-phone">
         <p class="prd-text--hyphenated">
           <%=ideia.titulo%>
-          <br/><small><em>Em <%=formated_date ideia.data_publicacao%><%if ideia.avaliacao%>, por <%=ideia.autor.nome%><%else%>, sendo avaliada pelo comitê<%end%></em></small>.
+          <br/><small><em>Em <%=formated_date ideia.data_publicacao || ideia.data_criacao%><%if ideia.avaliacao%>, por <%=ideia.autor.nome%><%else%>, sendo avaliada pelo comitê<%end%></em></small>.
         </p>
         <div class="mdl-cell mdl-cell--12-col-desktop mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-color-text--grey-400">
           <small class="prd-card__action">
