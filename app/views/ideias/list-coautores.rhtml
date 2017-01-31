@@ -55,3 +55,10 @@
       <%=yield_content :coautores%>
     <%end%>
   </div><!--/.mdl-card-->
+
+<%if permitido_alterar? ideia%>
+  <%content_for :script do%>
+    <script src="<%=path_to '/src/fetch/fetch.js'%>"></script>
+    <script src="<%=path_to '/js/usuarios.js'%>"></script>
+  <%end%>
+<%end%>
