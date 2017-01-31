@@ -16,17 +16,12 @@
         <div class="mdl-cell mdl-cell--12-col-desktop mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-color-text--grey-400">
           <small class="prd-card__action">
             <i class="material-icons">thumb_up</i>
-            <%=@relatorio.lista_ideias_apoiadores[ideia.id] && @relatorio.lista_ideias_apoiadores[ideia.id].size || 0%>
+            <%=@relatorio.total_apoiadores_por_ideia[ideia.id] || 0%>
           </small>
 
           <small class="prd-card__action">
             <i class="material-icons">people</i>
-            <%=@relatorio.lista_ideias_coautores[ideia.id] && @relatorio.lista_ideias_coautores[ideia.id].size || 0%>
-          </small>
-
-          <small class="prd-card__action">
-            <i class="material-icons">share</i>
-            <%=@relatorio.lista_ideias_coautores[ideia.id] && @relatorio.lista_ideias_coautores[ideia.id].size || 0%>
+            <%=@relatorio.total_coautores_por_ideia[ideia.id] || 0%>
           </small>
         </div><!--/.mdl-cell-->
       </div><!--/.mdl-cell-->
