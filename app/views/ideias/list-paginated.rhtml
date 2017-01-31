@@ -38,35 +38,40 @@
     <div class="mdl-cell mdl-cell--4-col-desktop mdl-cell--2-col-tablet mdl-cell--4-col-phone mdl-cell--middle">
       <span>Página <%=pagination[:current]%> de <%=pagination[:total]%></span>
     </div>
-    <%params = { autor: request.params['autor'], situacao: request.params['situacao'], ordem: pagination[:order] }%>
+
     <div class="mdl-cell mdl-cell--8-col mdl-typography--text-right">
-      <%params.update pagina: pagination[:previous]%>
-      <a id="page-previous" href="<%=path_to :ideias, params%>" class="mdl-button mdl-button--colored mdl-button--icon mdl-js-button mdl-js-ripple-effect">
-        <i class="material-icons">keyboard_arrow_left</i>
-      </a>
-      <span class="mdl-tooltip mdl-tooltip--top" for="page-previous">Página anterior</span>
-      <%params.update pagina: 1%>
-      <a id="page-first" href="<%=path_to :ideias, params%>" class="mdl-button mdl-button--colored mdl-button--icon mdl-js-button mdl-js-ripple-effect">
-        <i class="material-icons">skip_previous</i>
-      </a>
-      <span class="mdl-tooltip mdl-tooltip--top" for="page-first">Primeira página</span>
+      <%params = { autor: request.params['autor'], situacao: request.params['situacao'], ordem: pagination[:order] }%>
+      <%if @pagination[:total] > 1%>
+        <%params.update pagina: pagination[:previous]%>
+        <a id="page-previous" href="<%=path_to :ideias, params%>" class="mdl-button mdl-button--colored mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+          <i class="material-icons">keyboard_arrow_left</i>
+        </a>
+        <span class="mdl-tooltip mdl-tooltip--top" for="page-previous">Página anterior</span>
+        <%params.update pagina: 1%>
+        <a id="page-first" href="<%=path_to :ideias, params%>" class="mdl-button mdl-button--colored mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+          <i class="material-icons">skip_previous</i>
+        </a>
+        <span class="mdl-tooltip mdl-tooltip--top" for="page-first">Primeira página</span>
+      <%end%>
 
-      <button id="page-select" class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored">
-        <i class="material-icons">more_horiz</i>
-      </button>
-      <span class="mdl-tooltip mdl-tooltip--top" for="page-select">Selecione uma página</span>
+      <%if @pagination[:total] > 1%>
+        <button id="page-select" class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored">
+          <i class="material-icons">more_horiz</i>
+        </button>
+        <span class="mdl-tooltip mdl-tooltip--top" for="page-select">Selecione uma página</span>
 
-      <div class="mdl-menu mdl-menu--top-right mdl-js-menu" for="page-select">
-        <%(1..pagination[:total]).each_slice 5 do |pages|%>
-          <span class="mdl-menu__item">
-            <%pages.each do |page|%>
-              <%params.update pagina: page%>
-              <%is_disabled = pagination[:current] == page ? :disabled : ''%>
-              <a href="<%=path_to :ideias, params%>" class="mdl-button mdl-button--icon mdl-button--colored" <%=is_disabled%>><small><%=page%></small></a>
-            <%end%>
-          </span>
-        <%end%>
-      </div>
+        <div class="mdl-menu mdl-menu--top-right mdl-js-menu" for="page-select">
+          <%(1..pagination[:total]).each_slice 5 do |pages|%>
+            <span class="mdl-menu__item">
+              <%pages.each do |page|%>
+                <%params.update pagina: page%>
+                <%is_disabled = pagination[:current] == page ? :disabled : ''%>
+                <a href="<%=path_to :ideias, params%>" class="mdl-button mdl-button--icon mdl-button--colored" <%=is_disabled%>><small><%=page%></small></a>
+              <%end%>
+            </span>
+          <%end%>
+        </div>
+      <%end%>
 
       <button id="page-order" class="mdl-button mdl-button--icon mdl-button--colored"><i class="material-icons">filter_list</i></button>
       <span class="mdl-tooltip mdl-tooltip--top" for="page-order">Filtros da lista</span>
@@ -77,16 +82,18 @@
         <a href="<%=path_to :ideias, params.update(pagina: pagination[:current], ordem: 'jan~dez')%>" class="mdl-menu__item">Por data de Jan a Dez</a>
         <a href="<%=path_to :ideias, params.update(pagina: pagination[:current], ordem: 'dez~jan')%>" class="mdl-menu__item">Por data de Dez a Jan</a>
       </div>
-      <%params.update pagina: pagination[:total]%>
-      <a id="page-last" href="<%=path_to :ideias, params%>" class="mdl-button mdl-button--colored mdl-button--icon mdl-js-button mdl-js-ripple-effect">
-        <i class="material-icons">skip_next</i>
-      </a>
-      <span class="mdl-tooltip mdl-tooltip--top" for="page-last">Última página</span>
-      <%params.update pagina: pagination[:next]%>
-      <a id="page-next" href="<%=path_to :ideias, params%>" class="mdl-button mdl-button--colored mdl-button--icon mdl-js-button mdl-js-ripple-effect">
-        <i class="material-icons">keyboard_arrow_right</i>
-      </a>
-      <span class="mdl-tooltip mdl-tooltip--top" for="page-next">Próxima página</span>
+      <%if @pagination[:total] > 1%>
+        <%params.update pagina: pagination[:total]%>
+        <a id="page-last" href="<%=path_to :ideias, params%>" class="mdl-button mdl-button--colored mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+          <i class="material-icons">skip_next</i>
+        </a>
+        <span class="mdl-tooltip mdl-tooltip--top" for="page-last">Última página</span>
+        <%params.update pagina: pagination[:next]%>
+        <a id="page-next" href="<%=path_to :ideias, params%>" class="mdl-button mdl-button--colored mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+          <i class="material-icons">keyboard_arrow_right</i>
+        </a>
+        <span class="mdl-tooltip mdl-tooltip--top" for="page-next">Próxima página</span>
+      <%end%>
     </div>
   </div><!--/.mdl-card__actions-->
 </div><!--/.mdl-grid-->
