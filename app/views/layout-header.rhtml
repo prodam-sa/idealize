@@ -14,14 +14,13 @@
 
     <div class="mdl-layout-spacer"></div>
 
-    <form action="<%=path_to :ideias, :pesquisa%>" method="get" class="prd-navigation mdl-navigation">
-      <div class="prd-searchbox mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label mdl-textfield--align-right">
-        <label id="toolbar-search" class="mdl-button mdl-button--icon mdl-js-button" for="ideias-termo-pesquisa" style="top: 24px">
+    <form action="<%=path_to :ideias, :pesquisa%>" method="get" class="prd-searchbox">
+      <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
+        <label id="toolbar-search" class="mdl-button mdl-button--icon mdl-js-button" for="ideias-termo-pesquisa">
           <i class="material-icons">search</i>
         </label>
         <div class="mdl-textfield__expandable-holder">
           <input class="mdl-textfield__input" type="text" name="termo" id="ideias-termo-pesquisa" placeholder="Pesquise por ideias ...">
-          <span class="mdl-tooltip" for="toolbar-search">Procure por ideias publicadas</span>
         </div>
       </div>
     </form>
@@ -72,10 +71,10 @@
       </a>
     <%else%>
       <nav class="prd-navigation mdl-navigation">
-        <a href="#login" class="prd-navigation__link mdl-navigation__link mdl-js-ripple-effect mdl-button--open-dialog">
+        <a href="#login" class="prd-navigation__link mdl-navigation__link mdl-button--open-dialog">
           Login
         </a>
-        <a href="<%=path_to :conta, :nova%>" class="mdl-button mdl-button--raised mdl-color--accent mdl-js-button mdl-js-ripple-effect mdl-button--open-dialog">
+        <a href="<%=path_to :conta, :nova%>" class="mdl-button mdl-button--raised mdl-color--accent mdl-button--open-dialog">
           Cadastro
         </a>
       </nav>
