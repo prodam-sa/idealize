@@ -77,7 +77,7 @@
     :title: Moderação
     :description: Moderação das ideias.
     :layout: dashboard
-    :icon: playlist_add_check
+    :icon: assignment
     :navigation: [dashboard]
     :profiles: [moderador]
 
@@ -86,7 +86,7 @@
     :title: Avaliação
     :description: Avaliação das ideias publicadas.
     :layout: dashboard
-    :icon: play_for_work
+    :icon: assignment_turned_in
     :navigation: [dashboard]
     :profiles: [avaliador]
 
