@@ -1,89 +1,43 @@
-<%path = @ideia.id ? path_to(:ideias, @ideia.to_url_param) : path_to(:ideias)%>
-<form action="<%=path%>" method="post" class="mdl-grid">
-  <div class="mdl-cell mdl-cell--12-col mdl-grid mdl-grid--no-spacing mdl-card mdl-shadow--2dp">
-    <div class="mdl-cell mdl-cell--12-col mdl-card__actions">
-      <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label <%='is-invalid' if @ideia.errors[:titulo]%> mdl-cell mdl-cell--12-col">
-        <label class="mdl-textfield__label" for="ideia_titulo">Título da sua ideia</label>
-        <input id="ideia_titulo" name="ideia[titulo]" class="mdl-textfield__input" type="text" value="<%=@ideia.titulo%>"/>
-        <%if @ideia.errors[:titulo]%>
-          <span class="mdl-textfield__error"><%=@ideia.errors[:titulo].join(', ')%></span>
-        <%end%>
-      </div>
-
-      <div class="mdl-cell mdl-cell--12-col">
-        <label for="ideia_texto_oportunidade">Oportunidade/Desafio</label>
-        <%=partial 'ideias/editor', locals: { ideia: @ideia, field: :texto_oportunidade }%>
-      </div>
-
-      <div class="mdl-cell mdl-cell--12-col">
-        <label for="ideia_texto_solucao">Proposta/Solução</label>
-        <%=partial 'ideias/editor', locals: { ideia: @ideia, field: :texto_solucao }%>
-      </div>
-
-      <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--12-col">
-        <label class="mdl-textfield__label" for="historico_mensagem">Nota de modificação</label>
-        <textarea type="text" id="historico_mensagem" name="historico[mensagem]" class="mdl-textfield__input" pattern="[\w\W\s\S]*"></textarea>
-        <span class="mdl-textfield__error">Digite um texto válido registrar a modificação.</span>
-      </div>
-    </div><!--/.mdl-cell-->
-
-    <div class="mdl-cell mdl-cell--12-col mdl-card__actions mdl-card--border">
-      <%if @ideia.new?%>
-        <button id="postar" type="submit" name="_method" value="post" class="mdl-button mdl-button--raised mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-          <input type="hidden" name="postar" value="S"/>
-          Postar
-        </button>
-        <span class="mdl-tooltip mdl-tooltip--top" for="postar">Salvar e postar ideia</span>
+<form action="<%=path%>" method="post" class="mdl-card mdl-card--full-width mdl-shadow--2dp">
+  <div class="mdl-card__actions">
+    <div class="mdl-textfield mdl-textfield--full-width mdl-textfield--floating-label mdl-js-textfield <%='is-invalid' if ideia.errors && ideia.errors[:titulo]%>">
+      <label class="mdl-textfield__label" for="ideia_titulo">Título da sua ideia</label>
+      <input id="ideia_titulo" name="ideia[titulo]" class="mdl-textfield__input" type="text" value="<%=ideia.titulo%>"/>
+      <%if ideia.errors[:titulo]%>
+        <span class="mdl-textfield__error"><%=ideia.errors[:titulo].join(', ')%></span>
       <%end%>
+    </div>
 
-      <button id="salvar" type="submit" name="_method" value="<%=@ideia.id ? :put : :post%>" class="mdl-button mdl-button--raised mdl-js-button mdl-js-ripple-effect">
-        Salvar <%=@situacao.titulo%>
-      </button>
-      <span class="mdl-tooltip mdl-tooltip--top" for="salvar"><%=@situacao.descricao%></span>
+    <label for="ideia_texto_oportunidade" class="mdl-color-text--primary">Apresentação</label>
+    <%=partial 'ideias/editor', locals: { ideia: ideia, field: :texto_oportunidade }%>
 
-      <a href="<%=path_to :ideias%>" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-        Cancelar
-      </a>
-    </div><!--/.mdl-cell-->
-  </div><!--/./mdl-cell.mdl-grid-->
-</form><!--./mdl-grid-->
+    <br/>
 
-<%content_for :stylesheet do%>
-<style>
-  .editor__area, .editor__code {
-    height: 16rem;
-  }
+    <label for="ideia_texto_solucao" class="mdl-color-text--primary">Proposta</label>
+    <%=partial 'ideias/editor', locals: { ideia: ideia, field: :texto_solucao }%>
 
-  .editor__code {
-  }
+    <br/>
 
-  .editor__area {
-    overflow: auto;
-    border: 1px solid rgba(0, 0, 0, 0.10);
-    padding: 0.5em;
-    outline: none;
-  }
+    <div class="mdl-textfield mdl-textfield--full-width mdl-textfield--floating-label mdl-js-textfield">
+      <label class="mdl-textfield__label" for="historico_mensagem">Nota de modificação</label>
+      <textarea type="text" id="historico_mensagem" name="historico[mensagem]" class="mdl-textfield__input" pattern="[a-z][A-Z]{4,}+"></textarea>
+      <span class="mdl-textfield__error">Digite um texto válido para registrar a modificação.</span>
+    </div>
 
-  .editor__area:focus {
-    border-color: #777;
-  }
+    <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="ideia_situacao">
+      <input type="checkbox" id="ideia_situacao" name="ideia[situacao]" value="rascunho" class="mdl-checkbox__input" checked="checked">
+      <span class="mdl-checkbox__label">Ideia em rascunho</span>
+    </label>
+  </div><!--/.mdl-card__actions-->
 
-  .editor__area h2 {
-    font-size: 1.25em;
-    font-weight: bold;
-    padding: 0;
-    margin: 0;
-  }
+  <div class="mdl-card__actions mdl-card--border">
+    <button id="salvar-ideia" type="submit" name="_method" value="<%=method%>" class="mdl-button mdl-button--raised">
+      Salvar
+    </button>
+    <span class="mdl-tooltip mdl-tooltip--top" for="salvar-ideia">Salvar ideia. <%=situacao.descricao%></span>
 
-</style>
-<%end%>
-
-<%content_for :script do%>
-<script src="<%=path_to '/src/requirejs/require.js'%>" data-main="/js/editor"></script>
-<script>
-require(['editor'], function(editor) {
-  editor('#ideia_texto_oportunidade-editor', 'Digite o texto para a oportunidade (ou desafio).');
-  editor('#ideia_texto_solucao-editor', 'Digite o texto para a solução (ou proposta).');
-});
-</script>
-<%end%>
+    <a href="<%=path_to :ideias%>" class="mdl-button mdl-button--colored">
+      Cancelar
+    </a>
+  </div><!--/.mdl-card__actions-->
+</form><!--/.mdl-card-->
