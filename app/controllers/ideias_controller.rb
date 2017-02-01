@@ -52,6 +52,33 @@ class IdeiasController < ApplicationController
     view 'ideias/search'
   end
 
+  get '/nova', authenticate: true do
+    view 'ideias/new'
+  end
+
+  post '/', authenticate: true do
+    @situacao = situacao(params[:situacao] || :rascunho)
+    @ideia = Ideia.new(params[:ideia])
+    @ideia.autor_id = usuario_id
+
+    if @ideia.valid?
+      @ideia.situacao = @situacao.chave
+      @ideia.save
+
+      if @situacao.chave =~ /postagem/
+        historico(@ideia, @situacao, mensagem('Ideia postada pelo autor para moderação.')).save
+        message.update(level: :information, text: 'Sua ideia foi postada com sucesso!')
+      else
+        historico(@ideia, @situacao, mensagem('Ideia criada em rascunho para edição.')).save
+        message.update(level: :information, text: 'Sua ideia foi registrada em rascunho. Não esqueça de postar depois de finalizar.')
+      end
+      redirect to("/#{@ideia.to_url_param}")
+    else
+      message.update(level: :error, text: 'Oops! Tem alguma coisa errada. Observe os campos em vermelho.')
+      view 'ideias/new'
+    end
+  end
+
   get '/:id' do |id|
     @apoiadores = @relatorio.lista_apoiadores_ideia @ideia
     if (@ideia.publicada?) or (usuario_autor? @ideia) or (authorized_by? :moderador)

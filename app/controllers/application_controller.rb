@@ -51,7 +51,7 @@ class ApplicationController < Sinatra::Base
 
   before do
     @page = {}
-    @fab = { url: path_to(:postagens, :nova), icon: :edit, tooltip: 'Nova ideia!' }
+    @fab = { url: path_to(:ideias, :nova), icon: :wb_incandescent, tooltip: 'Nova ideia!' }
     @relatorio = Relatorio.new
     if authenticated?
       @usuario ||= Autor.find_by_id session_user[:id]
