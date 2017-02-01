@@ -53,7 +53,7 @@ class IdeiasController < ApplicationController
   end
 
   get '/:id' do |id|
-    @apoiadores = Relatorio.new.lista_apoiadores_ideia @ideia
+    @apoiadores = @relatorio.lista_apoiadores_ideia @ideia
     if (@ideia.publicada?) or (usuario_autor? @ideia) or (authorized_by? :moderador)
       view 'ideias/page'
     else
