@@ -29,8 +29,8 @@ class IdeiasController < ApplicationController
     dataset = case params[:ordem]
                 when 'a~z' then dataset.order(:titulo)
                 when 'z~a' then dataset.reverse(:titulo)
-                when 'jan~dez' then dataset.order(:data_publicacao)
-                when 'dez~jan' then dataset.reverse(:data_publicacao)
+                when 'jan~dez' then dataset.order(:data_publicacao, :data_criacao)
+                when 'dez~jan' then dataset.reverse(:data_publicacao, :data_criacao)
                 else dataset.reverse(:data_publicacao)
               end
 
