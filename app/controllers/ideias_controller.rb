@@ -63,7 +63,7 @@ class IdeiasController < ApplicationController
   end
 
   put '/:id/apoiar' do |id|
-    if (permitido_apoiar? @ideia) && !(authenticated_as? :administrador, :moderador, :avaliador)
+    if permitido_apoiar? @ideia
       unless usuario_apoiador? @ideia
         @ideia.add_apoiador usuario_id
         texto = 'Ideia apoiada pelo usuário.'
