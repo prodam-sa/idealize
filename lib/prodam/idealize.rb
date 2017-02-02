@@ -14,9 +14,7 @@ require 'prodam/idealize/version'
 
 class String
   def camelcase
-    gsub('/', ' :: ').
-    gsub(/([a-z]+)_([a-z]+)/,'\1 \2').
-    split(' ').map(&:capitalize).join
+    gsub('/', ' :: ').split(/[ _]/).map(&:capitalize).join
   end
 
   def underscore
