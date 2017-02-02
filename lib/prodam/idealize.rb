@@ -156,20 +156,12 @@ module Prodam
   # Controllers
   autoload :ApplicationController, 'controllers/application_controller'
 
-  def self.autoload_controllers(controllers = self.controllers)
-    controllers.each do |id, controller|
-      autoload controller[:const_name], controller[:require_path]
-      controller[:routes] && autoload_controllers(controller[:routes])
-    end
-  end
-
   def self.autoload_sources
-    sources_from(:models, :services, :helpers).each do |id, source|
+    sources_from(:models, :services, :helpers, :controllers).each do |id, source|
       autoload source[:const_name], source[:require_path]
     end
   end
 
-  autoload_controllers
   autoload_sources
 end
 
