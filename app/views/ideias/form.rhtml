@@ -24,10 +24,12 @@
       <span class="mdl-textfield__error">Digite um texto válido para registrar a modificação.</span>
     </div>
 
-    <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="ideia_situacao">
-      <input type="checkbox" id="ideia_situacao" name="ideia[situacao]" value="rascunho" class="mdl-checkbox__input" checked="checked">
-      <span class="mdl-checkbox__label">Ideia em rascunho</span>
-    </label>
+    <div class="mdl-textfield mdl-textfield--full-width">
+      <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="ideia_situacao">
+        <input type="checkbox" id="ideia_situacao" name="ideia[situacao]" value="<%=situacao.chave%>" class="mdl-checkbox__input" checked="checked">
+        <span class="mdl-checkbox__label"><%=situacao.titulo%></span>
+      </label>
+    </div><!--/.mdl-textfield-->
   </div><!--/.mdl-card__actions-->
 
   <div class="mdl-card__actions mdl-card--border">
