@@ -11,6 +11,7 @@ class Ideia < Model[:ideia]
   one_to_many :modificacoes
   many_to_many :apoiadores, join_table: :ideia_apoiador
   one_to_one :avaliacao
+  many_to_one :situacao
 
   def validate
     super
@@ -39,7 +40,7 @@ class Ideia < Model[:ideia]
   end
 
   def situacoes?(*nomes)
-    self[:situacao] && (nomes.include? self[:situacao].to_sym)
+    self[:situacao] && (nomes.include? self[:situacao].chave.to_sym)
   end
   alias situacao? situacoes?
 
@@ -101,10 +102,14 @@ class Ideia < Model[:ideia]
       where(autor_id: autor_id).reverse(:data_criacao)
     end
 
-    def find_by_situacao(chave)
-      where(situacao: chave).reverse(:data_atualizacao)
+    def find_by_situacoes(*chaves)
+      select(*column_aliases).
+      join(:situacao, id: :situacao_id).
+      where(situacao__chave: chaves).
+      eager(:situacao).
+      reverse(:data_atualizacao)
     end
-    alias find_by_situacoes find_by_situacao
+    alias find_by_situacao find_by_situacoes
 
     def find_by_situacao_categoria(chave, categoria_id)
       join(:categoria, id: categoria_id).where(situacao: chave).reverse(:data_atualizacao)

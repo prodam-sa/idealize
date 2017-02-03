@@ -3,6 +3,7 @@
 module Prodam::Idealize
 
 class Situacao < Model[:situacao]
+  one_to_many :ideias
 
   plugin :validation_helpers
 
