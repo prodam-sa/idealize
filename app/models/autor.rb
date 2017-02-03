@@ -16,7 +16,7 @@ class Autor < Usuario
   end
 
   def self.find_by_id(id)
-    eager(ideias: :avaliacao).where(id: id).all.first
+    eager(ideias: [:situacao, :avaliacao]).where(id: id).all.first
   end
 end
 
