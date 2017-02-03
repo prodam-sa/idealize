@@ -143,7 +143,6 @@ module Prodam
       klass = Sequel::Model(Database[dataset_name])
       klass.dataset = klass.dataset.sequence("s_#{dataset_name}".to_sym)
       klass.include InstanceMethods
-      klass.extend ClassMethods
       klass
     end
 
