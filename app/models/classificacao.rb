@@ -3,8 +3,6 @@
 module Prodam::Idealize
 
 class Classificacao < Model[:classificacao]
-  include Model
-
   plugin :validation_helpers
 
   one_to_many :avaliacoes

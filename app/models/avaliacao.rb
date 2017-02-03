@@ -3,8 +3,6 @@
 module Prodam::Idealize
 
 class Avaliacao < Model[:avaliacao]
-  include Model
-
   plugin :validation_helpers
 
   def validate

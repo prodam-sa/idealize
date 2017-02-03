@@ -3,8 +3,6 @@
 module Prodam::Idealize
 
 class Criterio < Model[:criterio]
-  include Model
-
   plugin :validation_helpers
 
   one_to_one :formulario

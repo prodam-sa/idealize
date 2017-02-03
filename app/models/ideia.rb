@@ -3,8 +3,6 @@
 module Prodam::Idealize
 
 class Ideia < Model[:ideia]
-  include Model
-
   plugin :validation_helpers
 
   many_to_one :autor

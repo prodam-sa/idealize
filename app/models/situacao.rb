@@ -3,7 +3,6 @@
 module Prodam::Idealize
 
 class Situacao < Model[:situacao]
-  include Model
 
   plugin :validation_helpers
 

@@ -5,8 +5,6 @@ require 'digest'
 module Prodam::Idealize
 
 class Usuario < Model[:usuario]
-  include Model
-
   EMAIL_PATTERN = /\A([\w+\-].?)+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i
   USERNAME_PATTERN = /^[a-zA-Z][a-zA-Z0-9\-_\.]{6,32}$/
   PROFILES = %w{

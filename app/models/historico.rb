@@ -3,8 +3,6 @@
 module Prodam::Idealize
 
 class Historico < Model[:historico]
-  include Model
-
   plugin :validation_helpers
 
   many_to_one :ideia
