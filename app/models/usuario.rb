@@ -62,14 +62,16 @@ class Usuario < Model[:usuario]
   end
 
   def profiles
-    PROFILES.select do |profile|
-      send(profile) && (send(profile) == 'S')
+    PROFILES.map(&:to_sym).select do |profile|
+      self[profile] && (self[profile] == 'S')
     end << 'usuario'
   end
+  alias perfis profiles
 
   def has_profile?(nome)
     profiles.include? nome.to_s
   end
+  alias perfil? has_profile?
 
   def param_name
     "#{id}-#{nome_usuario.downcase}"
