@@ -15,6 +15,8 @@ create table processo (
 , descricao varchar2(64)
     constraint processo_descricao_nn not null
 , bloqueia char(1) default 'N'
+, perfil varchar2(32)
+    constraint processo_perfil_nn not null
 ) tablespace &data;
 
 create or replace trigger processo_insert
@@ -30,3 +32,4 @@ comment on table  processo           is 'Processamento das ideias (moderação, 
 comment on column processo.chave     is 'Chave de pesquisa do processo.';
 comment on column processo.descricao is 'Descrição do processo.';
 comment on column processo.bloqueia  is 'Determina se o processo é bloqueante.';
+comment on column processo.perfil    is 'Perfil para execução do processo.';
