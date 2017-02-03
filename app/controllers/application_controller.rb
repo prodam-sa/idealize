@@ -53,6 +53,10 @@ class ApplicationController < Sinatra::Base
     @page = {}
     @fab = { url: path_to(:ideias, :nova), icon: :wb_incandescent, tooltip: 'Nova ideia!' }
     @relatorio = Relatorio.new
+    @situacoes = Situacao.all.each_with_object Hash.new do |situacao, situacoes|
+      situacoes[situacao.chave.to_sym] = situacao
+    end
+
     if authenticated?
       @usuario ||= Autor.find_by_id session_user[:id]
       @relatorio.autor = @usuario
