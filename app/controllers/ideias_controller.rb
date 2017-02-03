@@ -125,6 +125,19 @@ class IdeiasController < ApplicationController
     redirect to(id)
   end
 
+  delete '/:id', authenticate: true  do |id|
+    unless @ideia.bloqueada?
+      @ideia.remove_all_coautores
+      @ideia.remove_all_categorias
+      @ideia.remove_all_modificacoes
+      @ideia.delete
+      message.update(level: :information, text: 'Sua ideia foi excluída.')
+      redirect to('/')
+    else
+      message.update(level: :warning, text: @ideia.situacao.descricao)
+      redirect to(id)
+    end
+  end
 private
 end
 
