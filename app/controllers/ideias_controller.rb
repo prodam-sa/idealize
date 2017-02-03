@@ -7,7 +7,6 @@ class IdeiasController < ApplicationController
 
   before do
     @page = controllers[:ideias]
-    @situacoes = Situacao.all_by_sem_restricao(:chave).map(&:chave)
   end
 
   before '/:id/?:action?' do |id, action|
@@ -24,8 +23,8 @@ class IdeiasController < ApplicationController
   get '/' do
     limit = (params[:limite].to_i > 0 && params[:limite] || 7).to_i
     page  = (params[:pagina].to_i > 0 && params[:pagina] || 1).to_i
-    dataset = params[:autor] && params[:autor] =~ /usuario/i && @usuario && @usuario.ideias_dataset || Ideia.find_by_situacao(['publicacao', 'avaliacao'])
-    dataset = params[:situacao] && !params[:situacao].empty? && dataset.where(situacao: params[:situacao]) || dataset
+    dataset = params[:autor] && params[:autor] =~ /usuario/i && @usuario && @usuario.ideias_dataset || Ideia.find_by_situacoes('publicacao', 'avaliacao')
+    dataset = params[:situacao] && !params[:situacao].empty? && dataset.where(situacao_id: @situacoes[params[:situacao].to_sym].id) || dataset
     dataset = case params[:ordem]
                 when 'a~z' then dataset.order(:titulo)
                 when 'z~a' then dataset.reverse(:titulo)
