@@ -10,6 +10,8 @@ create table processo (
     constraint processo_pk primary key using index tablespace &indx
 , chave varchar2(32)
     constraint processo_chave_uk unique
+, titulo varchar2(64)
+    constraint processo_titulo_nn not null
 , descricao varchar2(64)
     constraint processo_descricao_nn not null
 , bloqueia char(1) default 'N'
