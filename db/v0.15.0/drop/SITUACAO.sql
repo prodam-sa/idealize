@@ -1,7 +1,8 @@
 prompt ** SITUACAO
 
 alter table situacao drop (
-  processo_id
+  rotulo
+, processo_id
 , oposta_id
 , seguinte_id
 );
