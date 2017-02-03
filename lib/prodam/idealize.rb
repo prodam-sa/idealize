@@ -114,6 +114,7 @@ module Prodam
       inflect.irregular 'apoiador', 'apoiadores'
       inflect.irregular 'modificacao', 'modificacoes'
       inflect.irregular 'criterio_multiplo', 'criterios_multiplos'
+      inflect.irregular 'situacao', 'situacoes'
       inflect.irregular 'avaliacao', 'avaliacoes'
       inflect.irregular 'classificacao', 'classificacoes'
     end
