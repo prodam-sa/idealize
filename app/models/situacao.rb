@@ -4,6 +4,9 @@ module Prodam::Idealize
 
 class Situacao < Model[:situacao]
   one_to_many :ideias
+  many_to_one :processo
+  many_to_one :oposta, class: self
+  many_to_one :seguinte, class: self
 
   plugin :validation_helpers
 
@@ -15,21 +18,24 @@ class Situacao < Model[:situacao]
   end
 
   def param_name
-    "#{id}-#{titulo.downcase.tr(' ', '-')}"
+    "#{id}-#{chave}"
   end
 
-  def restrito?
-    self[:restrito] == 'S'
+  def restrita?
+    self[:restrita] == 'S'
   end
-  alias restrita? restrito?
 
   class << self
     def chave(nome)
-      where(chave: nome.to_s).first
+      where(chave: nome.to_s).eager(:processo, :oposta, :seguinte).all.first
+    end
+
+    def find_by_chaves(*chaves)
+      where(chave: chaves.map(&:to_s)).eager(:processo, :oposta, :seguinte)
     end
 
     def all_by_sem_restricao(*fields)
-      where(restrito: 'N').select(*fields).all
+      where(restrita: 'N').select(*fields).all
     end
   end
 end
