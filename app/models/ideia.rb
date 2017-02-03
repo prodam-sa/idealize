@@ -40,7 +40,7 @@ class Ideia < Model[:ideia]
   end
 
   def situacoes?(*nomes)
-    self[:situacao] && (nomes.include? self[:situacao].chave.to_sym)
+    self.situacao && (nomes.include? self.situacao.chave.to_sym)
   end
   alias situacao? situacoes?
 
