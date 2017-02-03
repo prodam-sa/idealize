@@ -25,10 +25,17 @@
     </div>
 
     <div class="mdl-textfield mdl-textfield--full-width">
-      <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="ideia_situacao">
-        <input type="checkbox" id="ideia_situacao" name="ideia[situacao]" value="<%=situacao.chave%>" class="mdl-checkbox__input" checked="checked">
-        <span class="mdl-checkbox__label"><%=situacao.titulo%></span>
-      </label>
+      <%content_for :selecao_situacao do |situacao, checked|%>
+        <div class="mdl-textfield__input">
+          <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="ideia_situacao_id_<%=situacao.chave%>">
+            <input type="radio" id="ideia_situacao_id_<%=situacao.chave%>" name="ideia[situacao_id]" value="<%=situacao.id%>" class="mdl-radio__button" <%='checked="checked"' if checked%>/>
+            <span class="mdl-radio__label"><%=situacao.rotulo%></span>
+          </label>
+        </div>
+      <%end%>
+      <%=yield_content :selecao_situacao, situacao.oposta, false if situacao.oposta%>
+      <%=yield_content :selecao_situacao, situacao, true%>
+      <%=yield_content :selecao_situacao, situacao.seguinte, false if situacao.seguinte%>
     </div><!--/.mdl-textfield-->
   </div><!--/.mdl-card__actions-->
 

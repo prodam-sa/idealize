@@ -78,6 +78,36 @@ class IdeiasController < ApplicationController
     end
   end
 
+  get '/:id/editar', authenticate: true do |id|
+    unless @ideia.bloqueada?
+      view 'ideias/edit'
+    else
+      mensagem = @ideia.situacao.processo ? @ideia.situacao.processo.descricao : @ideia.situacao.descricao
+      message.update(level: :warning, text: mensagem)
+      redirect to(id)
+    end
+  end
+
+  put '/:id', authenticate: true do |id|
+    unless @ideia.bloqueada?
+      @ideia.set_all(params[:ideia])
+
+      if @ideia.valid?
+        @ideia.save
+        historico(@ideia, @ideia.situacao, mensagem('Ideia revisada pelo autor.')).save
+        message.update(level: :information, text: @ideia.situacao.descricao)
+        redirect to(id)
+      else
+        message.update(level: :error, text: 'Oops! Tem alguma coisa errada. Observe os campos em vermelho.')
+        @categorias = Categoria.all
+        view 'ideias/edit'
+      end
+    else
+      message.update(level: :warning, text: @ideia.situacao.processo.descricao)
+      redirect to(id)
+    end
+  end
+
   put '/:id/apoiar' do |id|
     if permitido_apoiar? @ideia
       unless usuario_apoiador? @ideia
