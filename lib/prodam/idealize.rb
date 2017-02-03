@@ -141,15 +141,31 @@ module Prodam
     def self.[](dataset_name)
       klass = Sequel::Model(Database[dataset_name])
       klass.dataset = klass.dataset.sequence("s_#{dataset_name}".to_sym)
+      klass.include InstanceMethods
+      klass.extend ClassMethods
       klass
     end
 
-    def param_name
-      id || ''
+    module InstanceMethods
+      def self.included(base)
+        base.extend ClassMethods
+      end
+
+      def param_name
+        id || ''
+      end
+
+      def to_url_param(prefix = nil)
+        [prefix, param_name].compact.join('/')
+      end
     end
 
-    def to_url_param(prefix = nil)
-      [prefix, param_name].compact.join('/')
+    module ClassMethods
+      def column_aliases
+        columns.map do |column|
+          "#{table_name}__#{column}".to_sym
+        end
+      end
     end
   end # Model
 
