@@ -40,7 +40,7 @@ class Ideia < Model[:ideia]
   end
 
   def situacoes?(*nomes)
-    self.situacao && (nomes.include? self.situacao.chave.to_sym)
+    situacao && (nomes.include? situacao.chave.to_sym)
   end
   alias situacao? situacoes?
 
@@ -53,7 +53,7 @@ class Ideia < Model[:ideia]
   end
 
   def bloqueada?
-    !(self[:bloqueada] =~ /S/i).nil?
+    self[:bloqueada] =~ /S/i && true || false
   end
 
   def desbloqueada?
@@ -87,6 +87,7 @@ class Ideia < Model[:ideia]
 
   def before_save
     self[:data_atualizacao] = Time.now
+    situacao.processo && (self[:bloqueada] = situacao.processo.bloqueia)
   end
 
   def remove_all_modificacoes
