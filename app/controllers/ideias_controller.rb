@@ -13,10 +13,8 @@ class IdeiasController < ApplicationController
     if (ideia_id = id.to_i) > 0
       @ideia = Ideia[ideia_id]
       @coautores = @ideia.coautores_dataset.order(:nome).all
-      @situacao = @ideia.modificacao.situacao
     else
-      @ideia = Ideia.new
-      @situacao = Situacao.chave :rascunho
+      @ideia = Ideia.new situacao_id: @situacoes[:rascunho].id
     end
   end
 
@@ -56,21 +54,13 @@ class IdeiasController < ApplicationController
   end
 
   post '/', authenticate: true do
-    @situacao = situacao(params[:situacao] || :rascunho)
     @ideia = Ideia.new(params[:ideia])
     @ideia.autor_id = usuario_id
 
     if @ideia.valid?
-      @ideia.situacao = @situacao.chave
       @ideia.save
-
-      if @situacao.chave =~ /postagem/
-        historico(@ideia, @situacao, mensagem('Ideia postada pelo autor para moderação.')).save
-        message.update(level: :information, text: 'Sua ideia foi postada com sucesso!')
-      else
-        historico(@ideia, @situacao, mensagem('Ideia criada em rascunho para edição.')).save
-        message.update(level: :information, text: 'Sua ideia foi registrada em rascunho. Não esqueça de postar depois de finalizar.')
-      end
+      historico(@ideia, @ideia.situacao, mensagem("Ideia cadastrada pelo autor.")).save
+      message.update(level: :information, text: @ideia.situacao.descricao)
       redirect to("/#{@ideia.to_url_param}")
     else
       message.update(level: :error, text: 'Oops! Tem alguma coisa errada. Observe os campos em vermelho.')

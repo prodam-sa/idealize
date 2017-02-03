@@ -4,6 +4,6 @@
   </div><!--/.mdl-cell-->
 
   <div class="mdl-cell mdl-cell--6-col-desktop mdl-cell--8-col-tablet mdl-cell--4-col-phone">
-    <%=partial 'ideias/form', locals: { path: path_to(:ideias), method: :post, ideia: @ideia, situacao: @situacao }%>
+    <%=partial 'ideias/form', locals: { path: path_to(:ideias), method: :post, ideia: @ideia, situacao: @ideia.situacao }%>
   </div><!--/.mdl-cell-->
 </div><!--/.mdl-grid-->
