@@ -26,6 +26,38 @@ class String
   end
 end
 
+module Sequel
+  module Plugins
+    module Paging
+      module DatasetMethods
+        @@paging = nil
+
+        def paging(options = nil)
+          @@paging || paging!(options)
+        end
+
+        def page(number = 1)
+          paging[:page] = number > 0 ? number : 1
+          paging[:current] = paging[:page] > paging[:total] ? paging[:total] : paging[:page]
+          paging[:offset] = ((paging[:current] - 1) * paging[:limit])
+          paging[:next] = paging[:current] < paging[:total] ? paging[:current] + 1 : paging[:total]
+          paging[:previous] = paging[:current] <= paging[:next] ? paging[:current] - 1 : 1
+          limit(paging[:limit]).offset(paging[:offset])
+        end
+
+      private
+
+        def paging!(options = nil)
+          @@paging = { limit: 7 }
+          options && @@paging.update(options)
+          @@paging[:total] = ((count.to_i + 1) / @@paging[:limit].to_f).ceil
+          @@paging
+        end
+      end # ClassMethods
+    end # Paging
+  end # Plugins
+end # Sequel
+
 module Prodam
   module Idealize
     class << self
