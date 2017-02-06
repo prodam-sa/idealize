@@ -19,8 +19,7 @@ class IdeiasController < ApplicationController
   end
 
   get '/' do
-    limit = (params[:limite].to_i > 0 && params[:limite] || 7).to_i
-    page  = (params[:pagina].to_i > 0 && params[:pagina] || 1).to_i
+    pagina  = (params[:pagina].to_i > 0 && params[:pagina] || 1).to_i
     dataset = params[:autor] && params[:autor] =~ /usuario/i && @usuario && @usuario.ideias_dataset || Ideia.find_by_situacoes('publicacao', 'avaliacao')
     dataset = params[:situacao] && !params[:situacao].empty? && dataset.where(situacao_id: @situacoes[params[:situacao].to_sym].id) || dataset
     dataset = case params[:ordem]
@@ -30,15 +29,9 @@ class IdeiasController < ApplicationController
                 when 'dez~jan' then dataset.reverse(:data_publicacao, :data_criacao)
                 else dataset.reverse(:data_publicacao)
               end
-
-    @pagination = { limit: limit, offset: 0, order: params[:ordem] }
-    @pagination[:total] = ((dataset.count.to_i + 1) / @pagination[:limit].to_f).ceil
-    @pagination[:current] = page > @pagination[:total] ? @pagination[:total] : page
-    @pagination[:offset] = ((@pagination[:current] - 1) * @pagination[:limit])
-    @pagination[:next] = @pagination[:current] < @pagination[:total] ? @pagination[:current] + 1 : @pagination[:total]
-    @pagination[:previous] = @pagination[:current] <= @pagination[:next] ? @pagination[:current] - 1 : 1
-
-    @ideias = dataset.eager(:autor, avaliacao: :classificacao).limit(@pagination[:limit]).offset(@pagination[:offset]).all
+    dataset = dataset.eager(:autor, avaliacao: :classificacao).page(pagina)
+    @ideias = dataset.all
+    @pagination = dataset.paging
 
     view 'ideias/index'
   end
@@ -152,6 +145,7 @@ class IdeiasController < ApplicationController
     end
     redirect to(id)
   end
+
 private
 end
 
