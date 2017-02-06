@@ -50,6 +50,20 @@ class ContaController < ApplicationController
     disconect!
     redirect path_to('/'), 303
   end
+
+  put '/', authenticate: true do
+    @usuario.set_all(params[:usuario])
+    params[:acesso] && !params[:acesso].values.join.empty? && @usuario.set_password(*params[:acesso].values)
+
+    if @usuario.valid?
+      @usuario.save
+      message.update(level: :information, text: 'Dados da conta foram atualizados.')
+      redirect path_to(:conta), 303
+    else
+      message.update(level: :error, text: 'Oops! Tem alguma coisa errada. Observe os campos em vermelho.')
+      view 'conta/index'
+    end
+  end
 end
 
 end # module
