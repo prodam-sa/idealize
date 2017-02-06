@@ -4,6 +4,7 @@ module Prodam::Idealize
 
 class Ideia < Model[:ideia]
   plugin :validation_helpers
+  plugin :paging
 
   many_to_one :autor
   many_to_many :categorias, join_table: :ideia_categoria
