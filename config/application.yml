@@ -63,15 +63,6 @@
     :navigation: [dashboard]
     :profiles: [administrador, moderador]
 
-  '/postagens':
-    :controller: PostagensController
-    :title: Ideias
-    :description: Postagem de ideias.
-    :layout: dashboard
-    :icon: wb_incandescent
-    :navigation: [dashboard]
-    :profiles: [usuario]
-
   '/moderacao':
     :controller: ModeracaoController
     :title: Moderação
