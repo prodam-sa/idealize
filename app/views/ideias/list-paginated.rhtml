@@ -41,7 +41,7 @@
 
     <div class="mdl-cell mdl-cell--8-col mdl-typography--text-right">
       <%params = { autor: request.params['autor'], situacao: request.params['situacao'], ordem: pagination[:order] }%>
-      <%if @pagination[:total] > 1%>
+      <%if pagination[:total] > 1%>
         <%params.update pagina: pagination[:previous]%>
         <a id="page-previous" href="<%=path_to :ideias, params%>" class="mdl-button mdl-button--colored mdl-button--icon mdl-js-button mdl-js-ripple-effect">
           <i class="material-icons">keyboard_arrow_left</i>
@@ -54,7 +54,7 @@
         <span class="mdl-tooltip mdl-tooltip--top" for="page-first">Primeira página</span>
       <%end%>
 
-      <%if @pagination[:total] > 1%>
+      <%if pagination[:total] > 1%>
         <button id="page-select" class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored">
           <i class="material-icons">more_horiz</i>
         </button>
@@ -82,7 +82,7 @@
         <a href="<%=path_to :ideias, params.update(pagina: pagination[:current], ordem: 'jan~dez')%>" class="mdl-menu__item">Por data de Jan a Dez</a>
         <a href="<%=path_to :ideias, params.update(pagina: pagination[:current], ordem: 'dez~jan')%>" class="mdl-menu__item">Por data de Dez a Jan</a>
       </div>
-      <%if @pagination[:total] > 1%>
+      <%if pagination[:total] > 1%>
         <%params.update pagina: pagination[:total]%>
         <a id="page-last" href="<%=path_to :ideias, params%>" class="mdl-button mdl-button--colored mdl-button--icon mdl-js-button mdl-js-ripple-effect">
           <i class="material-icons">skip_next</i>

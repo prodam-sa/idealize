@@ -38,12 +38,6 @@
     <%=ideia.texto_solucao%>
   </div>
 
-  <%if (permitido_moderar? ideia)%>
-    <div class="mdl-card__supporting-text mdl-color-text--primary">
-      <p>Categorias: <b><%=ideia.categorias.map(&:titulo).join('</b>, <b>')%></b></p>
-    </div>
-  <%end%>
-
   <div class="mdl-card__actions mdl-card--border">
     <button type="button" class="mdl-button mdl-button--icon mdl-layout--small-screen-only prd-button--backward"><i class="material-icons">arrow_back</i></button>
     <button type="button" class="mdl-button mdl-button--colored mdl-layout--large-screen-only prd-button--backward">Voltar</button>
