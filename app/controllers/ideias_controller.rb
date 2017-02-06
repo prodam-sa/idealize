@@ -138,6 +138,20 @@ class IdeiasController < ApplicationController
       redirect to(id)
     end
   end
+
+  put '/:id/coautores', authenticate: true do |id|
+    if @ideia.desbloqueada? && (usuario_autor? @ideia)
+      @ideia.remove_all_coautores
+      params[:coautores] && params[:coautores].each do |coautor_id|
+        @ideia.add_coautor coautor_id
+      end
+      @ideia.remove_coautor usuario_id if (@ideia.coautores.include? usuario_id)
+      message.update(level: :information, text: 'Os coautores de sua ideia foram atualizados.')
+    else
+      message.update(level: :warning, text: 'Sua ideia está bloqueada para inclusão de coautores.')
+    end
+    redirect to(id)
+  end
 private
 end
 
