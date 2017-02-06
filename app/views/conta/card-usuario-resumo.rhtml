@@ -5,7 +5,8 @@
 
   <div class="prd-card-account">
     <div class="prd-card-account__avatar">
-      <img src="<%=gravatar @usuario.email, size: 320, default: 'mm'%>" alt="<%=@usuario.nome%>" class="prd-card-account__avatar-image">
+      <a href="https://pt.gravatar.com/emails/" class=""><img id="gravatar" src="<%=gravatar @usuario.email, size: 320, default: 'mm'%>" alt="<%=@usuario.nome%>" class="prd-card-account__avatar-image"></a>
+      <span class="mdl-tooltip" for="gravatar">Você pode atualizar sua foto de perfil através do serviço Gravatar.com</span>
     </div>
     <div class="prd-card-account__name">
       <%=@usuario.nome%>
