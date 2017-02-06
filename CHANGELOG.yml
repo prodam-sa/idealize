@@ -1,3 +1,14 @@
+- :version: 0.15.0
+  :release: 2017-02-10
+  :summary:
+    Melhorias no layout, ranking dos autores
+  :changes:
+  - Melhorias na interface e navegabilidade.
+  - Apresentação das informações básicas do usuário autor.
+  - Filtros e paginação da lista de ideias.
+  - Ranking dos autores.
+  - Processos internos foram melhorados (moderação e avaliação).
+
 - :version: 0.14.0
   :release: 2016-12-21
   :summary:
