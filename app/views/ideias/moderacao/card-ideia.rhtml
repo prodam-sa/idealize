@@ -1,0 +1,79 @@
+<%disabled = ' disabled="disabled"' if ideia.bloqueada?%>
+<div class="prd-card mdl-card mdl-card--full-width mdl-shadow--2dp">
+  <div class="mdl-card__menu">
+    <span class="mdl-badge mdl-badge--overlap" data-badge="<%=apoiadores.size || 0%>">
+      <label id="support" class="mdl-button mdl-button--icon mdl-button--disabled">
+        <i class="material-icons">thumb_up</i>
+      </label>
+    </span>
+  </div>
+
+  <div class="mdl-card__supporting-text prd-text--hyphenated">
+    <h1 class="mdl-typography--headline mdl-typography--font-bold">
+      <%=ideia.titulo%>
+    </h1>
+
+    <p class="mdl-typography--text-right">
+      <small>
+        <em><%=ideia.data_publicacao ? :Publicada : :Cadastrada%> em <%=formated_date ideia.modificacao.data_registro%> com <%=pontos_avaliacao ideia%> pontos, <%=rotulo_premiacao ideia%></em>
+      </small>
+    </p>
+
+    <h2 class="mdl-typography--title">Apresentação</h2>
+    <%=ideia.texto_oportunidade%>
+
+    <h2 class="mdl-typography--title">Proposta</h2>
+    <%=ideia.texto_solucao%>
+  </div>
+
+  <%if (permitido_moderar? ideia)%>
+    <div class="mdl-card__supporting-text mdl-color-text--primary">
+      <p>Categorias: <b><%=ideia.categorias.map(&:titulo).join('</b>, <b>')%></b></p>
+    </div>
+  <%end%>
+
+  <div class="mdl-card__actions mdl-card--border">
+    <button type="button" class="mdl-button mdl-button--icon mdl-layout--small-screen-only prd-button--backward"><i class="material-icons">arrow_back</i></button>
+    <button type="button" class="mdl-button mdl-button--colored mdl-layout--large-screen-only prd-button--backward">Voltar</button>
+    <button type="button" class="mdl-button mdl-button--colored mdl-button--open-dialog">Categorias</button>
+    <a href="<%=path_to :moderacao, ideia.to_url_param, :moderar%>" class="mdl-button mdl-button--icon mdl-layout--small-screen-only"><i class="material-icons"><%=controllers[:moderacao][:icon]%></i></a>
+    <a href="<%=path_to :moderacao, ideia.to_url_param, :moderar%>" class="mdl-button mdl-layout--large-screen-only">Moderar</a>
+  </div><!--/.mdl-card__actions-->
+</div><!--/.mdl-card-->
+
+<%content_for :dialog do%>
+  <dialog class="mdl-dialog">
+    <form action="<%=path_to :moderacao, ideia.to_url_param, :categorias%>" method="post" class="">
+        <div class="mdl-dialog__content">
+          <h2 class="mdl-card__title-text">Categorias</h2>
+
+          <%categorias.each_with_index do |categoria, i|%>
+            <%checked = 'checked="checked"' if ideia.categorias.include? categoria%>
+            <p>
+            <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect mdl-cell mdl-cell--2-col" for="ideia_categorias_<%=i%>">
+              <input type="checkbox" id="ideia_categorias_<%=i%>" name="categorias[]" value="<%=categoria.id%>" class="mdl-checkbox__input" <%=checked%>/>
+              <span class="mdl-checkbox__label"><%=categoria.titulo%></span>
+            </label>
+            </p>
+          <%end%>
+        </div>
+
+        <div class="mdl-dialog__actions">
+          <button type="submit" name="_method" value="put" class="mdl-button mdl-button--raised mdl-js-button mdl-js-ripple-effect"> Salvar </button>
+          <button type="button" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect mdl-button--close-dialog"> Cancelar </button>
+        </div><!--/.mdl-cell-->
+    </form>
+  </dialog>
+  <script src="<%=path_to '/js/dialog.js'%>"></script>
+<%end%>
+
+<%content_for :script do%>
+  <script>
+    buttons = document.querySelectorAll('.prd-button--backward');
+    for (i = 0; i <= buttons.length - 1; i++) {
+      buttons[i].addEventListener('click', function(event) {
+        history.back();
+      });
+    };
+  </script>
+<%end%>
