@@ -8,7 +8,7 @@ class Ideia < Model[:ideia]
 
   many_to_one :autor
   many_to_many :categorias, join_table: :ideia_categoria
-  many_to_many :coautores, join_table: :ideia_coautor, right_key: :coautor_id
+  many_to_many :coautores, class: Autor, join_table: :ideia_coautor, right_key: :coautor_id
   one_to_many :modificacoes
   many_to_many :apoiadores, join_table: :ideia_apoiador
   one_to_one :avaliacao
