@@ -5,14 +5,14 @@ module Prodam::Idealize
 class ModeracaoController < ApplicationController
   helpers IdeiasHelper, DateHelper
 
-  before authorize_only: :moderador do
+  before authenticate: true, authorize_only: :moderador do
     @page = controllers[:moderacao]
   end
 
   before '/:id/?:action?' do |id, action|
     if (ideia_id = id.to_i) > 0
       @ideia = Ideia[ideia_id]
-      @situacao = @ideia.modificacao.situacao
+      @situacao = @ideia.situacao
     else
       @ideia = Ideia.new
       @situacao = Situacao.chave :rascunho
@@ -26,7 +26,7 @@ class ModeracaoController < ApplicationController
   end
 
   get '/:id' do |id|
-    @categorias = Categoria.all if permitido_moderar? @ideia
+    @categorias = Categoria.all
     @apoiadores = Relatorio.new.lista_apoiadores_ideia @ideia
     if (@ideia.publicada?) or (usuario_autor? @ideia) or (authorized_by? :moderador)
       view 'ideias/moderacao/page'
@@ -36,7 +36,7 @@ class ModeracaoController < ApplicationController
     end
   end
 
-  put '/:id/categorias', authenticate: true do |id|
+  put '/:id/categorias' do |id|
     if @ideia.desbloqueada? && (permitido_moderar? @ideia)
       @ideia.remove_all_categorias
       params[:categorias] && params[:categorias].each do |categoria_id|
@@ -49,7 +49,7 @@ class ModeracaoController < ApplicationController
     redirect to(id)
   end
 
-  get '/:id/moderar', authorize_only: :moderador do |id|
+  get '/:id/moderar' do |id|
     if (permitido_moderar? @ideia) or (usuario_moderador? @ideia)
       @processo = processo(:moderacao)
       @formulario = @processo.formulario
