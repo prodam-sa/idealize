@@ -51,7 +51,7 @@ class ModeracaoController < ApplicationController
 
   get '/:id/moderar' do |id|
     if (permitido_moderar? @ideia) or (usuario_moderador? @ideia)
-      @processo = processo(:moderacao)
+      @processo = Processo.find chave: 'moderacao'
       @formulario = @processo.formulario
       @criterios = @formulario.criterios
       unless @ideia.modificacao.situacao_id == @processo.id
