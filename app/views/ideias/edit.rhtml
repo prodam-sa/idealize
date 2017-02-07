@@ -9,7 +9,7 @@
 
   <%if usuario_autor? @ideia%>
     <div class="mdl-cell mdl-cell--3-col-desktop mdl-cell--4-col-tablet mdl-cell--order-2-tablet mdl-cell--4-col-phone mdl-cell--order-2-phone">
-      <%=partial 'ideias/list-coautores', locals: { ideia: @ideia } if usuario_autor? @ideia%>
+      <%=partial 'ideias/card-coautores', locals: { ideia: @ideia } if usuario_autor? @ideia%>
     </div><!--/.mdl-cell-->
   <%end%>
 </div><!--/.mdl-grid-->
