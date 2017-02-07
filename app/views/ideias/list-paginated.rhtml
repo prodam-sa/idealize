@@ -40,7 +40,7 @@
     </div>
 
     <div class="mdl-cell mdl-cell--8-col mdl-typography--text-right">
-      <%params = { autor: request.params['autor'], situacao: request.params['situacao'], ordem: pagination[:order] }%>
+      <%params = { autor: request.params['autor'], situacao: request.params['situacao'], ordem: request.params['ordem'] }%>
       <%if pagination[:total] > 1%>
         <%params.update pagina: pagination[:previous]%>
         <a id="page-previous" href="<%=path_to :ideias, params%>" class="mdl-button mdl-button--colored mdl-button--icon mdl-js-button mdl-js-ripple-effect">
@@ -76,12 +76,13 @@
       <button id="page-order" class="mdl-button mdl-button--icon mdl-button--colored"><i class="material-icons">filter_list</i></button>
       <span class="mdl-tooltip mdl-tooltip--top" for="page-order">Filtros da lista</span>
 
-      <div class="mdl-menu mdl-menu--top-right mdl-js-menu" for="page-order">
-        <a href="<%=path_to :ideias, params.update(pagina: pagination[:current], ordem: 'a~z')%>" class="mdl-menu__item">Por título de A a Z</a>
-        <a href="<%=path_to :ideias, params.update(pagina: pagination[:current], ordem: 'z~a')%>" class="mdl-menu__item">Por título de Z a A</a>
-        <a href="<%=path_to :ideias, params.update(pagina: pagination[:current], ordem: 'jan~dez')%>" class="mdl-menu__item">Por data de Jan a Dez</a>
-        <a href="<%=path_to :ideias, params.update(pagina: pagination[:current], ordem: 'dez~jan')%>" class="mdl-menu__item">Por data de Dez a Jan</a>
+      <div class="mdl-menu mdl-menu--top-right mdl-js-menu" for="page-order"><%filtro = params.clone%>
+        <a href="<%=path_to :ideias, filtro.update(pagina: pagination[:current], ordem: 'a~z')%>" class="mdl-menu__item">Por título de A a Z</a>
+        <a href="<%=path_to :ideias, filtro.update(pagina: pagination[:current], ordem: 'z~a')%>" class="mdl-menu__item">Por título de Z a A</a>
+        <a href="<%=path_to :ideias, filtro.update(pagina: pagination[:current], ordem: 'jan~dez')%>" class="mdl-menu__item">Por data de Jan a Dez</a>
+        <a href="<%=path_to :ideias, filtro.update(pagina: pagination[:current], ordem: 'dez~jan')%>" class="mdl-menu__item">Por data de Dez a Jan</a>
       </div>
+
       <%if pagination[:total] > 1%>
         <%params.update pagina: pagination[:total]%>
         <a id="page-last" href="<%=path_to :ideias, params%>" class="mdl-button mdl-button--colored mdl-button--icon mdl-js-button mdl-js-ripple-effect">
