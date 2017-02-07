@@ -20,8 +20,17 @@ class ModeracaoController < ApplicationController
   end
 
   get '/' do
-    @relatorio = Relatorio.new(ideias: Ideia.find_by_situacao(['postagem', 'moderacao']).exclude(autor_id: usuario_id).order(:data_criacao, :data_publicacao).all)
+    pagina  = (params[:pagina].to_i > 0 && params[:pagina] || 1).to_i
+    dataset = Ideia.find_by_situacao('postagem', 'moderacao').exclude(autor_id: @usuario.id).order(:data_criacao)
+    campo = params[:campo] || :data_criacao
+    ordem = params[:ordem] || :crescente
+    dataset = (ordem == :decrescente) ? dataset.reverse(campo.to_sym) : dataset.order(campo.to_sym)
+    dataset = dataset.eager(:autor).page(pagina)
+    @ideias = dataset.all
+    @pagination = dataset.paging
+    @relatorio = Relatorio.new(ideias: @ideias)
     @ideias = @relatorio.ideias
+
     view 'ideias/moderacao/index'
   end
 

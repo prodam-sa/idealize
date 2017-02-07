@@ -100,6 +100,11 @@ module IdeiasHelper
     end
   end
 
+  # retorna: próxima ordem, ícone, ativo/inativo
+  def ordem_icone(campo, query)
+    (query[:campo] == campo.to_s && query[:ordem] =~ /^crescente/) ? [:decrescente, :keyboard_arrow_down, true] : [:crescente, :keyboard_arrow_up, false]
+  end
+
   def perfil_responavel_historico(ideia, responsavel)
     return 'Autor' if responsavel.id == ideia.autor_id
     return 'Avaliador' if responsavel.has_profile? :avaliador

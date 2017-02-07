@@ -1,31 +1,25 @@
 <div class="mdl-grid">
   <div class="mdl-cell mdl-cell--12-col">
-    <table class="mdl-data-table mdl-js-data-table mdl-textfield--full-width">
-      <thead>
-        <th class="mdl-data-table__cell--non-numeric">Título</th>
-        <th class="mdl-data-table__cell--numeric">Apoios</th>
-        <th class="mdl-data-table__cell--non-numeric">Criação</th>
-        <th class="mdl-data-table__cell--non-numeric">Atualização</th>
-        <th class="mdl-data-table__cell--non-numeric">Publicação</th>
-        <th class="mdl-data-table__cell--non-numeric">Situação</th>
-      </thead>
-      <tbody>
-        <%@ideias.each_with_index do |ideia, i|%>
-          <tr>
-            <td class="mdl-data-table__cell--non-numeric">
-              <a href="<%=path_to :moderacao, ideia.to_url_param%>" class="mdl-button mdl-button--icon">
-                <i class="material-icons">pageview</i>
-              </a>
-              <%=ideia.titulo%>
-            </td>
-            <td class="mdl-data-table__cell--numeric"><%=@relatorio.total_apoiadores_por_ideia[ideia.id] || 0%></td>
-            <td class="mdl-data-table__cell--non-numeric"><%=formated_date ideia.data_criacao%></td>
-            <td class="mdl-data-table__cell--non-numeric"><%=formated_date ideia.data_atualizacao%></td>
-            <td class="mdl-data-table__cell--non-numeric"><%=formated_date ideia.data_publicacao%></td>
-            <td class="mdl-data-table__cell--non-numeric"><%=ideia.modificacao.situacao.titulo%></td>
-          </tr>
-        <%end%>
-      </tbody>
-    </table>
-  </div>
-</div>
+    <div class="mdl-card mdl-card--full-width mdl-shadow--2dp">
+      <div class="mdl-card__actions mdl-card--expand">
+        <%=partial 'ideias/moderacao/table-ideias', locals: { ideias: @ideias }%>
+      </div>
+
+      <div class="mdl-card__actions mdl-card--expand mdl-card--border">
+        <button type="button" class="mdl-button mdl-button--icon mdl-layout--small-screen-only prd-button--backward"><i class="material-icons">arrow_back</i></button>
+        <button type="button" class="mdl-button mdl-button--colored mdl-layout--large-screen-only prd-button--backward">Voltar</button>
+      </div><!--/.mdl-card__actions-->
+    </div><!--/.mdl-card-->
+  </div><!--/.mdl-cell-->
+</div><!--/.mdl-grid-->
+
+<%content_for :script do%>
+  <script>
+    buttons = document.querySelectorAll('.prd-button--backward');
+    for (i = 0; i <= buttons.length - 1; i++) {
+      buttons[i].addEventListener('click', function(event) {
+        history.back();
+      });
+    };
+  </script>
+<%end%>
