@@ -55,7 +55,7 @@
         <span>Página <%=@pagination[:current]%> de <%=@pagination[:total]%></span>
 
         <%if @pagination[:total] > 1%>
-          <%query = { pagina: @pagination[:previous], campo: query[:campo], ordem: query[:ordem] }%>
+          <%query.update pagina: @pagination[:previous]%>
           <a id="page-previous" href="<%=path_to :moderacao, query%>" class="mdl-button mdl-button--colored mdl-button--icon mdl-js-button mdl-js-ripple-effect">
             <i class="material-icons">keyboard_arrow_left</i>
           </a>
