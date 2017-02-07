@@ -22,8 +22,8 @@ class ModeracaoController < ApplicationController
   get '/' do
     pagina  = (params[:pagina].to_i > 0 && params[:pagina] || 1).to_i
     dataset = Ideia.find_by_situacao('postagem', 'moderacao').exclude(autor_id: @usuario.id).order(:data_criacao)
-    campo = params[:campo] || :data_criacao
-    ordem = params[:ordem] || :crescente
+    campo = params[:campo] && !params[:campo].empty? && params[:campo] || :data_criacao
+    ordem = params[:ordem] && !params[:ordem].empty? && params[:ordem] || :crescente
     dataset = (ordem == :decrescente) ? dataset.reverse(campo.to_sym) : dataset.order(campo.to_sym)
     dataset = dataset.eager(:autor).page(pagina)
     @ideias = dataset.all
