@@ -65,7 +65,7 @@ module IdeiasHelper
   end
 
   def processo(chave)
-    Processo.chave(chave)
+    Processo.find chave: chave
   end
 
   def historico(ideia, situacao, mensagem)
