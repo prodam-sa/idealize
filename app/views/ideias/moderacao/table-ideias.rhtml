@@ -36,12 +36,9 @@
     <%ideias.each_with_index do |ideia, i|%>
       <tr>
         <td class="mdl-data-table__cell--non-numeric">
-          <button id="opcoes-ideia-<%=i%>"class="mdl-button mdl-button--icon"><i class="material-icons">more_vert</i></button>
-          <div class="mdl-menu mdl-js-menu" for="opcoes-ideia-<%=i%>">
-            <a href="<%=path_to :moderacao, ideia.to_url_param%>" class="mdl-menu__item">Ler ideia</a>
-            <a href="<%=path_to :moderacao, ideia.to_url_param, :moderar%>" class="mdl-menu__item">Moderar</a>
-          </div>
-
+          <a href="<%=path_to :moderacao, ideia.to_url_param%>" class="mdl-button mdl-button--icon">
+            <i class="material-icons">pageview</i>
+          </a>
           <%=ideia.titulo%>
         </td>
         <td class="mdl-data-table__cell--numeric"><%=@relatorio.total_apoiadores_por_ideia[ideia.id] || 0%></td>
