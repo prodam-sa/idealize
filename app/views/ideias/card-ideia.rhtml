@@ -39,9 +39,6 @@
   </div>
 
   <div class="mdl-card__actions mdl-card--border">
-    <button type="button" class="mdl-button mdl-button--icon mdl-layout--small-screen-only prd-button--backward"><i class="material-icons">arrow_back</i></button>
-    <button type="button" class="mdl-button mdl-button--colored mdl-layout--large-screen-only prd-button--backward">Voltar</button>
-
     <%if ideia.desbloqueada? and (authorized? or usuario_autor? ideia)%>
       <a id="editar-ideia" href="<%=path_to :ideias, ideia.to_url_param, :editar%>" class="mdl-button mdl-button--icon mdl-layout--small-screen-only">
         <i class="material-icons">edit</i>
@@ -81,14 +78,3 @@
   </dialog>
   <script src="<%=path_to '/js/dialog.js'%>"></script>
 <%end if permitido_excluir? ideia%>
-
-<%content_for :script do%>
-  <script>
-    buttons = document.querySelectorAll('.prd-button--backward');
-    for (i = 0; i <= buttons.length - 1; i++) {
-      buttons[i].addEventListener('click', function(event) {
-        history.back();
-      });
-    };
-  </script>
-<%end%>

@@ -6,11 +6,9 @@
       </a>
     </span>
 
-    <span class="mdl-layout__title mdl-layout--large-screen-only"><%=@page[:title]%></span>
+    <%=yield_content :backward%>
 
-    <nav class="prd-navigation mdl-navigation mdl-layout--small-screen-only">
-      <%=yield_content :backward%>
-    </nav>
+    <span class="mdl-layout__title mdl-layout--large-screen-only" style="margin-left: 1rem"><%=@page[:title]%></span>
 
     <div class="mdl-layout-spacer"></div>
 
