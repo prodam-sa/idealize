@@ -4,7 +4,7 @@ module Prodam::Idealize
 
 class Situacao < Model[:situacao]
   one_to_many :ideias
-  many_to_one :processo
+  many_to_one :processo, class: self
   many_to_one :oposta, class: self
   many_to_one :seguinte, class: self
 
