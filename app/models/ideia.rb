@@ -36,8 +36,7 @@ class Ideia < Model[:ideia]
   end
 
   def param_name
-    spliter = /[ "'\<\>\/\\]/
-    "#{id}-#{titulo.downcase.split(spliter).join('-').squeeze}"
+    "#{id}-#{titulo.downcase.gsub(' ', '-')}"
   end
 
   def situacoes?(*nomes)

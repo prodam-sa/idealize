@@ -188,7 +188,13 @@ module Prodam
       end
 
       def to_url_param(prefix = nil)
-        [prefix, param_name].compact.join('/')
+        [prefix, param_name_clean].compact.join('/')
+      end
+
+    protected
+
+      def param_name_clean
+        param_name.gsub(/\W/, '-').sub(/-$/,'').squeeze('-')
       end
     end
 
