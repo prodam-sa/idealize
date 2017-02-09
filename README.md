@@ -1,30 +1,10 @@
-# Idealize - Caixa de Ideias da Prodam
+Idealize - Caixa de Ideias da Prodam
+====================================
 
 ## Funcionalidades básicas
 
-- Perfil do usuário
-  - Dados de acesso
-- Ideias/Propostas
-- Categorias das ideias
-
-## Tabelas
-
-- Usuário/Autor/Coautor
-  - Nome de usuário
-  - Nome (Pessoa)
-  - Email
-  - Senha (criptografada)
-  - Data de criação
-
-- Ideias
-  - Autor (Co-autores)
-  - Oportunidade/Desafio
-  - Proposta/Solução
-  - Categorias
-
-- Categorias
-  - Nome
-  - Ideias
+- Perfil do usuário/autor
+- Publicação, moderação e avaliação de ideias.
 
 # Clientes
 
@@ -34,10 +14,10 @@
 
 - Oracle 12c
 - Ruby v2.x
-  - Sinatra (~> 1.4)
-  - Sequel (~> 4.30)
-  - Json (~> 1.8)
-- Google Material Design Lite (~> 1.1.0)
+  - Sinatra
+  - Sequel
+  - Json
+- Google Material Design Lite
 
 ## Ambiente de Desenvolvimento
 
