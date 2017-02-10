@@ -61,18 +61,15 @@ class Ideia < Model[:ideia]
   end
 
   def bloquear!
-    self[:bloqueada] = 'S'
-    save
+    update bloqueada: 'S'
   end
 
   def desbloquear!
-    self[:bloqueada] = 'N'
-    save
+    update bloqueada: 'N'
   end
 
   def publicar!
-    self[:data_publicacao] = Time.now
-    save
+    update data_publicacao: Time.now
   end
 
   def publicada?
