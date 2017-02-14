@@ -74,7 +74,7 @@ class ModeracaoController < ApplicationController
     end
   end
 
-  post '/:id/moderacao', authorize_only: :moderador do |id|
+  post '/:id' do |id|
     @situacao = if ideia_moderada?
                   situacao(:publicacao)
                 else
@@ -96,19 +96,19 @@ class ModeracaoController < ApplicationController
     else
       @formulario = @processo.formulario
       @criterios = @formulario.criterios.map do |criterio|
-        parametro = params[:criterios].select do |(id, resposta)|
-          id == criterio.id
+        parametro = params[:criterios].select do |resposta|
+          resposta[:id] == criterio.id.to_s
         end.first
         criterio.resposta = parametro ? parametro[:resposta] : 'N'
         criterio
       end
       message.update(level: :error, text: 'Oops! Observe os campos em vermelho.')
-      view 'ideias/moderacao/form'
+      view 'ideias/moderacao/edit'
     end
   end
 
   # apenas para desbloqueio
-  put '/:id/moderacao', authorize_only: :moderador do |id|
+  put '/:id/moderacao' do |id|
     if params[:desbloquear]
       @situacao = situacao(:postagem)
       @ideia.situacao = @situacao.chave
@@ -116,7 +116,6 @@ class ModeracaoController < ApplicationController
       historico(@ideia, @situacao, 'Moderação cancelada').save
       message.update(level: :information, text: 'Moderação cancelada e ideia em situação de postagem.')
     end
-
     redirect to(id)
   end
 
