@@ -26,12 +26,6 @@
     <%=ideia.texto_solucao%>
   </div>
 
-  <%if (permitido_moderar? ideia)%>
-    <div class="mdl-card__supporting-text mdl-color-text--primary">
-      <p>Categorias: <b><%=ideia.categorias.map(&:titulo).join('</b>, <b>')%></b></p>
-    </div>
-  <%end%>
-
   <div class="mdl-card__actions mdl-card--border">
     <a href="<%=path_to :moderacao, ideia.to_url_param, :moderar%>" class="mdl-button mdl-button--icon mdl-layout--small-screen-only"><i class="material-icons"><%=controllers[:moderacao][:icon]%></i></a>
     <a href="<%=path_to :moderacao, ideia.to_url_param, :moderar%>" class="mdl-button mdl-button--colored mdl-layout--large-screen-only">Moderar</a>

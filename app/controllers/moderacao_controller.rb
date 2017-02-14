@@ -37,16 +37,11 @@ class ModeracaoController < ApplicationController
   get '/:id' do |id|
     @categorias = Categoria.all
     @apoiadores = Relatorio.new.lista_apoiadores_ideia @ideia
-    if (@ideia.publicada?) or (usuario_autor? @ideia) or (authorized_by? :moderador)
-      view 'ideias/moderacao/page'
-    else
-      message.update(level: :error, text: 'Você só poderá ler essa ideia depois de sua publicação.')
-      redirect to('/')
-    end
+    view 'ideias/moderacao/page'
   end
 
   put '/:id/categorias' do |id|
-    if @ideia.desbloqueada? && (permitido_moderar? @ideia)
+    if (permitido_moderar? @ideia) or (usuario_moderador? @ideia)
       @ideia.remove_all_categorias
       params[:categorias] && params[:categorias].each do |categoria_id|
         @ideia.add_categoria categoria_id
@@ -69,10 +64,12 @@ class ModeracaoController < ApplicationController
         @historico = @ideia.modificacao
       end
       @ideia.bloquear!
-      view 'ideias/moderacao/form'
+      view 'ideias/moderacao/edit'
     else
       if @ideia.publicada?
         mensagem = 'Ideia já foi publicada.'
+      elsif @ideia.coautores.include? @usuario
+        mensagem = 'Você é coautor(a) dessa ideia.'
       else
         mensagem = 'Ideia em moderação por outro usuário.'
       end
