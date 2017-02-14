@@ -11,7 +11,7 @@ class ModeracaoController < ApplicationController
 
   before '/:id/?:action?' do |id, action|
     if (ideia_id = id.to_i) > 0
-      @ideia = Ideia[ideia_id]
+      @ideia = Ideia.where(id: ideia_id).eager(:coautores, :apoiadores).find.first
       @situacao = @ideia.situacao
     else
       @ideia = Ideia.new
@@ -21,7 +21,7 @@ class ModeracaoController < ApplicationController
 
   get '/' do
     pagina  = (params[:pagina].to_i > 0 && params[:pagina] || 1).to_i
-    dataset = Ideia.find_by_situacao('postagem', 'moderacao').exclude(autor_id: @usuario.id).order(:data_criacao)
+    dataset = Ideia.find_by_situacao('postagem', 'moderacao').exclude(autor_id: @usuario.id)
     campo = params[:campo] && !params[:campo].empty? && params[:campo] || :data_criacao
     ordem = params[:ordem] && !params[:ordem].empty? && params[:ordem] || :crescente
     dataset = (ordem == :decrescente) ? dataset.reverse(campo.to_sym) : dataset.order(campo.to_sym)
