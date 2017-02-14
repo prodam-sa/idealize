@@ -12,10 +12,8 @@ class ModeracaoController < ApplicationController
   before '/:id/?:action?' do |id, action|
     if (ideia_id = id.to_i) > 0
       @ideia = Ideia.where(id: ideia_id).eager(:coautores, :apoiadores).find.first
+      @processo = Processo.find chave: 'moderacao'
       @situacao = @ideia.situacao
-    else
-      @ideia = Ideia.new
-      @situacao = Situacao.chave :rascunho
     end
   end
 
@@ -36,7 +34,7 @@ class ModeracaoController < ApplicationController
 
   get '/:id' do |id|
     @categorias = Categoria.all
-    @apoiadores = Relatorio.new.lista_apoiadores_ideia @ideia
+    @apoiadores = @relatorio.lista_apoiadores_ideia @ideia
     view 'ideias/moderacao/page'
   end
 
@@ -55,7 +53,6 @@ class ModeracaoController < ApplicationController
 
   get '/:id/moderar' do |id|
     if (permitido_moderar? @ideia) or (usuario_moderador? @ideia)
-      @processo = Processo.find chave: 'moderacao'
       @formulario = @processo.formulario
       @criterios = @formulario.criterios
       unless @ideia.modificacao.situacao_id == @processo.id
@@ -63,7 +60,6 @@ class ModeracaoController < ApplicationController
       else
         @historico = @ideia.modificacao
       end
-      @ideia.bloquear!
       view 'ideias/moderacao/edit'
     else
       if @ideia.publicada?
@@ -87,11 +83,10 @@ class ModeracaoController < ApplicationController
     @historico = historico(@ideia, @situacao, params[:historico][:descricao])
 
     if @historico.valid?
-      @ideia.situacao = @situacao.chave
+      @ideia.situacao = @situacao
       if ideia_moderada?
         @ideia.publicar!
         message.update(level: :information, text: 'Ideia foi publicada.')
-        @ideia.bloquear!
       else
         message.update(level: :information, text: 'Ideia foi enviada para revisão.')
         @ideia.desbloquear!
@@ -99,7 +94,7 @@ class ModeracaoController < ApplicationController
       @historico.save
       redirect to('/')
     else
-      @formulario = processo(:moderacao).formulario
+      @formulario = @processo.formulario
       @criterios = @formulario.criterios.map do |criterio|
         parametro = params[:criterios].select do |(id, resposta)|
           id == criterio.id
