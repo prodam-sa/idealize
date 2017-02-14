@@ -1,0 +1,23 @@
+<div class="mdl-grid">
+  <div class="mdl-cell mdl-cell--6-col-desktop mdl-cell--4-col-tablet mdl-cell--order-2-tablet mdl-cell--4-col-phone mdl-cell--order-2-phone">
+    <%=partial 'ideias/card-ideia', locals: { ideia: @ideia, apoiadores: @ideia.apoiadores }%>
+  </div><!--/.mdl-cell-->
+
+  <div class="mdl-cell mdl-cell--6-col-desktop mdl-cell--4-col-tablet mdl-cell--4-col-phone">
+    <%=partial 'ideias/moderacao/form', locals: { path: path_to(:ideias), method: :post, ideia: @ideia, situacao: @ideia.situacao }%>
+  </div><!--/.mdl-cell-->
+</div><!--/.mdl-grid-->
+
+<%content_for :backward do%>
+  <button type="button" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect prd-button--backward">
+    <i class="material-icons">keyboard_arrow_left</i>
+  </button>
+<%end%>
+
+<%content_for :script do%>
+  <script>
+    (document.querySelector('.prd-button--backward').addEventListener('click', function(event) {
+      history.back();
+    }))();
+  </script>
+<%end%>
