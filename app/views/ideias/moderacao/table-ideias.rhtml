@@ -9,24 +9,17 @@
       </a>
     </th>
     <th class="mdl-data-table__cell--numeric" style="width: 5%">Apoios</th>
-    <th class="mdl-data-table__cell--non-numeric" style="width: 10%">
+    <th class="mdl-data-table__cell--non-numeric" style="width: 15%">
       Criação
       <%ordem, icone, ativo = ordem_icone :data_criacao, query%>
       <a href="<%=path_to :moderacao, pagina: @pagination[:current], campo: :data_criacao, ordem: ordem%>" class="mdl-button mdl-button--icon mdl-button--<%=ativo ? :raised : :colored%>">
         <i class="material-icons"><%=icone%></i>
       </a>
     </th>
-    <th class="mdl-data-table__cell--non-numeric" style="width: 10%">
+    <th class="mdl-data-table__cell--non-numeric" style="width: 15%">
       Atualização
       <%ordem, icone, ativo = ordem_icone :data_atualizacao, query%>
       <a href="<%=path_to :moderacao, pagina: @pagination[:current], campo: :data_atualizacao, ordem: ordem%>" class="mdl-button mdl-button--icon mdl-button--<%=ativo ? :raised : :colored%>">
-        <i class="material-icons"><%=icone%></i>
-      </a>
-    </th>
-    <th class="mdl-data-table__cell--non-numeric" style="width: 10%">
-      Publicação
-      <%ordem, icone, ativo = ordem_icone :data_publicacao, query%>
-      <a href="<%=path_to :moderacao, pagina: @pagination[:current], campo: :data_publicacao, ordem: ordem%>" class="mdl-button mdl-button--icon mdl-button--<%=ativo ? :raised : :colored%>">
         <i class="material-icons"><%=icone%></i>
       </a>
     </th>
@@ -44,7 +37,6 @@
         <td class="mdl-data-table__cell--numeric"><%=@relatorio.total_apoiadores_por_ideia[ideia.id] || 0%></td>
         <td class="mdl-data-table__cell--non-numeric"><%=formated_date ideia.data_criacao%></td>
         <td class="mdl-data-table__cell--non-numeric"><%=formated_date ideia.data_atualizacao%></td>
-        <td class="mdl-data-table__cell--non-numeric"><%=formated_date ideia.data_publicacao%></td>
         <td class="mdl-data-table__cell--non-numeric"><%=ideia.modificacao.situacao.titulo%></td>
       </tr>
     <%end%>
