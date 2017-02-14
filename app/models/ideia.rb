@@ -96,6 +96,10 @@ class Ideia < Model[:ideia]
       select(*fields).exclude(data_publicacao: nil).reverse(:data_criacao)
     end
 
+    def find_by_id(id)
+      where(id: id).eager(:situacao, :modificacoes, :coautores, :apoiadores).all.first
+    end
+
     def find_by_autor(autor_id)
       where(autor_id: autor_id).reverse(:data_criacao)
     end
