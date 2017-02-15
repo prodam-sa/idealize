@@ -9,6 +9,10 @@ class Processo < Situacao
   def bloqueia?
     self[:bloqueia] =~ /S/i && true || false
   end
+
+  def self.find_by_chave(chave)
+    where(chave: chave).eager(:situacoes).all.first
+  end
 end
 
 end # module
