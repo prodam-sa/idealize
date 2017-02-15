@@ -58,7 +58,9 @@ class ModeracaoController < ApplicationController
     if (permitido_moderar? @ideia) or (usuario_moderador? @ideia)
       @formulario = @processo.formulario
       @criterios = @formulario.criterios
-      unless @ideia.modificacao.situacao_id == @processo.id
+      unless @processo.id == @ideia.modificacao.situacao_id
+        @ideia.situacao = @processo
+        @ideia.bloquear!
         @historico = historico(@ideia, @processo, 'Moderação iniciada.').save
       else
         @historico = @ideia.modificacao
@@ -118,7 +120,7 @@ class ModeracaoController < ApplicationController
     if params[:desbloquear]
       @situacao = situacao(:postagem)
       @ideia.situacao = @situacao
-      @ideia.save
+      @ideia.desbloquear!
       historico(@ideia, @situacao, 'Moderação cancelada').save
       message.update(level: :information, text: 'Moderação cancelada e ideia em situação de postagem.')
     end
