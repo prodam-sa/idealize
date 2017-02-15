@@ -33,7 +33,7 @@ module Sequel
         @@paging = nil
 
         def paging(options = nil)
-          @@paging || paging!(options)
+          @@paging || (paging! options)
         end
 
         def page(number = 1)
