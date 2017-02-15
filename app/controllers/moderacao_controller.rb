@@ -35,7 +35,7 @@ class ModeracaoController < ApplicationController
   get '/:id' do |id|
     @categorias = Categoria.all
     @apoiadores = @relatorio.lista_apoiadores_ideia @ideia
-    @historico = Historico.find_by_ideia(@ideia).find.group_by do |modificacao|
+    @historico = Historico.find_by_ideia(@ideia).all.group_by do |modificacao|
       formated_date modificacao.data_registro
     end
     view 'ideias/moderacao/page'
