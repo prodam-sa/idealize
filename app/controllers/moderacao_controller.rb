@@ -22,7 +22,7 @@ class ModeracaoController < ApplicationController
     dataset = Ideia.find_by_situacoes('postagem', 'moderacao').exclude(autor_id: @usuario.id)
     campo = params[:campo] && !params[:campo].empty? && params[:campo] || :data_criacao
     ordem = params[:ordem] && !params[:ordem].empty? && params[:ordem] || :crescente
-    dataset = (ordem == :decrescente) ? dataset.reverse(campo.to_sym) : dataset.order(campo.to_sym)
+    dataset = (ordem == 'decrescente') ? dataset.reverse(campo.to_sym) : dataset.order(campo.to_sym)
     dataset = dataset.eager(:autor).page(pagina)
     @pagination = dataset.paging
     @ideias = dataset.all
