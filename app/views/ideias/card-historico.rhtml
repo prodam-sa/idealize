@@ -3,7 +3,7 @@
     <h1 class="mdl-card__title-text">Histórico</h1>
   </div>
 
-  <%ideia.historico.group_by{|m| formated_date(m.data_registro)}.each do |data, mudancas|%>
+  <%historico.each do |data, mudancas|%>
     <div class="mdl-card__actions prd-timeline">
       <div class="prd-timeline__title mdl-color-text--primary">
         <i class="material-icons">event</i>
