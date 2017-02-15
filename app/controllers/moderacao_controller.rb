@@ -107,11 +107,11 @@ class ModeracaoController < ApplicationController
   end
 
   # apenas para desbloqueio
-  put '/:id/moderacao' do |id|
+  put '/:id' do |id|
     if params[:desbloquear]
       @situacao = situacao(:postagem)
-      @ideia.situacao = @situacao.chave
-      @ideia.desbloquear!
+      @ideia.situacao = @situacao
+      @ideia.save
       historico(@ideia, @situacao, 'Moderação cancelada').save
       message.update(level: :information, text: 'Moderação cancelada e ideia em situação de postagem.')
     end
