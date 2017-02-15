@@ -80,10 +80,16 @@ class ModeracaoController < ApplicationController
   end
 
   post '/:id' do |id|
-    @situacao = ideia_moderada? && @situacao.seguinte || @situacao.oposta
-    @historico = historico(@ideia, @situacao, params[:historico][:descricao])
     assunto = 'Sua ideia foi publicada'
     texto = 'Ideia foi publicada e o autor foi notificado por e-mail.'
+
+    if ideia_moderada?
+      @situacao = (params[:situacao]) && Situacao.find(params[:situacao]) || @situacao.seguinte
+    else
+      @situacao = @situacao.oposta
+    end
+
+    @historico = historico(@ideia, @situacao, params[:historico][:descricao])
 
     if @historico.valid?
       @ideia.situacao = @situacao
