@@ -37,7 +37,7 @@
         <td class="mdl-data-table__cell--numeric"><%=@relatorio.total_apoiadores_por_ideia[ideia.id] || 0%></td>
         <td class="mdl-data-table__cell--non-numeric"><%=formated_date ideia.data_criacao%></td>
         <td class="mdl-data-table__cell--non-numeric"><%=formated_date ideia.data_atualizacao%></td>
-        <td class="mdl-data-table__cell--non-numeric"><%=ideia.modificacao.situacao.titulo%></td>
+        <td class="mdl-data-table__cell--non-numeric"><%=ideia.situacao.titulo%></td>
       </tr>
     <%end%>
   </tbody>
