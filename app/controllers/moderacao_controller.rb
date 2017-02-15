@@ -11,7 +11,7 @@ class ModeracaoController < ApplicationController
 
   before '/:id/?:action?' do |id, action|
     if (ideia_id = id.to_i) > 0
-      @ideia = Ideia.where(id: ideia_id).eager(:coautores, :apoiadores).find.first
+      @ideia = Ideia.find_by_id(ideia_id)
       @processo = Processo.find chave: 'moderacao'
       @situacao = @ideia.situacao
     end
@@ -35,6 +35,9 @@ class ModeracaoController < ApplicationController
   get '/:id' do |id|
     @categorias = Categoria.all
     @apoiadores = @relatorio.lista_apoiadores_ideia @ideia
+    @historico = Historico.find_by_ideia(@ideia).find.group_by do |modificacao|
+      formated_date modificacao.data_registro
+    end
     view 'ideias/moderacao/page'
   end
 
@@ -75,11 +78,7 @@ class ModeracaoController < ApplicationController
   end
 
   post '/:id' do |id|
-    @situacao = if ideia_moderada?
-                  situacao(:publicacao)
-                else
-                  situacao(:revisao)
-                end
+    @situacao = ideia_moderada? && @situacao.seguinte || @situacao.oposta
     @historico = historico(@ideia, @situacao, params[:historico][:descricao])
 
     if @historico.valid?

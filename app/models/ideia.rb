@@ -97,7 +97,7 @@ class Ideia < Model[:ideia]
     end
 
     def find_by_id(id)
-      where(id: id).eager(:situacao, :modificacoes, :coautores, :apoiadores).all.first
+      where(id: id).eager(:situacao, :modificacoes, :coautores, :apoiadores).find.first
     end
 
     def find_by_autor(autor_id)
