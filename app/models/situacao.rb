@@ -33,6 +33,7 @@ class Situacao < Model[:situacao]
     def find_by_chaves(*chaves)
       where(chave: chaves.map(&:to_s)).eager(:processo, :oposta, :seguinte)
     end
+    alias find_by_chave find_by_chaves
 
     def all_by_sem_restricao(*fields)
       where(restrita: 'N').select(*fields).all
