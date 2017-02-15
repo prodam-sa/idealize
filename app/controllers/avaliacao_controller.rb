@@ -33,13 +33,12 @@ class AvaliacaoController < ApplicationController
   end
 
   get '/:id' do |id|
-    @apoiadores = Relatorio.new.lista_apoiadores_ideia @ideia
-    if (@ideia.publicada?) or (usuario_autor? @ideia) or (authorized_by? :moderador)
-      view 'ideias/avaliacao/page'
-    else
-      message.update(level: :error, text: 'Você só poderá ler essa ideia depois de sua publicação.')
-      redirect to('/')
+    @categorias = Categoria.all
+    @apoiadores = @relatorio.lista_apoiadores_ideia @ideia
+    @historico = Historico.find_by_ideia(@ideia).all.group_by do |modificacao|
+      formated_date modificacao.data_registro
     end
+    view 'ideias/avaliacao/page'
   end
 
   post '/' do
