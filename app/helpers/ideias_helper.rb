@@ -107,8 +107,8 @@ module IdeiasHelper
 
   def perfil_responavel_historico(ideia, responsavel)
     return 'Autor' if responsavel.id == ideia.autor_id
-    return 'Avaliador' if responsavel.has_profile? :avaliador
     return 'Moderador' if responsavel.has_profile? :moderador
+    return 'Avaliador' if responsavel.has_profile? :avaliador
     return 'Administrador' if responsavel.has_profile? :administrador
     'Usuário'
   end

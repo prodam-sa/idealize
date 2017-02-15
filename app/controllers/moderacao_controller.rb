@@ -3,7 +3,7 @@
 module Prodam::Idealize
 
 class ModeracaoController < ApplicationController
-  helpers IdeiasHelper, DateHelper
+  helpers IdeiasHelper, DateHelper, MailHelper
 
   before authenticate: true, authorize_only: :moderador do
     @page = controllers[:moderacao]
@@ -80,17 +80,24 @@ class ModeracaoController < ApplicationController
   post '/:id' do |id|
     @situacao = ideia_moderada? && @situacao.seguinte || @situacao.oposta
     @historico = historico(@ideia, @situacao, params[:historico][:descricao])
+    assunto = 'Sua ideia foi publicada'
+    texto = 'Ideia foi publicada e o autor foi notificado por e-mail.'
 
     if @historico.valid?
       @ideia.situacao = @situacao
       if ideia_moderada?
         @ideia.publicar!
-        message.update(level: :information, text: 'Ideia foi publicada.')
       else
-        message.update(level: :information, text: 'Ideia foi enviada para revisão.')
+        assunto = 'Sua deia foi enviada para revisão'
+        texto = 'Ideia enviada para revisão e o autor foi notificado por e-mail.'
         @ideia.desbloquear!
       end
+      message.update level: :information, text: texto
       @historico.save
+      enviar_notificacao para: @ideia.autor.email,
+                         assunto: assunto,
+                         mensagem_html: view("ideias/moderacao/email-#{@ideia.situacao.chave}", layout: false)
+
       redirect to('/')
     else
       @formulario = @processo.formulario

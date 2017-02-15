@@ -63,13 +63,13 @@ class Usuario < Model[:usuario]
 
   def profiles
     PROFILES.map(&:to_sym).select do |profile|
-      self[profile] && (self[profile] == 'S')
-    end << 'usuario'
+      self[profile] && (self[profile] =~ /S/i)
+    end << :usuario
   end
   alias perfis profiles
 
   def has_profile?(nome)
-    profiles.include? nome.to_s
+    profiles.include? nome
   end
   alias perfil? has_profile?
 
