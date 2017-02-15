@@ -76,7 +76,7 @@
     :controller: AvaliacaoController
     :title: Avaliação
     :description: Avaliação das ideias publicadas.
-    :layout: dashboard
+    :layout:
     :icon: assignment_turned_in
     :navigation: [dashboard]
     :profiles: [avaliador]

@@ -5,31 +5,30 @@ module Prodam::Idealize
 class AvaliacaoController < ApplicationController
   helpers IdeiasHelper, AvaliacaoHelper, DateHelper, MailHelper
 
-  before authorize_only: :avaliador do
+  before authenticate: true, authorize_only: :avaliador do
     @page = controllers[:avaliacao]
-    @processo = processo('avaliacao')
-    @situacoes = Situacao.all_by_sem_restricao(:chave).map(&:chave)
   end
 
   before '/:id/?:action?' do |id, action|
     if (ideia_id = id.to_i) > 0
-      @ideia = Ideia[ideia_id]
-      @situacao = @ideia.modificacao.situacao
-    else
-      @ideia = Ideia.new
-      @situacao = Situacao.chave :rascunho
+      @ideia = Ideia.find_by_id(ideia_id)
+      @processo = Processo.find_by_chave 'avaliacao'
+      @situacao = @ideia.situacao
     end
   end
 
   get '/' do
-    @relatorio = Relatorio.new(ideias: Ideia.find_by_situacao('publicacao').exclude(autor_id: usuario_id).order(:data_criacao, :data_publicacao).all)
-    @ideias_avaliadas = Ideia.
-      find_by_situacao('avaliacao').
-      exclude(autor_id: usuario_id).
-      order(:data_criacao, :data_publicacao).
-      eager(:avaliacao).
-      all
+    pagina  = (params[:pagina].to_i > 0 && params[:pagina] || 1).to_i
+    dataset = Ideia.find_by_situacao('publicacao').exclude(autor_id: @usuario.id)
+    campo = params[:campo] && !params[:campo].empty? && params[:campo] || :data_criacao
+    ordem = params[:ordem] && !params[:ordem].empty? && params[:ordem] || :crescente
+    dataset = (ordem == 'decrescente') ? dataset.reverse(campo.to_sym) : dataset.order(campo.to_sym)
+    dataset = dataset.eager(:autor).page(pagina)
+    @pagination = dataset.paging
+    @ideias = dataset.all
+    @relatorio = Relatorio.new(ideias: @ideias)
     @ideias = @relatorio.ideias
+
     view 'ideias/avaliacao/index'
   end
 
