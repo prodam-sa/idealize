@@ -48,9 +48,9 @@ class Relatorio
         %s",
     total_ideias_por_situacao: "
       SELECT situacao.chave
-           , COUNT(*) AS total
+           , COUNT(ideia.id) AS total
         FROM situacao
-        INNER JOIN ideia ON (ideia.situacao_id = situacao.id)
+        FULL JOIN ideia ON (ideia.situacao_id = situacao.id)
         %s
         GROUP BY situacao.chave",
     total_ideias_por_autor: "
