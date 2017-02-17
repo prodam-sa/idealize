@@ -39,7 +39,7 @@ module Sequel
         def page(number = 1)
           paging[:page] = number > 0 ? number : 1
           paging[:current] = paging[:page] > paging[:total] ? paging[:total] : paging[:page]
-          paging[:offset] = ((paging[:current] - 1) * paging[:limit])
+          paging[:offset] = ((paging[:current] - 1).abs * paging[:limit])
           paging[:next] = paging[:current] < paging[:total] ? paging[:current] + 1 : paging[:total]
           paging[:previous] = paging[:current] <= paging[:next] ? paging[:current] - 1 : 1
           limit(paging[:limit]).offset(paging[:offset])
