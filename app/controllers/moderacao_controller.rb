@@ -98,6 +98,7 @@ class ModeracaoController < ApplicationController
       else
         assunto = 'Sua deia foi enviada para revisão'
         texto = 'Ideia enviada para revisão e o autor foi notificado por e-mail.'
+        @ideia.situacao = @ideia.situacao.oposta
         @ideia.desbloquear!
       end
       message.update level: :information, text: texto
