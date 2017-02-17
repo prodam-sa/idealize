@@ -32,7 +32,7 @@
     :title: Mensagens
     :description: Mensagens dos usuários para você.
     :layout:
-    :icon: message
+    :icon: mail
     :navigation: [menu]
     :profiles: [usuario]
 
