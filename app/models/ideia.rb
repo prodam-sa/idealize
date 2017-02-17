@@ -84,7 +84,7 @@ class Ideia < Model[:ideia]
 
   def before_save
     self[:data_atualizacao] = Time.now
-    situacao && situacao.processo && (self[:bloqueada] = situacao.processo.bloqueia)
+    situacao && (self[:bloqueada] = situacao.bloqueia)
   end
 
   def remove_all_modificacoes
