@@ -1,0 +1,41 @@
+<form action="<%=path_to :avaliacao, @ideia.to_url_param%>" method="post" class="prd-card mdl-card mdl-card--full-width mdl-shadow--2dp">
+  <div class="mdl-card__title mdl-card--border">
+    <h3 class="mdl-card__title-text"><%=@formulario.titulo%></h3>
+  </div>
+
+  <%@criterios.each_with_index do |criterio, c|%>
+    <div class="mdl-card__title mdl-card--border">
+      <label class="mdl-color-text--primary"><%=criterio.titulo%></label>
+    </div>
+
+    <div class="mdl-list">
+      <%criterio.subcriterios.sort{|a,b| a.titulo <=> b.titulo}.each_with_index do |subcriterio, s|%>
+        <%checked = ' checked="checked"' if subcriterio.resposta =~ /S/i%>
+        <div class="mdl-list__item mdl-list__item--two-line">
+          <div class="mdl-list__item-primary-content">
+            <label class="mdl-check__label" for="criterios_resposta_id_<%=s%>"><%=subcriterio.titulo%></label>
+            <span class="mdl-list__item-sub-title">
+              <%=subcriterio.descricao%>
+            </span>
+          </div>
+          <div class="mdl-list__item-secondary-content">
+            <label class="mdl-list__item-secondary-action mdl-radio mdl-js-radio mdl-js-ripple-effect">
+              <input type="radio" id="criterios_resposta_id_<%=s%>" name="criterios[<%=criterio.id%>]" value="<%=subcriterio.id%>" class="mdl-radio__button"<%=checked%>/>
+            </label>
+          </div>
+        </div><!--/.mdl-list__item-->
+      <%end%>
+    </div><!--/.mdl-list-->
+  <%end%>
+
+  <div class="mdl-card__actions mdl-card--border">
+    <button name="_method" value="post" class="mdl-button mdl-button--raised mdl-js-button mdl-js-ripple-effect">
+      Salvar
+    </button>
+
+    <button name="_method" value="put" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+      <input type="hidden" name="desbloquear" value="true"/>
+      Cancelar
+    </button>
+  </div>
+</form>

@@ -12,7 +12,9 @@ class AvaliacaoController < ApplicationController
   before '/:id/?:action?' do |id, action|
     if (ideia_id = id.to_i) > 0
       @ideia = Ideia.find_by_id(ideia_id)
-      @processo = Processo.find_by_chave 'avaliacao'
+      @processo = Processo.find_by_chave('avaliacao')
+      @formulario = @processo.formulario
+      @criterios = @formulario.criterios
       @situacao = @ideia.situacao
     end
   end
@@ -41,22 +43,29 @@ class AvaliacaoController < ApplicationController
     view 'ideias/avaliacao/page'
   end
 
-  post '/' do
-    @pontuacoes = params[:pontuacoes]
-    @pontuacoes && @pontuacoes.each do |pontuacao|
-      pontos = pontuacao[:pontos] && pontuacao[:pontos].to_i
-      if pontos > 0
-        @classificacao = classificacao(pontos)
-        @avaliacao = Avaliacao.new(ideia_id: pontuacao[:ideia_id].to_i, classificacao: @classificacao, pontos: pontos)
-        @ideia = @avaliacao.ideia
-        @situacao = situacao(:avaliacao)
-        @ideia.situacao = @situacao.chave
-        @ideia.save
-        @avaliacao.save
-        historico(@avaliacao.ideia, @situacao, "Ideia avaliada com pontuacao #{pontos} e classificada como #{@classificacao.titulo}").save
+  get '/:id/avaliar' do |id|
+    if (permitido_avaliar? @ideia) or (usuario_avaliador? @ideia)
+      @formulario = @processo.formulario
+      @criterios = @formulario.criterios_dataset.eager(:subcriterios).order(:titulo).all
+      unless @processo.id == @ideia.modificacao.situacao_id
+        @ideia.situacao = @processo
+        @ideia.bloquear!
+        @historico = historico(@ideia, @processo, 'Avaliação iniciada.').save
+      else
+        @historico = @ideia.modificacao
       end
+      view 'ideias/avaliacao/edit'
+    else
+      if @ideia.avaliacao
+        mensagem = 'Ideia já foi avaliada.'
+      elsif @ideia.coautores.include? @usuario
+        mensagem = 'Você é coautor(a) dessa ideia.'
+      else
+        mensagem = 'Ideia em avaliação por outro usuário.'
+      end
+      message.update(level: :warning, text: mensagem)
+      redirect to(id)
     end
-    redirect to('/')
   end
 
   post '/notificacao' do
