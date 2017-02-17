@@ -67,7 +67,7 @@
     :controller: ModeracaoController
     :title: Moderação
     :description: Moderação das ideias.
-    :layout: dashboard
+    :layout:
     :icon: assignment
     :navigation: [dashboard]
     :profiles: [moderador]

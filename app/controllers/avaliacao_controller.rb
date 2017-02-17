@@ -68,21 +68,51 @@ class AvaliacaoController < ApplicationController
     end
   end
 
-  post '/notificacao' do
-    rodape = "<hr/><p><small>#{version_info}</small></p>"
-    assunto  = (params[:assunto] || 'Ideia avaliada')
-    mensagem = params[:mensagem]
-    @notificacoes = Ideia.eager(:autor, :avaliacao).where(id: params[:ideias]).all.map do |ideia|
-      avaliacao = ideia.avaliacao
-      classificacao = avaliacao.classificacao
-      cabecalho = "<p><b>Ideia</b>: #{ideia.titulo}</p><p><b>Pontuação</b>: #{avaliacao.pontos}</p><p><b>Classificação</b>: #{classificacao.titulo}</p><hr/>"
-      mensagem  = cabecalho + markdown(mensagem) + rodape
-      enviar_notificacao para:    ideia.autor.email,
-                         assunto: assunto,
-                         mensagem_html:   mensagem
+  post '/:id' do |id|
+    @respostas = params[:criterios] && Criterio.where(id: params[:criterios].values).eager(:criterio).all || []
+    @pontos = @respostas && @respostas.map do |resposta|
+      resposta.peso
+    end.reduce do |total, peso|
+      total + peso
+    end || 0
+    if ideia_avaliada?
+      @classificacao = classificacao(@pontos)
+      @avaliacao = Avaliacao.new(ideia: @ideia, classificacao: @classificacao, pontos: @pontos)
+      @ideia.situacao = @situacao.seguinte
+      @ideia.save
+      @avaliacao.save
+      message.update(level: :information, text: 'Ideia foi avaliada e classificada. O autor foi notificado por e-mail.')
+      historico(@ideia, @ideia.situacao, "Ideia avaliada com pontuacao #{@pontos} e classificada como #{@classificacao.titulo}.").save
+      enviar_notificacao(para: @ideia.autor.email, assunto: 'Sua ideia foi avaliada', mensagem_html: view("ideias/avaliacao/email-#{@ideia.situacao.chave}", layout: false))
+      redirect to('/')
+    else
+      @formulario = @processo.formulario
+      @criterios = @formulario.criterios_dataset.eager(:subcriterios).order(:titulo).all
+      message.update(level: :error, text: "Avaliação com #{@pontos} pontos e #{@respostas.size} respostas. Pontuação mínima é de #{@pontos_minimos} pontos para #{@criterios.size} critérios.")
+      view 'ideias/avaliacao/edit'
     end
-    message.update(level: :information, text: 'Mensagem enviada para os autores das ideias avaliadas.')
-    redirect to('/')
+  end
+
+  # apenas para desbloqueio
+  put '/:id' do |id|
+    if params[:desbloquear]
+      @ideia.situacao = situacao(:publicacao)
+      @ideia.desbloquear!
+      historico(@ideia, @ideia.situacao, 'Avaliação cancelada').save
+      message.update(level: :information, text: 'Avaliação cancelada e ideia em situação de publicação.')
+    end
+    redirect to(id)
+  end
+
+private
+
+  def ideia_avaliada?
+    @pontos_minimos = @criterios.map do |criterio|
+      criterio.peso
+    end.reduce do |total, peso|
+      total + peso
+    end
+    params[:criterios] && (params[:criterios].size == @criterios.size) && (@pontos >= @pontos_minimos)
   end
 end
 
