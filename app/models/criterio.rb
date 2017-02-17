@@ -7,6 +7,7 @@ class Criterio < Model[:criterio]
 
   many_to_one :formulario
   one_to_many :subcriterios, class: self, key: :criterio_multiplo_id
+  many_to_one :criterio, class: self, key: :criterio_multiplo_id
 
   attr_accessor :resposta
 
