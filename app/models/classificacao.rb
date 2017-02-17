@@ -6,6 +6,7 @@ class Classificacao < Model[:classificacao]
   plugin :validation_helpers
 
   one_to_many :avaliacoes
+  many_to_many :premiacoes, join_table: :classificacao_premiacao
 
   def validate
     super
