@@ -51,7 +51,7 @@ class ApplicationController < Sinatra::Base
 
   before do
     @page = {}
-    @fab = { url: path_to(:ideias, :nova), icon: :wb_incandescent, tooltip: 'Nova ideia!' }
+    @fab = { url: path_to(:ideias, :nova), icon: :add, tooltip: 'Nova ideia!' }
     @relatorio = Relatorio.new
     @situacoes = Situacao.all.each_with_object Hash.new do |situacao, situacoes|
       situacoes[situacao.chave.to_sym] = situacao
