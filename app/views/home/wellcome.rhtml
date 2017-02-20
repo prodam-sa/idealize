@@ -103,9 +103,9 @@
         <img src="<%=path_to 'img/ideia-premiada.svg'%>" alt=""/>
       </div>
       <div class="mdl-grid">
-        <div class="mdl-cell mdl-cell--5-col-desktop mdl-cell--hide-tablet mdl-cell--hide-phone mdl-typography--text-right"><big class="mdl-typography--display-3"><%=@relatorio.total_ideias_por_situacao[:avaliacao] || :Sem%></big></div>
+        <div class="mdl-cell mdl-cell--5-col-desktop mdl-cell--hide-tablet mdl-cell--hide-phone mdl-typography--text-right"><big class="mdl-typography--display-3"><%=@relatorio.total_ideias_por_situacao[:premiacao] || :Sem%></big></div>
         <div class="mdl-cell mdl-cell--7-col-desktop mdl-cell--hide-tablet mdl-cell--hide-phone mdl-typography--text-left mdl-cell--middle"><span class="mdl-typography--title">Ideias <strong>premiadas</strong></span></div>
-        <div class="mdl-cell mdl-cell--hide-desktop mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-typography--text-center"><big class="mdl-typography--display-3"><%=@relatorio.total_ideias_por_situacao[:avaliacao] || :Sem%></big></div>
+        <div class="mdl-cell mdl-cell--hide-desktop mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-typography--text-center"><big class="mdl-typography--display-3"><%=@relatorio.total_ideias_por_situacao[:premiacao] || :Sem%></big></div>
         <div class="mdl-cell mdl-cell--hide-desktop mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-typography--text-center"><span class="mdl-typography--title">Ideias <strong>premiadas</strong></span></div>
       </div>
     </div><!--/.mdl-card-->

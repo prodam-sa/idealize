@@ -65,7 +65,7 @@ class ApplicationController < Sinatra::Base
       @info[:total_pontos] ||= @relatorio.ranking_autor[:total_pontos]
       @info[:total_mensagens] ||= Mensagem.find_nao_lidas_para(@usuario.id).count
       @info[:total_ideias] ||= @usuario.ideias.size
-      [:avaliacao, :publicacao, :postagem, :rascunho, :revisao, :moderacao].each do |chave|
+      [:premiacao, :avaliacao, :publicacao, :postagem, :rascunho, :revisao, :moderacao].each do |chave|
         key = "total_ideias_#{chave}"
         @info[key.to_sym] ||= @usuario.ideias.select do |ideia|
           ideia.situacao? chave
