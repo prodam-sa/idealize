@@ -101,7 +101,7 @@ class AvaliacaoController < ApplicationController
       historico(@ideia, @ideia.situacao, 'Avaliação cancelada').save
       message.update(level: :information, text: 'Avaliação cancelada e ideia em situação de publicação.')
     end
-    redirect to(id)
+    redirect to('/')
   end
 
 private
