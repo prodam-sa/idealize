@@ -15,7 +15,7 @@ body {
   min-height: calc(100vh - 176px);
 }
 .prd-layout--max-height
-{ min-height: 90vh; }
+{ min-height: 75vh; }
 
 
 .prd-ribbon {
