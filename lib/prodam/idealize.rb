@@ -146,6 +146,7 @@ module Prodam
       inflect.irregular 'situacao', 'situacoes'
       inflect.irregular 'avaliacao', 'avaliacoes'
       inflect.irregular 'classificacao', 'classificacoes'
+      inflect.irregular 'premiacao', 'premiacoes'
     end
 
     class << self
