@@ -14,7 +14,7 @@ class IdeiasController < ApplicationController
       @ideia = Ideia[ideia_id]
       @coautores = @ideia.coautores_dataset.order(:nome).all
     else
-      @ideia = Ideia.new situacao_id: @situacoes[:rascunho].id
+      @ideia = Ideia.new(situacao: @situacoes[:rascunho])
     end
   end
 
