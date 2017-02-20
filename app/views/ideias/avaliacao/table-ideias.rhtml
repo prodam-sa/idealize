@@ -28,8 +28,8 @@
     <%ideias.each_with_index do |ideia, i|%>
       <tr>
         <td class="mdl-data-table__cell--non-numeric">
-          <a href="<%=path_to :avaliacao, ideia.to_url_param%>" class="mdl-button mdl-button--icon">
-            <i class="material-icons">pageview</i>
+          <a href="<%=path_to :avaliacao, ideia.to_url_param, :avaliar%>" class="mdl-button mdl-button--icon">
+            <i class="material-icons"><%=@page[:icon]%></i>
           </a>
           <%=ideia.titulo%>
         </td>
