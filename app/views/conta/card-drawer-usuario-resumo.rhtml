@@ -1,0 +1,27 @@
+<div class="mdl-card mdl-card--full-width">
+  <div class="mdl-card__menu">
+    <%=partial 'conta/menu-usuario', locals: { css_id: 'card-actions', icon: 'keyboard_arrow_down', direction: 'bottom-right'}%>
+  </div><!--/.mdl-card__menu-->
+
+  <div class="prd-card-account">
+    <div class="prd-card-account__avatar">
+      <a href="https://pt.gravatar.com/emails/" class=""><img id="gravatar" src="<%=gravatar @usuario.email, size: 320, default: 'mm'%>" alt="<%=@usuario.nome%>" class="prd-card-account__avatar-image"></a>
+      <span class="mdl-tooltip" for="gravatar">Você pode atualizar sua foto de perfil através do serviço Gravatar.com</span>
+    </div>
+    <div class="prd-card-account__name">
+      <%=@usuario.nome%>
+    </div>
+  </div>
+
+  <div class="mdl-card__actions mdl-grid mdl-card--expand mdl-card--border mdl-typography--text-uppercase mdl-typography--text-center mdl-color-text--indigo-800">
+    <div class="mdl-cell mdl-cell--12-col-desktop mdl-cell--8-col-tablet mdl-cell--4-col-phone">
+        <%=@info[:classificacao]%>&deg; ranking (<strong><%=@info[:total_pontos]%></strong> pontos)
+    </div>
+
+    <div class="mdl-cell mdl-cell--12-col-desktop mdl-cell--8-col-tablet mdl-cell--4-col-phone">
+      <a href="<%=path_to :ideias, :nova%>" class="prd-fake-button mdl-typography--text-center">
+        <small>Nova <b>ideia</b></small>
+      </a>
+    </div>
+  </div>
+</div><!--/.mdl-card-->
