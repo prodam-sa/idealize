@@ -1,6 +1,9 @@
 <div class="mdl-layout__drawer prd-layout__drawer">
-  <span class="mdl-layout-title"></span>
-  <a href="<%=path_to :home%>"><img src="<%=path_to '/img/brand-colored.svg'%>" class="prd-drawer__brand"/></a>
+  <%if authenticated?%>
+    <%=partial 'conta/card-drawer-usuario-resumo'%>
+  <%else%>
+    <a href="<%=path_to :home%>"><img src="<%=path_to '/img/brand-colored.svg'%>" class="prd-drawer__brand"/></a>
+  <%end%>
   <nav class="mdl-navigation prd-navigation">
   <%sections.select { |id, section| section[:navigation].include? 'header' }.each do |id, section|%>
     <%is_active = 'is-active' if @page[:url_path] == section[:url_path]%>

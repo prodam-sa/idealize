@@ -1,0 +1,18 @@
+<table class="mdl-data-table mdl-js-data-table mdl-textfield--full-width" style="white-space: normal">
+  <thead>
+    <tr>
+      <th class="mdl-data-table__cell--non-numeric">Ideia</th>
+      <th class="mdl-data-table__cell--non-numeric">Classificação</th>
+      <th class="mdl-data-table__cell--numeric">Pontuação</th>
+    </tr>
+  </thead>
+  <tbody>
+    <%@ideias_por_pontuacao.each do |ideia|%>
+      <tr>
+        <td class="mdl-data-table__cell--non-numeric"><%=ideia.titulo%></td>
+        <td class="mdl-data-table__cell--non-numeric"><%=ideia.avaliacao.classificacao.titulo%></td>
+        <td class="mdl-data-table__cell--numeric"><%=ideia.avaliacao.pontos%></td>
+      </tr>
+    <%end%>
+  </tbody>
+</table>

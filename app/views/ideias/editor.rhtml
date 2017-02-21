@@ -8,7 +8,7 @@
   </div>
 
   <div id="text-panel" class="mdl-tabs__panel is-active mdl-grid mdl-grid--no-spacing">
-    <div class="editor__toolbar mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--1-col-phone">
+    <div class="editor__toolbar mdl-cell mdl-cell--12-col-desktop mdl-cell--8-col-tablet mdl-cell--4-col-phone">
       <button type="button" class="mdl-button mdl-button--icon" id="<%=field%>-edit-h2"                  data-command-name="h2"><i class="material-icons">title</i></button>
       <button type="button" class="mdl-button mdl-button--icon" id="<%=field%>-edit-bold"                data-command-name="bold"><i class="material-icons">format_bold</i></button>
       <button type="button" class="mdl-button mdl-button--icon" id="<%=field%>-edit-italic"              data-command-name="italic"><i class="material-icons">format_italic</i></button>
@@ -26,7 +26,7 @@
       <button type="button" class="mdl-button mdl-button--icon" id="<%=field%>-edit-undo"                data-command-name="undo"><i class="material-icons">undo</i></button>
       <button type="button" class="mdl-button mdl-button--icon" id="<%=field%>-edit-redo"                data-command-name="redo"><i class="material-icons">redo</i></button>
       <button type="button" class="mdl-button mdl-button--icon" id="<%=field%>-edit-cleanup"             data-command-name="cleanup"><i class="material-icons">clear</i></button>
-  
+
       <span class="mdl-tooltip mdl-tooltip--top" for="<%=field%>-edit-h2">Título (CTRL+2)</span>
       <span class="mdl-tooltip mdl-tooltip--top" for="<%=field%>-edit-bold">Negrito (CTRL+B)</span>
       <span class="mdl-tooltip mdl-tooltip--top" for="<%=field%>-edit-italic">Itálico (CTRL+I)</span>
@@ -45,12 +45,53 @@
       <span class="mdl-tooltip mdl-tooltip--top" for="<%=field%>-edit-redo">Refazer (CTRL+SHIFT+Z)</span>
       <span class="mdl-tooltip mdl-tooltip--top" for="<%=field%>-edit-cleanup">Limpar tudo (remoção de espaços)</span>
     </div>
-    <div class="editor__area mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell-11-phone"></div>
+    <div class="editor__area mdl-cell mdl-cell--12-col-desktop mdl-cell--8-col-tablet mdl-cell--4-col-phone"></div>
   </div>
 
   <div id="html-panel" class="mdl-tabs__panel mdl-grid mdl-grid--no-spacing">
-    <div class="mdl-textfield mdl-textfield--full-width mdl-js-textfield <%='is-invalid' if ideia.errors[field]%>">
-      <textarea type="text" id="ideia_<%=field%>" name="ideia[<%=field%>]" class="mdl-textfield__input editor__code"><%=ideia[field]%></textarea>
+    <div class="mdl-cell mdl-cell--12-col-desktop mdl-cell--8-col-tablet mdl-cell--2-col-phone">
+      <div class="mdl-textfield mdl-textfield--full-width mdl-js-textfield <%='is-invalid' if ideia.errors[field]%>">
+        <textarea type="text" id="ideia_<%=field%>" name="ideia[<%=field%>]" class="mdl-textfield__input editor__code"><%=ideia[field]%></textarea>
+      </div>
     </div>
   </div>
 </div>
+
+<%content_for :stylesheet do%>
+<style>
+  .editor__area, .editor__code {
+    min-height: 16rem;
+  }
+
+  .editor__code {
+  }
+
+  .editor__area {
+    overflow: auto;
+    border: 1px solid rgba(0, 0, 0, 0.10);
+    padding: 0.5em;
+    outline: none;
+  }
+
+  .editor__area:focus {
+    border-color: #777;
+  }
+
+  .editor__area h2 {
+    font-size: 1.25em;
+    font-weight: bold;
+    padding: 0;
+    margin: 0;
+  }
+</style>
+<%end%>
+
+<%content_for :script do%>
+<script src="<%=path_to '/src/requirejs/require.js'%>" data-main="/js/editor"></script>
+<script>
+require(['editor'], function(editor) {
+  editor('#ideia_texto_oportunidade-editor', '');
+  editor('#ideia_texto_solucao-editor', '');
+});
+</script>
+<%end%>

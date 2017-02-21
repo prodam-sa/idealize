@@ -1,31 +1,23 @@
 <div class="mdl-grid">
   <div class="mdl-cell mdl-cell--12-col">
-    <table class="mdl-data-table mdl-js-data-table mdl-textfield--full-width">
-      <thead>
-        <th class="mdl-data-table__cell--non-numeric">Título</th>
-        <th class="mdl-data-table__cell--numeric">Apoios</th>
-        <th class="mdl-data-table__cell--non-numeric">Criação</th>
-        <th class="mdl-data-table__cell--non-numeric">Atualização</th>
-        <th class="mdl-data-table__cell--non-numeric">Publicação</th>
-        <th class="mdl-data-table__cell--non-numeric">Situação</th>
-      </thead>
-      <tbody>
-        <%@ideias.each_with_index do |ideia, i|%>
-          <tr>
-            <td class="mdl-data-table__cell--non-numeric">
-              <a href="<%=path_to :moderacao, ideia.to_url_param%>" class="mdl-button mdl-button--icon">
-                <i class="material-icons">pageview</i>
-              </a>
-              <%=ideia.titulo%>
-            </td>
-            <td class="mdl-data-table__cell--numeric"><%=@relatorio.total_apoiadores_por_ideia[ideia.id] || 0%></td>
-            <td class="mdl-data-table__cell--non-numeric"><%=formated_date ideia.data_criacao%></td>
-            <td class="mdl-data-table__cell--non-numeric"><%=formated_date ideia.data_atualizacao%></td>
-            <td class="mdl-data-table__cell--non-numeric"><%=formated_date ideia.data_publicacao%></td>
-            <td class="mdl-data-table__cell--non-numeric"><%=ideia.modificacao.situacao.titulo%></td>
-          </tr>
-        <%end%>
-      </tbody>
-    </table>
-  </div>
-</div>
+    <div class="mdl-card mdl-card--full-width mdl-shadow--2dp">
+      <div class="mdl-card__actions mdl-card--expand">
+        <%=partial 'ideias/moderacao/table-ideias', locals: { ideias: @ideias }%>
+      </div>
+    </div><!--/.mdl-card-->
+  </div><!--/.mdl-cell-->
+</div><!--/.mdl-grid-->
+
+<%content_for :backward do%>
+  <button type="button" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect prd-button--backward">
+    <i class="material-icons">keyboard_arrow_left</i>
+  </button>
+<%end%>
+
+<%content_for :script do%>
+  <script>
+    (document.querySelector('.prd-button--backward').addEventListener('click', function(event) {
+      history.back();
+    }))();
+  </script>
+<%end%>

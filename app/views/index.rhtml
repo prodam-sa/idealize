@@ -1,17 +1,108 @@
-<div class="mdl-grid">
-  <div class="mdl-cell mdl-cell--12-col mdl-typography--text-center">
-    <h2>Programa de Ideias e Sugestões Prodam</h2>
+<div class="mdl-grid prd-background--radial-gradient" style="">
+  <div class="mdl-cell mdl-cell--3-col-desktop mdl-cell--4-col-tablet mdl-cell--order-2-tablet mdl-cell--4-col-phone mdl-cell--order-2-phone">
+    <div class="mdl-card mdl-card--full-width mdl-shadow--2dp">
+      <div class="prd-card-account">
+        <div class="prd-card-account__avatar">
+          <img src="<%=gravatar @usuario.email, size: 320, default: 'mm'%>" alt="<%=@usuario.nome%>" class="prd-card-account__avatar-image">
+        </div>
+        <div class="prd-card-account__name">
+          <%=@usuario.nome%>
+        </div>
+      </div>
+      <div class="mdl-card__actions mdl-grid mdl-card--expand mdl-card--border mdl-typography--text-uppercase mdl-typography--text-center mdl-color-text--indigo-800">
+        <div class="mdl-cell mdl-cell--6-col-desktop mdl-cell--4-cell-tablet mdl-cell--2-col-phone">
+          <img src="<%=path_to 'img/ideia-cadastrada.svg'%>" alt="" style="width: 4rem"/>
+          <p class="mdl-typography--title"><%=@info[:total_ideias]%></p>
+          <small>Ideias<br/><b>criadas</b></small>
+        </div>
+
+        <div class="mdl-cell mdl-cell--6-col-desktop mdl-cell--4-cell-tablet mdl-cell--2-col-phone">
+          <img src="<%=path_to 'img/ideia-premiada.svg'%>" alt="" style="width: 4rem"/>
+          <p class="mdl-typography--title"><%=@info[:total_premiadas]%></p>
+          <small>Ideias<br/><b>premiadas</b></small>
+        </div>
+
+        <div class="mdl-cell mdl-cell--6-col-desktop mdl-cell--4-cell-tablet mdl-cell--2-col-phone">
+          <img src="<%=path_to 'img/ideia-moderada.svg'%>" alt="" style="width: 4rem"/>
+          <p class="mdl-typography--title"><%=@info[:total_moderadas]%></p>
+          <small>Ideias<br/><b>moderadas</b></small>
+        </div>
+
+        <div class="mdl-cell mdl-cell--6-col-desktop mdl-cell--4-cell-tablet mdl-cell--2-col-phone">
+          <img src="<%=path_to 'img/ideia-edicao.svg'%>" alt="" style="width: 4rem"/>
+          <p class="mdl-typography--title"><%=@info[:total_rascunhos]%></p>
+          <small>Ideias<br/><b>postadas</b></small>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <%@ideias.each_with_index do |ideia, i|%>
-    <div class="mdl-cell mdl-cell--4-col-desktop mdl-cell--4-col-tablet mdl-cell--12-col-phone">
-      <%=partial 'ideias/minicard', locals: {
-        ideia: ideia,
-        coautores_ideia: @relatorio.lista_ideias_coautores[ideia.id],
-        apoiadores_ideia: @relatorio.lista_ideias_apoiadores[ideia.id],
-      }%>
-    </div>
-  <%end%>
+  <div class="mdl-cell mdl-cell--6-col-desktop mdl-cell--8-col-tablet mdl-cell--4-col-phone">
+    <div class="mdl-grid mdl-grid--no-spacing mdl-card mdl-card--full-width mdl-shadow--2dp prd-card--min-height">
+      <%@ideias.each_with_index do |ideia, i|%>
+        <div class="mdl-cell mdl-cell--12-col-desktop mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card__actions mdl-card--border mdl-grid">
+          <%is_avaliado = !ideia.avaliacao.nil?%>
+          <div class="mdl-cell mdl-cell--middle mdl-cell--2-col-desktop mdl-cell--2-col-tablet mdl-cell--1-col-phone">
+            <div class="mdl-typography--text-center">
+              <img src="<%=path_to "img/premiacao/#{imagem_premiacao ideia}"%>" class="prd-card__media-premiacao"/>
+            </div>
+          </div><!--/.mdl-cell-->
+
+          <div class="mdl-cell mdl-cell--9-col-desktop mdl-cell--5-col-tablet mdl-cell--2-col-phone">
+            <p class="prd-text--hyphenated">
+              <%=ideia.titulo%>
+              <br/><small><em>Em <%=formated_date ideia.data_publicacao%><%if ideia.avaliacao%>, por <%=ideia.autor.nome%><%else%>, sendo avaliada pelo comitê<%end%></em></small>.
+            </p>
+            <div class="mdl-cell mdl-cell--12-col-desktop mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-color-text--grey-400">
+              <small class="prd-card__action">
+                <i class="material-icons">thumb_up</i>
+                <%=@relatorio.lista_ideias_apoiadores[ideia.id] && @relatorio.lista_ideias_apoiadores[ideia.id].size || 0%>
+              </small>
+
+              <small class="prd-card__action">
+                <i class="material-icons">people</i>
+                <%=@relatorio.lista_ideias_coautores[ideia.id] && @relatorio.lista_ideias_coautores[ideia.id].size || 0%>
+              </small>
+
+              <small class="prd-card__action">
+                <i class="material-icons">share</i>
+                <%=@relatorio.lista_ideias_coautores[ideia.id] && @relatorio.lista_ideias_coautores[ideia.id].size || 0%>
+              </small>
+            </div><!--/.mdl-cell-->
+          </div><!--/.mdl-cell-->
+
+          <div class="mdl-cell mdl-cell--middle mdl-cell--1-col-desktop mdl-cell--1-col-tablet mdl-cell--1-col-phone mdl-typography--text-right">
+            <a class="mdl-button mdl-button--icon mdl-button--colored" href="<%=path_to :ideias, ideia.to_url_param%>">
+              <i class="material-icons">keyboard_arrow_right</i>
+            </a>
+          </div><!--/.mdl-cell-->
+        </div><!--/.mdl-cell-->
+      <%end%>
+    </div><!--/.mdl-grid-->
+  </div><!--/.mdl-cell-->
+
+  <div class="mdl-cell mdl-cell--3-col-desktop mdl-cell--4-col-tablet mdl-cell--order-3-tablet mdl-cell--4-col-phone mdl-cell--order-3-phone">
+    <div class="mdl-card mdl-card--full-width mdl-shadow--2dp">
+      <div class="mdl-card__title mdl-card--border"><i class="material-icons">grade</i> <span class="mdl-card__title-text">Ranking</span></div>
+      <div class="mdl-list">
+      <%@relatorio.ranking.each_with_index do |info, i|%>
+        <div class="mdl-list__item mdl-list__item--two-line">
+          <div class="mdl-list__item-primary-content">
+            <span><%=i+1%><sup>o</sup></span>
+            <span><%=info[:autor_nome]%></span>
+            <span class="mdl-list__item-sub-title">
+              <%=info[:total_ideias] || 0%> ideias publicadas,
+              <%=info[:total_pontos] || 0%> pontos
+            </span>
+          </div>
+          <!--div class="mdl-list__item-secondary-content">
+            <a href=""><i class="material-icons">keyboard_arrow_right</i></a>
+          </div-->
+        </div>
+      <%end%>
+      </div><!--/.mdl-list-->
+    </div><!--/.mdl-card-->
+  </div><!--/.mdl-cell-->
 
   <p class="mdl-cell mdl-cell--12-col mdl-typography--text-center">
     <a href="<%=path_to :ideias%>" class="mdl-button mdl-button--colored mdl-button--raised mdl-js-button mdl-js-ripple-effect">

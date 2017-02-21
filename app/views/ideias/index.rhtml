@@ -1,15 +1,62 @@
-<div class="mdl-grid">
-  <div class="mdl-cell mdl-cell--12-col">
+<div class="mdl-grid prd-background--radial-gradient">
+  <div class="mdl-cell mdl-cell--3-col-desktop mdl-cell--4-col-tablet mdl-cell--order-2-tablet mdl-cell--4-col-phone mdl-cell--order-2-phone">
+    <%if authenticated?%>
+      <%=partial 'conta/card-usuario-resumo'%>
+    <%end%>
+  </div><!--/.mdl-cell-->
+
+  <div class="mdl-cell mdl-cell--6-col-desktop mdl-cell--8-col-tablet mdl-cell--4-col-phone">
+    <%=partial 'ideias/list-paginated', locals: { ideias: @ideias, pagination: @pagination }%>
+  </div><!--/.mdl-cell-->
+
+  <div class="mdl-cell mdl-cell--3-col-desktop mdl-cell--4-col-tablet mdl-cell--order-3-tablet mdl-cell--4-col-phone mdl-cell--order-3-phone">
     <div class="mdl-card mdl-card--full-width mdl-shadow--2dp">
-      <%unless @ideias.empty? %>
-        <%=partial 'ideias/list', locals: { relatorio: @relatorio, ideias: @ideias }%>
-      <%else%>
-        <div class="prd-layout--centered mdl-card mdl-card--expandable mdl-shadow--2dp">
-          <p class="mdl-typography--headline mdl-typography--text-center">
-            Nenhuma ideia foi publicada, ainda.
-          </p>
-        </div>
-      <%end%>
+      <div class="mdl-card__title mdl-card--border prd-ranking-list">
+        <i class="prd-ranking-list__item-botton material-icons">grade</i>
+        <span class="mdl-card__title-text mdl-cell--middle">Ranking</span>
+      </div>
+
+      <div class="mdl-card__menu">
+        <a class="mdl-button mdl-button--icon mdl-button--colored" href="<%=path_to :home, :ranking%>">
+          <i class="material-icons">keyboard_arrow_right</i>
+        </a>
+      </div>
+
+      <div class="mdl-list prd-ranking-list">
+        <%content_for :ranking_item do |info, order, botton|%>
+          <div class="mdl-list__item mdl-list__item--two-line">
+            <div class="mdl-list__item-primary-content">
+              <span class="mdl-list__item-avatar prd-ranking-list__item-botton prd-ranking-list__item-botton--<%=botton || :coin%>"><%=order%></span>
+              <span><%=nome_reduzido info[:autor_nome]%></span>
+              <span class="mdl-list__item-sub-title">
+                <small><em><%=info[:total_ideias] || 0%> ideias, <%=info[:total_pontos] || 0%> pontos</em></small>
+              </span>
+            </div>
+            <!--div class="mdl-list__item-secondary-content">
+              <a href=""><i class="material-icons">keyboard_arrow_right</i></a>
+            </div-->
+          </div>
+        <%end%>
+
+        <%if @relatorio.ranking.size >= 3%>
+          <%[:gold, :silver, :bronze].each_with_index do |botton, i|%>
+            <%=yield_content :ranking_item, @relatorio.ranking[i], i+1, botton if @relatorio.ranking[i]%>
+          <%end%>
+          <%@relatorio.ranking[3..9].each_with_index do |info, i|%>
+            <%=yield_content :ranking_item, info, i+4, nil%>
+          <%end%>
+        <%else%>
+          <%@relatorio.ranking[0..9].each_with_index do |info, i|%>
+            <%=yield_content :ranking_item, info, i+1, :coin%>
+          <%end%>
+        <%end%>
+      </div><!--/.mdl-list-->
+      <div class="mdl-card__actions mdl-card--border">
+        <a class="mdl-button mdl-button--colored" href="<%=path_to :home, :ranking%>">
+          <span>Ver ranking</span>
+          <i class="material-icons">keyboard_arrow_right</i>
+        </a>
+      </div>
     </div><!--/.mdl-card-->
   </div><!--/.mdl-cell-->
 </div><!--/.mdl-grid-->

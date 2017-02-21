@@ -32,14 +32,6 @@ class RelatoriosController < ApplicationController
 
     @relatorio = Relatorio.new data_inicial: data_inicial, data_final: data_final
 
-    @ideias = Ideia.where(id: @relatorio.total_ideias_por_apoiadores.keys).limit(10).all.map do |row|
-      ideia = row.to_hash
-      ideia[:total_apoiadores] = @relatorio.total_ideias_por_apoiadores[row.id]
-      ideia
-    end.sort do |a, b|
-      a[:total_apoiadores] <=> b[:total_apoiadores]
-    end.reverse
-
     @autores = Autor.where(id: @relatorio.total_ideias_por_autor.keys).all.map do |row|
       autor = row.to_hash
       autor[:total_ideias] = @relatorio.total_ideias_por_autor[row.id]
@@ -51,7 +43,19 @@ class RelatoriosController < ApplicationController
     @situacoes = Situacao.all
     @categorias = Categoria.all
 
+    @ideias_por_apoiadores = Ideia.where(id: @relatorio.total_ideias_por_apoiadores.keys).limit(10).all.map do |row|
+      ideia = row.to_hash
+      ideia[:total_apoiadores] = @relatorio.total_ideias_por_apoiadores[row.id]
+      ideia
+    end.sort do |a, b|
+      a[:total_apoiadores] <=> b[:total_apoiadores]
+    end.reverse
     @ideias_por_autor = @relatorio.ideias_por_autor
+    @ideias_por_pontuacao = Avaliacao.find_by_situacao_data(:avaliacao, data_inicial, data_final).map do |avaliacao|
+      avaliacao.ideia
+    end.sort do |a, b|
+      a.avaliacao.pontos <=> b.avaliacao.pontos
+    end.reverse
 
     view 'relatorios/index'
   end

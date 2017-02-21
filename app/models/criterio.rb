@@ -3,12 +3,11 @@
 module Prodam::Idealize
 
 class Criterio < Model[:criterio]
-  include Model
-
   plugin :validation_helpers
 
-  one_to_one :formulario
-  many_to_one :criterio_multiplo
+  many_to_one :formulario
+  one_to_many :subcriterios, class: self, key: :criterio_multiplo_id
+  many_to_one :criterio, class: self, key: :criterio_multiplo_id
 
   attr_accessor :resposta
 

@@ -14,9 +14,7 @@ require 'prodam/idealize/version'
 
 class String
   def camelcase
-    gsub('/', ' :: ').
-    gsub(/([a-z]+)_([a-z]+)/,'\1 \2').
-    split(' ').map(&:capitalize).join
+    gsub('/', ' :: ').split(/[ _]/).map(&:capitalize).join
   end
 
   def underscore
@@ -27,6 +25,36 @@ class String
     downcase
   end
 end
+
+module Sequel
+  module Plugins
+    module Paging
+      module DatasetMethods
+        @paging = nil
+
+        def paging(options = nil)
+          @paging || (paging! options)
+        end
+
+        def page(number = 1)
+          paging[:page] = number > 0 ? number : 1
+          paging[:current] = paging[:page] > paging[:total] ? paging[:total] : paging[:page]
+          paging[:offset] = ((paging[:current] - 1).abs * paging[:limit])
+          paging[:next] = paging[:current] < paging[:total] ? paging[:current] + 1 : paging[:total]
+          paging[:previous] = paging[:current] <= paging[:next] ? paging[:current] - 1 : 1
+          limit(paging[:limit]).offset(paging[:offset])
+        end
+
+        def paging!(options = nil)
+          @paging = { limit: 7 }
+          options && @paging.update(options)
+          @paging[:total] = ((count.to_i) / @paging[:limit].to_f).ceil
+          @paging
+        end
+      end # ClassMethods
+    end # Paging
+  end # Plugins
+end # Sequel
 
 module Prodam
   module Idealize
@@ -115,9 +143,10 @@ module Prodam
       inflect.irregular 'coautor', 'coautores'
       inflect.irregular 'apoiador', 'apoiadores'
       inflect.irregular 'modificacao', 'modificacoes'
-      inflect.irregular 'criterio_multiplo', 'criterios_multiplos'
+      inflect.irregular 'situacao', 'situacoes'
       inflect.irregular 'avaliacao', 'avaliacoes'
       inflect.irregular 'classificacao', 'classificacoes'
+      inflect.irregular 'premiacao', 'premiacoes'
     end
 
     class << self
@@ -143,35 +172,48 @@ module Prodam
     def self.[](dataset_name)
       klass = Sequel::Model(Database[dataset_name])
       klass.dataset = klass.dataset.sequence("s_#{dataset_name}".to_sym)
+      klass.include InstanceMethods
       klass
     end
 
-    def param_name
-      id || ''
+    module InstanceMethods
+      def self.included(base)
+        base.extend ClassMethods
+      end
+
+      def param_name
+        id || ''
+      end
+
+      def to_url_param(prefix = nil)
+        [prefix, param_name_clean].compact.join('/')
+      end
+
+    protected
+
+      def param_name_clean
+        param_name.gsub(/\W/, '-').sub(/-$/,'').squeeze('-')
+      end
     end
 
-    def to_url_param(prefix = nil)
-      [prefix, param_name].compact.join('/')
+    module ClassMethods
+      def column_aliases
+        columns.map do |column|
+          "#{table_name}__#{column}".to_sym
+        end
+      end
     end
   end # Model
 
   # Controllers
   autoload :ApplicationController, 'controllers/application_controller'
 
-  def self.autoload_controllers(controllers = self.controllers)
-    controllers.each do |id, controller|
-      autoload controller[:const_name], controller[:require_path]
-      controller[:routes] && autoload_controllers(controller[:routes])
-    end
-  end
-
   def self.autoload_sources
-    sources_from(:models, :helpers).each do |id, source|
+    sources_from(:models, :services, :helpers, :controllers).each do |id, source|
       autoload source[:const_name], source[:require_path]
     end
   end
 
-  autoload_controllers
   autoload_sources
 end
 

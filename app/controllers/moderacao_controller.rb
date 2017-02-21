@@ -3,41 +3,46 @@
 module Prodam::Idealize
 
 class ModeracaoController < ApplicationController
-  helpers IdeiasHelper, DateHelper
+  helpers IdeiasHelper, DateHelper, MailHelper
 
-  before authorize_only: :moderador do
+  before authenticate: true, authorize_only: :moderador do
     @page = controllers[:moderacao]
   end
 
   before '/:id/?:action?' do |id, action|
     if (ideia_id = id.to_i) > 0
-      @ideia = Ideia[ideia_id]
-      @situacao = @ideia.modificacao.situacao
-    else
-      @ideia = Ideia.new
-      @situacao = Situacao.chave :rascunho
+      @ideia = Ideia.find_by_id(ideia_id)
+      @processo = Processo.find_by_chave 'moderacao'
+      @situacao = @ideia.situacao
     end
   end
 
   get '/' do
-    @relatorio = Relatorio.new(ideias: Ideia.find_by_situacao(['postagem', 'moderacao']).exclude(autor_id: usuario_id).order(:data_criacao, :data_publicacao).all)
+    pagina  = (params[:pagina].to_i > 0 && params[:pagina] || 1).to_i
+    dataset = Ideia.find_by_situacoes('postagem', 'moderacao').exclude(autor_id: @usuario.id)
+    campo = params[:campo] && !params[:campo].empty? && params[:campo] || :data_criacao
+    ordem = params[:ordem] && !params[:ordem].empty? && params[:ordem] || :crescente
+    dataset = (ordem == 'decrescente') ? dataset.reverse(campo.to_sym) : dataset.order(campo.to_sym)
+    dataset = dataset.eager(:autor).page(pagina)
+    @pagination = dataset.paging
+    @ideias = dataset.all
+    @relatorio = Relatorio.new(ideias: @ideias)
     @ideias = @relatorio.ideias
+
     view 'ideias/moderacao/index'
   end
 
   get '/:id' do |id|
-    @categorias = Categoria.all if permitido_moderar? @ideia
-    @apoiadores = Relatorio.new.lista_apoiadores_ideia @ideia
-    if (@ideia.publicada?) or (usuario_autor? @ideia) or (authorized_by? :moderador)
-      view 'ideias/moderacao/page'
-    else
-      message.update(level: :error, text: 'Você só poderá ler essa ideia depois de sua publicação.')
-      redirect to('/')
+    @categorias = Categoria.all
+    @apoiadores = @relatorio.lista_apoiadores_ideia @ideia
+    @historico = Historico.find_by_ideia(@ideia).all.group_by do |modificacao|
+      formated_date modificacao.data_registro
     end
+    view 'ideias/moderacao/page'
   end
 
-  put '/:id/categorias', authenticate: true do |id|
-    if @ideia.desbloqueada? && (permitido_moderar? @ideia)
+  put '/:id/categorias' do |id|
+    if (permitido_moderar? @ideia) or (usuario_moderador? @ideia)
       @ideia.remove_all_categorias
       params[:categorias] && params[:categorias].each do |categoria_id|
         @ideia.add_categoria categoria_id
@@ -49,21 +54,23 @@ class ModeracaoController < ApplicationController
     redirect to(id)
   end
 
-  get '/:id/moderar', authorize_only: :moderador do |id|
+  get '/:id/moderar' do |id|
     if (permitido_moderar? @ideia) or (usuario_moderador? @ideia)
-      @processo = processo(:moderacao)
       @formulario = @processo.formulario
       @criterios = @formulario.criterios
-      unless @ideia.modificacao.situacao_id == @processo.id
+      unless @processo.id == @ideia.modificacao.situacao_id
+        @ideia.situacao = @processo
+        @ideia.bloquear!
         @historico = historico(@ideia, @processo, 'Moderação iniciada.').save
       else
         @historico = @ideia.modificacao
       end
-      @ideia.bloquear!
-      view 'ideias/moderacao/form'
+      view 'ideias/moderacao/edit'
     else
       if @ideia.publicada?
         mensagem = 'Ideia já foi publicada.'
+      elsif @ideia.coautores.include? @usuario
+        mensagem = 'Você é coautor(a) dessa ideia.'
       else
         mensagem = 'Ideia em moderação por outro usuário.'
       end
@@ -72,50 +79,58 @@ class ModeracaoController < ApplicationController
     end
   end
 
-  post '/:id/moderacao', authorize_only: :moderador do |id|
-    @situacao = if ideia_moderada?
-                  situacao(:publicacao)
-                else
-                  situacao(:revisao)
-                end
+  post '/:id' do |id|
+    assunto = 'Sua ideia foi publicada'
+    texto = 'Ideia foi publicada e o autor foi notificado por e-mail.'
+
+    if ideia_moderada?
+      @situacao = (params[:situacao]) && Situacao.find(params[:situacao]) || @situacao.seguinte
+    else
+      @situacao = @situacao.oposta
+    end
+
     @historico = historico(@ideia, @situacao, params[:historico][:descricao])
 
     if @historico.valid?
-      @ideia.situacao = @situacao.chave
+      @ideia.situacao = @situacao
       if ideia_moderada?
         @ideia.publicar!
-        message.update(level: :information, text: 'Ideia foi publicada.')
-        @ideia.bloquear!
       else
-        message.update(level: :information, text: 'Ideia foi enviada para revisão.')
+        assunto = 'Sua deia foi enviada para revisão'
+        texto = 'Ideia enviada para revisão e o autor foi notificado por e-mail.'
+        @ideia.situacao = @ideia.situacao.oposta
         @ideia.desbloquear!
       end
+      message.update level: :information, text: texto
       @historico.save
+      enviar_notificacao para: @ideia.autor.email,
+                         assunto: assunto,
+                         mensagem_html: view("ideias/moderacao/email-#{@ideia.situacao.chave}", layout: false)
+
       redirect to('/')
     else
-      @formulario = processo(:moderacao).formulario
+      @formulario = @processo.formulario
       @criterios = @formulario.criterios.map do |criterio|
-        parametro = params[:criterios].select do |(id, resposta)|
-          id == criterio.id
+        parametro = params[:criterios].select do |resposta|
+          resposta[:id] == criterio.id.to_s
         end.first
         criterio.resposta = parametro ? parametro[:resposta] : 'N'
         criterio
       end
       message.update(level: :error, text: 'Oops! Observe os campos em vermelho.')
-      view 'ideias/moderacao/form'
+      view 'ideias/moderacao/edit'
     end
   end
 
   # apenas para desbloqueio
-  put '/:id/moderacao', authorize_only: :moderador do |id|
+  put '/:id' do |id|
     if params[:desbloquear]
       @situacao = situacao(:postagem)
-      @ideia.situacao = @situacao.chave
+      @ideia.situacao = @situacao
       @ideia.desbloquear!
       historico(@ideia, @situacao, 'Moderação cancelada').save
       message.update(level: :information, text: 'Moderação cancelada e ideia em situação de postagem.')
     end
-
     redirect to(id)
   end
 

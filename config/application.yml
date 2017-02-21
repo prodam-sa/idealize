@@ -19,11 +19,20 @@
     :profiles: [usuario]
 
   '/conta':
-    :controller: AcessoController
+    :controller: ContaController
     :title: Conta
     :description: Administre sua conta.
     :layout:
     :icon: account_box
+    :navigation: [menu]
+    :profiles: [usuario]
+
+  '/mensagens':
+    :controller: MensagensController
+    :title: Mensagens
+    :description: Mensagens dos usuários para você.
+    :layout:
+    :icon: mail
     :navigation: [menu]
     :profiles: [usuario]
 
@@ -54,21 +63,12 @@
     :navigation: [dashboard]
     :profiles: [administrador, moderador]
 
-  '/postagens':
-    :controller: PostagensController
-    :title: Ideias
-    :description: Postagem de ideias.
-    :layout: dashboard
-    :icon: wb_incandescent
-    :navigation: [dashboard]
-    :profiles: [usuario]
-
   '/moderacao':
     :controller: ModeracaoController
     :title: Moderação
     :description: Moderação das ideias.
-    :layout: dashboard
-    :icon: playlist_add_check
+    :layout:
+    :icon: assignment
     :navigation: [dashboard]
     :profiles: [moderador]
 
@@ -76,8 +76,8 @@
     :controller: AvaliacaoController
     :title: Avaliação
     :description: Avaliação das ideias publicadas.
-    :layout: dashboard
-    :icon: play_for_work
+    :layout:
+    :icon: assignment_turned_in
     :navigation: [dashboard]
     :profiles: [avaliador]
 
@@ -105,7 +105,7 @@
     :description: Dúvidas frequentes sobre o Idealize.
     :data: faq
     :layout:
-    :navigation: [header, drawer]
+    :navigation: []
     :profiles: []
     :icon: help
 

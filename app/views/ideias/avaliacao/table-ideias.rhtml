@@ -1,0 +1,94 @@
+<%query = { campo: request.params['campo'], ordem: request.params['ordem'] }%>
+<table class="mdl-data-table mdl-js-data-table mdl-textfield--full-width">
+  <thead>
+    <th class="mdl-data-table__cell--non-numeric" style="width: 50%">
+      Título
+      <%ordem, icone, ativo = ordem_icone :titulo, query%>
+      <a href="<%=path_to :avaliacao, pagina: @pagination[:current], campo: :titulo, ordem: ordem%>" class="mdl-button mdl-button--icon mdl-button--<%=ativo ? :raised : :colored%>">
+        <i class="material-icons"><%=icone%></i>
+      </a>
+    </th>
+    <th class="mdl-data-table__cell--numeric" style="width: 5%">Apoios</th>
+    <th class="mdl-data-table__cell--non-numeric" style="width: 15%">
+      Criação
+      <%ordem, icone, ativo = ordem_icone :data_criacao, query%>
+      <a href="<%=path_to :avaliacao, pagina: @pagination[:current], campo: :data_criacao, ordem: ordem%>" class="mdl-button mdl-button--icon mdl-button--<%=ativo ? :raised : :colored%>">
+        <i class="material-icons"><%=icone%></i>
+      </a>
+    </th>
+    <th class="mdl-data-table__cell--non-numeric" style="width: 15%">
+      Publicação
+      <%ordem, icone, ativo = ordem_icone :data_publicacao, query%>
+      <a href="<%=path_to :avaliacao, pagina: @pagination[:current], campo: :data_publicacao, ordem: ordem%>" class="mdl-button mdl-button--icon mdl-button--<%=ativo ? :raised : :colored%>">
+        <i class="material-icons"><%=icone%></i>
+      </a>
+    </th>
+  </thead>
+  <tbody>
+    <%ideias.each_with_index do |ideia, i|%>
+      <tr>
+        <td class="mdl-data-table__cell--non-numeric">
+          <a href="<%=path_to :avaliacao, ideia.to_url_param, :avaliar%>" class="mdl-button mdl-button--icon">
+            <i class="material-icons"><%=@page[:icon]%></i>
+          </a>
+          <%=ideia.titulo%>
+        </td>
+        <td class="mdl-data-table__cell--numeric"><%=@relatorio.total_apoiadores_por_ideia[ideia.id] || 0%></td>
+        <td class="mdl-data-table__cell--non-numeric"><%=formated_date ideia.data_criacao%></td>
+        <td class="mdl-data-table__cell--non-numeric"><%=formated_date ideia.data_publicacao%></td>
+      </tr>
+    <%end%>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td colspan="6">
+        <span>Página <%=@pagination[:current]%> de <%=@pagination[:total]%></span>
+
+        <%if @pagination[:total] > 1%>
+          <%query.update pagina: @pagination[:previous]%>
+          <a id="page-previous" href="<%=path_to :avaliacao, query%>" class="mdl-button mdl-button--colored mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+            <i class="material-icons">keyboard_arrow_left</i>
+          </a>
+          <span class="mdl-tooltip mdl-tooltip--top" for="page-previous">Página anterior</span>
+          <%query.update pagina: 1%>
+          <a id="page-first" href="<%=path_to :avaliacao, query%>" class="mdl-button mdl-button--colored mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+            <i class="material-icons">skip_previous</i>
+          </a>
+          <span class="mdl-tooltip mdl-tooltip--top" for="page-first">Primeira página</span>
+        <%end%>
+
+        <%if @pagination[:total] > 1%>
+          <button id="page-select" class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored">
+            <i class="material-icons">more_horiz</i>
+          </button>
+          <span class="mdl-tooltip mdl-tooltip--top" for="page-select">Selecione uma página</span>
+
+          <div class="mdl-menu mdl-menu--top-right mdl-js-menu" for="page-select">
+            <%(1..@pagination[:total]).each_slice 5 do |pages|%>
+              <span class="mdl-menu__item">
+                <%pages.each do |page|%>
+                  <%query.update pagina: page%>
+                  <%is_disabled = @pagination[:current] == page ? :disabled : ''%>
+                  <a href="<%=path_to :avaliacao, query%>" class="mdl-button mdl-button--icon mdl-button--colored" <%=is_disabled%>><small><%=page%></small></a>
+                <%end%>
+              </span>
+            <%end%>
+          </div>
+        <%end%>
+
+        <%if @pagination[:total] > 1%>
+          <%query.update pagina: @pagination[:total]%>
+          <a id="page-last" href="<%=path_to :avaliacao, query%>" class="mdl-button mdl-button--colored mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+            <i class="material-icons">skip_next</i>
+          </a>
+          <span class="mdl-tooltip mdl-tooltip--top" for="page-last">Última página</span>
+          <%query.update pagina: @pagination[:next]%>
+          <a id="page-next" href="<%=path_to :avaliacao, query%>" class="mdl-button mdl-button--colored mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+            <i class="material-icons">keyboard_arrow_right</i>
+          </a>
+          <span class="mdl-tooltip mdl-tooltip--top" for="page-next">Próxima página</span>
+        <%end%>
+      </td>
+    </tr>
+  </tfoot>
+</table>

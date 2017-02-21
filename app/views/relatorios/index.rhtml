@@ -98,7 +98,18 @@
     </div><!--/.mdl-card-->
   </div><!--/.mdl-cell-->
 
-  <div class="mdl-cell mdl-cell--8-col">
+  <div class="mdl-cell mdl-cell--4-col">
+    <div class="mdl-card mdl-card--full-width mdl-shadow--2dp">
+      <div class="mdl-card__title mdl-card--border">
+        <h2 class="mdl-card__title-text">Ranking</h2>
+      </div>
+      <div class="prd-card--max-height">
+        <%=partial 'relatorios/list-ranking'%>
+      </div>
+    </div><!--/.mdl-card-->
+  </div><!--/.mdl-cell-->
+
+  <div class="mdl-cell mdl-cell--4-col">
     <div class="mdl-card mdl-card--full-width mdl-shadow--2dp">
       <div class="mdl-card__title mdl-card--border">
         <h2 class="mdl-card__title-text">Ideias mais apoiadas</h2>
@@ -111,8 +122,22 @@
 
   <div class="mdl-cell mdl-cell--12-col">
     <div class="mdl-card mdl-card--full-width mdl-shadow--2dp">
+      <div class="mdl-card__title mdl-card--border">
+        <h2 class="mdl-card__title-text">Ideias por autor</h2>
+      </div>
       <div class="mdl-card__actions">
         <%=partial 'relatorios/table-ideias_por_autor'%>
+      </div>
+    </div><!--/.mdl-card-->
+  </div><!--/.mdl-cell-->
+
+  <div class="mdl-cell mdl-cell--12-col">
+    <div class="mdl-card mdl-card--full-width mdl-shadow--2dp">
+      <div class="mdl-card__title mdl-card--border">
+        <h2 class="mdl-card__title-text">Ideias por pontuação</h2>
+      </div>
+      <div class="mdl-card__actions">
+        <%=partial 'relatorios/table-ideias_por_pontuacao'%>
       </div>
     </div><!--/.mdl-card-->
   </div><!--/.mdl-cell-->

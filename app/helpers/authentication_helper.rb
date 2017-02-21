@@ -18,7 +18,7 @@ module AuthenticationHelper
   end
 
   def authorized_by?(*profiles)
-    session[:user] && (session[:user][:profiles] & profiles.map(&:to_s)).any?
+    session[:user] && (session[:user][:profiles] & profiles).any?
   end
   alias authenticated_as? authorized_by?
 
@@ -28,6 +28,10 @@ module AuthenticationHelper
       email: user_email,
       profiles: profiles,
     }
+  end
+
+  def session_user
+    @session_user ||= session[:user] && session[:user] || {}
   end
 
   def disconect!

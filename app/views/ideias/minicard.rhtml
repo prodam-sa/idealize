@@ -1,43 +1,39 @@
-<div class="mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
-  <div class="mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone prd-card prd-card--minicard mdl-card mdl-card--expandable">
-    <div class="mdl-card__title mdl-card--expand">
-      <h2 class="mdl-card__title-text">
-        <%=ideia.titulo%>
-      </h2>
-
-      <span class="mdl-card--subtitle-text  mdl-card--expand mdl-typography--text-right mdl-cell--top">
-      <%=formated_date ideia.modificacao.data_registro%>
-      </span>
-    </div>
-
-    <div class="mdl-card__supporting-text">
-      <p><%=remove_html_tags(ideia.texto_oportunidade[0..256])%></p>
-    </div>
-
-    <div class="mdl-card__actions mdl-card--border">
-      <div class="mdl-grid mdl-grid--no-spacing">
-        <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--2-col-phone">
-          <a id="ver-<%=ideia.id%>" href="<%=path_to :ideias, ideia.to_url_param%>" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect mdl-cell--middle">
-            Ver mais <i class="material-icons">keyboard_arrow_right</i>
-          </a>
-        </div>
-
-        <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--2-col-phone mdl-typography--text-right mdl-cell--middle">
-          <%apoiadores_ideia && (apoiadores_ideia.include? usuario_id) && css_apoiador = 'mdl-color-text--accent'%>
-          <%coautores_ideia && (coautores_ideia.include? usuario_id) && css_coautor = 'mdl-color-text--accent'%>
-          <span id="supporters-<%=ideia.id%>" class="<%=css_apoiador%>">
-            <i class="material-icons">thumb_up</i>
-            <small><%=apoiadores_ideia && apoiadores_ideia.size || 0%></small>
-          </span>
-          <span class="mdl-tooltip mdl-tooltip--left" for="supporters-<%=ideia.id%>">Apoiadores da ideia</span>
-
-          <span id="coauthors-<%=ideia.id%>" class="<%=css_coautor%>">
-            <i class="material-icons">people</i>
-            <small><%=coautores_ideia && coautores_ideia.size || 0%></small>
-          </span>
-          <span class="mdl-tooltip mdl-tooltip--left" for="coauthors-<%=ideia.id%>">Coautores da ideia</span>
-        </div>
-      </div>
-    </div><!--/.mdl-card__actions-->
+<div class="prd-card prd-card--minicard mdl-card mdl-card--expandable">
+  <div class="mdl-card__title mdl-card--expand">
+    <span class="mdl-card--subtitle-text  mdl-card--expand mdl-cell--top">
+    <%=formated_date ideia.modificacao.data_registro%>
+    </span>
   </div>
+
+  <div class="mdl-card__supporting-text">
+    <h2 class="mdl-card__title-text">
+      <%=ideia.titulo%>
+    </h2>
+  </div>
+
+  <div class="mdl-card__actions mdl-card--border">
+    <div class="mdl-grid mdl-grid--no-spacing">
+      <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--2-col-phone">
+        <a id="ver-<%=ideia.id%>" href="<%=path_to :ideias, ideia.to_url_param%>" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect mdl-cell--middle">
+          Ver mais <i class="material-icons">keyboard_arrow_right</i>
+        </a>
+      </div>
+
+      <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--2-col-phone mdl-typography--text-right mdl-cell--middle">
+        <%apoiadores_ideia && (apoiadores_ideia.include? usuario_id) && css_apoiador = 'mdl-color-text--accent'%>
+        <%coautores_ideia && (coautores_ideia.include? usuario_id) && css_coautor = 'mdl-color-text--accent'%>
+        <span id="supporters-<%=ideia.id%>" class="<%=css_apoiador%>">
+          <i class="material-icons">thumb_up</i>
+          <small><%=apoiadores_ideia && apoiadores_ideia.size || 0%></small>
+        </span>
+        <span class="mdl-tooltip mdl-tooltip--left" for="supporters-<%=ideia.id%>">Apoiadores da ideia</span>
+
+        <span id="coauthors-<%=ideia.id%>" class="<%=css_coautor%>">
+          <i class="material-icons">people</i>
+          <small><%=coautores_ideia && coautores_ideia.size || 0%></small>
+        </span>
+        <span class="mdl-tooltip mdl-tooltip--left" for="coauthors-<%=ideia.id%>">Coautores da ideia</span>
+      </div>
+    </div>
+  </div><!--/.mdl-card__actions-->
 </div>

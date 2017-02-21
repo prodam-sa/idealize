@@ -6,18 +6,22 @@ class HomeController < ApplicationController
   helpers IdeiasHelper, DateHelper
 
   before do
+    @relatorio = Relatorio.new
     @page = controllers[:home]
   end
 
   get '/' do
-    @relatorio = Relatorio.new
     if authenticated?
-      @ideias = Ideia.find_by_situacao(['publicacao', 'avaliacao']).order(:data_publicacao).limit(6).all
-      @relatorio.ideias = @ideias
-      view 'index'
+      redirect path_to :ideias
     else
-      view 'wellcome', layout: :landpage
+      @premiacao = Situacao.chave(:avaliacao)
+      @moderacao = Situacao.chave(:publicacao)
+      view 'home/wellcome', layout: :landpage
     end
+  end
+
+  get '/ranking' do
+    view 'home/ranking'
   end
 
   get '/faq' do
@@ -30,15 +34,6 @@ class HomeController < ApplicationController
     @page = pages[:versao]
     @changelog = data @page[:data]
     view 'paginas/changelog'
-  end
-
-  get '/painel', authenticate: true do
-    unless authorized?
-      redirect path_to(:postagens)
-    else
-      @page = pages[:painel]
-      view 'painel/index'
-    end
   end
 end
 

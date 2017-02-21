@@ -3,23 +3,16 @@
 module Prodam::Idealize
 
 class Ideia < Model[:ideia]
-  include Model
-
   plugin :validation_helpers
+  plugin :paging
 
   many_to_one :autor
-  many_to_many :categorias, {
-    join_table: :ideia_categoria
-  }
-  many_to_many :coautores, {
-    join_table: :ideia_coautor,
-    right_key: :coautor_id
-  }
+  many_to_many :categorias, join_table: :ideia_categoria
+  many_to_many :coautores, class: Autor, join_table: :ideia_coautor, right_key: :coautor_id
   one_to_many :modificacoes
-  many_to_many :apoiadores, {
-    join_table: :ideia_apoiador
-  }
+  many_to_many :apoiadores, join_table: :ideia_apoiador
   one_to_one :avaliacao
+  many_to_one :situacao
 
   def validate
     super
@@ -43,16 +36,16 @@ class Ideia < Model[:ideia]
   end
 
   def param_name
-    spliter = /[ "'\<\>\/\\]/
-    "#{id}-#{titulo.downcase.split(spliter).join('-').squeeze}"
+    "#{id}-#{titulo.downcase.gsub(' ', '-')}"
   end
 
   def situacoes?(*nomes)
-    self[:situacao] && (nomes.include? self[:situacao].to_sym)
+    situacao && (nomes.include? situacao.chave.to_sym)
   end
+  alias situacao? situacoes?
 
   def historico
-    @historico || (@historico = modificacoes_dataset.reverse(:data_registro).all)
+    @historico ||= modificacoes_dataset.reverse(:data_registro).all
   end
 
   def modificacao
@@ -60,7 +53,7 @@ class Ideia < Model[:ideia]
   end
 
   def bloqueada?
-    !(self[:bloqueada] =~ /S/i).nil?
+    self[:bloqueada] =~ /S/i && true || false
   end
 
   def desbloqueada?
@@ -68,18 +61,15 @@ class Ideia < Model[:ideia]
   end
 
   def bloquear!
-    self[:bloqueada] = 'S'
-    save
+    update bloqueada: 'S'
   end
 
   def desbloquear!
-    self[:bloqueada] = 'N'
-    save
+    update bloqueada: 'N'
   end
 
   def publicar!
-    self[:data_publicacao] = Time.now
-    save
+    update data_publicacao: Time.now
   end
 
   def publicada?
@@ -94,6 +84,7 @@ class Ideia < Model[:ideia]
 
   def before_save
     self[:data_atualizacao] = Time.now
+    situacao && (self[:bloqueada] = situacao.bloqueia)
   end
 
   def remove_all_modificacoes
@@ -105,14 +96,22 @@ class Ideia < Model[:ideia]
       select(*fields).exclude(data_publicacao: nil).reverse(:data_criacao)
     end
 
+    def find_by_id(id)
+      where(id: id).eager(:situacao, :modificacoes, :coautores, :apoiadores).all.first
+    end
+
     def find_by_autor(autor_id)
       where(autor_id: autor_id).reverse(:data_criacao)
     end
 
-    def find_by_situacao(chave)
-      where(situacao: chave).reverse(:data_atualizacao)
+    def find_by_situacoes(*chaves)
+      select(*column_aliases).
+      join(:situacao, id: :situacao_id).
+      where(situacao__chave: chaves).
+      eager(:situacao).
+      reverse(:data_atualizacao)
     end
-    alias find_by_situacoes find_by_situacao
+    alias find_by_situacao find_by_situacoes
 
     def find_by_situacao_categoria(chave, categoria_id)
       join(:categoria, id: categoria_id).where(situacao: chave).reverse(:data_atualizacao)

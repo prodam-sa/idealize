@@ -47,12 +47,12 @@ class Relatorio
         FULL OUTER JOIN ideia_categoria ON (ideia_categoria.ideia_id = ideia.id)
         %s",
     total_ideias_por_situacao: "
-      SELECT situacao.id AS situacao_id
-           , COUNT(*) AS total
-        FROM ideia
-        INNER JOIN situacao ON (situacao.chave = ideia.situacao)
+      SELECT situacao.chave
+           , COUNT(ideia.id) AS total
+        FROM situacao
+        FULL JOIN ideia ON (ideia.situacao_id = situacao.id)
         %s
-        GROUP BY situacao.id",
+        GROUP BY situacao.chave",
     total_ideias_por_autor: "
       SELECT ideia.autor_id
            , COUNT(*) AS total
@@ -80,7 +80,19 @@ class Relatorio
         INNER JOIN usuario ON (usuario.id = ideia.autor_id)
         INNER JOIN avaliacao ON (avaliacao.ideia_id = ideia.id)
         INNER JOIN classificacao ON (classificacao.id = avaliacao.classificacao_id)
-        %s"
+        %s",
+    ranking: "
+      SELECT usuario.id AS autor_id
+           , usuario.nome AS autor_nome
+           , COUNT(ideia.id) AS total_ideias
+           , SUM(avaliacao.pontos) AS total_pontos
+        FROM ideia
+        INNER JOIN usuario ON (usuario.id = ideia.autor_id)
+        INNER JOIN avaliacao ON (avaliacao.ideia_id = ideia.id)
+        %s
+        GROUP BY usuario.id
+               , usuario.nome
+        ORDER BY SUM(avaliacao.pontos) DESC",
   }.freeze
 
   attr_accessor :autor
@@ -92,6 +104,10 @@ class Relatorio
     atributos.each do |atributo, valor|
       send("#{atributo}=", valor)
     end
+  end
+
+  def total_ideias
+    Ideia.count.to_i
   end
 
   # Coautores
@@ -206,7 +222,7 @@ class Relatorio
   def total_ideias_por_situacao!
     @total_ideias_por_situacao = {}
     Database[sql :total_ideias_por_situacao, filtro_por_data(:criacao)].all.map do |row|
-      @total_ideias_por_situacao[row[:situacao_id]] = row[:total].to_i
+      @total_ideias_por_situacao[row[:chave].to_sym] = row[:total].to_i
     end
     @total_ideias_por_situacao
   end
@@ -257,6 +273,25 @@ class Relatorio
     @ideias_por_autor = Database[sql :ideias_por_autor, filtro_por_data].all.group_by do |row|
       [ row[:autor_id], row[:autor_nome] ]
     end
+  end
+
+  def ranking
+    @ranking || ranking!
+  end
+
+  def ranking!
+    @ranking = Database[sql :ranking].all.each_with_index do |row, i|
+      row[:classificacao] = i + 1
+      row[:total_ideias] = row[:total_ideias].to_i
+      row[:total_pontos] = row[:total_pontos].to_i
+    end
+  end
+
+  def ranking_autor(autor = @autor)
+    autor && @ranking_autor ||= ranking.select do |info|
+      info[:autor_id] == autor.id
+    end.first || { colocacao: nil, autor_id: nil, autor_nome: nil, total_ideias: 0, total_pontos: 0 }
+    @ranking_autor
   end
 
 private

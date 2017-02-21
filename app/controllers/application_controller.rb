@@ -51,11 +51,27 @@ class ApplicationController < Sinatra::Base
 
   before do
     @page = {}
-    @fab = {
-      url: path_to(:postagens, :nova),
-      icon: :edit,
-      tooltip: 'Nova ideia!'
-    }
+    @fab = { url: path_to(:ideias, :nova), icon: :add, tooltip: 'Nova ideia!' }
+    @relatorio = Relatorio.new
+    @situacoes = Situacao.all.each_with_object Hash.new do |situacao, situacoes|
+      situacoes[situacao.chave.to_sym] = situacao
+    end
+
+    if authenticated?
+      @usuario ||= Autor.find_by_id session_user[:id]
+      @relatorio.autor = @usuario
+      @info ||= {}
+      @info[:classificacao] ||= @relatorio.ranking_autor[:classificacao]
+      @info[:total_pontos] ||= @relatorio.ranking_autor[:total_pontos]
+      @info[:total_mensagens] ||= Mensagem.find_nao_lidas_para(@usuario.id).count
+      @info[:total_ideias] ||= @usuario.ideias.size
+      [:premiacao, :avaliacao, :publicacao, :postagem, :rascunho, :revisao, :moderacao].each do |chave|
+        key = "total_ideias_#{chave}"
+        @info[key.to_sym] ||= @usuario.ideias.select do |ideia|
+          ideia.situacao? chave
+        end.compact.size
+      end
+    end
   end
 end
 

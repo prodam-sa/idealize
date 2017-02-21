@@ -1,0 +1,80 @@
+<%disabled = ' disabled="disabled"' if ideia.bloqueada?%>
+<div class="prd-card mdl-card mdl-card--full-width mdl-shadow--2dp">
+  <div class="mdl-card__menu">
+    <%if permitido_apoiar? ideia%>
+      <form action="<%=path_to :ideias, ideia.to_url_param, :apoiar%>" method="post" style="display: inline">
+        <%apoiadores && (apoiadores.include? usuario_id) && css_apoiador = ' mdl-button--raised mdl-button--colored' %>
+        <span class="mdl-badge mdl-badge--overlap" data-badge="<%=apoiadores.size || 0%>">
+          <button id="support" class="mdl-button mdl-button--icon <%=css_apoiador%>" name="_method" value="put">
+            <i class="material-icons">thumb_up</i>
+          </button>
+        </span>
+        <span class="mdl-tooltip" for="support">Usuários que apoiam essa ideia.</span>
+      </form>
+    <%else%>
+      <span class="mdl-badge mdl-badge--overlap" data-badge="<%=apoiadores.size || 0%>">
+        <label id="support" class="mdl-button mdl-button--icon mdl-button--disabled">
+          <i class="material-icons">thumb_up</i>
+        </label>
+      </span>
+    <%end%>
+  </div>
+
+  <div class="mdl-card__supporting-text prd-text--hyphenated">
+    <h1 class="mdl-typography--headline mdl-typography--font-bold">
+      <%=ideia.titulo%>
+    </h1>
+
+    <p class="mdl-typography--text-right">
+      <small>
+        <em><%=ideia.data_publicacao ? :Publicada : :Cadastrada%> em <%=formated_date ideia.modificacao.data_registro%> com <%=pontos_avaliacao ideia%> pontos, <%=rotulo_premiacao ideia%></em>
+      </small>
+    </p>
+
+    <h2 class="mdl-typography--title">Apresentação</h2>
+    <%=ideia.texto_oportunidade%>
+
+    <h2 class="mdl-typography--title">Proposta</h2>
+    <%=ideia.texto_solucao%>
+  </div>
+
+  <div class="mdl-card__actions mdl-card--border">
+    <%if ideia.desbloqueada? and (authorized? or usuario_autor? ideia)%>
+      <a id="editar-ideia" href="<%=path_to :ideias, ideia.to_url_param, :editar%>" class="mdl-button mdl-button--icon mdl-layout--small-screen-only">
+        <i class="material-icons">edit</i>
+      </a>
+      <a id="editar-ideia" href="<%=path_to :ideias, ideia.to_url_param, :editar%>" class="mdl-button mdl-button--colored mdl-layout--large-screen-only">
+        Editar
+      </a>
+    <%end%>
+
+    <%if permitido_postar? ideia%>
+      <form action="<%=path_to :ideias, ideia.to_url_param%>" method="post" style="display: inline">
+        <input type="hidden" id="ideia_situacao_id" name="ideia[situacao_id]" value="<%=@situacoes[:postagem].id%>">
+        <button name="_method" value="put" class="mdl-button mdl-button--icon mdl-layout--small-screen-only"><i class="material-icons">publish</i></button>
+        <button name="_method" value="put" class="mdl-button mdl-button--colored mdl-layout--large-screen-only">Postar</button>
+      </form>
+    <%end%>
+
+    <%if permitido_excluir? ideia%>
+      <button class="mdl-button mdl-button--icon mdl-button--open-dialog mdl-layout--small-screen-only"<%=disabled%>><i class="material-icons">delete</i></button>
+      <button class="mdl-button mdl-button--colored mdl-button--open-dialog mdl-layout--large-screen-only"<%=disabled%>>Excluir</button>
+    <%end%>
+  </div><!--/.mdl-card__actions-->
+</div><!--/.mdl-card-->
+
+<%content_for :dialog do%>
+  <dialog class="mdl-dialog">
+    <form action="<%=path_to :ideias, ideia.to_url_param%>" method="post">
+      <div class="mdl-dialog__content">
+        <p>Deseja realmente excluir sua ideia sobre "<%=ideia.titulo%>"?</p>
+      </div><!--/.mdl-dialog__content-->
+
+      <div class="mdl-dialog__actions">
+        <button type="submit" name="_method" value="delete" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect"<%=disabled%>>Sim</button>
+        <button type="button" class="mdl-button mdl-button--raised mdl-button--colored mdl-js-button mdl-js-ripple-effect mdl-button--close-dialog">Não</button>
+      </div>
+    </form>
+  </dialog>
+  <script src="<%=path_to '/js/dialog.js'%>"></script>
+<%end if permitido_excluir? ideia%>

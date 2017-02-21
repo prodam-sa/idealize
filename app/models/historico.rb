@@ -3,8 +3,6 @@
 module Prodam::Idealize
 
 class Historico < Model[:historico]
-  include Model
-
   plugin :validation_helpers
 
   many_to_one :ideia
@@ -22,6 +20,10 @@ class Historico < Model[:historico]
 
   def param_name
     "#{id}-#{titulo.downcase.tr(' ', '-')}"
+  end
+
+  def self.find_by_ideia(ideia)
+    where(ideia_id: ideia.id).eager(:situacao, :responsavel).reverse(:data_registro)
   end
 end
 

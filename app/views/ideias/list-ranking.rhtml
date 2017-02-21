@@ -1,0 +1,38 @@
+<div class="mdl-card mdl-card--full-width mdl-shadow--2dp">
+  <div class="mdl-card__title mdl-card--border prd-ranking-list">
+    <i class="prd-ranking-list__item-botton material-icons">grade</i>
+    <span class="mdl-card__title-text mdl-cell--middle">Ranking</span>
+  </div>
+
+  <div class="mdl-list prd-ranking-list">
+    <%content_for :ranking_item do |info, order, botton|%>
+      <div class="mdl-list__item mdl-list__item--two-line">
+        <div class="mdl-list__item-primary-content">
+          <span class="mdl-list__item-avatar prd-ranking-list__item-botton prd-ranking-list__item-botton--<%=botton || :coin%>"><%=order%></span>
+          <span class="mdl-layout--large-screen-only"><%=info[:autor_nome]%></span>
+          <span class="mdl-layout--small-screen-only"><%=info[:autor_nome].split(' ').first%></span>
+          <span class="mdl-list__item-sub-title">
+            <small><em><%=info[:total_ideias] || 0%> ideias</em></small>
+          </span>
+        </div>
+        <div class="mdl-list__item-secondary-content">
+          <span class="mdl-list__item-sub-title"><%=info[:total_pontos] || 0%></span>
+          <span class="mdl-list__item-secondary-info">pontos</span>
+        </div>
+      </div>
+    <%end%>
+
+    <%if ranking.size >= 3%>
+      <%[:gold, :silver, :bronze].each_with_index do |botton, i|%>
+        <%=yield_content :ranking_item, ranking[i], i+1, botton if ranking[i]%>
+      <%end%>
+      <%ranking[3..-1].each_with_index do |info, i|%>
+        <%=yield_content :ranking_item, info, i+4, nil%>
+      <%end%>
+    <%else%>
+      <%ranking.each_with_index do |info, i|%>
+        <%=yield_content :ranking_item, info, i+1, :coin%>
+      <%end%>
+    <%end%>
+  </div><!--/.mdl-list-->
+</div><!--/.mdl-card-->

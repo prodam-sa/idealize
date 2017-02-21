@@ -3,8 +3,6 @@
 module Prodam::Idealize
 
 class Categoria < Model[:categoria]
-  include Model
-
   plugin :validation_helpers
 
   many_to_many :ideias, join_table: :ideia_categoria

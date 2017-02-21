@@ -1,0 +1,18 @@
+<div class="mdl-layout__drawer prd-layout__drawer">
+  <span class="mdl-layout-title"></span>
+  <a href="<%=path_to :home%>"><img src="<%=path_to '/img/brand-colored.svg'%>" class="prd-drawer__brand"/></a>
+
+  <nav class="prd-navigation mdl-navigation">
+    <%sections.select { |id, section| section[:navigation].include? 'header' }.each do |id, section|%>
+      <%is_active = 'is-active' if @page[:url_path] == section[:url_path]%>
+      <a class="mdl-navigation__link prd-navigation__link <%=is_active%>" href="<%=path_to section[:url_path]%>">
+        <i class="material-icons" role="presentation"><%=section[:icon]%></i>
+        <%=section[:title]%>
+      </a>
+    <%end%>
+    <a href="<%=path_to :conta%>" class="prd-navigation__link mdl-navigation__link mdl-js-ripple-effect mdl-button--open-dialog">
+      <i class="material-icons" role="presentation">account_box</i>
+      Acesso
+    </a>
+  </nav>
+</div><!--/.mdl-layout__drawer-->

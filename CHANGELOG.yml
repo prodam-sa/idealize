@@ -1,3 +1,16 @@
+- :version: 0.15.0
+  :release: 2017-02-21
+  :summary:
+    Melhorias no layout, ranking dos autores, melhorias na edição das ideias
+  :changes:
+  - Novo tema do site com melhorias na interface e navegabilidade.
+  - Apresentação das informações básicas do usuário autor.
+  - Filtros e paginação da lista de ideias.
+  - Ranking dos autores.
+  - Processos internos foram melhorados (moderação e avaliação).
+  - Inclusão de sistema de mensagens (em desenvolvimento).
+  - Notificações por e-mail sobre a moderação e a avaliação das ideias.
+
 - :version: 0.14.0
   :release: 2016-12-21
   :summary:

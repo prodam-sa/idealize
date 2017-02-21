@@ -3,11 +3,10 @@
 module Prodam::Idealize
 
 class Classificacao < Model[:classificacao]
-  include Model
-
   plugin :validation_helpers
 
   one_to_many :avaliacoes
+  many_to_many :premiacoes, join_table: :classificacao_premiacao
 
   def validate
     super

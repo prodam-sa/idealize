@@ -1,7 +1,3 @@
-#!/usr/bin/env puma
-
-# directory '/u/apps/lolcat'
-
 @environment = ENV['RACK_ENV'] || 'development'
 
 environment @environment

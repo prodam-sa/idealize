@@ -1,0 +1,100 @@
+<div class="mdl-grid mdl-grid--no-spacing mdl-card mdl-card--full-width mdl-shadow--2dp prd-card--min-height">
+  <%ideias.each_with_index do |ideia, i|%>
+    <div class="mdl-cell mdl-cell--12-col-desktop mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card__actions mdl-card--border mdl-grid">
+      <%is_avaliado = !ideia.avaliacao.nil?%>
+      <div class="mdl-cell mdl-cell--top mdl-cell--2-col-desktop mdl-cell--2-col-tablet mdl-cell--1-col-phone mdl-typography--text-center">
+        <img src="<%=path_to "img/premiacao/#{imagem_premiacao ideia}"%>" class="prd-card__media-premiacao"/>
+        <small><em><%=rotulo_premiacao ideia%></em></small><br/>
+        <small><em><%=pontos_avaliacao ideia%> pontos</em></small>
+      </div><!--/.mdl-cell-->
+
+      <div class="mdl-cell mdl-cell--9-col-desktop mdl-cell--5-col-tablet mdl-cell--2-col-phone">
+        <p class="prd-text--hyphenated">
+          <%=ideia.titulo%>
+          <br/><small><em>Em <%=formated_date ideia.data_publicacao || ideia.data_criacao%><%if ideia.avaliacao%>, por <%=ideia.autor.nome%><%else%>, sendo avaliada pelo comitê<%end%></em></small>.
+        </p>
+        <div class="mdl-cell mdl-cell--12-col-desktop mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-color-text--grey-400">
+          <small class="prd-card__action">
+            <i class="material-icons">thumb_up</i>
+            <%=@relatorio.total_apoiadores_por_ideia[ideia.id] || 0%>
+          </small>
+
+          <small class="prd-card__action">
+            <i class="material-icons">people</i>
+            <%=@relatorio.total_coautores_por_ideia[ideia.id] || 0%>
+          </small>
+        </div><!--/.mdl-cell-->
+      </div><!--/.mdl-cell-->
+
+      <div class="mdl-cell mdl-cell--middle mdl-cell--1-col-desktop mdl-cell--1-col-tablet mdl-cell--1-col-phone mdl-typography--text-right">
+        <a class="mdl-button mdl-button--icon mdl-button--colored" href="<%=path_to :ideias, ideia.to_url_param%>">
+          <i class="material-icons">keyboard_arrow_right</i>
+        </a>
+      </div><!--/.mdl-cell-->
+    </div><!--/.mdl-cell-->
+  <%end%>
+
+  <div class="mdl-cell mdl-cell--12-col-desktop mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card__actions mdl-card--border mdl-grid">
+    <div class="mdl-cell mdl-cell--4-col-desktop mdl-cell--2-col-tablet mdl-cell--4-col-phone mdl-cell--middle">
+      <span>Página <%=pagination[:current]%> de <%=pagination[:total]%></span>
+    </div>
+
+    <div class="mdl-cell mdl-cell--8-col mdl-typography--text-right">
+      <%params = { autor: request.params['autor'], situacao: request.params['situacao'], ordem: request.params['ordem'] }%>
+      <%if pagination[:total] > 1%>
+        <%params.update pagina: pagination[:previous]%>
+        <a id="page-previous" href="<%=path_to :ideias, params%>" class="mdl-button mdl-button--colored mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+          <i class="material-icons">keyboard_arrow_left</i>
+        </a>
+        <span class="mdl-tooltip mdl-tooltip--top" for="page-previous">Página anterior</span>
+        <%params.update pagina: 1%>
+        <a id="page-first" href="<%=path_to :ideias, params%>" class="mdl-button mdl-button--colored mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+          <i class="material-icons">skip_previous</i>
+        </a>
+        <span class="mdl-tooltip mdl-tooltip--top" for="page-first">Primeira página</span>
+      <%end%>
+
+      <%if pagination[:total] > 1%>
+        <button id="page-select" class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored">
+          <i class="material-icons">more_horiz</i>
+        </button>
+        <span class="mdl-tooltip mdl-tooltip--top" for="page-select">Selecione uma página</span>
+
+        <div class="mdl-menu mdl-menu--top-right mdl-js-menu" for="page-select">
+          <%(1..pagination[:total]).each_slice 5 do |pages|%>
+            <span class="mdl-menu__item">
+              <%pages.each do |page|%>
+                <%params.update pagina: page%>
+                <%is_disabled = pagination[:current] == page ? :disabled : ''%>
+                <a href="<%=path_to :ideias, params%>" class="mdl-button mdl-button--icon mdl-button--colored" <%=is_disabled%>><small><%=page%></small></a>
+              <%end%>
+            </span>
+          <%end%>
+        </div>
+      <%end%>
+
+      <button id="page-order" class="mdl-button mdl-button--icon mdl-button--colored"><i class="material-icons">filter_list</i></button>
+      <span class="mdl-tooltip mdl-tooltip--top" for="page-order">Filtros da lista</span>
+
+      <div class="mdl-menu mdl-menu--top-right mdl-js-menu" for="page-order"><%filtro = params.clone%>
+        <a href="<%=path_to :ideias, filtro.update(pagina: pagination[:current], ordem: 'a~z')%>" class="mdl-menu__item">Por título de A a Z</a>
+        <a href="<%=path_to :ideias, filtro.update(pagina: pagination[:current], ordem: 'z~a')%>" class="mdl-menu__item">Por título de Z a A</a>
+        <a href="<%=path_to :ideias, filtro.update(pagina: pagination[:current], ordem: 'jan~dez')%>" class="mdl-menu__item">Por data de Jan a Dez</a>
+        <a href="<%=path_to :ideias, filtro.update(pagina: pagination[:current], ordem: 'dez~jan')%>" class="mdl-menu__item">Por data de Dez a Jan</a>
+      </div>
+
+      <%if pagination[:total] > 1%>
+        <%params.update pagina: pagination[:total]%>
+        <a id="page-last" href="<%=path_to :ideias, params%>" class="mdl-button mdl-button--colored mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+          <i class="material-icons">skip_next</i>
+        </a>
+        <span class="mdl-tooltip mdl-tooltip--top" for="page-last">Última página</span>
+        <%params.update pagina: pagination[:next]%>
+        <a id="page-next" href="<%=path_to :ideias, params%>" class="mdl-button mdl-button--colored mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+          <i class="material-icons">keyboard_arrow_right</i>
+        </a>
+        <span class="mdl-tooltip mdl-tooltip--top" for="page-next">Próxima página</span>
+      <%end%>
+    </div>
+  </div><!--/.mdl-card__actions-->
+</div><!--/.mdl-grid-->

@@ -3,12 +3,9 @@
 module Prodam::Idealize
 
 class Formulario < Model[:formulario]
-  include Model
-
   plugin :validation_helpers
 
   one_to_many :criterios
-  one_to_many :criterios_multiplos
   many_to_one :processo
 
   def validate

@@ -1,61 +1,80 @@
 <header class="prd-layout__header mdl-layout__header">
   <div class="mdl-layout__header-row">
-    <div class="mdl-layout--small-screen-only">
-      <span class="mdl-layout-title prd-layout-title">
-        <i class="material-icons"><%=@page[:icon]%></i>
-        <span><%=@page[:title]%></span>
-      </span>
-    </div>
+    <span class="mdl-layout__title mdl-layout--large-screen-only">
+      <a href="<%=path_to :home%>" class=" prd-layout__brand-icon">
+        <img src="<%=path_to '/img/brand-colored.svg'%>" alt="Idealize" title="Idealize"/>
+      </a>
+    </span>
 
-    <div class="mdl-layout--large-screen-only">
-      <span class="mdl-layout-title prd-layout-icon-expanded">
-        <a href="<%=path_to :home%>">
-          <img src="<%=path_to '/img/brand-colored.svg'%>" alt="Idealize" title="Idealize"/>
-        </a>
-      </span>
-    </div>
+    <span class="mdl-layout__title">
+      <%=yield_content :backward%>
+    </span>
+
+    <span class="mdl-layout__title mdl-layout--large-screen-only" style="margin-left: 1rem"><%=@page[:title]%></span>
 
     <div class="mdl-layout-spacer"></div>
 
-    <nav class="prd-navigation mdl-navigation">
-      <form action="<%=path_to :ideias, :pesquisa%>" method="get">
-        <div class="prd-searchbox mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label mdl-textfield--align-right">
-          <label id="toolbar-search" class="mdl-button mdl-button--icon mdl-js-button" for="ideias-termo-pesquisa">
-            <i class="material-icons">search</i>
-          </label>
-          <div class="mdl-textfield__expandable-holder">
-            <input class="mdl-textfield__input" type="text" name="termo" id="ideias-termo-pesquisa" placeholder="Pesquise por ideias ...">
-            <span class="mdl-tooltip" for="toolbar-search">Procure por ideias publicadas</span>
-          </div>
+    <form action="<%=path_to :ideias, :pesquisa%>" method="get" class="prd-searchbox">
+      <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
+        <label id="toolbar-search" class="mdl-button mdl-button--icon mdl-js-button" for="ideias-termo-pesquisa">
+          <i class="material-icons">search</i>
+        </label>
+        <div class="mdl-textfield__expandable-holder">
+          <input class="mdl-textfield__input" type="text" name="termo" id="ideias-termo-pesquisa" placeholder="Pesquise por ideias ...">
         </div>
-      </form>
-    </nav>
-
-    <nav class="prd-navigation mdl-navigation mdl-layout--large-screen-only">
-      <%sections.select { |id, section| section[:navigation].include? 'header' }.each do |id, section|%>
-        <%is_active = 'is-active' if @page[:url_path] == section[:url_path]%>
-        <a class="mdl-navigation__link prd-navigation__link <%=is_active%>" href="<%=path_to section[:url_path]%>">
-          <%=section[:title]%>
-        </a>
-      <%end%>
-    </nav>
+      </div>
+    </form>
 
     <%if authenticated?%>
-      <button id="account-options" class="mdl-button mdl-button--fab mdl-button--mini-fab mdl-js-button">
-        <img src="<%=gravatar usuario_email, size: '40', default: :mm%>"/>
-      </button>
+      <%if (@info[:total_mensagens] > 0)%>
+        <%pagina = controllers[:mensagens]%>
+        <span class="mdl-badge mdl-badge--overlap" data-badge="<%=@info[:total_mensagens]%>">
+          <a id="notification-mensagens" href="<%=path_to :mensagens%>" class="mdl-button mdl-button--icon">
+            <i class="material-icons"><%=pagina[:icon]%></i>
+          </a>
+        </span>
+        <span class="mdl-tooltip" for="notification-mensagens">Mensagens não lidas</span>
+      <%end%>
 
-      <div class="mdl-menu mdl-menu--bottom-right mdl-js-menu" for="account-options">
-        <a href="<%=path_to :painel%>" class="mdl-menu__item">Painel</a>
-        <a href="<%=path_to :conta%>" class="mdl-menu__item">Conta</a>
-        <a href="<%=path_to :conta, :sair%>" class="mdl-menu__item">Sair</a>
-      </div>
+      <%if (authenticated_as? :moderador) && (@relatorio.total_ideias_por_situacao[:postagem] > 0)%>
+        <%pagina = controllers[:moderacao]%>
+        <span class="mdl-badge mdl-badge--overlap" data-badge="<%=@relatorio.total_ideias_por_situacao[:postagem]%>">
+          <a id="notification-moderacao" href="<%=path_to :moderacao%>" class="mdl-button mdl-button--icon">
+            <i class="material-icons"><%=pagina[:icon]%></i>
+          </a>
+        </span>
+        <span class="mdl-tooltip" for="notification-moderacao">Moderações pendentes</span>
+      <%end%>
+
+      <%if (authenticated_as? :avaliador) && (@relatorio.total_ideias_por_situacao[:publicacao] > 0)%>
+        <%pagina = controllers[:avaliacao]%>
+        <span class="mdl-badge mdl-badge--overlap" data-badge="<%=@relatorio.total_ideias_por_situacao[:publicacao]%>">
+          <a id="notification-avaliacao" href="<%=path_to :avaliacao%>" class="mdl-button mdl-button--icon">
+            <i class="material-icons"><%=pagina[:icon]%></i>
+          </a>
+        </span>
+        <span class="mdl-tooltip" for="notification-avaliacao">Avaliações pendentes</span>
+      <%end%>
+
+      <%if (authenticated_as? :administrador)%>
+        <%pagina = controllers[:relatorios]%>
+        <a id="notification-relatorios" href="<%=path_to :relatorios%>" class="mdl-button mdl-button--icon">
+          <i class="material-icons"><%=pagina[:icon]%></i>
+        </a>
+        <span class="mdl-tooltip" for="notification-relatorios">Relatórios</span>
+      <%end%>
+
+      <%=partial 'conta/menu-usuario', locals: { css_id: 'account-actions', icon: 'account_box', direction: 'bottom-right'}%>
+
+      <a href="<%=path_to :conta, :sair%>" class="mdl-button mdl-button--icon">
+        <i class="material-icons">settings_power</i>
+      </a>
     <%else%>
       <nav class="prd-navigation mdl-navigation">
-        <a href="#login" class="prd-navigation__link mdl-navigation__link mdl-js-ripple-effect mdl-button--open-dialog">
+        <a href="#login" class="prd-navigation__link mdl-navigation__link mdl-button--open-dialog">
           Login
         </a>
-        <a href="<%=path_to :usuarios, :novo%>" class="mdl-button mdl-button--raised mdl-color--accent mdl-js-button mdl-js-ripple-effect mdl-button--open-dialog">
+        <a href="<%=path_to :conta, :nova%>" class="mdl-button mdl-button--raised mdl-color--accent mdl-button--open-dialog">
           Cadastro
         </a>
       </nav>

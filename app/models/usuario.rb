@@ -5,8 +5,6 @@ require 'digest'
 module Prodam::Idealize
 
 class Usuario < Model[:usuario]
-  include Model
-
   EMAIL_PATTERN = /\A([\w+\-].?)+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i
   USERNAME_PATTERN = /^[a-zA-Z][a-zA-Z0-9\-_\.]{6,32}$/
   PROFILES = %w{
@@ -64,14 +62,16 @@ class Usuario < Model[:usuario]
   end
 
   def profiles
-    PROFILES.select do |profile|
-      send(profile) && (send(profile) == 'S')
-    end << 'usuario'
+    PROFILES.map(&:to_sym).select do |profile|
+      self[profile] && (self[profile] =~ /S/i)
+    end << :usuario
   end
+  alias perfis profiles
 
   def has_profile?(nome)
-    profiles.include? nome.to_s
+    profiles.include? nome
   end
+  alias perfil? has_profile?
 
   def param_name
     "#{id}-#{nome_usuario.downcase}"

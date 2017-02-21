@@ -1,0 +1,64 @@
+<%content_for :coautores do%>
+  <ul id="coautores" class="mdl-list">
+    <%@coautores.each_with_index do |coautor, c|%>
+      <li id="coautores<%=coautor.id%>" class="mdl-list__item">
+        <span class="mdl-list__item-primary-content">
+          <%=coautor.nome%>
+        </span>
+        <span class="mdl-list__item-secondary-action">
+          <input type="hidden" name="coautores[]" value="<%=coautor.id%>"/>
+          <%if (usuario_autor? @ideia) and (@ideia.desbloqueada?)%>
+            <button id="remover-<%=c%>" type="button" class="mdl-button mdl-button--icon mdl-button--raised mdl-js-button mdl-js-ripple-effect" data-id="<%=coautor.id%>">
+              <i class="material-icons">close</i>
+            </button>
+            <span class="mdl-tooltip mdl-tooltip--left" for="remover-<%=c%>">Remover <%=coautor.nome%></span>
+          <%end%>
+        </span>
+      </li>
+    <%end%>
+  </ul>
+<%end if @coautores%>
+
+<div class="prd-card mdl-card mdl-card--full-width mdl-shadow--2dp">
+  <div class="mdl-card__title mdl-card--border">
+    <h1 class="mdl-card__title-text">Coautores</h1>
+  </div>
+
+  <%if ideia.coautores.empty?%>
+    <div id="usuarios-mensagem" class="mdl-card__supporting-text">
+      <p class="mdl-typography--text-center">
+        Nenhum coautor foi adicionado.
+      </p>
+    </div>
+  <%end%>
+
+  <%if (ideia and ideia.desbloqueada?)%>
+    <form action="<%=path_to :ideias, ideia.to_url_param, :coautores%>" method="post">
+      <%=yield_content :coautores%>
+
+      <div class="mdl-card__actions mdl-card--border">
+        <div class="mdl-textfield mdl-textfield--floating-label mdl-textfield--full-width mdl-js-textfield">
+          <label for="pesquisa" class="mdl-textfield__label">Busque pelo nome do usuário para adicionar</label>
+          <input type="text" id="pesquisa" list="usuarios" data-list="coautores" class="mdl-textfield__input"/>
+          <datalist id="usuarios">
+          </datalist>
+        </div>
+      </div>
+
+      <div class="mdl-card__actions mdl-card--border mdl-card--expand">
+        <button type="submit" name="_method" value="put" class="mdl-button mdl-button--raised mdl-js-button mdl-js-ripple-effect">
+          Salvar
+        </button>
+      </div>
+    </form>
+  <%else%>
+    <%=yield_content :coautores%>
+  <%end%>
+</div><!--/.mdl-card-->
+
+<%if permitido_alterar? ideia%>
+<%content_for :script do%>
+  <script src="<%=path_to '/src/fetch/fetch.js'%>"></script>
+  <script src="<%=path_to '/js/usuarios.js'%>"></script>
+<%end%>
+<%end%>

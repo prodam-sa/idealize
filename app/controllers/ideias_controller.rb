@@ -7,34 +7,62 @@ class IdeiasController < ApplicationController
 
   before do
     @page = controllers[:ideias]
-    @situacoes = Situacao.all_by_sem_restricao(:chave).map(&:chave)
   end
 
   before '/:id/?:action?' do |id, action|
     if (ideia_id = id.to_i) > 0
       @ideia = Ideia[ideia_id]
       @coautores = @ideia.coautores_dataset.order(:nome).all
-      @situacao = @ideia.modificacao.situacao
     else
-      @ideia = Ideia.new
-      @situacao = Situacao.chave :rascunho
+      @ideia = Ideia.new(situacao: @situacoes[:rascunho])
     end
   end
 
   get '/' do
-    @relatorio = Relatorio.new(ideias: Ideia.find_by_situacoes(@situacoes).order(:data_criacao, :data_publicacao).all)
-    @ideias = @relatorio.ideias
+    pagina  = (params[:pagina].to_i > 0 && params[:pagina] || 1).to_i
+    dataset = params[:autor] && params[:autor] =~ /usuario/i && @usuario && @usuario.ideias_dataset || Ideia.find_by_situacoes('publicacao', 'avaliacao', 'premiacao')
+    dataset = params[:situacao] && !params[:situacao].empty? && dataset.where(situacao_id: @situacoes[params[:situacao].to_sym].id) || dataset
+    dataset = case params[:ordem]
+                when 'a~z' then dataset.order(:titulo)
+                when 'z~a' then dataset.reverse(:titulo)
+                when 'jan~dez' then dataset.order(:data_publicacao, :data_criacao)
+                when 'dez~jan' then dataset.reverse(:data_publicacao, :data_criacao)
+                else dataset.reverse(:data_publicacao)
+              end
+    dataset = dataset.eager(:autor, avaliacao: :classificacao).page(pagina)
+    @ideias = dataset.all
+    @pagination = dataset.paging
+
     view 'ideias/index'
   end
 
   get '/pesquisa' do
     @termo = params[:termo]
-    @relatorio = Relatorio.new ideias: Ideia.search(@termo).where(situacao: @situacoes).all
+    @relatorio.ideias = Ideia.search(@termo).all
     view 'ideias/search'
   end
 
+  get '/nova', authenticate: true do
+    view 'ideias/new'
+  end
+
+  post '/', authenticate: true do
+    @ideia = Ideia.new(params[:ideia])
+    @ideia.autor_id = usuario_id
+
+    if @ideia.valid?
+      @ideia.save
+      historico(@ideia, @ideia.situacao, mensagem("Ideia cadastrada pelo autor.")).save
+      message.update(level: :information, text: @ideia.situacao.descricao)
+      redirect to("/#{@ideia.to_url_param}")
+    else
+      message.update(level: :error, text: 'Oops! Tem alguma coisa errada. Observe os campos em vermelho.')
+      view 'ideias/new'
+    end
+  end
+
   get '/:id' do |id|
-    @apoiadores = Relatorio.new.lista_apoiadores_ideia @ideia
+    @apoiadores = @relatorio.lista_apoiadores_ideia @ideia
     if (@ideia.publicada?) or (usuario_autor? @ideia) or (authorized_by? :moderador)
       view 'ideias/page'
     else
@@ -43,8 +71,38 @@ class IdeiasController < ApplicationController
     end
   end
 
+  get '/:id/editar', authenticate: true do |id|
+    unless @ideia.bloqueada?
+      view 'ideias/edit'
+    else
+      mensagem = @ideia.situacao.processo ? @ideia.situacao.processo.descricao : @ideia.situacao.descricao
+      message.update(level: :warning, text: mensagem)
+      redirect to(id)
+    end
+  end
+
+  put '/:id', authenticate: true do |id|
+    unless @ideia.bloqueada?
+      @ideia.set_all(params[:ideia])
+
+      if @ideia.valid?
+        @ideia.save
+        historico(@ideia, @ideia.situacao, mensagem('Ideia revisada pelo autor.')).save
+        message.update(level: :information, text: @ideia.situacao.descricao)
+        redirect to(id)
+      else
+        message.update(level: :error, text: 'Oops! Tem alguma coisa errada. Observe os campos em vermelho.')
+        @categorias = Categoria.all
+        view 'ideias/edit'
+      end
+    else
+      message.update(level: :warning, text: @ideia.situacao.processo.descricao)
+      redirect to(id)
+    end
+  end
+
   put '/:id/apoiar' do |id|
-    if (permitido_apoiar? @ideia) && !(authenticated_as? :administrador, :moderador, :avaliador)
+    if permitido_apoiar? @ideia
       unless usuario_apoiador? @ideia
         @ideia.add_apoiador usuario_id
         texto = 'Ideia apoiada pelo usuário.'
@@ -60,93 +118,35 @@ class IdeiasController < ApplicationController
     redirect to(id)
   end
 
-  # Moderação
-
-  get '/:id/moderar', authorize_only: :moderador do |id|
-    if (permitido_moderar? @ideia) or (usuario_moderador? @ideia)
-      @processo = processo(:moderacao)
-      @formulario = @processo.formulario
-      @criterios = @formulario.criterios
-      unless @ideia.modificacao.situacao_id == @processo.id
-        @historico = historico(@ideia, @processo, 'Moderação iniciada.').save
-      else
-        @historico = @ideia.modificacao
-      end
-      @ideia.bloquear!
-      view 'ideias/moderacao/form'
+  delete '/:id', authenticate: true  do |id|
+    unless @ideia.bloqueada?
+      @ideia.remove_all_coautores
+      @ideia.remove_all_categorias
+      @ideia.remove_all_modificacoes
+      @ideia.delete
+      message.update(level: :information, text: 'Sua ideia foi excluída.')
+      redirect to('/')
     else
-      if @ideia.publicada?
-        mensagem = 'Ideia já foi publicada.'
-      else
-        mensagem = 'Ideia em moderação por outro usuário.'
-      end
-      message.update(level: :warning, text: mensagem)
+      message.update(level: :warning, text: @ideia.situacao.descricao)
       redirect to(id)
     end
   end
 
-  post '/:id/moderacao', authorize_only: :moderador do |id|
-    @situacao = if ideia_moderada?
-                  situacao(:publicacao)
-                else
-                  situacao(:revisao)
-                end
-    @historico = historico(@ideia, @situacao, params[:historico][:descricao])
-
-    if @historico.valid?
-      @ideia.situacao = @situacao.chave
-      if ideia_moderada?
-        @ideia.publicar!
-        message.update(level: :information, text: 'Ideia foi publicada.')
-        @ideia.bloquear!
-      else
-        message.update(level: :information, text: 'Ideia foi enviada para revisão.')
-        @ideia.desbloquear!
+  put '/:id/coautores', authenticate: true do |id|
+    if @ideia.desbloqueada? && (usuario_autor? @ideia)
+      @ideia.remove_all_coautores
+      params[:coautores] && params[:coautores].each do |coautor_id|
+        @ideia.add_coautor coautor_id
       end
-      @historico.save
-      redirect to('/')
+      @ideia.remove_coautor usuario_id if (@ideia.coautores.include? usuario_id)
+      message.update(level: :information, text: 'Os coautores de sua ideia foram atualizados.')
     else
-      @formulario = processo(:moderacao).formulario
-      @criterios = @formulario.criterios.map do |criterio|
-        parametro = params[:criterios].select do |(id, resposta)|
-          id == criterio.id
-        end.first
-        criterio.resposta = parametro ? parametro[:resposta] : 'N'
-        criterio
-      end
-      message.update(level: :error, text: 'Oops! Observe os campos em vermelho.')
-      view 'ideias/moderacao/form'
+      message.update(level: :warning, text: 'Sua ideia está bloqueada para inclusão de coautores.')
     end
-  end
-
-  # apenas para desbloqueio
-  put '/:id/moderacao', authorize_only: :moderador do |id|
-    if params[:desbloquear]
-      @situacao = situacao(:postagem)
-      @ideia.situacao = @situacao.chave
-      @ideia.desbloquear!
-      historico(@ideia, @situacao, 'Moderação cancelada').save
-      message.update(level: :information, text: 'Moderação cancelada e ideia em situação de postagem.')
-    end
-
     redirect to(id)
   end
 
-  get '/autor/:autor_id' do |autor_id|
-    @ideias = Ideia.find_by_autor(autor_id.to_i).all
-    @ideias.to_s
-  end
-
 private
-
-  def ideia_moderada?
-    total = params[:criterios].size
-    check = params[:criterios].select do |criterio|
-      criterio['resposta'] =~ /S/i
-    end
-
-    check.size == params[:criterios].size
-  end
 end
 
 end # module

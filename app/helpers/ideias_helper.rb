@@ -24,6 +24,10 @@ module IdeiasHelper
     (authenticated_as? :moderador) && !(usuario_colaborador? ideia) && (ideia.modificacao.responsavel_id == usuario_id)
   end
 
+  def usuario_avaliador?(ideia)
+    (authenticated_as? :avaliador) && !(usuario_colaborador? ideia) && (ideia.modificacao.responsavel_id == usuario_id)
+  end
+
   def usuario_apoiador?(ideia)
     usuario_autenticado? && ideia && ideia.apoiadores_dataset.where(apoiador_id: usuario_id).any?
   end
@@ -53,7 +57,7 @@ module IdeiasHelper
   end
 
   def permitido_apoiar?(ideia)
-    usuario_autenticado? && !(usuario_colaborador? ideia) && !(usuario_moderador? ideia)
+    usuario_autenticado? && !(usuario_colaborador? ideia) && !(usuario_moderador? ideia) && !(usuario_avaliador? ideia) && !(authenticated_as? :administrador)
   end
 
   def situacao(chave)
@@ -61,7 +65,7 @@ module IdeiasHelper
   end
 
   def processo(chave)
-    Processo.chave(chave)
+    Processo.find chave: chave
   end
 
   def historico(ideia, situacao, mensagem)
@@ -69,6 +73,22 @@ module IdeiasHelper
                     situacao_id: situacao.id,
                     responsavel_id: usuario_id,
                     descricao: mensagem
+  end
+
+  def pontos_avaliacao(ideia)
+    (ideia.avaliacao && ideia.avaliacao) && ideia.avaliacao.pontos || 0
+  end
+
+  def imagem_premiacao(ideia)
+    format("%02d.svg", (ideia.avaliacao && ideia.avaliacao) && ideia.avaliacao.classificacao.ponto_maximo || 0)
+  end
+
+  def rotulo_premiacao(ideia)
+    (ideia.avaliacao && ideia.avaliacao && ideia.avaliacao.classificacao) && ideia.avaliacao.classificacao.titulo || "Sem avaliação"
+  end
+
+  def nome_reduzido(nome)
+    nome.gsub(/ \w{2,3} /,' ').split(' ').slice(0, 2).join(' ')
   end
 
   def mensagem(texto)
@@ -80,10 +100,15 @@ module IdeiasHelper
     end
   end
 
+  # retorna: próxima ordem, ícone, ativo/inativo
+  def ordem_icone(campo, query)
+    (query[:campo] == campo.to_s && query[:ordem] =~ /^crescente/) ? [:decrescente, :keyboard_arrow_down, true] : [:crescente, :keyboard_arrow_up, false]
+  end
+
   def perfil_responavel_historico(ideia, responsavel)
     return 'Autor' if responsavel.id == ideia.autor_id
-    return 'Avaliador' if responsavel.has_profile? :avaliador
     return 'Moderador' if responsavel.has_profile? :moderador
+    return 'Avaliador' if responsavel.has_profile? :avaliador
     return 'Administrador' if responsavel.has_profile? :administrador
     'Usuário'
   end

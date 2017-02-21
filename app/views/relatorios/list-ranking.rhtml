@@ -1,0 +1,17 @@
+<div class="mdl-list">
+<%@relatorio.ranking.each_with_index do |info, i|%>
+  <div class="mdl-list__item mdl-list__item--two-line">
+    <div class="mdl-list__item-primary-content">
+      <span><%=i+1%><sup>o</sup></span>
+      <span><%=info[:autor_nome]%></span>
+      <span class="mdl-list__item-sub-title">
+        <%=info[:total_ideias] || 0%> ideias publicadas,
+        <%=info[:total_pontos] || 0%> pontos
+      </span>
+    </div>
+    <!--div class="mdl-list__item-secondary-content">
+      <a href=""><i class="material-icons">keyboard_arrow_right</i></a>
+    </div-->
+  </div>
+<%end%>
+</div>
