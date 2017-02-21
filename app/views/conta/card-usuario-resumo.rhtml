@@ -33,9 +33,9 @@
     </div>
 
     <div class="mdl-cell mdl-cell--6-col-desktop mdl-cell--4-col-tablet mdl-cell--2-col-phone">
-      <a href="<%=path_to :ideias, autor: :usuario, situacao: :avaliacao%>" class="prd-fake-button">
+      <a href="<%=path_to :ideias, autor: :usuario, situacao: :premiacao%>" class="prd-fake-button">
         <img src="<%=path_to 'img/ideia-premiada.svg'%>" alt="" style="width: 4rem"/>
-        <p class="mdl-typography--title"><%=@info[:total_ideias_avaliacao]%></p>
+        <p class="mdl-typography--title"><%=@info[:total_ideias_premiacao]%></p>
         <small>Ideias<br/><b>premiadas</b></small>
       </a>
     </div>
@@ -71,6 +71,12 @@
     <div class="mdl-cell mdl-cell--12-col-desktop mdl-cell--8-col-tablet mdl-cell--4-col-phone">
       <a href="<%=path_to :ideias, autor: :usuario, situacao: :moderacao%>" class="prd-fake-button prd-fake-button--badge mdl-typography--text-left" data-badge="<%=@info[:total_ideias_moderacao]%>">
         <small>Ideias <b>em moderação</b></small>
+      </a>
+    </div>
+
+    <div class="mdl-cell mdl-cell--12-col-desktop mdl-cell--8-col-tablet mdl-cell--4-col-phone">
+      <a href="<%=path_to :ideias, autor: :usuario, situacao: :avaliacao%>" class="prd-fake-button prd-fake-button--badge mdl-typography--text-left" data-badge="<%=@info[:total_ideias_avaliacao]%>">
+        <small>Ideias <b>em avaliação</b></small>
       </a>
     </div>
   </div>
