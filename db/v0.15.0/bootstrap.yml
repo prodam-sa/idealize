@@ -6,7 +6,7 @@
 - :chave: avaliacao
   :rotulo: 'Avaliação'
   :descricao: 'Processo de classificação, pontuação e premiação'
-  :bloqueia: S
+  :bloqueia: N
 
 :situacoes:
   :insercao: []
