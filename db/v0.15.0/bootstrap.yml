@@ -9,12 +9,12 @@
   :bloqueia: N
 
 :situacoes:
-  :insercao: []
-  # - :chave: premiacao
-  #   :rotulo: 'Premiação'
-  #   :titulo: 'Ideia premiada'
-  #   :descricao: 'Ideia foi avaliada após sua publicação e classificada para premiação.'
-  #   :bloqueia: N
+  :insercao:
+  - :chave: premiacao
+    :rotulo: 'Premiação'
+    :titulo: 'Ideia premiada'
+    :descricao: 'Ideia foi avaliada após sua publicação e classificada para premiação.'
+    :bloqueia: N
   :atualizacao:
   - :chave: rascunho
     :rotulo: Rascunho
