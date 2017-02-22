@@ -8,12 +8,12 @@
       <%end%>
     </div>
 
-    <label for="ideia_texto_oportunidade" class="mdl-color-text--primary">Apresentação</label>
+    <label for="ideia_texto_oportunidade" class="mdl-color-text--primary">Oportunidade/Desafio</label>
     <%=partial 'ideias/editor', locals: { ideia: ideia, field: :texto_oportunidade }%>
 
     <br/>
 
-    <label for="ideia_texto_solucao" class="mdl-color-text--primary">Proposta</label>
+    <label for="ideia_texto_solucao" class="mdl-color-text--primary">Proposta/Solução</label>
     <%=partial 'ideias/editor', locals: { ideia: ideia, field: :texto_solucao }%>
 
     <br/>
