@@ -20,19 +20,6 @@ class UsuariosController < ApplicationController
     redirect path_to :home
   end
 
-  post '/' do
-    @usuario = Usuario.new(params[:usuario]).set_password(*params[:acesso].values)
-
-    if @usuario.valid?
-      @usuario.save
-      message.update(level: :information, text: 'Oba! Agora você já pode acessar e compartilhar suas ideias.')
-      redirect path_to(:home)
-    else
-      message.update(level: :error, text: 'Oops! Tem alguma coisa errada. Observe os campos em vermelho.')
-      view 'usuarios/form', layout: :signin
-    end
-  end
-
   get '/pesquisa.json' do
     content_type :json
     @termo = params[:termo] || 'a'
