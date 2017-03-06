@@ -40,9 +40,9 @@ end
 Ideia.find_by_situacao('avaliacao').eager(:avaliacao).each do |ideia|
   if ideia.avaliacao && ideia.situacao.chave == 'avaliacao'
     ideia.add_modificacao(Modificacao.new(responsavel: @admin, descricao: "Atualização da situação de '#{ideia.situacao.titulo}' para '#{ideia.situacao.seguinte.titulo}' por atualização do sistema v0.15.0."))
-    ideia.update(situacao: ideia.situacao.seguinte, bloqueada: ideia.situacao.seguinte.bloqueia).save
+    ideia.update(situacao: ideia.situacao.seguinte, bloqueada: ideia.situacao.seguinte.bloqueia)
   end
-  ideia.update(bloqueada: ideia.situacao.seguinte.bloqueia).save
+  ideia.update(bloqueada: ideia.situacao.bloqueia)
 end
 
 @yaml[:premiacoes].each do |data|

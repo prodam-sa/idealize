@@ -25,6 +25,7 @@
 
   <div class="mdl-card__supporting-text">
     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-textfield--full-width <%='is-invalid' if @historico.errors[:descricao]%>">
+      <input type="hidden" id="historico_ideia_id" name="historico[ideia_id]" value="<%=@ideia.id%>"/>
       <label class="mdl-textfield__label" for="historico_descricao">Nota de moderação</label>
       <textarea id="historico_descricao" name="historico[descricao]" class="mdl-textfield__input" rows="3"></textarea>
       <%if @historico.errors[:descricao]%>
@@ -35,8 +36,14 @@
 
   <div class="mdl-card__actions mdl-card--border">
     <button name="_method" value="post" class="mdl-button mdl-button--raised mdl-js-button mdl-js-ripple-effect">
-      Salvar
+      Publicar
     </button>
+
+    <%@processo.situacoes.each_with_index do |situacao, s|%>
+      <button id="historico_situacao_<%=s%>_id" name="historico[situacao_id]" value="<%=situacao.id%>" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+        <%=situacao.rotulo%>
+      </button>
+    <%end%>
 
     <button name="_method" value="put" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
       <input type="hidden" name="desbloquear" value="true"/>
