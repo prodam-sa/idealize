@@ -72,7 +72,7 @@ class ModeracaoController < ApplicationController
       elsif @ideia.coautores.include? @usuario
         mensagem = 'Você é coautor(a) dessa ideia.'
       else
-        mensagem = 'Ideia em moderação por outro usuário.'
+        mensagem = "Ideia em moderação por #{@ideia.modificacao.responsavel.nome}."
       end
       message.update(level: :warning, text: mensagem)
       redirect to(id)
@@ -83,23 +83,25 @@ class ModeracaoController < ApplicationController
     assunto = 'Sua ideia foi publicada'
     texto = 'Ideia foi publicada e o autor foi notificado por e-mail.'
 
-    if ideia_moderada?
-      @situacao = (params[:situacao]) && Situacao.find(params[:situacao]) || @situacao.seguinte
-    else
-      @situacao = @situacao.oposta
-    end
+    @historico = Historico.new(params[:historico])
+    @historico.responsavel = @usuario
 
-    @historico = historico(@ideia, @situacao, params[:historico][:descricao])
+    situacao_valida = @historico.situacao != @situacao
+    historico_valido = @historico.valid? && situacao_valida
 
-    if @historico.valid?
-      @ideia.situacao = @situacao
+    if historico_valido
+      @ideia.situacao = @historico.situacao
+
       if ideia_moderada?
+        @ideia.situacao = @situacao.seguinte
         @ideia.publicar!
       else
-        assunto = 'Sua deia foi enviada para revisão'
-        texto = 'Ideia enviada para revisão e o autor foi notificado por e-mail.'
+        @historico.situacao = @situacao
+        assunto = "Sua deia foi atualizada: #{@ideia.situacao.titulo}"
+        texto = "Ideia atualizada para situação \"#{@ideia.situacao.titulo}\" e o autor foi notificado por e-mail."
         @ideia.desbloquear!
       end
+
       message.update level: :information, text: texto
       @historico.save
       enviar_notificacao para: @ideia.autor.email,
@@ -108,6 +110,7 @@ class ModeracaoController < ApplicationController
 
       redirect to('/')
     else
+      @ideia.situacao = @situacao
       @formulario = @processo.formulario
       @criterios = @formulario.criterios.map do |criterio|
         parametro = params[:criterios].select do |resposta|
@@ -116,6 +119,7 @@ class ModeracaoController < ApplicationController
         criterio.resposta = parametro ? parametro[:resposta] : 'N'
         criterio
       end
+      @historico.errors[:descricao] << "situação deve ser diferente de \"#{@situacao.rotulo}\"."
       message.update(level: :error, text: 'Oops! Observe os campos em vermelho.')
       view 'ideias/moderacao/edit'
     end
