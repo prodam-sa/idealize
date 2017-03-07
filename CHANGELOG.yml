@@ -1,3 +1,10 @@
+- :version: 0.15.2
+  :release: 2017-03-07
+  :summary:
+    Correções na pesquisa de ideias
+  :changes:
+  - Correção método de pesquisa de ideias por situações.
+
 - :version: 0.15.1
   :release: 2017-03-06
   :summary:
