@@ -38,7 +38,7 @@ class IdeiasController < ApplicationController
 
   get '/pesquisa' do
     @termo = params[:termo]
-    @relatorio.ideias = Ideia.search(@termo).all
+    @relatorio.ideias = Ideia.search_by_situacoes(@termo, 'publicacao', 'avaliacao', 'premiacao').all
     view 'ideias/search'
   end
 

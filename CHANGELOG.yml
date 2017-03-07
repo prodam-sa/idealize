@@ -1,3 +1,11 @@
+- :version: 0.15.2
+  :release: 2017-03-07
+  :summary:
+    Correções na pesquisa e moderação de ideias
+  :changes:
+  - Correção método de pesquisa de ideias por situações.
+  - Correção do processo de moderação/publicação.
+
 - :version: 0.15.1
   :release: 2017-03-06
   :summary:
