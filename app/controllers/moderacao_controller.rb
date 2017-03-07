@@ -84,6 +84,7 @@ class ModeracaoController < ApplicationController
     texto = 'Ideia foi publicada e o autor foi notificado por e-mail.'
 
     @historico = Historico.new(params[:historico])
+    @historico.situacao ||= @situacao.seguinte
     @historico.responsavel = @usuario
 
     situacao_valida = @historico.situacao != @situacao
@@ -119,7 +120,7 @@ class ModeracaoController < ApplicationController
         criterio.resposta = parametro ? parametro[:resposta] : 'N'
         criterio
       end
-      @historico.errors[:descricao] << "situação deve ser diferente de \"#{@situacao.rotulo}\"."
+      (@historico.errors[:descricao] ||= []) << "situação deve ser diferente de \"#{@situacao.rotulo}\"."
       message.update(level: :error, text: 'Oops! Observe os campos em vermelho.')
       view 'ideias/moderacao/edit'
     end
