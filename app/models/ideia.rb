@@ -125,13 +125,24 @@ class Ideia < Model[:ideia]
       regexp_like(term, :titulo, :texto_oportunidade, :texto_solucao).reverse(:data_atualizacao)
     end
 
+    def search_by_situacoes(termo, *chaves)
+      regexp_like(termo, :ideia__titulo, :ideia__texto_oportunidade, :ideia__texto_solucao).reverse(:data_atualizacao).
+      select(*column_aliases).
+      join(:situacao, id: :situacao_id).
+      where(situacao__chave: chaves).
+      eager(:situacao).
+      reverse(:data_atualizacao)
+    end
+    alias search_by_situacao search_by_situacoes
+
   private
 
     def regexp_like(pattern, *fields)
-      expressao = fields.map do |field|
-        format("REGEXP_LIKE(#{field}, '%s', 'i')", pattern.to_s)
-      end.join(' OR ')
-      where(expressao)
+      dataset = where
+      fields.each do |field|
+        dataset = dataset.where(Sequel.function(:REGEXP_LIKE, field, pattern.to_s, 'i'))
+      end
+      dataset
     end
   end
 end
