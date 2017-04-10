@@ -82,17 +82,36 @@ class Relatorio
         INNER JOIN classificacao ON (classificacao.id = avaliacao.classificacao_id)
         %s",
     ranking: "
-      SELECT usuario.id AS autor_id
-           , usuario.nome AS autor_nome
-           , COUNT(ideia.id) AS total_ideias
-           , SUM(avaliacao.pontos) AS total_pontos
-        FROM ideia
-        INNER JOIN usuario ON (usuario.id = ideia.autor_id)
-        INNER JOIN avaliacao ON (avaliacao.ideia_id = ideia.id)
+      SELECT autor_id
+           , autor_nome
+           , SUM(total_ideias) AS total_ideias
+           , SUM(total_pontos) AS total_pontos
+        FROM (
+          SELECT usuario.id AS autor_id
+               , usuario.nome AS autor_nome
+               , COUNT(ideia.id) AS total_ideias
+               , SUM(avaliacao.pontos) AS total_pontos
+            FROM ideia
+            INNER JOIN usuario ON (usuario.id = ideia.autor_id)
+            INNER JOIN avaliacao ON (avaliacao.ideia_id = ideia.id)
+            GROUP BY usuario.id
+                   , usuario.nome
+          UNION
+          SELECT ideia_coautor.coautor_id AS autor_id
+               , usuario.nome AS autor_nome
+               , COUNT(ideia.id) AS total_ideias
+               , SUM(avaliacao.pontos) AS total_pontos
+            FROM ideia
+            INNER JOIN ideia_coautor ON (ideia_coautor.ideia_id = ideia.id)
+            INNER JOIN usuario ON (usuario.id = ideia_coautor.coautor_id)
+            INNER JOIN avaliacao ON (avaliacao.ideia_id = ideia.id)
+            GROUP BY ideia_coautor.coautor_id
+                   , usuario.nome
+        )
         %s
-        GROUP BY usuario.id
-               , usuario.nome
-        ORDER BY SUM(avaliacao.pontos) DESC",
+        GROUP BY autor_id
+               , autor_nome
+        ORDER BY total_pontos DESC",
   }.freeze
 
   attr_accessor :autor
