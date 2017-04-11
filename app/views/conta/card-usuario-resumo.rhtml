@@ -1,6 +1,6 @@
 <div class="mdl-card mdl-card--full-width mdl-shadow--2dp">
   <div class="mdl-card__menu mdl-layout--large-screen-only">
-    <%=partial 'conta/menu-usuario', locals: { css_id: 'card-actions', icon: 'keyboard_arrow_down', direction: 'bottom-right'}%>
+    <%=partial 'conta/menu-usuario', locals: { css_id: 'card-actions-large-screen', icon: 'keyboard_arrow_down', direction: 'bottom-right'}%>
   </div><!--/.mdl-card__menu-->
 
   <div class="prd-card-account mdl-layout--large-screen-only">
@@ -15,7 +15,7 @@
 
   <div class="mdl-card__actions mdl-grid mdl-card--expand mdl-card--border mdl-typography--text-uppercase mdl-typography--text-center mdl-color-text--indigo-800">
     <div class="mdl-cell mdl-cell--12-col-desktop mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-layout--large-screen-only">
-        <%=@info[:classificacao]%>&deg; ranking (<strong><%=@info[:total_pontos]%></strong> pontos)
+        <%=@info[:classificacao] || 0%>&deg; ranking (<strong><%=@info[:total_pontos]%></strong> pontos)
     </div>
 
     <div class="mdl-cell mdl-cell--12-col-desktop mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-layout--large-screen-only">
