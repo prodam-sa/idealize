@@ -12,7 +12,10 @@
           <span class="mdl-layout--large-screen-only"><%=info[:autor_nome]%></span>
           <span class="mdl-layout--small-screen-only"><%=info[:autor_nome].split(' ').first%></span>
           <span class="mdl-list__item-sub-title">
-            <small><em><%=info[:total_ideias] || 0%> ideias</em></small>
+            <small>
+              <em><%=info[:total_premiacoes] || 0%> premiações</em>,
+              <em><%=info[:total_contribuicoes] || 0%> contribuições</em>
+            </small>
           </span>
         </div>
         <div class="mdl-list__item-secondary-content">
