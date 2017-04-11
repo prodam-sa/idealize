@@ -82,17 +82,39 @@ class Relatorio
         INNER JOIN classificacao ON (classificacao.id = avaliacao.classificacao_id)
         %s",
     ranking: "
-      SELECT usuario.id AS autor_id
-           , usuario.nome AS autor_nome
-           , COUNT(ideia.id) AS total_ideias
-           , SUM(avaliacao.pontos) AS total_pontos
-        FROM ideia
-        INNER JOIN usuario ON (usuario.id = ideia.autor_id)
-        INNER JOIN avaliacao ON (avaliacao.ideia_id = ideia.id)
+      SELECT autor_id
+           , autor_nome
+           , SUM(total_premiacoes) AS total_premiacoes
+           , SUM(total_contribuicoes) AS total_contribuicoes
+           , SUM(total_pontos) AS total_pontos
+        FROM (
+          SELECT usuario.id AS autor_id
+               , usuario.nome AS autor_nome
+               , COUNT(ideia.id) AS total_premiacoes
+               , 0 AS total_contribuicoes
+               , SUM(avaliacao.pontos) AS total_pontos
+            FROM ideia
+            INNER JOIN usuario ON (usuario.id = ideia.autor_id)
+            INNER JOIN avaliacao ON (avaliacao.ideia_id = ideia.id)
+            GROUP BY usuario.id
+                   , usuario.nome
+          UNION
+          SELECT ideia_coautor.coautor_id AS autor_id
+               , usuario.nome AS autor_nome
+               , 0 AS total_premiacoes
+               , COUNT(ideia_coautor.ideia_id) AS total_contribuicoes
+               , SUM(avaliacao.pontos) AS total_pontos
+            FROM ideia
+            INNER JOIN ideia_coautor ON (ideia_coautor.ideia_id = ideia.id)
+            INNER JOIN usuario ON (usuario.id = ideia_coautor.coautor_id)
+            INNER JOIN avaliacao ON (avaliacao.ideia_id = ideia.id)
+            GROUP BY ideia_coautor.coautor_id
+                   , usuario.nome
+        )
         %s
-        GROUP BY usuario.id
-               , usuario.nome
-        ORDER BY SUM(avaliacao.pontos) DESC",
+        GROUP BY autor_id
+               , autor_nome
+        ORDER BY total_pontos DESC",
   }.freeze
 
   attr_accessor :autor
@@ -282,7 +304,9 @@ class Relatorio
   def ranking!
     @ranking = Database[sql :ranking].all.each_with_index do |row, i|
       row[:classificacao] = i + 1
-      row[:total_ideias] = row[:total_ideias].to_i
+      row[:to_url_param] = ("#{row[:autor_id]}-#{row[:autor_nome]}").gsub(/\W/, '-').sub(/-$/,'').squeeze('-').downcase
+      row[:total_premiacoes] = row[:total_premiacoes].to_i
+      row[:total_contribuicoes] = row[:total_contribuicoes].to_i
       row[:total_pontos] = row[:total_pontos].to_i
     end
   end
@@ -290,7 +314,15 @@ class Relatorio
   def ranking_autor(autor = @autor)
     autor && @ranking_autor ||= ranking.select do |info|
       info[:autor_id] == autor.id
-    end.first || { colocacao: nil, autor_id: nil, autor_nome: nil, total_ideias: 0, total_pontos: 0 }
+    end.first || {
+      colocacao: nil,
+      autor_id: nil,
+      autor_nome: nil,
+      to_url_param: nil,
+      total_premiacoes: 0,
+      total_contribuicoes: 0,
+      total_pontos: 0
+    }
     @ranking_autor
   end
 

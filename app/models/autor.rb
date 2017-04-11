@@ -4,6 +4,11 @@ module Prodam::Idealize
 
 class Autor < Usuario
   one_to_many :ideias
+  many_to_many :contribuicoes,
+    class: Ideia,
+    join_table: :ideia_coautor,
+    left_key: :coautor_id,
+    right_key: :ideia_id
 
   def pontuacao_ranking
     if ideias && ideias.any? && @pontuacao_ranking.nil?

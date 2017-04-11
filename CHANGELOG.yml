@@ -1,3 +1,14 @@
+- :version: 0.16.0
+  :release: 2017-04-11
+  :summary:
+    Novas funcionalidades na avaliação de ideias e melhorias nas páginas
+  :changes:
+  - Contador de pontuação na página de avaliação da ideias.
+  - Melhoria no ranking com a inclusão dos totais de ideias premiadas e
+    contribuições (coautores).
+  - Atualização dos dados do usuário com suas contribuições como coautor.
+  - Lista de ideias do usuário coautor.
+
 - :version: 0.15.2
   :release: 2017-03-07
   :summary:
@@ -32,7 +43,7 @@
   :summary:
     Notificação por email e relatórios administrativos
   :changes:
-  - Notifiações para os autores das ideias.
+  - Notificações para os autores das ideias.
   - Lista de ideias por datas de criação e publicação.
   - Lista de ideias para premiação.
 

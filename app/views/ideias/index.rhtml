@@ -29,12 +29,14 @@
               <span class="mdl-list__item-avatar prd-ranking-list__item-botton prd-ranking-list__item-botton--<%=botton || :coin%>"><%=order%></span>
               <span><%=nome_reduzido info[:autor_nome]%></span>
               <span class="mdl-list__item-sub-title">
-                <small><em><%=info[:total_ideias] || 0%> ideias, <%=info[:total_pontos] || 0%> pontos</em></small>
+                <small><em><%=info[:total_pontos] || 0%> pontos</em></small>
               </span>
             </div>
-            <!--div class="mdl-list__item-secondary-content">
-              <a href=""><i class="material-icons">keyboard_arrow_right</i></a>
-            </div-->
+            <div class="mdl-list__item-secondary-content">
+              <a href="<%=path_to :usuarios, info[:to_url_param]%>" class="mdl-list__item-secondary-action mdl-button mdl-button--icon mdl-button--colored">
+                <i class="material-icons">keyboard_arrow_right</i>
+              </a>
+            </div>
           </div>
         <%end%>
 
