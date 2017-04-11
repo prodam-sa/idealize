@@ -20,7 +20,9 @@ class IdeiasController < ApplicationController
 
   get '/' do
     pagina  = (params[:pagina].to_i > 0 && params[:pagina] || 1).to_i
-    dataset = params[:autor] && params[:autor] =~ /usuario/i && @usuario && @usuario.ideias_dataset || Ideia.find_by_situacoes('publicacao', 'avaliacao', 'premiacao')
+    dataset = Ideia.find_publicacoes
+    dataset = params[:autor] && dataset.where(autor_id: params[:autor].to_i) || dataset
+    dataset = params[:coautor] && Ideia.find_contribuicoes(params[:coautor]) || dataset
     dataset = params[:situacao] && !params[:situacao].empty? && dataset.where(situacao_id: @situacoes[params[:situacao].to_sym].id) || dataset
     dataset = case params[:ordem]
                 when 'a~z' then dataset.order(:titulo)
