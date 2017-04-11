@@ -113,6 +113,16 @@ class Ideia < Model[:ideia]
     end
     alias find_by_situacao find_by_situacoes
 
+    def find_publicacoes
+      find_by_situacoes('publicacao', 'avaliacao', 'premiacao')
+    end
+
+    def find_contribuicoes(coautor_id)
+      find_publicacoes.
+        join(:ideia_coautor, ideia_id: :ideia__id).
+        where(ideia_coautor__coautor_id: coautor_id.to_i)
+    end
+
     def find_by_situacao_categoria(chave, categoria_id)
       join(:categoria, id: categoria_id).where(situacao: chave).reverse(:data_atualizacao)
     end
