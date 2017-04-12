@@ -824,7 +824,7 @@ select.mdl-textfield__input:before {
     text-shadow: 1px 1px 1px transparent;
     text-shadow: 1px 1px 1px rgba(7,7,7,0.80); }
     .prd-ranking-list .prd-ranking-list__item-botton.prd-ranking-list__item-botton--coin
-    { color: rgba(180,180,180,0.90);
+    { color: rgba(200,200,200,0.90);
       background-image: url('/img/ranking/coin.svg'); }
     .prd-ranking-list .prd-ranking-list__item-botton.prd-ranking-list__item-botton--gold
     { color: rgba(229,157,35,0.90);
