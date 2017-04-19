@@ -112,6 +112,10 @@ module IdeiasHelper
     return 'Administrador' if responsavel.has_profile? :administrador
     'Usuário'
   end
+
+  def situacoes
+    @situacoes
+  end
 end
 
 end # module

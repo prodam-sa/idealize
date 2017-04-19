@@ -3,7 +3,7 @@
     <%icon = ideia.categorias.empty? ? :wb_incandescent : ideia.categorias.first.icone%>
     <li class="mdl-list__item mdl-list__item--three-line prd-">
       <div class="mdl-list__item-primary-content">
-        <a href="<%=path_to :ideias, ideia.to_url_param%>">
+        <a href="<%=path_to :ideias, ideia.to_url_param%>" class="mdl-layout--large-screen-only">
           <i class="material-icons mdl-list__item-avatar"><%=icon%></i>
         </a>
 

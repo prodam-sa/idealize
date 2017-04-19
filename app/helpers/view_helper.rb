@@ -26,6 +26,7 @@ module ViewHelper
 
   def message
     session[:message] ||= { level: :information, text: nil, url: nil }
+    session[:message]
   end
 
   def data(filename)
