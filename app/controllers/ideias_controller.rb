@@ -7,7 +7,6 @@ class IdeiasController < ApplicationController
 
   before do
     @page = controllers[:ideias]
-    @postagem = Situacao.chave :postagem
   end
 
   before '/:id/?:action?' do |id, action|
@@ -15,7 +14,7 @@ class IdeiasController < ApplicationController
       @ideia = Ideia[ideia_id]
       @coautores = @ideia.coautores_dataset.order(:nome).all
     else
-      @ideia = Ideia.new(situacao: Situacao.chave(:rascunho))
+      @ideia = Ideia.new(situacao: @situacoes[:rascunho])
     end
   end
 
@@ -24,7 +23,7 @@ class IdeiasController < ApplicationController
     dataset = Ideia.find_publicacoes
     dataset = params[:autor] && !params[:autor].empty? && dataset.where(autor_id: params[:autor].to_i) || dataset
     dataset = params[:coautor] && !params[:coautor].empty? && Ideia.find_contribuicoes(params[:coautor]) || dataset
-    dataset = params[:situacao] && !params[:situacao].empty? && dataset.where(situacao_id: params[:situacao].to_i) || dataset
+    dataset = params[:situacao] && !params[:situacao].empty? && dataset.where(situacao_id: @situacoes[params[:situacao].to_sym].id) || dataset
     dataset = case params[:ordem]
                 when 'a~z' then dataset.order(:titulo)
                 when 'z~a' then dataset.reverse(:titulo)

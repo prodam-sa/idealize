@@ -50,7 +50,7 @@
 
     <%if permitido_postar? ideia%>
       <form action="<%=path_to :ideias, ideia.to_url_param%>" method="post" style="display: inline">
-        <input type="hidden" id="ideia_situacao_id" name="ideia[situacao_id]" value="<%=@postagem.id%>">
+        <input type="hidden" id="ideia_situacao_id" name="ideia[situacao_id]" value="<%=@situacoes[:postagem].id%>">
         <button name="_method" value="put" class="mdl-button mdl-button--icon mdl-layout--small-screen-only"><i class="material-icons">publish</i></button>
         <button name="_method" value="put" class="mdl-button mdl-button--colored mdl-layout--large-screen-only">Postar</button>
       </form>

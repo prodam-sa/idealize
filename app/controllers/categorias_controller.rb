@@ -7,6 +7,7 @@ class CategoriasController < ApplicationController
 
   before do
     @page = controllers[:categorias]
+    @situacoes = Situacao.all_by_sem_restricao(:chave).map(&:chave)
     @fab = {
       url: path_to(:categorias, :nova),
       tooltip: 'Nova categoria!'

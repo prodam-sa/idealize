@@ -54,7 +54,7 @@ class ApplicationController < Sinatra::Base
     @fab = { url: path_to(:ideias, :nova), icon: :add, tooltip: 'Nova ideia!' }
     @relatorio = Relatorio.new
     @situacoes = Situacao.all.each_with_object Hash.new do |situacao, situacoes|
-      situacoes[situacao.id] = situacao
+      situacoes[situacao.chave.to_sym] = situacao
     end
 
     if authenticated?

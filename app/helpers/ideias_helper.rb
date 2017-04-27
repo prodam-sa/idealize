@@ -45,11 +45,11 @@ module IdeiasHelper
   end
 
   def permitido_postar?(ideia)
-    (permitido_alterar? ideia) && (ideia.situacao.restrita?)
+    (permitido_alterar? ideia) && (ideia.situacoes? :rascunho, :revisao)
   end
 
   def permitido_excluir?(ideia)
-    (permitido_alterar? ideia) && (ideia.situacao.restrita?)
+    (permitido_alterar? ideia) && (ideia.situacoes? :rascunho, :revisao)
   end
 
   def permitido_arquivar?(ideia)
