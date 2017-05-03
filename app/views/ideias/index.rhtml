@@ -6,7 +6,7 @@
   </div><!--/.mdl-cell-->
 
   <div class="mdl-cell mdl-cell--6-col-desktop mdl-cell--8-col-tablet mdl-cell--4-col-phone">
-    <%=partial 'ideias/list-paginated', locals: { ideias: @ideias, pagination: @pagination }%>
+    <%=partial 'ideias/list-paginated', locals: { url: @path, ideias: @ideias, pagination: @pagination, filters: @filters }%>
   </div><!--/.mdl-cell-->
 
   <div class="mdl-cell mdl-cell--3-col-desktop mdl-cell--4-col-tablet mdl-cell--order-3-tablet mdl-cell--4-col-phone mdl-cell--order-3-phone">
