@@ -1,3 +1,11 @@
+- :version: 0.16.2
+  :release: 2017-05-03
+  :summary:
+    Correção da filtragem e paginação das ideias por autor/usuário
+  :changes:
+  - Correção dos filtros e paginação das ideias do usuários.
+  - Correção das métricas de ideas por situação no relatório administrativo.
+
 - :version: 0.16.1
   :release: 2017-04-17
   :summary:

@@ -4,8 +4,8 @@ SHELL = /bin/bash
 -include config.mk
 
 name = idealize
-version ?= 0.16.1
-release ?= 2017-04-17
+version ?= 0.16.2
+release ?= 2017-05-03
 database = $(name)
 environment ?= development
 
