@@ -25,7 +25,7 @@
     </div>
 
     <div class="mdl-cell mdl-cell--6-col-desktop mdl-cell--4-col-tablet mdl-cell--2-col-phone">
-      <a href="<%=path_to :ideias, autor: @usuario.to_url_param%>" class="prd-fake-button">
+      <a href="<%=path_to :ideias, :usuario%>" class="prd-fake-button">
         <img src="<%=path_to 'img/ideia-cadastrada.svg'%>" alt="" style="width: 4rem"/>
         <p class="mdl-typography--title"><%=@info[:total_ideias]%></p>
         <small>Ideias<br/><b>cadastradas</b></small>
@@ -33,7 +33,7 @@
     </div>
 
     <div class="mdl-cell mdl-cell--6-col-desktop mdl-cell--4-col-tablet mdl-cell--2-col-phone">
-      <a href="<%=path_to :ideias, autor: @usuario.to_url_param, situacao: :premiacao%>" class="prd-fake-button">
+      <a href="<%=path_to :ideias, :usuario, situacao: :premiacao%>" class="prd-fake-button">
         <img src="<%=path_to 'img/ideia-premiada.svg'%>" alt="" style="width: 4rem"/>
         <p class="mdl-typography--title"><%=@info[:total_ideias_premiacao]%></p>
         <small>Ideias<br/><b>premiadas</b></small>
@@ -41,7 +41,7 @@
     </div>
 
     <div class="mdl-cell mdl-cell--6-col-desktop mdl-cell--4-col-tablet mdl-cell--2-col-phone">
-      <a href="<%=path_to :ideias, autor: @usuario.to_url_param, situacao: :publicacao%>" class="prd-fake-button">
+      <a href="<%=path_to :ideias, :usuario, situacao: :publicacao%>" class="prd-fake-button">
         <img src="<%=path_to 'img/ideia-moderada.svg'%>" alt="" style="width: 4rem"/>
         <p class="mdl-typography--title"><%=@info[:total_ideias_publicacao]%></p>
         <small>Ideias<br/><b>publicadas</b></small>
@@ -49,7 +49,7 @@
     </div>
 
     <div class="mdl-cell mdl-cell--6-col-desktop mdl-cell--4-col-tablet mdl-cell--2-col-phone">
-      <a href="<%=path_to :ideias, autor: @usuario.to_url_param, situacao: :postagem%>" class="prd-fake-button">
+      <a href="<%=path_to :ideias, :usuario, situacao: :postagem%>" class="prd-fake-button">
         <img src="<%=path_to 'img/ideia-edicao.svg'%>" alt="" style="width: 4rem"/>
         <p class="mdl-typography--title"><%=@info[:total_ideias_postagem]%></p>
         <small>Ideias<br/><b>postadas</b></small>
@@ -63,25 +63,25 @@
     </div>
 
     <div class="mdl-cell mdl-cell--12-col-desktop mdl-cell--8-col-tablet mdl-cell--4-col-phone">
-      <a href="<%=path_to :ideias, autor: @usuario.to_url_param, situacao: :rascunho%>" class="prd-fake-button prd-fake-button--badge mdl-typography--text-left" data-badge="<%=@info[:total_ideias_rascunho]%>">
+      <a href="<%=path_to :ideias, :usuario, situacao: :rascunho%>" class="prd-fake-button prd-fake-button--badge mdl-typography--text-left" data-badge="<%=@info[:total_ideias_rascunho]%>">
         <small>Ideias <b>em rascunho</b></small>
       </a>
     </div>
 
     <div class="mdl-cell mdl-cell--12-col-desktop mdl-cell--8-col-tablet mdl-cell--4-col-phone">
-      <a href="<%=path_to :ideias, autor: @usuario.to_url_param, situacao: :revisao%>" class="prd-fake-button prd-fake-button--badge mdl-typography--text-left" data-badge="<%=@info[:total_ideias_revisao]%>">
+      <a href="<%=path_to :ideias, :usuario, situacao: :revisao%>" class="prd-fake-button prd-fake-button--badge mdl-typography--text-left" data-badge="<%=@info[:total_ideias_revisao]%>">
         <small>Ideias <b>em revisão</b></small>
       </a>
     </div>
 
     <div class="mdl-cell mdl-cell--12-col-desktop mdl-cell--8-col-tablet mdl-cell--4-col-phone">
-      <a href="<%=path_to :ideias, autor: @usuario.to_url_param, situacao: :moderacao%>" class="prd-fake-button prd-fake-button--badge mdl-typography--text-left" data-badge="<%=@info[:total_ideias_moderacao]%>">
+      <a href="<%=path_to :ideias, :usuario, situacao: :moderacao%>" class="prd-fake-button prd-fake-button--badge mdl-typography--text-left" data-badge="<%=@info[:total_ideias_moderacao]%>">
         <small>Ideias <b>em moderação</b></small>
       </a>
     </div>
 
     <div class="mdl-cell mdl-cell--12-col-desktop mdl-cell--8-col-tablet mdl-cell--4-col-phone">
-      <a href="<%=path_to :ideias, autor: @usuario.to_url_param, situacao: :avaliacao%>" class="prd-fake-button prd-fake-button--badge mdl-typography--text-left" data-badge="<%=@info[:total_ideias_avaliacao]%>">
+      <a href="<%=path_to :ideias, :usuario, situacao: :avaliacao%>" class="prd-fake-button prd-fake-button--badge mdl-typography--text-left" data-badge="<%=@info[:total_ideias_avaliacao]%>">
         <small>Ideias <b>em avaliação</b></small>
       </a>
     </div>

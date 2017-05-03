@@ -7,6 +7,7 @@ class IdeiasController < ApplicationController
 
   before do
     @page = controllers[:ideias]
+    @postagem = Situacao.chave :postagem
   end
 
   before '/:id/?:action?' do |id, action|
@@ -14,27 +15,38 @@ class IdeiasController < ApplicationController
       @ideia = Ideia[ideia_id]
       @coautores = @ideia.coautores_dataset.order(:nome).all
     else
-      @ideia = Ideia.new(situacao: @situacoes[:rascunho])
+      @ideia = Ideia.new(situacao: situacoes[:rascunho])
     end
   end
 
   get '/' do
-    pagina  = (params[:pagina].to_i > 0 && params[:pagina] || 1).to_i
-    dataset = Ideia.find_publicacoes
-    dataset = params[:autor] && !params[:autor].empty? && dataset.where(autor_id: params[:autor].to_i) || dataset
-    dataset = params[:coautor] && !params[:coautor].empty? && Ideia.find_contribuicoes(params[:coautor]) || dataset
-    dataset = params[:situacao] && !params[:situacao].empty? && dataset.where(situacao_id: @situacoes[params[:situacao].to_sym].id) || dataset
-    dataset = case params[:ordem]
-                when 'a~z' then dataset.order(:titulo)
-                when 'z~a' then dataset.reverse(:titulo)
-                when 'jan~dez' then dataset.order(:data_publicacao, :data_criacao)
-                when 'dez~jan' then dataset.reverse(:data_publicacao, :data_criacao)
-                else dataset.reverse(:data_publicacao)
-              end
-    dataset = dataset.eager(:autor, avaliacao: :classificacao).page(pagina)
+    dataset = filtragem(Ideia.find_publicacoes)
     @ideias = dataset.all
     @pagination = dataset.paging
+    @path = path_to(:ideias)
+    @filters = { ordem: params[:ordem] }
+    view 'ideias/index'
+  end
 
+  get '/usuario/?', authenticate: true do
+    dataset = @usuario.ideias_dataset
+    dataset = params[:situacao] && !params[:situacao].empty? && dataset.where(situacao_id: situacoes[params[:situacao].to_sym].id) || dataset
+    dataset = filtragem(dataset)
+    @ideias = dataset.all
+    @pagination = dataset.paging
+    @filters = { situacao: params[:situacao], ordem: params[:ordem] }
+    @path = path_to(:ideias, :usuario)
+    view 'ideias/index'
+  end
+
+  get '/usuario/:id' do |id|
+    dataset = Ideia.find_publicacoes.where(autor_id: params[:autor].to_i)
+    dataset = params[:coautor] && !params[:coautor].empty? && Ideia.find_contribuicoes(params[:coautor]) || dataset
+    dataset = filtragem(dataset)
+    @ideias = dataset.all
+    @pagination = dataset.paging
+    @filters = { situacao: params[:situacao], ordem: params[:ordem] }
+    @path = path_to(:ideias, :usuario)
     view 'ideias/index'
   end
 
@@ -149,6 +161,18 @@ class IdeiasController < ApplicationController
   end
 
 private
+
+  def filtragem(dataset)
+    pagina  = (params[:pagina].to_i > 0 && params[:pagina] || 1).to_i
+    dataset = case params[:ordem]
+                when 'a~z' then dataset.order(:titulo)
+                when 'z~a' then dataset.reverse(:titulo)
+                when 'jan~dez' then dataset.order(:data_publicacao, :data_criacao)
+                when 'dez~jan' then dataset.reverse(:data_publicacao, :data_criacao)
+                else dataset.reverse(:data_publicacao)
+              end
+    dataset = dataset.eager(:autor, avaliacao: :classificacao).page(pagina)
+  end
 end
 
 end # module

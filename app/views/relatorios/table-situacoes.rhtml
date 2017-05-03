@@ -9,7 +9,7 @@
     <%@situacoes.each do |situacao|%>
       <tr>
         <td class="mdl-data-table__cell--non-numeric"><%=situacao.titulo%></td>
-        <td class="mdl-data-table__cell--numeric"><%=@total_ideias_por_situacao[situacao.id] || 0%></td>
+        <td class="mdl-data-table__cell--numeric"><%=@total_ideias_por_situacao[situacao.chave.to_sym] || 0%></td>
       </tr>
       <%end%>
   </tbody>
