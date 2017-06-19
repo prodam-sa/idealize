@@ -52,7 +52,7 @@ class IdeiasController < ApplicationController
   get '/pesquisa' do
     @termo = params[:termo]
     @situacoes = Situacao.find_by_chaves(:publicacao, :avaliacao, :premiacao).select(:id).all.map(&:id)
-    @relatorio.ideias = Ideia.search_by_situacoes(@termo, @situacoes).all
+    @relatorio.ideias = Ideia.search_by_situacoes(@termo, *@situacoes).all
     view 'ideias/search'
   end
 
