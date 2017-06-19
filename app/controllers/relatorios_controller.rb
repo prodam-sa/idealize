@@ -51,7 +51,7 @@ class RelatoriosController < ApplicationController
       a[:total_apoiadores] <=> b[:total_apoiadores]
     end.reverse
     @ideias_por_autor = @relatorio.ideias_por_autor
-    @ideias_por_pontuacao = Avaliacao.find_by_situacao_data(:avaliacao, data_inicial, data_final).map do |avaliacao|
+    @ideias_por_pontuacao = Avaliacao.find_by_situacao_data(:premiacao, data_inicial, data_final).map do |avaliacao|
       avaliacao.ideia
     end.sort do |a, b|
       a.avaliacao.pontos <=> b.avaliacao.pontos
