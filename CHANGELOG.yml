@@ -1,3 +1,11 @@
+- :version: 0.16.3
+  :release: 2017-06-20
+  :summary:
+    Correções de pesquisa de ideias e ajustes dos links de autoria/contribuição
+  :changes:
+  - Correção na pesquisa de ideias por termo
+  - Ajustes para os links de autoria e contribuição
+
 - :version: 0.16.2
   :release: 2017-05-03
   :summary:
