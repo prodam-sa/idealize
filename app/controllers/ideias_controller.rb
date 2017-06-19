@@ -34,8 +34,8 @@ class IdeiasController < ApplicationController
     dataset = filtragem(dataset)
     @ideias = dataset.all
     @pagination = dataset.paging
-    @filters = { situacao: params[:situacao], ordem: params[:ordem] }
     @path = path_to(:ideias, :usuario)
+    @filters = { situacao: params[:situacao], ordem: params[:ordem] }
     view 'ideias/index'
   end
 
@@ -44,8 +44,8 @@ class IdeiasController < ApplicationController
     dataset = filtragem(dataset)
     @ideias = dataset.all
     @pagination = dataset.paging
-    @filters = { situacao: params[:situacao], ordem: params[:ordem] }
-    @path = path_to(:ideias, :usuario)
+    @path = path_to(:ideias, :usuarios, params[:id])
+    @filters = { ordem: params[:ordem] }
     view 'ideias/index'
   end
 
