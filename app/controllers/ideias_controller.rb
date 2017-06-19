@@ -39,9 +39,8 @@ class IdeiasController < ApplicationController
     view 'ideias/index'
   end
 
-  get '/usuario/:id' do |id|
-    dataset = Ideia.find_publicacoes.where(autor_id: params[:autor].to_i)
-    dataset = params[:coautor] && !params[:coautor].empty? && Ideia.find_contribuicoes(params[:coautor]) || dataset
+  get '/usuarios/:id' do |id|
+    dataset = Ideia.find_contribuicoes(id).or(autor_id: id.to_i)
     dataset = filtragem(dataset)
     @ideias = dataset.all
     @pagination = dataset.paging

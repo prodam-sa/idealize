@@ -119,8 +119,7 @@ class Ideia < Model[:ideia]
 
     def find_contribuicoes(coautor_id)
       find_publicacoes.
-        join(:ideia_coautor, ideia_id: :ideia__id).
-        where(ideia_coautor__coautor_id: coautor_id.to_i)
+        join(:ideia_coautor, ideia_id: :ideia__id).or(ideia_coautor__coautor_id: coautor_id.to_i)
     end
 
     def find_by_situacao_categoria(chave, categoria_id)
