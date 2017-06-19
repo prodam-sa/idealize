@@ -147,9 +147,9 @@ class Ideia < Model[:ideia]
   private
 
     def regexp_like(pattern, *fields)
-      dataset = where
+      dataset = where(true)
       fields.each do |field|
-        dataset = dataset.where(Sequel.function(:REGEXP_LIKE, field, pattern.to_s, 'i'))
+        dataset = dataset.or(Sequel.function(:REGEXP_LIKE, field, pattern.to_s, 'i'))
       end
       dataset
     end
