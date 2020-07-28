@@ -3,7 +3,7 @@ GEM
   specs:
     backports (3.6.8)
     coderay (1.1.1)
-    json (2.2.0)
+    json (2.3.0)
     mail (2.6.4)
       mime-types (>= 1.16, < 4)
     method_source (0.8.2)
